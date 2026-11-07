@@ -1,19 +1,19 @@
 # Lane D integration status
 
-Latest checkpoint: 2026-11-07, 13:59 Pacific. Source checkpoint `54dca9e` is on main; incoming Stage polish and Lane A changes were received through `b2f7337`. No runtime recovery swap or public phone publication is claimed.
+Latest checkpoint: 2026-11-07, 13:59 Pacific. Source checkpoint `54dca9e` is on main; incoming Stage one-screen revision and later site changes were received through `50d9270`. No runtime recovery swap or public phone publication is claimed.
 
 ## Verified now
 
 | Item | Evidence |
 |---|---|
 | Original variant boot | Title, menus and basic movement previously observed; engine SHA-1 `d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2`. A controlled continuous 30-second active-play check remains open. |
-| Static-face package | 5,704,780 bytes; SHA-1 `337fbb15462b57eb6cc5a35bcf11e36646e130e2`. Current player reached New Game/episode/skill and gameplay. Movement, turn, fire and changing face expressions at full health observed. Game ran across checks for over 30 seconds; no continuous video recorded. Local screenshot: `creature/shots/static-face-browser.jpg`. |
+| Static-face package | 5,704,780 bytes; SHA-1 `337fbb15462b57eb6cc5a35bcf11e36646e130e2`. Current player reached New Game/episode/skill and gameplay. Movement, turn, fire and changing face expressions at full health observed. Game ran across checks for over 30 seconds; no continuous video recorded. Committed screenshot: `creature/shots/static-face-browser.jpg`. |
 | Matching data | Original playable SHA-1 `e1ddb8fb96764422d5fb6b1c84c83b85c98236bd`. Both packages omit GUS; processed-WAD SHA-1 `628f0749251adbc059e3f15bd9b18bd403285ad3`. Packager verified actual engine preservation and payload structure. |
 | Restore preflight | Third mode verifies baseline patch report, identical rebuild report, origins, actual hashes, one changed function and package/WAD chains. Python compilation and 19 synthetic protocol checks passed. No observed emulator swap. |
 | Phone deployment bundle | Allowlisted Cloudflare Pages folder, isolation headers, truthful status and pinned notices. Real packaged game and all file hashes checked; waiting states and refusal cases passed. Judging service worker caches shell only; ROM/status stay network-only. Not deployed. |
-| Stage | Frozen Vite build and TypeScript check passed. Eight of nine tests passed; remaining server test blocked by Windows symlink EPERM. No tracked Stage changes. |
+| Stage | Frozen Vite build and TypeScript check passed. Eight of nine tests passed; remaining server test blocked by Windows symlink EPERM. No tracked Stage changes. Rebuilt the newer one-screen/card revision `1075572` too. |
 | Stage services | Frontend 5173 supplies COOP/COEP. HTTP 7201 and websocket 7202; health reports live:null. Real Doom replay renders 28/568 with REPLAY · 8X. No live run invented. |
-| Murmur | Official v0.2.3 checksum verified. Root AGENTS/CLAUDE discovery committed. Clone-local join/daemon and official MCP who/status/inbox calls worked. Only local peer, name pending; global registration and shell remote push blocked. See MURMUR.md. |
+| Murmur | Official v0.2.3 checksum verified. Root AGENTS/CLAUDE discovery committed. Clone-local join/daemon and official MCP who/status/inbox calls worked. Real inbound message received from Lane A and remote agents visible. Outbound send explicitly failed in shell credential-manager; name pending and global registration blocked. See MURMUR.md. |
 
 The static face is our hand-written display rule. `fn_0801B298` is absent from the 28-function recovered set. Restoring it must not be called face-source recovery.
 
