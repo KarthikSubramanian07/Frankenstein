@@ -1,45 +1,57 @@
-/* fn_0801102C: recovered by the Frankenstein crew, run doom_align_on.
+/* fn_0801102C: recovered by the Frankenstein crew, run doom_align_off.
    Observed: compiles to identical bytes (referee MATCH, Checker accepted).
    Inferred: nothing in this file is a claim about original names. */
 
-typedef struct { unsigned int f00; unsigned int f04; unsigned int f08; unsigned int f0C; unsigned int f10; unsigned int f14; unsigned int f18; unsigned int f1C; unsigned int f20; unsigned int f24; unsigned int f28; unsigned int f2C; unsigned int f30; unsigned int f34; unsigned int f38; unsigned int f3C; unsigned int f40; unsigned int f44; unsigned int f48; int f4C; unsigned int f50; unsigned int f54; short f58; unsigned char f5A; unsigned char f5B; } Obj;
 extern unsigned char *data_030064C4;
 int fn_08006B00(void);
-void fn_08010F6C(Obj *);
-void fn_0801102C(Obj *p)
-{
-    int v = p->f4C;
-    if ((v & 0x100000) != 0) {
-        if (p->f5A != 0) {
-            if (data_030064C4[0x25A] != 0) {
-                if ((v & 0x400000) == 0)
-                    return;
-            } else {
-                int t = p->f3C | p->f40 | p->f44;
-                if (t != 0)
-                    return;
-                if (p->f14 != p->f30)
-                    return;
-                p->f08 = t;
-                return;
-            }
-        } else {
-            if ((v & 0x400000) == 0)
-                return;
-            if (data_030064C4[0x25A] == 0)
-                return;
-        }
-    } else {
-        if ((v & 0x400000) == 0)
-            return;
-        if (data_030064C4[0x25A] == 0)
-            return;
-    }
-    p->f58++;
-    if (p->f58 > 419) {
-        if (((*(unsigned int *)(data_030064C4 + 0x10EC) << 27) != 0))
-            return;
-        if (fn_08006B00() <= 4)
-            fn_08010F6C(p);
-    }
+void fn_08010F6C(void *p);
+typedef struct {
+ unsigned int _00;
+ unsigned int _04;
+ unsigned int _08;
+ unsigned int _0C;
+ unsigned int _10;
+ unsigned int _14;
+ unsigned int _18;
+ unsigned int _1C;
+ unsigned int _20;
+ unsigned int _24;
+ unsigned int _28;
+ unsigned int _2C;
+ unsigned int _30;
+ unsigned int _34;
+ unsigned int _38;
+ unsigned int _3C;
+ unsigned int _40;
+ unsigned int _44;
+ unsigned int _48;
+ unsigned int _4C;
+ unsigned int _50;
+ unsigned int _54;
+ short _58;
+ unsigned char _5A;
+} S;
+void fn_0801102C(S *p) {
+ if (p->_4C & 0x100000) {
+  if (p->_5A) {
+   if (data_030064C4[0x25A]) {
+    if (!(p->_4C & 0x400000)) return;
+   } else {
+    if ((p->_3C | p->_40 | p->_44)) return;
+    if (p->_14 != p->_30) return;
+    p->_08 = 0;
+    return;
+   }
+  } else {
+   if (!(p->_4C & 0x400000)) return;
+   if (!data_030064C4[0x25A]) return;
+  }
+ } else {
+  if (!(p->_4C & 0x400000)) return;
+  if (!data_030064C4[0x25A]) return;
+ }
+ if (++p->_58 <= 419) return;
+ if ((*(unsigned int *)(data_030064C4 + 0x10EC) & 0x1F)) return;
+ if (fn_08006B00() > 4) return;
+ fn_08010F6C(p);
 }

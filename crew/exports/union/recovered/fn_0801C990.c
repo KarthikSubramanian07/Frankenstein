@@ -1,18 +1,18 @@
-/* fn_0801C990: recovered by the Frankenstein crew, run doom_relay1.
+/* fn_0801C990: recovered by the Frankenstein crew, run doom_relay2.
    Observed: compiles to identical bytes (referee MATCH, Checker accepted).
    Inferred: nothing in this file is a claim about original names. */
 
-struct S { unsigned char _0[0x5A38]; int v38; unsigned char v3C; unsigned char _pd[11]; int v48; unsigned char _pd2[0x4C]; unsigned char v98; };
+struct S { unsigned char pad[0x5A38]; int f38; unsigned char f3C; unsigned char pad2[0xB]; int f48; unsigned char pad3[0x4C]; unsigned char f98; };
 extern struct S *data_030064C4;
 void fn_0801C990(void) {
     struct S *p = data_030064C4;
-    int v = p->v48 - 1;
-    p->v48 = v;
-    if (v == 0 || p->v38 != 0) {
-        p->v3C = 255;
-        p->v38 = 0;
-        p->v48 = 10;
+    int v = p->f48 - 1;
+    p->f48 = v;
+    if (v == 0 || p->f38 != 0) {
+        p->f3C = 0xFF;
+        p->f38 = 0;
+        p->f48 = 10;
     } else {
-        p->v98 = (19 >= (v & 31));
+        p->f98 = (19 >= (v & 31));
     }
 }
