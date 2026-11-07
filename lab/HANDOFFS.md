@@ -1,5 +1,9 @@
 # Lane A handoffs
 
+## Active assignment from Enzo: implement Pokémon target support
+
+Read [docs/POKEMON_IMPLEMENTATION.md](../docs/POKEMON_IMPLEMENTATION.md). Publish STARTED / QUEUED AFTER DOOM (exact gate) / BLOCKED (exact target input). Next checkpoint: runnable Game Boy target/profile inspection, bank-aware ids, one declared verifier/checkpoint and visual topology handoff. Keep Doom intact. Complete input-independent adapter work even if the team-provided ROM is pending. More persuasion notes are not the requested deliverable.
+
 ## Human direction update: pursue the bounded Pokémon demo
 
 Enzo reports that Eddy wants this direction too: finish the good Doom demo, then spike Pokémon Red's menu and first interactions with the genuine coverage map. Read [POKEMON_RED_DECISION.md](POKEMON_RED_DECISION.md) for the explicit instruction, nine demo/engineering reasons and concrete next steps.
