@@ -9,7 +9,7 @@
 
 `#game-preservation` `#matching-decompilation` `#coding-agents` `#multi-agent` `#verification` `#gba` `#muse-spark` `#subquadratic` `#fetch-ai` `#mongodb` `#hackathon`
 
-87% of classic games are endangered, and most of their source code is gone.
+87% of classic games are endangered (VGHF and SPN, 2023), and most of their source code is gone.
 Frankenstein's agents rebuild it from the cartridge, one piece at a time.
 A compiler checks every byte.
 
@@ -56,7 +56,7 @@ Doom is our first patient: famous, hidden from the agents, scrambled so they can
 | What | Result | Source |
 |---|---|---|
 | Recovered and proven | **170 of 568 functions (29.9%)**, 6,774 of 141,774 code bytes (4.78%); every one re-verified by the referee, 0 rejected | `crew/exports/union/UNION.json` |
-| Rebuilt game | 169 agent-written functions spliced into the ROM, 399 original: **SHA-1 identical** (`d936259b…`), verified on two machines (the 170th runs from IWRAM, which the ROM rebuild doesn't splice) | `DECISIONS.md` 14:52 |
+| Rebuilt game | 169 agent-written functions spliced into the ROM, 399 original: **SHA-1 identical** (`d936259b…`), verified on two machines | `DECISIONS.md` 14:52 |
 | Trust but verify | **24 lies caught**, **30 fakes rejected**, **0 fakes accepted** across 33 finished runs | `python3 tools/counts.py` |
 | Didn't it just remember Doom? | From memory alone, 0 of 20 functions compiled. Given the real headers and compiler errors, 3 of 20 matched, none of them functions we'd changed | `lab/out/memory_probe.json`, `DECISIONS.md` 13:28 |
 | Held-out (functions the crew never trained on) | Library on vs off: 29 vs 29 of 40 easy, 6 vs 6 of 20 hard. **No measured gain, so we don't claim one.** Run over run, warm start, salvage and the permuter turned near-misses into matches | `crew/EXPERIMENTS.md` |
@@ -74,7 +74,7 @@ Every "I matched it" is re-run by the Checker with a fresh compile. A match that
 | Partner | Role | One line |
 |---|---|---|
 | Meta Model API (Muse Spark, Muse Wonder) | The hands | Writes every line of recovered C. |
-| Subquadratic (SubQ Snap) | The judgment | Reads the whole game at once and decides where every attempt goes. |
+| Subquadratic (SubQ Snap) | The judgment | Reads every function at once and decides where every attempt goes. |
 | Fetch.ai (ASI:One) | The front door | Ask for a recovery in a chat. Get proof back. |
 | MongoDB Atlas | The memory | Remembers every trick, so the next game is faster. |
 | Google Gemini | The second opinion | A different lab double-checks every match. It also rendered every illustration on the site, today (`site/tools/generate_art.py`). |
@@ -111,7 +111,7 @@ Every reply keeps what the compiler proved (Observed) apart from our guesses (In
 |---|---|---|
 | **A · The Lab** | Eddy | Builds the game, runs the referee, hosts the ASI:One agent. [`lab/`](lab/README.md) |
 | **B · The Crew** | Karthik | The Diggers, the Checker, Snap steering and the idiom library. [`crew/`](crew/README.md) |
-| **C · The Stage** | | The live show, driven only by the event stream. [`stage/`](stage/README.md) |
+| **C · The Stage** | Aidenn | The live show, driven only by the event stream. [`stage/`](stage/README.md) |
 | **D · The Creature** | Enzo | Doom in an emulator, healing as its code comes back, plus the phone page. [`creature/`](creature/README.md) |
 
 [`DECISIONS.md`](DECISIONS.md) is the engineering log.

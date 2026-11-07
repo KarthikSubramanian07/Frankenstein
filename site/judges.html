@@ -85,7 +85,7 @@
       <section class="tldr" aria-labelledby="tldr-h">
         <h2 id="tldr-h" class="tldr-h">TL;DR for judges</h2>
         <dl>
-          <div><dt>What it is</dt><dd><b>AI agents rebuild a lost game's source code from the cartridge.</b> It's for game preservation groups and rights holders, because 87% of classic US games are critically endangered and their code is gone.</dd></div>
+          <div><dt>What it is</dt><dd><b>AI agents rebuild a lost game's source code from the cartridge.</b> It's for game preservation groups and rights holders, because 87% of classic US games are critically endangered and their code is gone. <span class="src">VGHF and SPN, 2023</span></dd></div>
           <div><dt>What's proven</dt><dd><b>A piece only counts if it's byte-identical:</b> the compiler turns the agents' C into the original's exact bytes. Put back into Doom, the rebuilt game has the same checksum.</dd></div>
           <div><dt>The numbers</dt><dd><b>170 of Doom's 568 game functions are back, proven byte-identical.</b> That's 4.78% of the code by size, because the crew starts with the small ones.</dd></div>
           <div><dt>Try it</dt><dd><b>Press Enter at our table</b> and watch two agents recover a function live. Then play Doom on the controller, or scan the QR code to play it on your phone.</dd></div>
@@ -178,7 +178,7 @@
           <p class="split-line"><b>169</b> functions from the agents' own compiled C &middot; <b>399</b> from the original build &middot; <b>4.74%</b> agent-written code &middot; verified on two machines</p>
           <span class="stamp stamp-mint" aria-hidden="true">IDENTICAL</span>
           <p class="hand note note-sha"><svg class="arr" aria-hidden="true"><use href="#arrow-down"/></svg>same 40 characters: not similar, identical</p>
-          <figcaption>The union rebuild at 14:55, from <code>crew/exports/union</code> (DECISIONS 14:52). The one function left out runs from fast RAM, which the ROM splice doesn't cover.</figcaption>
+          <figcaption>The union rebuild at 14:55, from <code>crew/exports/union</code> (DECISIONS 14:52).</figcaption>
         </figure>
       </details>
     </article>
@@ -367,11 +367,11 @@
         </div>
       </div>
       <dl class="claims">
-        <div><dt>The whole game in one read</dt><dd>Snap reads every function's machine code in one 384K window and sets the work order; in the first run that was 1.39M tokens. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/exports/doom_r01/metrics.json">doom_r01 metrics</a></dd></div>
+        <div><dt>Every function in one read</dt><dd>Snap reads every function's machine code in one 384K window and sets the work order; in the first run that was 1.39M tokens. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/exports/doom_r01/metrics.json">doom_r01 metrics</a></dd></div>
         <div><dt>Keep, escalate or abandon</dt><dd>After each miss, Snap decides where the next Muse dollar goes, in well under a second. <a class="src" href="#snap-feed">see its calls</a></dd></div>
         <div><dt>The fake gate</dt><dd>Every MATCH also needs low fake and recital odds from Snap before it's accepted. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/checker.py">crew/checker.py</a></dd></div>
         <div><dt>Eyes on the screen</dt><dd>Play the game, and Snap picks what's on screen to rebuild next, then checks a patch changed only what we said. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/DECISIONS.md">DECISIONS 12:00</a></dd></div>
-        <div class="without"><dt>Without it</dt><dd>Muse digs blind, and nobody reads the whole game at once.</dd></div>
+        <div class="without"><dt>Without it</dt><dd>Muse digs blind, and nobody reads every function at once.</dd></div>
         <div class="limits"><dt>Honest limits</dt><dd>Plain-words routing is a hint, 5 to 7 times better than random. Snap on vs off was 6 vs 4 of 20 on hard code: a weak hint, not a result. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/DECISIONS.md">DECISIONS 13:58</a></dd></div>
       </dl>
       <details class="proof">
