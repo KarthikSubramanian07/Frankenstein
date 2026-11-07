@@ -1,0 +1,15 @@
+{
+ "v": 1,
+ "rom_path": "lab/out/instant_raise.gba",
+ "rom_sha1": "a997215e40fa8eae3480ffec8cf7130cde66da88",
+ "kind": "engine ROM (no IWAD); package it with the WAD before playing",
+ "fn": "fn_08013370",
+ "role_inferred": "the weapon-raise function (name inferred ?)",
+ "source": "crew/exports/union/recovered/fn_08013370.c (referee MATCH, run doom_r11) with one edit: the per-tic raise step (subtract 393216, return if still below the top) is removed, so the weapon is set to the top position 0x200000 at once",
+ "changed_functions": ["fn_08013370"],
+ "unchanged": 567,
+ "patched_bytes": 48,
+ "original_bytes": 68,
+ "expected_effect": "after switching weapons (and at spawn) the new weapon appears instantly instead of sliding up; untested in emulator",
+ "built_with": "python3 -m lab.referee patch --fn fn_08013370 --src lab/demo/instant_raise/fn_08013370.c"
+}

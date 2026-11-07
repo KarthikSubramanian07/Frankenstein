@@ -1,0 +1,16 @@
+{
+ "v": 1,
+ "rom_path": "lab/out/god_200.gba",
+ "rom_sha1": "7acc0dc9122dbbabcab271afd735ebcde7dcfa34",
+ "kind": "engine ROM (no IWAD); package it with the WAD before playing",
+ "fn": "fn_080054C8",
+ "role_inferred": "the god-mode cheat (name inferred ?)",
+ "source": "crew/exports/union/recovered/fn_080054C8.c (referee MATCH) with one edit: when god mode turns on, health is set to 200 instead of the value the game reads from its table (100 in the original)",
+ "changed_functions": ["fn_080054C8"],
+ "unchanged": 567,
+ "patched_bytes": 68,
+ "original_bytes": 72,
+ "trigger": "during play, press Up, Up, Down, Down, Left, Left, Right, Right (GBADoom's god-mode button sequence; the GBA has no keyboard, so there is no typed IDDQD)",
+ "expected_effect": "god mode turns on and the status bar health reads 200% instead of 100%; untested in emulator",
+ "built_with": "python3 -m lab.referee patch --fn fn_080054C8 --src lab/demo/god_200/fn_080054C8.c"
+}
