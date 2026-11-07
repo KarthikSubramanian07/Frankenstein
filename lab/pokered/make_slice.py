@@ -9,7 +9,7 @@ the slice description live in lab/secrets/pokered/<config>.json because they are
 
 Edges: call/jp/jr, the far-call macros and predef; `dw`-style pointer entries in a routine's body; and
 `ld r16, T` where T is a pointer table (every statement a dw/dw_const/dba/dbw), which covers
-CallFunctionInTable, JumpTable and `jp hl` dispatch over named tables. Computed targets (pointers built at
+table-dispatch helpers and `jp hl` dispatch over named tables. Computed targets (pointers built at
 runtime, tables indexed from another bank's data) are still missed.
 """
 from __future__ import annotations
