@@ -22,6 +22,8 @@ export class EndingScene implements Scene {
       <div class="en-main">
         <div class="en-col">
           <div class="en-verdict" data-k="verdict">NOT REBUILT YET</div>
+          <div class="en-proof" data-k="proof"></div>
+          <div class="en-meta" data-k="meta"></div>
           <div class="en-sums">
             <div class="en-sum"><span class="l">original</span><span class="v" data-k="orig">--</span></div>
             <div class="en-sum rb"><span class="l">rebuilt</span><span class="v" data-k="rebuilt">--</span></div>
@@ -31,7 +33,7 @@ export class EndingScene implements Scene {
         <div class="en-qr" data-k="qr"></div>
       </div>
       <div class="en-credits">
-        <h1>BUILT TODAY <span>/</span> NOT OURS</h1>
+        <h1>CREDITS</h1>
         <div class="cc">
           <div><h2>BUILT TODAY</h2><p class="when">Nov 7, 2026, after 10:45</p><ul>
             <li>The compiler referee and the fakematch linter</li>
@@ -78,8 +80,21 @@ export class EndingScene implements Scene {
     if (this.el.dataset.state !== state) this.el.dataset.state = state;
 
     setText(this.el, 'verdict', identical ? 'IDENTICAL' : differ ? 'DIFFERENT' : 'NOT REBUILT YET');
-    setText(this.el, 'orig', orig ?? 'not in the manifest');
-    setText(this.el, 'rebuilt', b ? String(b.rom_sha1 ?? 'no checksum reported') : '');
+    this.setSha('orig', orig, 'not in the manifest');
+    this.setSha('rebuilt', b ? b.rom_sha1 : null, b ? 'no checksum reported' : '');
+
+    // the rebuild proof, straight from build.rom; nothing here when there is no build yet
+    const n = b && typeof b.recovered === 'number' ? b.recovered : null;
+    const verdictWord = identical ? 'ROM identical' : differ ? 'ROM differs' : '';
+    const proof = !b ? '' : n !== null
+      ? `<b>${n}</b> agent-written function${n === 1 ? '' : 's'} \u00b7 ${verdictWord || 'no verdict reported'}`
+      : (verdictWord || 'Build reported, no verdict');
+    const pp = this.el.querySelector('[data-k="proof"]') as HTMLElement;
+    if (pp.innerHTML !== proof) pp.innerHTML = proof;
+    const meta: string[] = [];
+    if (b && typeof b.pct_agent_code === 'number' && b.pct_agent_code > 10) meta.push(`${Math.round(b.pct_agent_code)}% agent code`);
+    if (b && typeof b.rejected_count === 'number') meta.push(`${b.rejected_count} rejected by the compiler`);
+    setText(this.el, 'meta', meta.join(' \u00b7 '));
 
     const total = gameTotal(ctx);
     const proved = `<b>${s.matched.length}</b> of ${total || '?'} pieces proved`;
@@ -89,6 +104,15 @@ export class EndingScene implements Scene {
     this.renderQr(ctx);
   }
 
+  /** a SHA-1 shortened to its first and last 8 characters, full value on hover */
+  private setSha(k: string, sha: unknown, empty: string) {
+    const el = this.el.querySelector(`[data-k="${k}"]`) as HTMLElement;
+    const full = typeof sha === 'string' && sha ? sha : '';
+    const text = !full ? empty : full.length > 20 ? `${full.slice(0, 8)}\u2026${full.slice(-8)}` : full;
+    if (el.textContent !== text) el.textContent = text;
+    if (el.title !== full) el.title = full;
+  }
+
   private renderQr(ctx: Ctx) {
     const ph = ctx.state.phone;
     const key = ph ? `${ph.url}|${ph.qr_png}` : '';
@@ -96,14 +120,29 @@ export class EndingScene implements Scene {
     this.qrKey = key;
     const el = this.el.querySelector('[data-k="qr"]') as HTMLElement;
     this.el.classList.toggle('has-qr', !!ph);
-    el.classList.remove('loaded');
+    el.classList.remove('loaded', 'qr-missing');
     if (!ph) { el.innerHTML = ''; return; }
     const src = ph.qr_png ? `${this.base}/file?path=${encodeURIComponent(ph.qr_png)}` : '';
     const url = String(ph.url ?? '').replace(/^https?:\/\//, '').replace(/\/$/, '');
+    // no QR image: the link itself, big enough to type; no link either: ask us
     el.innerHTML = `<div class="p2">Player 2, press start</div>
-      <div class="img">${src ? `<img alt="QR code for ${esc(url)}" src="${esc(src)}">` : ''}<span>QR image not found</span></div>
+      <div class="img">${src ? `<img alt="QR code for ${esc(url)}" src="${esc(src)}">` : ''}</div>
+      <div class="alt">${url
+        ? `<span class="lbl">Open on your phone</span><span class="big">${urlLines(url)}</span>`
+        : `<span class="big">Ask us for the link</span>`}</div>
       <div class="url">${esc(url)}</div>`;
     const img = el.querySelector('img');
+    if (!img) el.classList.add('qr-missing');
+    else img.onerror = () => el.classList.add('qr-missing');
     if (img) img.onload = () => el.classList.add('loaded');
   }
+}
+
+/** a host split before its first dot into unbreakable pieces, so it wraps as "word-word" / ".trycloudflare.com" */
+function urlLines(url: string): string {
+  const [host, ...rest] = url.split('/');
+  const parts = host.split('.');
+  const head = `<i>${esc(parts[0])}</i>`;
+  const tail = parts.length > 1 ? `<wbr><i>.${esc(parts.slice(1).join('.'))}</i>` : '';
+  return head + tail + (rest.length ? `<wbr><i>/${esc(rest.join('/'))}</i>` : '');
 }
