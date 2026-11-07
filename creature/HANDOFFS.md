@@ -1,5 +1,14 @@
 # Lane D handoffs
 
+## Play anywhere: the phone page became the universal player (for Enzo, 2026-11-07)
+
+`creature/phone/` now plays on a phone (an on-screen touch overlay, landscape-first), a laptop (keyboard with a legend), a TV, an Xbox or PlayStation browser, or a Steam Deck (Gamepad API, controller-only menus). It installs as a PWA (fullscreen, landscape) and plays offline after the first load while keeping COOP/COEP. The servers add gzip and ETag revalidation, plus a `/status.json` endpoint. Details, mappings and verification are in [phone/README.md](phone/README.md).
+
+- **Honest label:** "This is the rebuilt game … X% … proven byte for byte" appears only when you start a server with `--report` holding a real, byte-identical `build.rom` report that matches the served ROM. For a packaged ROM, add `--engine` (the report's engine, checked with `package_rom.validate_package`). Otherwise the server refuses to start.
+- **Download:** "Download the ROM" stays hidden until [phone/DISTRIBUTION.md](phone/DISTRIBUTION.md) says `Status: approved`. That file lists the open questions: the shareware WAD terms, the GPLv2 source offer (`lab/out/NOTICE.md`), and no commercial content. The pause sheet also shows a QR code of the page, for handing off to another device.
+- **Verified:** with Playwright on an iPhone 15 (portrait and landscape), a Pixel 7 (portrait and landscape), and 1920x1080 and 1280x720 screens, using an input-probe ROM through the real core and stubbed gamepads.
+- **Still needs you:** a physical-phone test on iOS Safari and Android Chrome, a test on a console browser, and a run with the packaged playable ROM. GbaWadUtil is Windows-only, so there was no WAD-packaged ROM on the Mac this was built on.
+
 ## New follow-on target from Enzo: Pokémon Red
 
 After a good Doom demo, add a bounded Pokémon Red opening slice: landing/title menu plus first Pokémon interactions. Show a real geographic map with attached interaction branches beside gameplay, with visited/validated/code-verified progress kept distinct. See [POKEMON_RED_PLAN.md](POKEMON_RED_PLAN.md) and [issue #4](https://github.com/KarthikSubramanian07/Frankenstein/issues/4). A/B task briefs and direct requests were added to their folders at Enzo's instruction.
