@@ -33,7 +33,7 @@
 
     m.classList.add("road");
     m.innerHTML =
-      '<header class="rd-h"><p class="hand rd-kicker">the first afternoon</p>' +
+      '<header class="rd-h"><p class="hand rd-kicker">the road to 100%, run by run</p>' +
       '<h3>The first afternoon.</h3><p class="rd-sub">Unique Doom functions recovered and proven, run by run. From ' + T(r.day_start) + " to " + (last ? T(new Date(last).toISOString()) : "now") + " (Pacific).</p></header>" +
       '<div class="rd-top"><figure class="rd-chart"><svg viewBox="0 0 800 340" preserveAspectRatio="none" role="img" aria-label="' + n + ' unique Doom functions proven over the afternoon, rising run by run"></svg>' +
       '<figcaption>' + r.runs.length + " runs, each tick is one run starting. Only functions in the re-verified union are counted.</figcaption></figure>" +

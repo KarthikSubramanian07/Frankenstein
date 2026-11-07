@@ -62,6 +62,6 @@
 .rd-bb i{display:block;height:100%;width:0;background:var(--mint,#7CF2C8);transition:width 1.2s .3s cubic-bezier(.2,.8,.2,1)}
 .rd-tag{margin:22px 0 0;font:700 clamp(1.05rem,1.8vw,1.35rem)/1.3 var(--display);color:var(--rd-ink)}
 @media (max-width:860px){.rd-top{grid-template-columns:1fr}.rd-bands{grid-template-columns:1fr 1fr}}
-@media (max-width:480px){.rd-cells i{height:12px}.rd-q b{font-size:1.7rem}}
+@media (max-width:480px){.rd-cells i{height:12px}.rd-q b{font-size:1.7rem}.rd-bands{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.road *{transition:none!important;animation:none!important}}
 .rd-cells::after{content:"";flex-grow:9999}

@@ -90,3 +90,17 @@ the Stage shows the expected words, Versus has a real lie, the Ending has a rebu
 hot-reload mid-demo. `make demo-live` checks that the referee is real and that no other live run is on stage,
 prints the rehearsed timing, waits for the judge's Enter, then runs `python -m crew.demo --pick 2 --live`
 (`ARGS=--no-live` keeps the Stage on its replay, `ARGS=--yes` skips the Enter).
+
+## Road to 100% (site meter and Stage ROAD scene)
+
+After every `python -m crew.union`, one line refreshes the site's road meter and redeploys it:
+
+```bash
+site/tools/sync_union.sh --deploy
+```
+
+It copies `crew/exports/union/UNION.json` to `site/data/union.json` (exact copy), re-runs `tools/close_tier.py`
+(the separate "close, not proven" tier in `crew/exports/union/CLOSE.json`: best attempt at least 90%, never matched,
+never counted), writes `site/data/road.json` with `stage/server/road.mjs`, then runs
+`npx --yes wrangler@4 pages deploy site --project-name tryfrankenstein --branch main --commit-dirty=true`.
+Without `--deploy` it only syncs. The Stage reads the same summary live from `GET :7201/road` (key `6`, or `?scene=road`).
