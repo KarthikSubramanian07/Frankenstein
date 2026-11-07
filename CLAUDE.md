@@ -1,5 +1,11 @@
 # FRANKENSTEIN: context for every Claude Code session in this repo
 
+## Current implementation assignment: Pokémon Red opening slice
+
+Enzo explicitly requests implementation checkpoints for the bounded Pokémon demonstration. Every active lane must read [docs/POKEMON_IMPLEMENTATION.md](docs/POKEMON_IMPLEMENTATION.md), take its assigned technical task and acknowledge STARTED, QUEUED AFTER DOOM (specific gate), or BLOCKED (exact input). Preserve Doom's working demo and deliver it first; prepare the independent Pokémon adapter/map/player work in parallel.
+
+The next checkpoint should contain runnable code or target evidence, not another target-selection essay. Further legal research is outside the coding agents' assigned spike; route unresolved rights/event/distribution decisions to the human team. Keep proof, provenance and actual device-support claims accurate.
+
 Lost games, rebuilt and proven. AI agents rebuild a classic game's lost source code from the compiled game, one
 function at a time, and a compiler accepts only byte-identical pieces. Doom (GBADoom) is our first patient.
 Hackathon: AI Engineer Code Summit, Shack15 SF, Sat Nov 7 2026. Hacking 10:45 to 17:00. Freeze 14:55, record
