@@ -6,9 +6,11 @@
 python creature/runtime/prepare_swap.py --mode rebuild --baseline playable.gba --candidate rebuilt-playable.gba --report rebuild.json --out creature/runtime/generated/run-01
 ```
 
-Run from a full repository checkout. Choose a new output directory each time; keep generated ROMs and preflight outputs out of commits. Both ROMs must be actual playable packages. `lab/out/target.gba` currently has no WAD, so booting it as supplied is not a valid gameplay test. A report hash for engine-only bytes does not attest the WAD-appended game: this tool intentionally refuses that mismatch. Lane A must supply the corresponding playable-file hash/report or an explicit separate engine/package verification path before automatic packaging integration.
+Run from a full repository checkout. Choose a new output directory each time; keep generated ROMs and preflight outputs out of commits. Both ROMs must be actual playable packages. `lab/out/target.gba` has no WAD. For engine-only referee reports, use the two actual engines and both verified package sidecars described in [PACKAGE_SWAP.md](PACKAGE_SWAP.md). This checks the engine preservation and identical processed-WAD payload independently of the report.
 
 For a patch, pass `--mode patch`. The report must list exactly one changed function, candidate hash must match the report, and candidate bytes must differ from baseline. Save-state compatibility must be checked before acknowledging `--state-compatible`. Lane A's in-place patch must fit the original function and keep layout stable. If this is not established, open the patched ROM at a menu/restart and label that fallback.
+
+For the static-face → restored finale, use `--mode restore`, the original patch report as `--baseline-report`, and a real identical rebuild as `--report`. This restores a deliberate display rule. It does not establish that the face function was recovered; the current 28-function recovery does not include it.
 
 After preflight, pause mGBA and load generated `swap.lua` through Tools > Scripting. The copies must remain unchanged; the printed SHA-1 is a preflight file measurement, **not** a loaded-emulator SHA-1 measurement. mGBA's documented checksum API exposes CRC32 only. The script checks save/load API success and attempts baseline rollback if candidate state restore fails. On ROM load failure, reopen the baseline and restore state manually as needed. Visually confirm game, audio and controls before the orchestrator emits any success event. A save state from a different engine/package may be rejected despite equal code layout.
 

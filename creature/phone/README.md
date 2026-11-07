@@ -67,3 +67,26 @@ Still to check on real hardware:
 - iOS Safari and Android Chrome on physical phones: audio unlock, haptics, the notch safe areas and five phones at once.
 - The Xbox, PlayStation and smart-TV browsers. Some don't count a controller press as a user gesture, so sound may wait for the first touch or key.
 - WebKit's service worker offline path, which was checked only in Chromium.
+
+
+## Build a static judging deployment (does not deploy)
+
+From `creature/phone`, with Python 3.9+ and Node/npm installed:
+
+```sh
+npm ci --ignore-scripts
+npm run prepare:core
+npm run bundle -- --out dist/judging-static --rom ../runtime/generated/doom-static-playable.gba --engine ../../lab/out/static_face.gba
+```
+
+`--rom` must be an already-packaged shareware ROM. Use its matching engine: `static_face.gba` matches the static-face package; `target.gba` may not. For a different package, supply its own paths. Without `--engine`, the command validates the package structure only. Without `--rom`, it builds an honest waiting page that still supports device-local file loading. To show the verified agent-written percentage, add `--report /path/to/real-build-payload.json`; the same hash/engine checks as the Python server apply. Fixtures, unmatched hashes and non-finite percentages are refused. No report means `build: null`.
+
+Only a fresh child directory of `creature/phone/dist/` is accepted for `--out`. Existing output is refused and never deleted or overwritten. The output contains an explicit allowlist of shell, icons, core, license notices, the supplied game as `game.gba`, and generated status/configuration. It does not copy reports, engine-only files, source trees or local configuration. `bundle-manifest.json` records file sizes and SHA-256 hashes, the ROM SHA-1 and the validation scope. It explicitly records that bundling did not verify gameplay. A bundle is not a deployment, a published URL, a QR publication event, or approval for a download button. Static `status.json` always leaves `distribution_approved: false`.
+
+For Cloudflare Pages, the future upload directory is `creature/phone/dist/judging-static`. Its `_headers` applies COOP `same-origin`, COEP `require-corp`, CORP `same-origin`, no-store and noindex to every static response. Top-level `404.html` prevents Pages' SPA fallback from returning the player for a missing ROM. There are no Pages Functions in this bundle; headers need separate handling if a host later introduces functions. No deployment command runs as part of bundling.
+
+The generated judging service worker intentionally differs from the universal player's source `sw.js`: it keeps an offline shell, but **never caches the ROM or status**, and clears older `player2-` caches when activated. ROM/status requests require the network. This supports the public-play permission's limited judging window. At the end of the approved window, the deployment owner must remove the public ROM from the production deployment **and remove old preview deployments that still contain it**. Removing only a production alias leaves previous Pages preview URLs reachable. Verify the public game URL is unavailable afterward. A ROM already loaded into a running browser may remain in that tab's memory until closed; this command cannot revoke bytes already delivered.
+
+### Static bundle checks (2026-11-07, Windows)
+
+The real 5,704,780-byte static-face package (`337fbb15462b57eb6cc5a35bcf11e36646e130e2`) passed preservation validation against `lab/out/static_face.gba`. The earlier variant package (`e1ddb8fb96764422d5fb6b1c84c83b85c98236bd`) also passed against its corresponding engine. The static package correctly failed against the different `target.gba`. Manifest sizes/hashes and the exact output allowlist were checked, as were waiting-page status and eight failure cases: output outside `dist`, output equal to `dist`, overwrite, engine-only ROM, report without ROM, fixture report, non-object report and wrong report hash. Python compilation and generated service-worker syntax passed. This verifies packaging and rejection behavior; it does not re-run Doom gameplay, prove physical-phone controls, or verify Cloudflare's deployed headers. Those remain launch checks after an authorized deployment.

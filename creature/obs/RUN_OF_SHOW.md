@@ -1,6 +1,6 @@
 # Laptop capture and 60-second video
 
-Lost games, rebuilt and proven. Doom is the first patient: its source is public, so the team can hide it from the agents and check every answer. The demo shows the method for recovering games whose source is gone. Lead with Doom running and a real compiler proof; the static-face ROM is the primary visual effect. Use the optional overlay only after real gameplay, face recovery, and the referee path work. These instructions describe setup; an OBS scene collection has not been exported or verified yet.
+Lost games, rebuilt and proven. Doom is the first patient: its source is public, so the team can hide it from the agents and check every answer. The demo shows the method for recovering games whose source is gone. Lead with Doom running and a real compiler proof; the static-face ROM is a deliberate display-rule visualization. The current recovered set does not include the face function. Use the optional overlay only after real gameplay and the referee path work. These instructions describe setup; an OBS scene collection has not been exported or verified yet.
 
 ## OBS composition
 
@@ -18,13 +18,15 @@ Stage's scenes are now implemented. Use the following Browser-source URLs (1920x
 | OBS scene | Stage URL suffix |
 |---|---|
 | Title | `/?scene=title` |
-| Hi-score | `/?scene=hiscore` |
-| Versus | `/?scene=versus` |
-| Time trial | `/?scene=timetrial` |
-| Ending | `/?scene=ending` |
+| Rebuild | `/?scene=split` |
+| Caught | `/?scene=versus` |
+| Faster | `/?scene=timetrial` |
+| Alive | `/?scene=ending` |
 | Credits | `/?scene=ending&page=credits` |
 
-The Ending consumes real rebuild/patch/publication events. Its Built today / Not ours card is the primary final card; `endcard.html` is an editable standalone fallback only. Stage keys are `0` Title, `1` Split, `5`/`h` Hi-score, `2` Versus, `3` Time trial, `4` Ending, and `space` on Ending for credits. OBS Browser sources need interaction/focus to receive those keys; distinct scene sources avoid that dependency during a take. Create Game (capture only), and Phones only if actual phone play is available. Keep controller/game focus on mGBA while changing scenes with OBS hotkeys that do not overlap gameplay keys. Test the chosen keys locally.
+The Ending consumes real rebuild/patch/publication events. Its Built today / Not ours card is the primary final card; `endcard.html` is an editable standalone fallback only. Stage keys are `0` Title, `1` Rebuild (`5`/`h` aliases), `2` Caught, `3` Faster, `4` Alive, and `space` on Alive for credits. OBS Browser sources need interaction/focus to receive those keys; distinct scene sources avoid that dependency during a take. Create Game (capture only), and Phones only if actual phone play is available. Keep controller/game focus on mGBA while changing scenes with OBS hotkeys that do not overlap gameplay keys. Test the chosen keys locally.
+
+For browser-only composition, Stage accepts `?scene=split&game=http://127.0.0.1:7411/` (use the actual player port). Both hosts must send isolation headers. For the frozen show use `cd stage && npm run demo`; see the latest `stage/HANDOFF_D.md`.
 
 The Stage's phone QR comes from the real `phone.published` event. It resolves `qr_png` through the Stage server's `/file?path=` endpoint, restricted to PNGs under `creature/`. A missing QR must remain visibly unavailable; do not add a placeholder code. The running-code badge stays on original code until a real `rom.swapped` event arrives.
 
@@ -37,11 +39,11 @@ Set transitions to a short cut/fade until a real pixel-dissolve asset exists. Av
 | 0-5 s | Doom running; static face begins to restore | "Lost games, rebuilt and proven." State that static marks unrecovered code. |
 | 5–16 s | Split: real recovery attempt and submitted C | "Agents reconstruct C from machine code." Mark sample/replay and actual speed if used. |
 | 16–26 s | Referee rejection with actual differing instruction | "Nothing lands on a claim alone." Use a genuine rejection, not scripted fake evidence. |
-| 26–38 s | Accepted function, actual rebuild report, real face recovery | Show the real percentage and matching checksum. Claim a swap only if confirmed. |
-| 38–47 s | Actual before/after of the verified one-function change | "Recovered code can change again." Call it a bug fix only if the bug is real and reproduced. |
+| 26-38 s | Accepted function and actual rebuild report; separately show display-rule restoration if tested | Show the real percentage and matching checksum. Label face static as our visualization. Claim a swap only if confirmed. |
+| 38-47 s | Actual before/after of the verified one-function display patch | "Source code lets a game change again." This patch is hand-written demo code; do not call the face recovered or an original bug fixed. |
 | 47–54 s | Actual ASI:One verification or measured results; phone play if tested | Show only working partners/features and real numbers. Cut rather than stage missing footage. |
 | 54-60 s | Stage `?scene=ending&page=credits` | Built today / Not ours, credits, repo URL. |
 
 Burn captions into the exported video, at least 34 px at 1080p; keep most captions to two short lines. Use Lane C's self-hosted font files if available, otherwise a readable local font. No need for a vertical cut. End card lists only features actually built and partners actually used; edit it before recording.
 
-Say "Doom is our first patient" rather than suggesting Doom's actual source was lost. End with "Games don't have to die." The honest laptop-only fallback is real Doom + recovered face + referee evidence + a labeled recorded modification. Phone playback is a bonus. Save the final exported video and verify it plays on a second device before submission.
+Say "Doom is our first patient" rather than suggesting Doom's actual source was lost. End with "Games don't have to die." The laptop fallback is real Doom + referee evidence + a labeled display-rule modification. QR phone play remains the intended finale; report physical-device/public-host gates honestly. Save the final exported video and verify it plays on a second device before submission.

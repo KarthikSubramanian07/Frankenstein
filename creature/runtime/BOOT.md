@@ -33,8 +33,22 @@ Then prepare the phone core using the instructions in `../phone/README.md`, and 
 node creature/phone/serve.mjs --port 7411 --rom creature/runtime/generated/doom-variant-playable.gba
 ```
 
-Open `http://127.0.0.1:7411/`, choose START DEMO, then the on-screen START and A controls to enter a game. Deliberate pointer presses were used; brief automation clicks can occur between emulator input polls. This server binds localhost only and supplies COOP/COEP headers. It is not a public phone URL or a distribution approval.
+Open `http://127.0.0.1:7411/`, choose PRESS START, then Enter to open Doom's menu and X to confirm New Game, episode one and skill. On touch, use MENU and USE. Deliberate presses were used; brief automation clicks can occur between emulator input polls. This server binds localhost only and supplies COOP/COEP headers. It is not a public phone URL.
+
+## Static-face package and matching data
+
+The committed `lab/out/static_face.gba` and `lab/demo/static_face_report.json` are available. Package it with the same command above, changing `--engine` to that file, `--expected-engine-sha1` to `752c61e50fc1255e301e8efa4011082bf380c3e2`, and `--out` to `creature/runtime/generated/doom-static-playable.gba`.
+
+Both local demo packages omit `--gus`. They have identical processed-WAD SHA-1 `628f0749251adbc059e3f15bd9b18bd403285ad3`; changing music settings for only one package would invalidate a code-only swap. The static package is 5,704,780 bytes, SHA-1 `337fbb15462b57eb6cc5a35bcf11e36646e130e2`. These package checks do not establish runtime swap success.
+
+Manual fallback from the upstream `GbaWadUtil` directory, using absolute input/output paths:
+
+```powershell
+.\GbaWadUtil.exe -in .\doom1.wad -rom <engine.gba> -romout <playable.gba>
+```
+
+Use this identical no-GUS setting for static, original and rebuilt packages. Validate the result with `package_rom.validate_package` before using it in the finale.
 
 ## Remaining demo gate
 
-Lane A still needs to supply the current static-face stub and its activation/build instructions. We can now test it against a known-working browser/package path. A verified recovered-function rebuild, matching package proof and real observed swap are still required before claiming the game is running on agent-written code.
+Restore preflight is implemented. Lane A still needs to publish the actual rebuild JSON, including original/ROM hashes and the recovered set. A real observed swap is required before claiming the loaded ROM changed. The static face is a hand-written display-rule visualization; the face function is not among the 28 recovered functions.
