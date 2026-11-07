@@ -1,0 +1,129 @@
+{
+ "functions": {
+  "fn_08000200": {
+   "name": "dist_approx",
+   "file": "dist_approx.c"
+  },
+  "fn_08000230": {
+   "name": "rng_next",
+   "file": "rng_next.c"
+  },
+  "fn_08000250": {
+   "name": "clamp_s32",
+   "file": "clamp_s32.c"
+  },
+  "fn_08000264": {
+   "name": "menu_input",
+   "file": "menu_input.c"
+  },
+  "fn_080002B8": {
+   "name": "wave_sample",
+   "file": "wave_sample.c"
+  },
+  "fn_080002E0": {
+   "name": "key_edge",
+   "file": "key_edge.c"
+  },
+  "fn_080002E4": {
+   "name": "count_bits",
+   "file": "count_bits.c"
+  },
+  "fn_080002F8": {
+   "name": "abs_diff",
+   "file": "abs_diff.c"
+  },
+  "fn_08000304": {
+   "name": "tick_frame",
+   "file": "tick_frame.c"
+  },
+  "fn_08000324": {
+   "name": "copy_words",
+   "file": "copy_words.c"
+  },
+  "fn_08000340": {
+   "name": "mover_damage",
+   "file": "mover_damage.c"
+  },
+  "fn_08000374": {
+   "name": "pal_blend",
+   "file": "pal_blend.c"
+  },
+  "fn_080003C4": {
+   "name": "pickup_find",
+   "file": "pickup_find.c"
+  },
+  "fn_080003F4": {
+   "name": "mover_reset",
+   "file": "mover_reset.c"
+  },
+  "fn_08000408": {
+   "name": "score_add",
+   "file": "score_add.c"
+  },
+  "fn_08000454": {
+   "name": "mover_step",
+   "file": "mover_step.c"
+  },
+  "fn_08000480": {
+   "name": "fx_mul",
+   "file": "fx_mul.c"
+  },
+  "fn_08000498": {
+   "name": "mover_confine",
+   "file": "mover_confine.c"
+  },
+  "fn_080004C0": {
+   "name": "div_round",
+   "file": "div_round.c"
+  },
+  "fn_080004E4": {
+   "name": "spawn_actor",
+   "file": "spawn_actor.c"
+  }
+ },
+ "rename": {
+  "dist_approx": "fn_08000200",
+  "rng_next": "fn_08000230",
+  "clamp_s32": "fn_08000250",
+  "menu_input": "fn_08000264",
+  "wave_sample": "fn_080002B8",
+  "key_edge": "fn_080002E0",
+  "count_bits": "fn_080002E4",
+  "abs_diff": "fn_080002F8",
+  "tick_frame": "fn_08000304",
+  "copy_words": "fn_08000324",
+  "mover_damage": "fn_08000340",
+  "pal_blend": "fn_08000374",
+  "pickup_find": "fn_080003C4",
+  "mover_reset": "fn_080003F4",
+  "score_add": "fn_08000408",
+  "mover_step": "fn_08000454",
+  "fx_mul": "fn_08000480",
+  "mover_confine": "fn_08000498",
+  "div_round": "fn_080004C0",
+  "spawn_actor": "fn_080004E4",
+  "frame_count": "data_489E11BC",
+  "blink_phase": "data_D3D51AE4",
+  "sine_lut": "data_8ECACF13",
+  "score": "data_8DC03A2F",
+  "combo": "data_8D4B0B19",
+  "lives": "data_A8918DEC",
+  "next_life": "data_125FD592",
+  "rng_seed": "data_A7868023",
+  "actors": "data_E151E092",
+  "menu_cursor": "data_8D700FE5",
+  "sound_on": "data_0AA61C24",
+  "Mover": "struct_0785FF",
+  "mo_x": "f_00",
+  "mo_y": "f_04",
+  "mo_vx": "f_08",
+  "mo_vy": "f_0C",
+  "mo_health": "f_10",
+  "mo_flags": "f_12",
+  "mo_state": "f_13",
+  "Pickup": "struct_AC5D52",
+  "pk_kind": "f_00",
+  "pk_count": "f_01",
+  "pk_timer": "f_02"
+ }
+}
