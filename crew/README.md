@@ -31,7 +31,7 @@ Take any one of these away and something specific stops working.
 3. **Fakematch gate.** Every byte MATCH also has to clear Snap's fakematch and recital probabilities (reject at 0.85 or higher) before the Checker accepts it.
 4. **Play-to-recover director.** It watches live frames and heartbeats and picks what to rebuild next, so the part of the screen you're looking at heals first.
 5. **Eyes.** A behavioural check: two frames, original and rebuilt, and the question "did it change the way we said it would, and nothing else?"
-6. **Router for ASI:One.** It turns plain words ("bring back Doomguy's face") into candidate functions, from the disassembly alone. Measured against the hidden map, outside the crew: hud precision@10 was 1/10 (random 0.2) and weapons 4/10 (random 0.55). So it is a hint, always labelled inferred, and the referee still proves any recovery.
+6. **Router for ASI:One.** It turns plain words ("bring back Doomguy's face") into candidate functions, from the disassembly alone. Measured against the hidden map by a script outside the crew, its top 10 held 1 HUD function (random picks would hold 0.2) and 4 weapon functions (random: 0.55). That makes it a useful hint, 5 to 7 times better than random, labelled inferred and not precise. The referee still proves any recovery.
 
 **The Cartographer runs on `subq-preview`, which is pending early access.** Until Subquadratic grants that access, we do not claim it. `--provider meta` exists only to test the pipeline and is labelled `meta-fallback` everywhere.
 
