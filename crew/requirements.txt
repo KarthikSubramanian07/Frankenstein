@@ -1,0 +1,3 @@
+# Lane B runtime dependencies (the crew core itself is stdlib only)
+python-dotenv>=1.0
+pymongo>=4.6        # MongoDB Atlas memory: idiom library and the run record (optional; no-op without MONGODB_URI)

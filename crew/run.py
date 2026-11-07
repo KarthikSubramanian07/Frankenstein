@@ -90,6 +90,10 @@ class Run:
         self.checker = Checker(self.referee, self.log, snap_review=snap_review, second_review=second)
         self.archivist = Archivist(self.log)
         self.log.listeners.append(self.archivist.on_event)
+        from .memory import AtlasSink
+
+        self.atlas = AtlasSink(cfg, self.run_id)  # MongoDB Atlas system of record (no-op without MONGODB_URI)
+        self.log.listeners.append(self.atlas.on_event)
         self.matched: list[tuple[float, str]] = []
         self.outcomes: list[Outcome] = []
         self.names: dict[str, dict] = {}
@@ -370,6 +374,7 @@ class Run:
         }
         if getattr(self.referee, "kind", "") == "mock" or self.target.fixture:
             metrics["fixture"] = True  # never mistakable for a real result
+        metrics["memory"] = self.atlas.finish({k: v for k, v in metrics.items() if k != "curve"})
         (self.dir / "metrics.json").write_text(json.dumps(metrics, indent=2) + "\n")
         (self.dir / "names.json").write_text(json.dumps({"v": 1, "run_id": self.run_id, "names": list(self.names.values())},
                                                          indent=2) + "\n")
