@@ -1,4 +1,6 @@
-/* fn_08009FD4: MMIO absolute casts rewritten to named symbols; still byte-identical MATCH. */
+/* fn_08009FD4: recovered by the Frankenstein crew, run doom_sweep1.
+   Observed: compiles to identical bytes (referee MATCH, Checker accepted).
+   Inferred: nothing in this file is a claim about original names. */
 
 void fn_0800FC90(void *a, void *b, unsigned int c);
 void fn_08009FD4(void *a)

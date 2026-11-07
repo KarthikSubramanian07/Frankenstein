@@ -1,4 +1,6 @@
-/* fn_0800549C: MMIO absolute casts rewritten to named symbols; still byte-identical MATCH. */
+/* fn_0800549C: recovered by the Frankenstein crew, run doom_sweep1.
+   Observed: compiles to identical bytes (referee MATCH, Checker accepted).
+   Inferred: nothing in this file is a claim about original names. */
 
 void fn_0800549C(int *a, int b, int c)
 {

@@ -1,4 +1,6 @@
-/* fn_080067F8: MMIO absolute casts rewritten to named symbols; still byte-identical MATCH. */
+/* fn_080067F8: recovered by the Frankenstein crew, run doom_sweep1.
+   Observed: compiles to identical bytes (referee MATCH, Checker accepted).
+   Inferred: nothing in this file is a claim about original names. */
 
 struct S { char _0[0x784]; int _784; char _788[4]; short _78c; };
 extern struct S *data_030064C4;

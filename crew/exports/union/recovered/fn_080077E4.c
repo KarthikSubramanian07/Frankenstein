@@ -1,47 +1,48 @@
-/* fn_080077E4: MMIO absolute casts rewritten to named symbols; still byte-identical MATCH. */
+/* fn_080077E4: recovered by the Frankenstein crew, run doom_r14.
+   Observed: compiles to identical bytes (referee MATCH, Checker accepted).
+   Inferred: nothing in this file is a claim about original names. */
 
-typedef struct Main Main;
-typedef struct Sub Sub;
+void fn_0800704C(void);
+void *fn_0801D67C(int a, int b, int c);
+void fn_08020990(void *p, int v, int n);
+void fn_0801851C(void *p);
+
 struct Sub {
     int unk0;
     int unk4;
-    void (*handler)(void);
-    unsigned char flag;
-    unsigned char _pad0d[3];
-    void *owner;
-    int _pad14;
-    int unk18;
-    int unk1c;
-    int _pad20;
+    void (*unk8)(void);
+    unsigned char unk12;
+    char _13[3];
+    void *unk16;
+    int unk20;
     int unk24;
     int unk28;
-    int unk2c;
+    int unk32;
+    int unk36;
+    int unk40;
+    int unk44;
 };
+
 struct Main {
-    char _pad00[20];
-    Sub *sub;
-    char _pad18[8];
-    unsigned short s20;
+    char _0[20];
+    struct Sub *unk20;
+    char _24[8];
+    short unk32;
 };
 
-void *fn_0801D67C(int, int, int);
-void fn_08020990(void *, int, int);
-void fn_0801851C(void *);
-void fn_0800704C(void);
-
-void fn_080077E4(Main *p)
+void fn_080077E4(struct Main *p)
 {
-    Sub *s = fn_0801D67C(48, 3, 0);
-    fn_08020990(s, 0, 48);
-    fn_0801851C(s);
-    p->sub = s;
-    p->s20 = 0;
-    s->handler = fn_0800704C;
-    s->flag = 0;
-    s->unk18 = 131072;
-    s->owner = p;
-    s->unk1c = 0;
-    s->unk24 = 1050;
-    s->unk28 = 0;
-    s->unk2c = 0;
+    struct Sub *q = fn_0801D67C(48, 3, 0);
+    fn_08020990(q, 0, 48);
+    fn_0801851C(q);
+    p->unk20 = q;
+    p->unk32 = 0;
+    q->unk8 = fn_0800704C;
+    q->unk12 = 0;
+    q->unk24 = 0x20000;
+    q->unk16 = p;
+    q->unk28 = 0;
+    q->unk36 = 0x41A;
+    q->unk40 = 0;
+    q->unk44 = 0;
 }

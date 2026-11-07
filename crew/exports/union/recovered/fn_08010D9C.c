@@ -1,4 +1,6 @@
-/* fn_08010D9C: MMIO absolute casts rewritten to named symbols; still byte-identical MATCH. */
+/* fn_08010D9C: recovered by the Frankenstein crew, run doom_relay2.
+   Observed: compiles to identical bytes (referee MATCH, Checker accepted).
+   Inferred: nothing in this file is a claim about original names. */
 
 struct E { short a0; short a2; short a4; short a6; unsigned short a8; };
 struct P { char f0[72]; struct E *p; char f1[10]; short x; short y; };

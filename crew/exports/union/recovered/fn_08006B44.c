@@ -1,4 +1,4 @@
-/* fn_08006B44: recovered by the Frankenstein crew, run doom_r02b.
+/* fn_08006B44: recovered by the Frankenstein crew, run doom_r04b.
    Observed: compiles to identical bytes (referee MATCH, Checker accepted).
    Inferred: nothing in this file is a claim about original names. */
 

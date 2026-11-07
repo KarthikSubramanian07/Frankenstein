@@ -1,21 +1,27 @@
 {
   "v": 1,
-  "generated_at": "2026-11-07T22:56:07+00:00",
+  "generated_at": "2026-11-07T23:09:49+00:00",
   "rule": "game function not in UNION.json and never fn.matched, whose best match_pct over every verdict is >= 90",
   "label": "close = best attempt >=90% byte-match, not accepted, not counted",
   "threshold_pct": 90.0,
-  "close": 17,
-  "close_95": 8,
+  "close": 19,
+  "close_95": 9,
   "of": 568,
-  "proven_exact": 170,
-  "matched_pending_union": 0,
-  "runs_scanned": 42,
+  "proven_exact": 173,
+  "matched_pending_union": 1,
+  "runs_scanned": 49,
   "rows": [
+    {
+      "fn": "fn_03001764",
+      "size": 52,
+      "best_match_pct": 100.0,
+      "run": "doom_play01"
+    },
     {
       "fn": "fn_0800060C",
       "size": 132,
       "best_match_pct": 95.3,
-      "run": "doom_sweep2"
+      "run": "doom_dig03"
     },
     {
       "fn": "fn_08004E84",
@@ -33,13 +39,13 @@
       "fn": "fn_0800591C",
       "size": 68,
       "best_match_pct": 92.9,
-      "run": "doom_sweep1"
+      "run": "doom_dig03"
     },
     {
       "fn": "fn_08005960",
       "size": 36,
       "best_match_pct": 92.9,
-      "run": "doom_sweep1"
+      "run": "doom_dig03"
     },
     {
       "fn": "fn_08005A04",
@@ -51,7 +57,13 @@
       "fn": "fn_08005A28",
       "size": 36,
       "best_match_pct": 92.9,
-      "run": "doom_sweep1"
+      "run": "doom_dig03"
+    },
+    {
+      "fn": "fn_08005A4C",
+      "size": 68,
+      "best_match_pct": 96.0,
+      "run": "doom_dig03"
     },
     {
       "fn": "fn_08005AB0",
@@ -69,19 +81,19 @@
       "fn": "fn_08006558",
       "size": 40,
       "best_match_pct": 93.8,
-      "run": "doom_sweep1"
-    },
-    {
-      "fn": "fn_08006F70",
-      "size": 80,
-      "best_match_pct": 97.3,
-      "run": "doom_sweep1"
+      "run": "doom_dig03"
     },
     {
       "fn": "fn_08009A28",
       "size": 76,
       "best_match_pct": 97.1,
       "run": "doom_sweep1"
+    },
+    {
+      "fn": "fn_0800D0E0",
+      "size": 108,
+      "best_match_pct": 94.3,
+      "run": "doom_sweep3"
     },
     {
       "fn": "fn_0801143C",
