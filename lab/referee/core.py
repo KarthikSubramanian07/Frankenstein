@@ -10,7 +10,7 @@ import time
 import uuid
 from pathlib import Path
 
-from .lint import lint
+from .lint import lint, lint_expanded
 
 REPO = Path(__file__).resolve().parents[2]
 LAB = REPO / "lab"
@@ -20,7 +20,7 @@ OBJDUMP = "$DEVKITARM/bin/arm-none-eabi-objdump"
 GCC = "$DEVKITARM/bin/arm-none-eabi-gcc"
 MAX_DIFF = 64
 COMPILE_TIMEOUT_S = 60
-DIAG_FLAGS = "-fmax-errors=20"  # diagnostics only; does not change code
+DIAG_FLAGS = "-fmax-errors=20 -fno-diagnostics-show-caret"  # diagnostics only; does not change code
 # A compile log may only talk about the candidate, its ctx header and the toolchain's own headers. Anything else
 # (an include that slipped past lint) would print another file's lines, so the whole log is withheld.
 LOG_PATH_RE = re.compile(r"^(?:In file included from|\s+from)?\s*([^\s:]+):\d+(?::\d+)?[:,]", re.M)
@@ -67,12 +67,14 @@ class Referee:
         result = {"v": 1, "fn": fn, "status": "LINT_FAIL", "match_pct": 0.0, "first_diff": None, "diff": [],
                   "lint": lint_result, "compile": {"ok": False, "log": ""}, "elapsed_ms": 0, "referee": _git_sha()}
         if lint_result["ok"]:
-            ok, log, got = self._compile(fn, src, meta["mode"])
-            result["compile"] = {"ok": ok, "log": log[-4000:]}
-            if not ok:
-                result["status"] = "NO_COMPILE"
-            else:
-                result.update(self._compare(target, got))
+            # The raw pass passed; _compile lints the macro-expanded text too and may still return LINT_FAIL.
+            ok, log, got, result["lint"] = self._compile(fn, src, meta["mode"])
+            if result["lint"]["ok"]:
+                result["compile"] = {"ok": ok, "log": log[-4000:]}
+                if ok:
+                    result.update(self._compare(target, got))
+                else:
+                    result["status"] = "NO_COMPILE"
         result["elapsed_ms"] = int((time.time() - started) * 1000)
         return result, target, got
 
@@ -100,22 +102,30 @@ class Referee:
         return self._compare(self._target(fn), got)
 
     # ---------- compile ----------
-    def _compile(self, fn: str, src: str, mode: str) -> tuple[bool, str, list[dict]]:
+    def _compile(self, fn: str, src: str, mode: str) -> tuple[bool, str, list[dict], dict]:
+        """Preprocess, lint the expansion, then compile. Returns (ok, log, items, expanded lint result)."""
         work = OUT / "tmp" / uuid.uuid4().hex[:10]
         work.mkdir(parents=True)
         (work / "cand.c").write_text(src)
         rel = work.relative_to(REPO)
-        flags = ARM_FLAGS if mode == "arm" else THUMB_FLAGS
-        cmd = (f"{GCC} {flags} {DIAG_FLAGS} -include lab/out/ctx/{fn}.h -c {rel}/cand.c -o {rel}/cand.o 2>&1 && "
+        flags = f"{ARM_FLAGS if mode == 'arm' else THUMB_FLAGS} {DIAG_FLAGS} -include lab/out/ctx/{fn}.h"
+        proc = _docker(f"{GCC} {flags} -E {rel}/cand.c -o {rel}/cand.i 2>&1", timeout=COMPILE_TIMEOUT_S)
+        if proc.returncode != 0:
+            return False, scrub_log(proc.stdout + proc.stderr), [], {"ok": True, "violations": []}
+        expanded = lint_expanded((work / "cand.i").read_text(), f"{rel}/cand.c")
+        if not expanded["ok"]:
+            return False, "", [], expanded
+        cmd = (f"{GCC} {flags} -c {rel}/cand.c -o {rel}/cand.o 2>&1 && "
                f"{OBJDUMP} -dr {rel}/cand.o > {rel}/cand.dis && {OBJDUMP} -t {rel}/cand.o > {rel}/cand.sym")
         proc = _docker(cmd, timeout=COMPILE_TIMEOUT_S)
+        log = scrub_log(proc.stdout + proc.stderr)
         if proc.returncode != 0:
-            return False, scrub_log(proc.stdout + proc.stderr), []
+            return False, log, [], expanded
         blocks = _blocks((work / "cand.dis").read_text())
         if fn not in blocks:
-            return False, f"{scrub_log(proc.stdout)}\nno function named {fn} in the object (define it non-static, named exactly {fn})", []
+            return False, f"{log}\nno function named {fn} in the object (define it non-static, named exactly {fn})", [], expanded
         symtab = _symtab((work / "cand.sym").read_text())
-        return True, scrub_log(proc.stdout), [self._normalize(i, symtab, own_ids=True) for i in blocks[fn]]
+        return True, log, [self._normalize(i, symtab, own_ids=True) for i in blocks[fn]], expanded
 
     # ---------- target ----------
     def _target(self, fn: str) -> list[dict]:

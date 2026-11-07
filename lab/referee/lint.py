@@ -2,19 +2,33 @@
 import re
 
 MAX_LINES_PER_INSN = 8
+MAX_CHARS_PER_INSN = 320  # non-blank characters; stops padding hidden in one very long line
+DIGRAPHS = (("%:%:", "##"), ("%:", "#"), ("<:", "["), (":>", "]"), ("<%", "{"), ("%>", "}"), ("??=", "#"))
+DIRECTIVES = "include|define|undef|if|ifdef|ifndef|elif|elifdef|elifndef|else|endif|error|warning"
 
 RULES: list[tuple[str, re.Pattern[str], str]] = [
     ("L001", re.compile(r"\b(?:__asm__|__asm|asm)\b"), "inline assembly is not allowed"),
     ("L002", re.compile(r"\.(?:byte|2byte|4byte|hword|short|word|inst)\b"), "raw bytes or words emitted into code"),
-    ("L003", re.compile(r"#\s*pragma|_Pragma|__attribute__"), "#pragma or __attribute__ that can change codegen"),
+    ("L003", re.compile(r"#\s*pragma|_Pragma|__attribute__|\[\s*\["), "#pragma, __attribute__ or [[attribute]] that can change codegen"),
+    # __builtin_arm_cdp/mcr/ldc... take immediates, so they encode chosen instruction bits.
+    ("L011", re.compile(r"__builtin_arm_"), "ARM instruction intrinsics (__builtin_arm_*)"),
     ("L004", re.compile(r"\bregister\b[^;]*\basm\s*\("), "register asm bindings"),
     # Only <system> headers: a quoted, absolute or ../ include could read lab/secrets or .env through the compile log.
     ("L009", re.compile(r'#\s*(?:include|include_next|import|embed)\s*(?:"|<\s*/|<[^>]*(?:\.\.|secrets)|[^"<\s])'), "only <system> headers may be included"),
-    ("L009", re.compile(r"\b__has_(?:include|include_next|embed)\b"), "only <system> headers may be included"),
+    ("L009", re.compile(r"has_include|has_embed"), "only <system> headers may be included"),
+    # #line and GNU linemarkers could relabel candidate code as a system header; #embed/#include_next/#import read files.
+    ("L010", re.compile(rf"^[ \t]*#[ \t]*(?!(?:{DIRECTIVES})\b)\S", re.M), "preprocessor directive not on the allowlist"),
     # RAM and ROM only (EWRAM 0x02, IWRAM 0x03, cart 0x08); I/O, palette, VRAM and OAM casts are normal GBA code.
-    ("L006", re.compile(r"\(\s*\w[\w\s\*]*\*\s*\)\s*0x0?[238][0-9a-fA-F]{6}\b"), "hard-coded RAM or ROM address instead of an fn_/data_ id"),
+    # Hex or decimal, optionally parenthesized; the value is checked against BANNED_REGIONS in _rule_hits.
+    ("L006", re.compile(r"\(\s*\w[\w\s\*]*\*\s*\)\s*\(?\s*(0[xX][0-9a-fA-F]+|\d+)"),
+     "hard-coded RAM or ROM address instead of an fn_/data_ id"),
 ]
-COMPUTED_GOTO = re.compile(r"goto\s*\*|&&\s*[A-Za-z_]\w*")
+BANNED_REGIONS = {0x02, 0x03, 0x08}
+# Rules that still mean something after `gcc -E` (directives are gone by then).
+EXPANDED_RULES = ("L001", "L002", "L003", "L004", "L006", "L011")
+LINEMARKER = re.compile(r'^# \d+ "((?:[^"\\]|\\.)*)"')
+# Unary && (label address) follows an operator or `return`; binary `a && b` follows an operand and is fine.
+COMPUTED_GOTO = re.compile(r"goto\s*\*|(?:[=(,?:{\[]|\breturn)\s*&&\s*[A-Za-z_]")
 GOTO_LABEL = re.compile(r"^\s*[A-Za-z_]\w*\s*:(?!:)", re.M)
 
 
@@ -28,27 +42,50 @@ def strip_comments(src: str) -> str:
     """The source as the preprocessor sees it: line splices joined, comments as one space, %: digraphs as #."""
     src = re.sub(r"\\[ \t]*\r?\n", "", src)
     src = _LEXEME.sub(lambda m: " " if m.group(2) is not None else m.group(0), src)
-    return src.replace("%:", "#")
+    for alt, std in DIGRAPHS:
+        src = src.replace(alt, std)
+    return src
+
+
+def _rule_hits(code: str, only: tuple[str, ...] | None = None) -> list[dict]:
+    violations = [{"rule": rule, "line": code.count("\n", 0, m.start()) + 1, "reason": reason}
+                  for rule, pattern, reason in RULES if only is None or rule in only for m in pattern.finditer(code)
+                  if rule != "L006" or int(m.group(1), 16 if m.group(1)[:2] in ("0x", "0X") else 10) >> 24 in BANNED_REGIONS]
+    if COMPUTED_GOTO.search(code) or _consecutive_labels(code) > 2:
+        violations.append({"rule": "L005", "line": 0, "reason": "computed goto or more than 2 consecutive labels"})
+    return violations
+
+
+def lint_expanded(expanded: str, cand_path: str) -> dict:
+    """Second pass over `gcc -E` output: only lines the linemarkers attribute to the candidate file,
+    so token pasting and macros can't assemble asm, _Pragma or attributes that the raw pass missed."""
+    keep, mine = [], False
+    for line in expanded.splitlines():
+        m = LINEMARKER.match(line)
+        if m:
+            mine = m.group(1) == cand_path
+            continue
+        keep.append(line if mine else "")
+    violations = _rule_hits(strip_comments("\n".join(keep)), EXPANDED_RULES)
+    for v in violations:
+        v["reason"] += " (after macro expansion)"
+    return {"ok": not violations, "violations": violations}
 
 
 def lint(src: str, target_insns: int, asm_text: str = "") -> dict:
     """Return {"ok": bool, "violations": [{"rule", "line", "reason"}]}."""
     code = strip_comments(src)
-    violations = []
-    for rule, pattern, reason in RULES:
-        for m in pattern.finditer(code):
-            violations.append({"rule": rule, "line": code.count("\n", 0, m.start()) + 1, "reason": reason})
+    violations = _rule_hits(code)
     for m in INCLUDE_LINE.finditer(code):  # allow-list: every include must be a plain <system> header
         arg = m.group(2)
         line = code.count("\n", 0, m.start()) + 1
         bad = m.group(1) == "embed" or not SYSTEM_HEADER.match(arg) or ".." in arg or "secrets" in arg
         if bad and {"rule": "L009", "line": line, "reason": "only <system> headers may be included"} not in violations:
             violations.append({"rule": "L009", "line": line, "reason": "only <system> headers may be included"})
-    if COMPUTED_GOTO.search(code) or _consecutive_labels(code) > 2:
-        violations.append({"rule": "L005", "line": 0, "reason": "computed goto or more than 2 consecutive labels"})
     lines = [l for l in code.splitlines() if l.strip()]
-    if target_insns and len(lines) > MAX_LINES_PER_INSN * target_insns:
-        violations.append({"rule": "L007", "line": 0, "reason": f"{len(lines)} lines for {target_insns} instructions (padding)"})
+    chars = len(re.sub(r"\s", "", code))
+    if target_insns and (len(lines) > MAX_LINES_PER_INSN * target_insns or chars > MAX_CHARS_PER_INSN * target_insns):
+        violations.append({"rule": "L007", "line": 0, "reason": f"{len(lines)} lines, {chars} characters for {target_insns} instructions (padding)"})
     if asm_text and _copies_asm(src, asm_text):
         violations.append({"rule": "L008", "line": 0, "reason": "asm text copied into comments or strings"})
     return {"ok": not violations, "violations": violations}
