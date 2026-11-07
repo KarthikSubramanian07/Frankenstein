@@ -24,6 +24,7 @@ CREW_URL = os.environ.get("CREW_URL", "http://127.0.0.1:7111")
 FN_RE = re.compile(r"\bfn_[0-9A-Fa-f]{8}\b")
 CODE_RE = re.compile(r"```(?:c|C)?\s*\n(.*?)```", re.S)
 JOB_TIMEOUT_S = 90
+MIN_SUGGEST_BYTES = 8  # 2-byte functions are a bare return; too trivial to show anyone
 OBSERVED = "**Observed** (proved by the compiler)"
 INFERRED = "**Inferred** (our reading, not proof)"
 
@@ -158,11 +159,11 @@ def answer_prove() -> str:
 
 def answer_candidates() -> str:
     done = {p.stem for p in (REPO / "runs" / "live" / "recovered").glob("fn_*.c")} if (REPO / "runs" / "live").exists() else set()
-    small = sorted((f for f in referee().functions.values() if f["scope"] == "game" and f["id"] not in done and f["mode"] == "thumb"),
+    small = sorted((f for f in referee().functions.values() if f["scope"] == "game" and f["id"] not in done and f["mode"] == "thumb" and f["size"] >= MIN_SUGGEST_BYTES),
                    key=lambda f: f["size"])[:8]
     rows = "\n".join(f"- `{f['id']}`: {f['size']} bytes, Thumb" for f in small)
     return ("### Smallest functions nobody has recovered yet\n\n" + rows +
-            "\n\nDefine the function under its exact id, non-static, and declare anything it calls by id. Then send:\n"
+            "\n\nDefine the function under its exact id, non-static, and declare anything it calls by id. Then send (start with @frankenstein-referee so it reaches me):\n"
             "\"Does this C match fn_…?\" with your code in a ```c block.")
 
 
