@@ -121,3 +121,8 @@ body.obs .lg-game .ttl { display: none; }
 .lg-raw li .w { color: #a8a8a8; }
 .lg-raw li .f { color: #8c8c8c; }
 .lg-raw li.proved, .lg-raw li.proved .w, .lg-raw li.proved .f, .lg-raw li.rejected .w, .lg-raw li.rejected .f { color: #f2f2f2; }
+/* half a step back down: between the first and the brightened greys */
+.lg-raw li { color: #858585; }
+.lg-raw li .t { color: #646464; }
+.lg-raw li .w { color: #939393; }
+.lg-raw li .f { color: #767676; }
