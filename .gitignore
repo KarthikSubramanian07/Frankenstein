@@ -30,3 +30,4 @@ dist/
 *.mp4
 !docs/**/*.mp4
 .wrangler/
+site/tools/out/
