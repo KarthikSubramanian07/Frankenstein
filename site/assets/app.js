@@ -168,7 +168,7 @@
       (async function loop() {
         for (;;) {
           await vis.wait();
-          blankAll(); stamp.classList.remove("on", "off"); attempt.textContent = "1"; setStatus("idle", "Idle");
+          blankAll(); stamp.classList.remove("on", "off"); attempt.textContent = "1"; setStatus("idle", "Waking the referee");
           await sleep(500);
           setStatus("load", "Reading ROM");
           await Promise.all(rows.map(function (row, i) {
@@ -215,7 +215,16 @@
   // ── liar caught ───────────────────────────────────────────────────
   var scene = $("#liarScene");
   if (scene) {
-    var play = function () { scene.classList.remove("play"); void scene.offsetWidth; scene.classList.add("play"); };
+    var lies = 0, lieEl = $("[data-lies]");
+    var play = function () {
+      scene.classList.remove("play"); void scene.offsetWidth; scene.classList.add("play");
+      // the running gag: every stamp is one more lie caught on this page
+      setTimeout(function () {
+        if (!lieEl) return;
+        lieEl.textContent = ++lies; lieEl.classList.add("bump");
+        setTimeout(function () { lieEl.classList.remove("bump"); }, 350);
+      }, reduce ? 0 : 1600);
+    };
     onView(scene, play, 0.55);
     var rb = $("[data-replay]"); if (rb) rb.addEventListener("click", play);
   }
@@ -259,6 +268,39 @@
         }
       })();
     }
+  }
+
+
+  // ── chapter II: the chat ──────────────────────────────────────────
+  var chat = $("#chat");
+  if (chat) {
+    var msgs = $$(".msg", chat), typing = $(".typing", chat);
+    if (reduce) {
+      msgs.forEach(function (m) { m.classList.add("on"); });
+      if (typing) typing.classList.add("gone");
+    } else onView(chat, async function () {
+      var order = [[".me", 300], [".typing", 700], [".reply", 1500], [".small", 1400], [".reply2", 1300]];
+      for (var k = 0; k < order.length; k++) {
+        await sleep(order[k][1]);
+        if (order[k][0] === ".reply") typing.classList.add("gone");
+        var m = $(".msg" + order[k][0], chat); if (m) m.classList.add("on");
+      }
+    }, 0.45);
+  }
+
+  // ── chapter IV: the SHA-1 gate ────────────────────────────────────
+  var sha = $("#sha");
+  if (sha) {
+    var target = $("[data-sha]", sha).dataset.sha, typed = $(".sha-typed", sha);
+    if (reduce) { typed.textContent = target; sha.classList.add("done"); }
+    else onView(sha, function () {
+      var i = 0;
+      (function tick() {
+        i = Math.min(target.length, i + 1);
+        typed.textContent = target.slice(0, i);
+        if (i < target.length) setTimeout(tick, 34); else setTimeout(function () { sha.classList.add("done"); }, 250);
+      })();
+    }, 0.5);
   }
 
   // ── tilt on role cards ────────────────────────────────────────────
