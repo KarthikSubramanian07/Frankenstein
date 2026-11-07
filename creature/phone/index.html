@@ -1,30 +1,90 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-state="loading">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
   <meta name="theme-color" content="#0b0b2e">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Player 2">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="description" content="Player 2: play the Frankenstein Doom ROM on your phone in a browser GBA emulator.">
   <title>Player 2 · Frankenstein</title>
+  <link rel="icon" href="data:,">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<main>
-  <header><span class="eyebrow">FRANKENSTEIN / PLAYER 2</span><h1>IT'S ALIVE<span class="dot">.</span></h1><p>The game can change again.</p></header>
-  <section class="screen" aria-label="Game screen">
-    <div class="screenbar"><span>GBADOOM</span><span id="signal">WAITING</span></div>
-    <div class="viewport"><canvas id="game" width="240" height="160" aria-label="Game Boy Advance emulator output"></canvas><div id="cover"><span class="cross">✚</span><strong>PLAYER 2<br>PRESS START</strong></div></div>
-    <p id="status" role="status" aria-live="polite">Ready to load the local demo.</p>
-  </section>
-  <div class="utility"><button id="boot">START DEMO</button><button id="pause" disabled>PAUSE</button><button id="mute" disabled>SOUND ON</button><button id="fullscreen">FULLSCREEN</button></div>
-  <section class="controller" aria-label="Touch controller">
-    <div class="shoulders"><button data-key="l">L</button><button data-key="r">R</button></div>
-    <div class="pad"><button data-key="up" aria-label="Up">▲</button><button data-key="left" aria-label="Left">◀</button><span></span><button data-key="right" aria-label="Right">▶</button><button data-key="down" aria-label="Down">▼</button></div>
-    <div class="actions"><button data-key="b">B</button><button data-key="a">A</button></div>
-    <div class="system"><button data-key="select">SELECT</button><button data-key="start">START</button></div>
-  </section>
-  <p class="hint">ARROWS move · X / Z = A / B · A / S = L / R · ENTER start · BACKSPACE select</p>
-  <details><summary>Load a local game file</summary><label for="rom">Choose the team's assembled .gba file</label><input id="rom" type="file" accept=".gba"><p>Your file stays in this browser.</p></details>
-  <footer><p>Doom © id Software · prBoom by its authors · GBADoom by doomhack</p><p>Browser emulation: mGBA / Jeffrey Pfau and Nicholas VanCise · <a href="https://github.com/thenick775/mgba/tree/feature/wasm">MPL-2.0 core source</a></p><p>Built today: this player page. Game, engine and emulator are prior work.</p><a href="https://github.com/KarthikSubramanian07/Frankenstein">FRANKENSTEIN SOURCE ↗</a></footer>
-</main>
+<div id="safe" aria-hidden="true"></div>
+
+<header class="bar">
+  <span class="brand">FRANKENSTEIN <b>/</b> PLAYER 2</span>
+  <span id="signal">LOADING</span>
+</header>
+
+<div id="screen" aria-label="Game screen"><canvas id="game" width="240" height="160" aria-label="Game Boy Advance emulator output"></canvas></div>
+
+<div id="controls" aria-label="Touch controller">
+  <button class="pill shoulder" data-key="l" aria-label="Strafe left (L)"><b>◀ STRAFE</b><small>L</small></button>
+  <button class="pill shoulder" data-key="r" aria-label="Strafe right (R)"><b>STRAFE ▶</b><small>R</small></button>
+  <div id="dpad" role="group" aria-label="Move and turn (D-pad)">
+    <i data-key="up"></i><i data-key="left"></i><i data-key="right"></i><i data-key="down"></i><span class="hub"></span>
+  </div>
+  <div id="actions" role="group" aria-label="Fire and use">
+    <i class="fire" data-key="b"><b>FIRE</b><small>B</small></i>
+    <i class="use" data-key="a"><b>USE</b><small>A</small></i>
+  </div>
+  <button class="pill sys" data-key="select" aria-label="Automap (Select)"><b>MAP</b><small>SELECT</small></button>
+  <button class="pill sys" data-key="start" aria-label="Doom menu (Start)"><b>MENU</b><small>START</small></button>
+  <button id="pause" class="round" aria-label="Pause and options">❚❚</button>
+  <p id="rotate">↻ Turn sideways for the big screen.</p>
+</div>
+
+<section id="gate" aria-live="polite">
+  <div class="gate-inner">
+    <span class="eyebrow">FRANKENSTEIN / PLAYER 2</span>
+    <h1 id="gate-title">CHARGING<br>THE LIGHTNING<span class="dot">.</span></h1>
+    <p id="gate-line">Loading the emulator and the game.</p>
+    <div id="progress" role="progressbar" aria-label="Download progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
+    <p id="progress-text" class="fine">&nbsp;</p>
+    <button id="start" class="cta">PRESS START</button>
+    <button id="retry" class="cta ghost">TRY AGAIN</button>
+    <label id="pick" class="link-button">Have the .gba? Load it from this phone<input id="rom" type="file" accept=".gba,application/octet-stream"></label>
+    <p id="gate-note" class="fine">Real emulator, real ROM. This page doesn't vouch for how the ROM was built.</p>
+    <button class="link" data-open-sheet>Controls &amp; credits</button>
+  </div>
+</section>
+
+<section id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" hidden>
+  <div class="sheet-inner">
+    <div class="sheet-head"><h2 id="sheet-title">PAUSED</h2><p id="sheet-sub">The monsters will wait.</p></div>
+    <div class="sheet-actions">
+      <button id="resume" class="cta">RESUME</button>
+      <button id="mute" class="chip">SOUND ON</button>
+      <button id="fullscreen" class="chip">FULL SCREEN</button>
+    </div>
+    <h3>How to play</h3>
+    <dl class="legend">
+      <dt>D-pad</dt><dd>Move and turn. Slide your thumb for diagonals.</dd>
+      <dt>FIRE · B</dt><dd>Shoot. Hold it while you move.</dd>
+      <dt>USE · A</dt><dd>Open doors, flip switches. Hold to run.</dd>
+      <dt>STRAFE · L R</dt><dd>Sidestep.</dd>
+      <dt>USE + STRAFE</dt><dd>Change weapon.</dd>
+      <dt>MAP · SELECT</dt><dd>Automap.</dd>
+      <dt>MENU · START</dt><dd>Doom's own menu.</dd>
+      <dt>Keyboard</dt><dd>Arrows move. Z fires (B), X uses (A), A / S strafe (L / R), Enter is Start, Backspace is Select.</dd>
+    </dl>
+    <p class="fine">On iPhone, Safari can't go full screen. Turn sideways, or add this page to your Home Screen.</p>
+    <label class="link-button">Load a .gba from this phone<input id="rom-sheet" type="file" accept=".gba,application/octet-stream"></label>
+    <h3>Built today / Not ours</h3>
+    <div class="ledger">
+      <p><b>Built today</b>This player page: the touch controller, the layout and the loading screens.</p>
+      <p><b>Not ours</b>Doom © id Software. prBoom by its authors. GBADoom by doomhack. mGBA by Jeffrey Pfau, WASM bindings by Nicholas VanCise (<a href="https://github.com/thenick775/mgba/tree/feature/wasm" target="_blank" rel="noopener">MPL-2.0 source</a>).</p>
+    </div>
+    <a class="source" href="https://github.com/KarthikSubramanian07/Frankenstein" target="_blank" rel="noopener">FRANKENSTEIN SOURCE ↗</a>
+    <button id="close-sheet" class="link">Close</button>
+  </div>
+</section>
 <script type="module" src="player.js"></script>
-</body></html>
+</body>
+</html>
