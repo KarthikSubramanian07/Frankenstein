@@ -1,0 +1,10 @@
+{
+  "rom_sha1": "d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2",
+  "identical": true,
+  "recovered": 6,
+  "from_original": 562,
+  "pct_agent_code": 0.36,
+  "rom_path": "lab/out/rebuilt.gba",
+  "original_sha1": "d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2",
+  "method": "object-splice"
+}
