@@ -14,6 +14,7 @@ Never invents running functions: it only ranks ids the heartbeat actually report
 from __future__ import annotations
 
 import base64
+import json
 import threading
 import time
 from collections import Counter, deque
@@ -26,6 +27,34 @@ MAX_OPTIONS = 40  # keep the choice small: latency scales with options and state
 
 def _img(png_bytes: bytes, media: str = "image/png") -> dict:
     return {"mediaType": media, "base64": base64.b64encode(png_bytes).decode()}
+
+
+MAX_HEARTBEAT_BYTES = 6_000_000  # a 4 MiB PNG in base64 plus the id list
+MAX_FRAME_BYTES = 4 * 1024 * 1024  # Lane D's adapter sends at most this (creature/bridge/director_adapter.py)
+MAX_RUNNING = 1024  # more ids than the game has functions is not a real frame
+PNG_MAGIC = b"\x89PNG\r\n\x1a\n"
+
+
+def parse_heartbeat(raw: bytes) -> tuple[list[str], bytes | None]:
+    """Validate one POST /heartbeat body: {"running": [fn ids], "frame_png_b64": "..."}. Raises ValueError."""
+    if len(raw) > MAX_HEARTBEAT_BYTES:
+        raise ValueError(f"heartbeat is larger than {MAX_HEARTBEAT_BYTES} bytes")
+    d = json.loads(raw or b"{}")
+    if not isinstance(d, dict):
+        raise ValueError("expected a JSON object")
+    running = d.get("running") or []
+    if not isinstance(running, list) or not all(isinstance(f, str) and len(f) <= 32 for f in running):
+        raise ValueError("running must be a list of fn ids")
+    if len(running) > MAX_RUNNING:
+        raise ValueError(f"running lists more than {MAX_RUNNING} functions")
+    png, b64 = None, d.get("frame_png_b64")
+    if b64:
+        if not isinstance(b64, str) or len(b64) > (MAX_FRAME_BYTES + 2) // 3 * 4:
+            raise ValueError(f"frame must be a base64 PNG of at most {MAX_FRAME_BYTES} bytes")
+        png = base64.b64decode(b64, validate=True)
+        if not png.startswith(PNG_MAGIC):
+            raise ValueError("frame must be a PNG")
+    return list(dict.fromkeys(running)), png
 
 
 class Director:

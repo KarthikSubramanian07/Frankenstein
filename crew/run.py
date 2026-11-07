@@ -301,10 +301,9 @@ class Run:
 
     def _start_director(self) -> None:
         """POST /heartbeat {"running": [fn ids], "frame_png_b64": "..."} from Lane D's tap; Snap steers every few s."""
-        import base64
         from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-        from .director import Director
+        from .director import MAX_HEARTBEAT_BYTES, Director, parse_heartbeat
 
         self.director = Director(self.cfg, self.target, self.log)
         run = self
@@ -314,14 +313,19 @@ class Run:
                 pass
 
             def do_POST(self):
-                n = int(self.headers.get("Content-Length") or 0)
                 try:
-                    d = json.loads(self.rfile.read(min(n, 8_000_000)) or b"{}")
-                    png = base64.b64decode(d["frame_png_b64"]) if d.get("frame_png_b64") else None
-                    run.director.heartbeat(list(d.get("running") or []), png)
-                    body, code = {"ok": True, "boosted": run.director.boosted}, 200
-                except Exception as e:
-                    body, code = {"error": str(e)[:200]}, 400
+                    n = int(self.headers.get("Content-Length") or 0)
+                except ValueError:
+                    n = -1
+                if not 0 <= n <= MAX_HEARTBEAT_BYTES:  # refuse before reading: no 8 MB reads on demand
+                    body, code = {"error": f"body must be 0 to {MAX_HEARTBEAT_BYTES} bytes"}, 413
+                else:
+                    try:
+                        running, png = parse_heartbeat(self.rfile.read(n))
+                        run.director.heartbeat(running, png)
+                        body, code = {"ok": True, "boosted": run.director.boosted}, 200
+                    except Exception as e:
+                        body, code = {"error": str(e)[:200]}, 400
                 data = json.dumps(body).encode()
                 self.send_response(code)
                 self.send_header("Content-Type", "application/json")

@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -17,6 +18,7 @@ from pathlib import Path
 from .config import ROOT, Config
 
 OUT = ROOT / "crew" / "exports"
+RUN_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,63}")  # one directory name: no slashes, no leading dot
 
 
 def sha1(p: Path) -> str:
@@ -25,6 +27,8 @@ def sha1(p: Path) -> str:
 
 def export(run_id: str, cfg: Config | None = None) -> Path:
     cfg = cfg or Config()
+    if not RUN_ID.fullmatch(run_id) or ".." in run_id:
+        raise SystemExit(f"bad run id {run_id!r}: one directory name under runs/")  # export ends in rmtree(dst)
     src = cfg.runs_dir / run_id
     if not (src / "events.jsonl").exists():
         raise SystemExit(f"no run at {src}")
