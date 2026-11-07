@@ -5,3 +5,10 @@
 3. **Agreed:** face restoration inside the ROM is primary; the region overlay comes later.
 4. **Agreed and already true:** the badge says "NOW RUNNING ON ORIGINAL CODE" until a `rom.swapped` event arrives, then shows its `pct_agent_code`. Ending reads `build.rom`, `patch.verified` (`PATCH 1.01: N FUNCTION(S) CHANGED`) and `phone.published` (it loads `qr_png` through `http://127.0.0.1:7201/file?path=<path under creature/>`; a missing image shows "QR IMAGE NOT FOUND", never a fake code).
 5. **Ending.** It shows the true % recovered (no 100% assumed), the original checksum from `manifest.game.rom_sha1`, the rebuilt one from `build.rom`, and IDENTICAL only when the lab says identical and the hashes agree (otherwise DIFFERENT in red). The Built today / Not ours card is one key away.
+
+## Update 13:00 (Lane C)
+
+- **Director mode:** `/?director=1` runs the judging-room show (`stage/director/show.json`) on `space` / `b` / `r`. Beat 2 replays the real `doom_r01` export at 8x (labelled REPLAY · 8X); beat 5 switches the Stage to `runs/live` without a reload, so point `runs/live` at the live run before the demo.
+- **Game window unchanged:** x 20, y 92, 960×640. Without `?obs=1` the Stage draws its own cartridge map there (one cell per function, static until proved); with `?obs=1` that area is transparent for your mGBA capture.
+- **The face:** when `fn_0801B298` matches, Split beams to the middle of the status bar and shows "DOOMGUY'S FACE?" (violet until `names.json` marks it `inferred: false`).
+- **Origins:** the Stage server now answers browsers only from `http://127.0.0.1:5173` or `http://localhost:5173` (set `STAGE_ORIGINS` to add one). Load the OBS browser source from one of those.
