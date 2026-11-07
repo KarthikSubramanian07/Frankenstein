@@ -17,7 +17,7 @@ Actual private-variant Doom now boots in the browser mGBA core. Title/menu/new-g
 
 ## Handoffs
 
-A: static-face source/build instructions received in lab/demo/README.md (fn_0801B298). Current main has no static_face.gba binary; requested an approved GitHub artifact. A verified recovered-function rebuild and actual observed swap remain required before the running-agent-code badge changes.
+A: static-face source/build instructions received in lab/demo/README.md (fn_0801B298). Received committed lab/out/static_face.gba and lab/demo/static_face_report.json in9a45076. Static engine SHA-1 is752c61e50fc1255e301e8efa4011082bf380c3e2; its runtime behavior still needs testing. A verified recovered-function rebuild and actual observed swap remain required before the running-agent-code badge changes.
 
 B: real export delivery resolved. Director endpoint exists in crew.run --director at localhost7112/heartbeat; D's explicit --forward adapter is ready. B handoff reports 12-second stale-sample expiry and listener shutdown implemented; received.
 
@@ -46,3 +46,9 @@ Desktop mGBA/Lua tap, live socket bridge, actual recovered-code swap, static-fac
 The connected Windows environment became unavailable during the desktop ROM-open action. Desktop boot and Lua telemetry remain unverified. All source checkpoints and browser boot/package evidence notes are committed. Real static-face playtest, live tap and swap require the host connection to return. Browser screenshot was saved on that host at creature/shots/browser-boot.jpg before disconnection.
 
 Finale path chosen: honest visible modification rather than an unconfirmed original bug. A/B still need to nominate an accepted function and verify the patch; do not present this as completed.
+
+## Latest incoming review / requested next target
+
+Received Stage's sponsor judgment rail and Versus evidence polish, Crew's library_backend events and Atlas library updates, current A/B handoffs and experiment caveats, and Lane A's new static-face artifacts/integration audit. B reports fn_0801B298 out of reach today; face recovery must not be claimed. A's audit queues a distinct restore preflight mode, consistent music-bank packaging, baseline manifest validation and continuous target/static playtests; these are pending work, not fixed by this documentation checkpoint.
+
+After a good Doom demo, Enzo requests the Pokémon Red opening/menu + first-interaction slice with a genuine geographic/progression coverage map. Brief: POKEMON_RED_PLAN.md; A and B have direct task files and handoff entries; issue#4 tracks the request. Visited, behavior-validated and code-verified coverage stay separate. Pokémon implementation has not started.
