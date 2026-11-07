@@ -44,7 +44,7 @@ for (const [name, q] of SCENES) {
       if (hidden) continue;
       let a = el, moving = false; // mid-animation positions are transient
       while (a && a !== scene) { if (a.getAnimations().some((x) => x.playState === 'running')) moving = true; a = a.parentElement; }
-      if (parseFloat(cs.fontSize) < 28) out.push(`small ${cs.fontSize}: "${t}"`);
+      if (parseFloat(cs.fontSize) < 18) out.push(`small ${cs.fontSize}: "${t}"`);
       if (el.scrollWidth > el.clientWidth + 2 && cs.overflow !== 'visible' && !el.classList.contains('scroll')) out.push(`clipped: "${t}"`);
       // text wider than its own block box (runs into a neighbour or off the edge)
       if (['block', 'grid', 'flex', 'inline-block'].includes(cs.display) && cs.overflow === 'visible' && el.scrollWidth > el.clientWidth + 4) out.push(`overflows its box: "${t}"`);

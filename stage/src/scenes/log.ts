@@ -31,9 +31,14 @@ export class LogScene implements Scene {
     this.el.innerHTML = `
       <div class="lg-game">${game ? `<iframe src="${esc(game)}" allow="cross-origin-isolated; autoplay; gamepad; fullscreen"></iframe>` : '<span>Doom plays here</span>'}</div>
       <div class="lg-side">
-        <div class="lg-count"><b data-k="n">0</b><span data-k="of">/ 568</span></div>
-        <div class="lg-label">pieces rebuilt</div>
-        <ol class="lg-log" data-k="log"></ol>
+        <div class="lg-panel">
+          <div class="lg-head">
+            <span class="cnt"><b data-k="n">0</b> <span data-k="of">/ 568</span> pieces rebuilt</span>
+            <span class="tot"><em class="p" data-k="p">+0</em><em class="r" data-k="r">−0</em></span>
+          </div>
+          <ol class="lg-log" data-k="log"></ol>
+        </div>
+        <div class="lg-key">? = our guess · everything else is proved by the compiler</div>
       </div>`;
   }
 
@@ -54,6 +59,9 @@ export class LogScene implements Scene {
     this.memo = key;
     (this.el.querySelector('[data-k="n"]') as HTMLElement).textContent = String(s.matched.length);
     (this.el.querySelector('[data-k="of"]') as HTMLElement).textContent = `/ ${total || '--'}`;
+    // diff-style totals: proved in green, rejected (real lies + fake rejections) in red
+    (this.el.querySelector('[data-k="p"]') as HTMLElement).textContent = `+${s.matched.length} proved`;
+    (this.el.querySelector('[data-k="r"]') as HTMLElement).textContent = `−${s.falseClaims.length + s.fakes.length} rejected`;
     const log = this.el.querySelector('[data-k="log"]') as HTMLElement;
     log.innerHTML = entries.length
       ? entries.map((e) => {
@@ -61,7 +69,7 @@ export class LogScene implements Scene {
           const name = `<span class="nm${n.guess ? ' guess' : ''}">${esc(n.text)}${n.guess ? '<em>?</em>' : ''}</span>`;
           return e.ok
             ? `<li class="ok"><i>✓</i>${name}<span class="st">proved</span></li>`
-            : `<li class="no"><i>✗</i>${name}<span class="st">REJECTED</span><span class="why">${esc(e.why)}</span></li>`;
+            : `<li class="no"><i>✗</i>${name}<span class="st">rejected</span><span class="why">${esc(e.why)}</span></li>`;
         }).join('')
       : '<li class="wait">Waiting for the first piece…</li>';
   }
