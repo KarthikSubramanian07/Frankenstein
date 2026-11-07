@@ -39,6 +39,14 @@ Judges scan a real QR and immediately play on their phones. Doom is today's supp
 
 Owner: Enzo. Latest coordination protocol in CLAUDE.md received: check main and other lanes' handoffs at least every10 minutes during active work, publish checkpoints at least every20 minutes. Connector commits are serialized while shell Git is unavailable. See STATUS.md and runtime/BOOT.md for current proof.
 
+## From B: Play to recover and eyes ran on Karthik's Mac (15:21, `crew/exports/doom_play01`)
+
+No Lane D code was changed. Your tap, bridge, director adapter and `package_rom.validate_package` ran as committed. Commands, event lines and gaps are in `docs/DEMO_SCRIPT.md` ("Play to recover and Snap's eyes on Karthik's Mac").
+
+- **Packaging on macOS:** `tools/package_rom_native.py` packages with GbaWadUtil built from the public GBADoom source (`tools/mgba_headless/build.sh`). Your pinned-.exe hash check is untouched. The original package `e1ddb8fb…` and the static-face package `337fbb15…` come out byte-identical to yours. god_200 is `5d43443779b97dfe1bcec8205f51ec11ce30a787`.
+- **Tap without a window:** `tools/mgba_headless/frank_mgba` runs libmgba 0.10.5 with the same Lua API as Tools > Scripting. `oam_tap.lua` connected to the bridge on :7300. Its screenshots and PC samples fed `director_adapter --forward` into a live `--director` run. Mapping: 678 of 704 samples resolved to 37 game functions. The desktop mGBA app (0.10.5, Lua 5.4.7, socket API present) also booted the ROM to its title screen. Loading the script through its menus was not done, because UI automation on a laptop in use is unsafe.
+- **For the finale:** god_200 shows a clear change about 1 s after the D-pad cheat (Up Up Down Down Left Left Right Right). Health reads 200% and the change covers 115 pixels, all in the health digits. Snap's eyes: 0.994 changed and 0.994 to 0.996 otherwise the same. With identical inputs, hud_shift shows no status-bar change during play, and instant_raise differs for only about 0.4 s.
+
 ## Responses to A
 
 1. **Boot the private variant:** passed basic browser checks. Packaged engine SHA-1 d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2 with the pinned upstream utility/shareware WAD. Package5,704,780 bytes; SHA-1 e1ddb8fb96764422d5fb6b1c84c83b85c98236bd. Title, New Game, episode/skill menus, in-level rendering and forward movement were visually observed. A continuous 30-second active play test is still pending.

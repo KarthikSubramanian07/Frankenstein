@@ -149,6 +149,47 @@ Test checklist (Lane D runs it; tick each with a time and a device name in `crea
 | **(b) The judge types into ASI:One and the Stage switches** | **Lite version in the judging room, full version on stage.** Lite: the judge types "Prove the rebuild is exact" or "How much of DOOM is back?" in ASI:One; the agent answers with both checksums or the count. Deterministic, no spend, about 5 s. Full: "bring back the shotgun", `POST /jobs {"query", "live": true}`, Stage shows ROUTED and the dig. | A: the agent must run where the crew API runs (the seed handover, STORY gap A3), and forward plain words to `/jobs` with `live: true`. B: start the API with `--live-jobs`; restrict routed live jobs to functions under 120 bytes so a match is possible in a minute. C: show the query (done in `judgment.ts`). | A 20 min, B 30 min | Routing is inferred and was not repeatable in our test (friction 8); the Stage must show "ROUTED → fn_… · P" as a guess. Never claim the face live. | The lite question; or a pre-recorded ASI:One transcript labelled RECORDED. |
 | **(a) Crowd Play-to-recover**: phones send frames, Snap's director picks what the crew rebuilds next | **Not before freeze. Do the local version only.** The director (`:7112`) is localhost-only by design, and DECISIONS forbids tunnels. A public intake would need a relay (for example a Cloudflare Worker with a per-session token in the QR URL, a rate limit of one frame per phone per 5 s, a 64 KB cap, PNG only, no audio, no IP logging) that the laptop **polls outbound**. That is new security-sensitive infrastructure at the freeze. Local version: the laptop's own browser player posts its canvas to `127.0.0.1:7112/heartbeat` during a live run. | Local: D adds an opt-in `?director=http://127.0.0.1:7112` to the player that posts a 240×160 PNG every 3 s; B adds CORS for `http://127.0.0.1:7401` on `/heartbeat`. Public relay (after judging only): B and D. | Local 30 min (D 20, B 10). Relay 2 h or more. | Frames only, no personal data; Snap's pick from pixels is inferred and shown as `PLAY → fn_…`. The room-wide version is only true if real phones post. | The tap-based director already measured (2.4 s per decision, DECISIONS 12:00), shown from a recorded run. |
 
+## Play to recover and Snap's eyes on Karthik's Mac (verified 15:21, run `doom_play01`)
+
+Both ran for real on the Mac with the referee, crew and Stage. There was no desktop mGBA window, because scripting a GUI on a laptop someone is using is unsafe. Instead, `tools/mgba_headless/frank_mgba` (libmgba 0.10.5 with the same Lua API as Tools > Scripting) runs Lane D's unmodified `creature/tap/oam_tap.lua` and scripted input. Doom reaches E1M1 and plays.
+
+**Reproduce** (ROMs, WADs and builds stay outside git):
+
+```sh
+brew install --cask mgba-app; brew install qtbase lua@5.4 libpng cmake pkgconf
+B=$TMPDIR/frank-build; tools/mgba_headless/build.sh $B          # GbaWadUtil + frank_mgba from public sources
+python3 tools/package_rom_native.py --engine lab/out/target.gba --utility $B/wadutil/GbaWadUtil \
+  --wad $B/gbadoom/GbaWadUtil/doom1.wad --out $B/roms/doom-original.gba          # SHA-1 e1ddb8fb…
+python3 -m creature.bridge --events runs/live/events.jsonl --manifest lab/out/manifest.json --viz-map lab/out/viz_map.json &
+mkdir -p $B/shots; FRANK_REPO=$PWD FRANK_SHOTS=$B/shots $B/frank_mgba $B/roms/doom-original.gba tools/mgba_headless/drive.lua &
+python3 -m creature.bridge.director_adapter --forward --shots-root $B/shots &
+REFEREE_URL=http://127.0.0.1:7101 .venv/bin/python -m crew.run --director --live --diggers 4 --library on \
+  --library-path runs/_doom_lib.json --run-id doom_play01 --label "doom · play to recover (live)" --budget-usd 2 \
+  --fns fn_03000DBC,fn_03001764,fn_0300170C,fn_03001590,fn_08010384,fn_080019D0,fn_08019178,fn_03001618,fn_0300275C
+```
+
+Use `.venv/bin/python` for the crew. Plain `python3` here has no `python-dotenv`, so every Digger fails at once with "META_API_KEY is not set".
+
+**What was verified** (`crew/exports/doom_play01`):
+
+- **Packages, made with GbaWadUtil built from the public source:** original `e1ddb8fb96764422d5fb6b1c84c83b85c98236bd` and static face `337fbb15462b57eb6cc5a35bcf11e36646e130e2`. Both are byte-identical to Lane D's packages. god_200 is `5d43443779b97dfe1bcec8205f51ec11ce30a787` (engine `7acc0dc9…`). All are 5,704,780 bytes, and every processed WAD is `628f0749…`. The union rebuild engine is the original engine (`d936259b…`), so its package is the original package.
+- **The tap is real:** in 75 s of play the bridge received 704 samples. 678 of them mapped to 37 distinct game functions. The 9 `--fns` were the small, unrecovered, non-held-out functions among them.
+- **The director is live:** 25 `snap.decision` events with op "director", each with a real frame. Only 1 was Snap's own choice, because Snap's API needs 2 or more options. The other 24 had a single running queued function, so they fell back to the hottest one and are labelled `fallback: "hottest"`:
+  `{"seq":22,"type":"snap.decision","fn":"fn_080019D0","payload":{"op":"director","fns":["fn_080019D0","fn_0300275C"],"confidence":0.579,"visible_p":0.621,"frame":true}}`
+- **Boosts reorder the queue:** 3 of the 5 later claims were boosted functions, each taken ahead of earlier queue entries: fn_080019D0 (seq 51), fn_03001618 (seq 132) and fn_0300275C (seq 196). The first 4 claims happen before any heartbeat.
+- **Result:** 2 of 9 matched (fn_03000DBC, fn_0300170C), and neither was a boosted function. 1 fake was rejected. Cost $1.60, 15.4 min, and the rebuild SHA-1 is identical.
+- **Snap's eyes on god_200**, with the claim "After the same god-mode cheat, health reads 200% instead of 100%; the rest of the status bar is unchanged.":
+  - Lane A's browser pair: changed 0.994, otherwise same 0.994 (seq 410).
+  - Our headless pair, frame 780 with identical inputs: changed 0.994, otherwise same 0.996 (seq 411).
+  - Control, the same frame twice and not logged: changed 0.008. Snap is not just saying yes.
+
+**Gaps:**
+
+- The desktop mGBA GUI was installed and booted the title screen, but the tap was not loaded through its menus.
+- Snap returns 422 when only one function is offered. Crew should boost it without asking Snap.
+- hud_shift is out. Its gameplay frames show no status-bar change, and the menu text and 3D view differ instead.
+- instant_raise only differs for about 0.4 s after a weapon switch.
+
 ## Q&A: one breath each (numbers from run files and DECISIONS only)
 
 - **"Isn't it staged?"** The real source is hidden from the agents and used only as the answer key; they see machine code and `fn_` ids. That's the only way to prove it's exact. (Eddy can open `lab/out/target/<fn>.json` to show what the referee compares.)

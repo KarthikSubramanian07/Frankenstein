@@ -5,11 +5,13 @@
   "manifest_sha1": "a6ff9e7ec03e776f5a539f9db47f925d32e5c5d7",
   "target_rom_sha1": "d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2",
   "game_id": "doom",
-  "recovered": 0,
+  "recovered": 2,
   "files": {
-    "events.jsonl": "f342fd3aa9010c7141b3cd35f3721f362a5923ed",
-    "metrics.json": "ef70848cecf3b80fcc444b49334705910c43fa49",
-    "names.json": "f84ac80ed2a95d455637b6e471b8bf512efc9c76"
+    "events.jsonl": "30b68de224f43e46a8fe22753d6d9dc64292ff53",
+    "metrics.json": "232e40aa86f8c61919aa3427a2aaaf1700b3412f",
+    "names.json": "1da2a3c6c84a9b17a905e9e25706d967d41357ef",
+    "recovered/fn_03000DBC.c": "6a117ef239f125b374cdd307e6df9926beb39906",
+    "recovered/fn_0300170C.c": "c447e662eec1f20803c2ba1db7a95d35442c87b4"
   },
   "fixture": false
 }

@@ -1,5 +1,18 @@
 {
   "v": 1,
   "run_id": "doom_play01",
-  "names": []
+  "names": [
+    {
+      "fn": "fn_03000DBC",
+      "name": "memchr",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0300170C",
+      "name": "reverse_scan_for_unflagged_word",
+      "inferred": true,
+      "basis": "recovered code"
+    }
+  ]
 }

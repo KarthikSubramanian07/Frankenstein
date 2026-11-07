@@ -7,14 +7,14 @@
   "model": "muse-spark-1.3",
   "reasoning_effort": "high",
   "fn_total": 9,
-  "matched": 0,
-  "match_rate": 0.0,
-  "attempts_per_match": 0.0,
-  "minutes_per_match": 0.0,
-  "cost_per_match_usd": 0.0,
+  "matched": 2,
+  "match_rate": 0.222,
+  "attempts_per_match": 1.0,
+  "minutes_per_match": 0.51,
+  "cost_per_match_usd": 0.8001,
   "false_claims_caught": 0,
-  "fakematches_rejected": 0,
-  "cost_usd": 0.0,
+  "fakematches_rejected": 1,
+  "cost_usd": 1.6001,
   "curve": [
     {
       "t_min": 0,
@@ -22,24 +22,93 @@
     },
     {
       "t_min": 1,
-      "matched": 0
+      "matched": 2
+    },
+    {
+      "t_min": 2,
+      "matched": 2
+    },
+    {
+      "t_min": 3,
+      "matched": 2
+    },
+    {
+      "t_min": 4,
+      "matched": 2
+    },
+    {
+      "t_min": 5,
+      "matched": 2
+    },
+    {
+      "t_min": 6,
+      "matched": 2
+    },
+    {
+      "t_min": 7,
+      "matched": 2
+    },
+    {
+      "t_min": 8,
+      "matched": 2
+    },
+    {
+      "t_min": 9,
+      "matched": 2
+    },
+    {
+      "t_min": 10,
+      "matched": 2
+    },
+    {
+      "t_min": 11,
+      "matched": 2
+    },
+    {
+      "t_min": 12,
+      "matched": 2
+    },
+    {
+      "t_min": 13,
+      "matched": 2
+    },
+    {
+      "t_min": 14,
+      "matched": 2
+    },
+    {
+      "t_min": 15,
+      "matched": 2
+    },
+    {
+      "t_min": 16,
+      "matched": 2
     }
   ],
   "muse": {
-    "calls": 0,
-    "tool_calls": 0,
+    "calls": 57,
+    "tool_calls": 50,
     "image_calls": 0,
-    "tokens_in": 0,
-    "tokens_out": 0,
+    "tokens_in": 327691,
+    "tokens_out": 280124,
     "reasoning_effort": "high",
-    "cost_usd": 0.0,
-    "by_model": {}
+    "cost_usd": 1.6001,
+    "by_model": {
+      "muse-spark-1.3": {
+        "calls": 40,
+        "cost_usd": 1.1786
+      },
+      "muse-wonder-1.0": {
+        "calls": 17,
+        "cost_usd": 0.4216
+      }
+    }
   },
-  "attempts_total": 0,
-  "elapsed_s": 0.6,
+  "attempts_total": 34,
+  "elapsed_s": 921.7,
   "referee": "lab",
   "fixture_target": false,
-  "library_backend": "local-json",
+  "library_backend": "mongodb-atlas:idioms__doom_lib",
   "library_size": 38,
   "library_status": {
     "candidate": 38,
@@ -48,10 +117,35 @@
   },
   "case_memory": 28,
   "library_baseline": 0.5,
-  "snap_reviews": 0,
-  "second_opinion_reviews": 0,
+  "snap_reviews": 2,
+  "second_opinion_reviews": 2,
   "cartographer": false,
-  "snap": null,
+  "snap": {
+    "on": true,
+    "model": "subq-snap-1.1",
+    "snap_calls": 45,
+    "errors": 24,
+    "latency_ms_mean": 761.9,
+    "input_tokens": 45065,
+    "cost_usd": 0.001803,
+    "by_op": {
+      "director": {
+        "calls": 25,
+        "latency_ms_total": 18862.572913058102,
+        "input_tokens": 1173
+      },
+      "review": {
+        "calls": 2,
+        "latency_ms_total": 1311.8384590488859,
+        "input_tokens": 1671
+      },
+      "decide_next": {
+        "calls": 18,
+        "latency_ms_total": 14113.050915999338,
+        "input_tokens": 42221
+      }
+    }
+  },
   "aligned_feedback": true,
   "permuter": {
     "on": true,
@@ -59,9 +153,10 @@
   },
   "draft": true,
   "draft_used": 3,
-  "cost_estimated": false,
+  "cost_estimated": true,
   "memory": {
-    "backend": "none",
+    "backend": "mongodb-atlas",
+    "events_written": 409,
     "error": null
   }
 }
