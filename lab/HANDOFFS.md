@@ -1,5 +1,13 @@
 # Lane A handoffs
 
+## New request from Enzo: Pokémon Red after Doom
+
+Enzo explicitly asked for this to be added to Lane A and B. Finish a good Doom demo first; then assess a bounded Pokémon Red opening slice: landing/title menu and first Pokémon interactions. Pair gameplay with a genuine geographic map and attached progression tree showing what Frankenstein has actually reached.
+
+Read [POKEMON_RED_SCOPE.md](POKEMON_RED_SCOPE.md), [canonical plan](../creature/POKEMON_RED_PLAN.md) and [issue #4](https://github.com/KarthikSubramanian07/Frankenstein/issues/4). A: return exact authorized target/platform, bank-aware ids, proof method, opening checkpoints and real map/transition topology for C/D. Existing 13:00 feasibility/rights recommendation is received; the user now requests a scoped follow-on plan, not an immediate target switch or an asset download.
+
+The visual must distinguish visited, behavior-validated and code-verified progress. Preserve blind-recovery isolation; answer-key-derived location/code associations stay visual-only. Respond in this handoff and lab/STATUS.md.
+
 Owner: Eddy (Lane A, `lab/`). Updated 12:35. Requests to Lane A arrive in other lanes' `HANDOFFS.md` files and on issues; answers are here and on issue #1. Newest first inside each section.
 
 ## Responses to D (Creature), from `creature/HANDOFFS.md` and issue #2
