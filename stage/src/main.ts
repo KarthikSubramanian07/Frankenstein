@@ -15,6 +15,7 @@ import { TimeTrialScene } from './scenes/timetrial.ts';
 import { EndingScene } from './scenes/ending.ts';
 import { Director } from './director.ts';
 import type { Source } from './director.ts';
+import { Rail } from './rail.ts';
 
 const params = new URLSearchParams(location.search);
 const host = params.get('server') || '127.0.0.1';
@@ -42,7 +43,9 @@ const hiscore = new HiscoreScene();
 const timetrial = new TimeTrialScene(HTTP);
 const ending = new EndingScene(HTTP, reduced);
 for (const s of [title, split, hiscore, versus, timetrial, ending] as Scene[]) { scenes[s.id] = s; stageEl.appendChild(s.el); }
-stageEl.append(fxCanvas, flashEl, markEl);
+// the judgment rail (sponsors at work) sits over Split and Hi-score; judgment.css places it per scene
+const rail = new Rail(reduced);
+stageEl.append(rail.el, fxCanvas, flashEl, markEl);
 
 let current: SceneId = 'split';
 const ctx: Ctx = {
@@ -111,6 +114,7 @@ function onEffects(list: Effect[]) {
       setTimeout(() => go('versus'), 1000);
       setTimeout(() => { if (current === 'versus') go('hiscore'); versusCut = false; }, 5300);
     }
+    if (current === 'split' || current === 'hiscore' || e.kind === 'reset') rail.effect(ctx, e);
     for (const s of Object.values(scenes)) {
       // the visible scene animates; hidden scenes still hear resets
       if (s!.id === current || e.kind === 'reset') s!.effect?.(ctx, e);
@@ -179,6 +183,7 @@ function frame() {
   if (dirty || split.busy() || scenes[current]?.animating?.(ctx)) {
     dirty = false;
     scenes[current]?.render(ctx);
+    rail.render(ctx);
     renderMark();
   }
   requestAnimationFrame(frame);
