@@ -8,7 +8,6 @@ import { h, esc } from '../types.ts';
 import type { Effect } from '../state.ts';
 import { displayName } from '../data.ts';
 import { coin } from '../audio.ts';
-import { announce } from '../voice.ts';
 import { gameTotal } from './common.ts';
 import { FACE_FN, Mosaic } from './mosaic.ts';
 
@@ -146,22 +145,17 @@ export class SplitScene implements Scene {
       el.innerHTML = '<span class="sp-wait">Waiting for the first piece</span>';
       return;
     }
-    let name: string;
-    if (fn === FACE_FN) {
-      name = `<span class="sp-nm face">DOOMGUY'S FACE${confirmed ? '' : '<em>?</em>'}</span>`;
-    } else {
-      const d = displayName(ctx.side, fn);
-      name = `<span class="sp-nm${d.guess ? ' guess' : ''}">${esc(d.text)}</span>`;
-    }
+    const d = displayName(ctx.side, fn);
+    const name = `<span class="sp-nm${d.guess ? ' guess' : ''}">${esc(d.text)}</span>`;
     el.innerHTML = `<span class="sp-tag">PROVED</span>${name}`;
-    el.className = `sp-new${fn === FACE_FN ? ' is-face' : ''}`;
+    el.className = 'sp-new';
     if (!ctx.reduced && !sameFn) { void el.offsetWidth; el.classList.add('slide'); }
     this.fit(el.querySelector('.sp-nm') as HTMLElement);
   }
 
   /** shrink a long name until it fits on one line (never below NAME_MIN) */
   private fit(nm: HTMLElement) {
-    const max = nm.classList.contains('face') ? 112 : NAME_MAX;
+    const max = NAME_MAX;
     let px = max;
     nm.style.fontSize = `${px}px`;
     while (nm.scrollWidth > nm.clientWidth + 1 && px > NAME_MIN) { px -= 4; nm.style.fontSize = `${px}px`; }
@@ -171,10 +165,6 @@ export class SplitScene implements Scene {
     if (e.kind === 'matched') {
       coin();
       if (this.mosaic && !ctx.reduced) { this.mosaic.land(e.m.fn); this.flashUntil = performance.now() + FLASH_MS; }
-      if (e.m.fn === FACE_FN) {
-        announce('The face is back.');
-        ctx.fx.flash();
-      }
     } else if (e.kind === 'reset') {
       this.memo = '';
       this.meterKey = '';
