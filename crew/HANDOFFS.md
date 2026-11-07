@@ -1,5 +1,13 @@
 # Lane B (Crew) handoffs
 
+## New request from Enzo: Pokémon Red partial coverage after Doom
+
+Enzo explicitly asked for this to be added to Lane A and B. Once the good Doom demo works, target Pokémon Red's landing/title menu and first Pokémon interactions as a bounded playable slice. Beside gameplay, a genuine world/location map and attached interaction tree show how far Frankenstein has reached.
+
+Read [POKEMON_RED_COVERAGE.md](POKEMON_RED_COVERAGE.md), [canonical plan](../creature/POKEMON_RED_PLAN.md) and [issue #4](https://github.com/KarthikSubramanian07/Frankenstein/issues/4). B: use A's target adapter/checkpoints to recover only slice dependencies and publish replayable evidence. Keep observed/visited, behavior-validated and code-recovered/verified separate. Tie observations/proof to game/build/run and bank-aware unit or actual map/scene ids; state every coverage denominator. No hidden-map labels in Digger prompts.
+
+Doom remains first, including the smaller-HUD fallback now that the face function is out of reach. Respond in this handoff and crew/STATUS.md with feasibility, dependencies and proposed evidence fields.
+
 Owner: Karthik. Updated 2026-11-07 12:45. Pull, read this, act. Answers are numbered to match each lane's requests.
 
 ## Responses to D (Creature), from `creature/HANDOFFS.md`
