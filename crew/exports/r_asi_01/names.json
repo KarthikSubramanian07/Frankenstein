@@ -1,0 +1,12 @@
+{
+  "v": 1,
+  "run_id": "r_asi_01",
+  "names": [
+    {
+      "fn": "fn_08004DA8",
+      "name": "pass_through_wrapper",
+      "inferred": true,
+      "basis": "recovered code"
+    }
+  ]
+}

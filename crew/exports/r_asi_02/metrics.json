@@ -1,0 +1,88 @@
+{
+  "v": 1,
+  "run_id": "r_asi_02",
+  "label": "asi:one job j_2",
+  "split": "train",
+  "library": "on",
+  "model": "muse-spark-1.3",
+  "reasoning_effort": "high",
+  "fn_total": 1,
+  "matched": 0,
+  "match_rate": 0.0,
+  "attempts_per_match": 0.0,
+  "minutes_per_match": 0.0,
+  "cost_per_match_usd": 0.0,
+  "false_claims_caught": 0,
+  "fakematches_rejected": 0,
+  "cost_usd": 0.0324,
+  "curve": [
+    {
+      "t_min": 0,
+      "matched": 0
+    },
+    {
+      "t_min": 1,
+      "matched": 0
+    }
+  ],
+  "muse": {
+    "calls": 6,
+    "tool_calls": 6,
+    "image_calls": 0,
+    "tokens_in": 11303,
+    "tokens_out": 4300,
+    "reasoning_effort": "high",
+    "cost_usd": 0.0324,
+    "by_model": {
+      "muse-spark-1.3": {
+        "calls": 4,
+        "cost_usd": 0.0245
+      },
+      "muse-wonder-1.0": {
+        "calls": 2,
+        "cost_usd": 0.0079
+      }
+    }
+  },
+  "attempts_total": 4,
+  "elapsed_s": 39.0,
+  "referee": "lab",
+  "fixture_target": false,
+  "library_backend": "local-json",
+  "library_size": 0,
+  "library_status": {
+    "candidate": 0,
+    "adopted": 0,
+    "retired": 0
+  },
+  "library_baseline": 0.5,
+  "snap_reviews": 0,
+  "second_opinion_reviews": 0,
+  "cartographer": false,
+  "snap": {
+    "on": true,
+    "model": "subq-snap-1.1",
+    "snap_calls": 3,
+    "errors": 0,
+    "latency_ms_mean": 426.1,
+    "input_tokens": 1594,
+    "cost_usd": 6.4e-05,
+    "by_op": {
+      "review": {
+        "calls": 1,
+        "latency_ms_total": 574.8964578378946,
+        "input_tokens": 539
+      },
+      "decide_next": {
+        "calls": 2,
+        "latency_ms_total": 703.4184171352535,
+        "input_tokens": 1055
+      }
+    }
+  },
+  "cost_estimated": true,
+  "memory": {
+    "backend": "none",
+    "error": null
+  }
+}
