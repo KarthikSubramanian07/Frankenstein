@@ -175,7 +175,8 @@ class Digger:
                     res = self.checker.judge(fn_id, out.attempts, src)
                     pct = float(res.get("match_pct", 0.0))
                     fd = res.get("first_diff") or {}
-                    out.journey.append((out.attempts, res["status"], pct, fd.get("expected_ins"), fd.get("got_ins")))
+                    out.journey.append((out.attempts, res["status"], pct, fd.get("expected_ins"), fd.get("got_ins"),
+                                        (res.get("aligned") or {}).get("structure_pct")))
                     if pct >= out.best_pct:
                         out.best_pct, best_src = pct, src
                     if res["status"] != "MATCH":
@@ -192,6 +193,8 @@ class Digger:
                             elif act == "abandon" and conf >= 0.6 and failures >= 3:
                                 budget = out.attempts  # Snap says more attempts won't converge: stop spending
                     reply = {k: res.get(k) for k in ("status", "match_pct", "first_diff", "lint")}
+                    if res.get("aligned"):
+                        reply["aligned"] = res["aligned"]  # side-by-side: where the structure really diverges
                     reply["diff"] = (res.get("diff") or [])[:16]
                     if res["status"] == "NO_COMPILE":
                         reply["compile_log"] = (res.get("compile") or {}).get("log", "")[-1500:]

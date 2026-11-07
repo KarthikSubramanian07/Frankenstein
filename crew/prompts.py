@@ -19,6 +19,10 @@ How to work:
 - Submit a full candidate with referee_check(src). Read first_diff and the diff list, then adjust the C to steer GCC:
   statement order, signed vs unsigned, int vs short/char locals, loop form (for/while/do, count up/down),
   early returns vs nested ifs, temporaries that change register allocation, expression grouping.
+- match_pct is positional: one early register difference makes everything after it count as wrong. Use the
+  "aligned" view instead: structure_pct ignores register names, "registers" says which registers GCC chose
+  differently (fix with declaration order, temporaries, types), and side_by_side shows the real divergent hunks.
+  Climb structure_pct to 100 first, then fix registers.
 - Small, targeted edits between attempts. Keep the best-scoring version in mind.
 - If you are confident a candidate matches exactly, set claim=true on that referee_check: a correct claim finishes
   the function immediately (fewer round trips). Claims are public and false ones are counted, so claim only when sure.

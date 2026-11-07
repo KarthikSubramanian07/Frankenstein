@@ -31,6 +31,14 @@ class HttpReferee:
     def __init__(self, url: str, timeout: float = 60):
         self.url = url.rstrip("/")
         self.timeout = timeout
+        self.aligner = None
+        if self.url.startswith(("http://127.0.0.1", "http://localhost")):
+            try:  # same machine as Lane A's referee: get the aligned side-by-side for PARTIAL verdicts
+                from .align import LabAligner
+
+                self.aligner = LabAligner()
+            except Exception:
+                self.aligner = None
 
     def _req(self, method: str, path: str, body: dict | None = None, raw: bool = False):
         data = json.dumps(body).encode() if body is not None else None
@@ -55,7 +63,12 @@ class HttpReferee:
         return self._req("GET", "/health")
 
     def check(self, fn: str, src: str) -> dict:
-        return self._req("POST", "/check", {"fn": fn, "src": src})
+        res = self._req("POST", "/check", {"fn": fn, "src": src})
+        if res.get("status") == "PARTIAL" and self.aligner is not None:
+            al = self.aligner.explain(fn, src)  # feedback only; the verdict above is the referee's
+            if al:
+                res["aligned"] = al
+        return res
 
     def context(self, fn: str) -> str:
         txt = self._req("GET", f"/context/{fn}", raw=True)  # lab serves the header as text; bench may wrap it in JSON
