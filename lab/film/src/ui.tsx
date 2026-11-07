@@ -41,11 +41,11 @@ export const Caption: React.FC<{lines: {t: string; at: number}[]; top?: number; 
 };
 
 /** The small detail line for experts, bottom of frame. */
-export const Expert: React.FC<{text: string; at?: number}> = ({text, at = 20}) => {
+export const Expert: React.FC<{text: string; at?: number; bottom?: number}> = ({text, at = 20, bottom = 46}) => {
   const f = useCurrentFrame();
   const o = interpolate(f, [at, at + 10], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   return (
-    <div style={{position: 'absolute', bottom: 46, left: 0, right: 0, textAlign: 'center', opacity: o, fontFamily: MONO, fontSize: 25, color: C.gray}}>
+    <div style={{position: 'absolute', bottom, left: 0, right: 0, textAlign: 'center', opacity: o, fontFamily: MONO, fontSize: 25, color: C.gray}}>
       <span style={{color: C.coral, fontWeight: 700, marginRight: 14}}>FOR EXPERTS</span>
       {text}
     </div>

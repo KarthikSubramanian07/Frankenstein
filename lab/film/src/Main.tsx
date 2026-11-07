@@ -26,7 +26,8 @@ const Hook: React.FC<{len: number}> = ({len}) => (
       </Sequence>
     </Lcd>
     <Readout at={12} />
-    <Expert text="GBADoom · god-mode function fn_080054C8 recovered by the agents, one line edited, rebuilt" at={30} />
+    <Newcomer at={24} />
+    <Expert text="GBADoom · god-mode function fn_080054C8 recovered by the agents, one line edited, rebuilt" at={30} bottom={14} />
   </Scene>
 );
 
@@ -40,14 +41,14 @@ const Readout: React.FC<{at: number}> = ({at}) => {
   const line = interpolate(f, [at + 10, at + 22], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   const flash = interpolate(f, [at + 10, at + 14, at + 28], [0, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   const item = (x: number, v: string, col: string, s: number) => (
-    <div style={{position: 'absolute', left: x, top: 900, width: 840, textAlign: 'center', opacity: clamp01(p * 1.5), transform: `scale(${(0.8 + 0.2 * p) * s})`, fontFamily: HEAD, fontWeight: 800, fontSize: 64, color: col}}>{v}</div>
+    <div style={{position: 'absolute', left: x, top: 884, width: 840, textAlign: 'center', opacity: clamp01(p * 1.5), transform: `scale(${(0.8 + 0.2 * p) * s})`, fontFamily: HEAD, fontWeight: 800, fontSize: 64, color: col}}>{v}</div>
   );
   return (
     <>
       <div style={{position: 'absolute', left: 960, top: 292, width: 818, height: 558, border: `10px solid ${C.coral}`, borderRadius: 12, opacity: flash, boxSizing: 'border-box'}} />
       {item(120, 'health 100%', C.gray, 1)}
       {item(960, 'health 200%', C.coral, pulse)}
-      <div style={{position: 'absolute', left: 1380 - 190 * line, top: 985, width: 380 * line, height: 10, borderRadius: 5, background: C.coral}} />
+      <div style={{position: 'absolute', left: 1380 - 190 * line, top: 968, width: 380 * line, height: 10, borderRadius: 5, background: C.coral}} />
     </>
   );
 };
@@ -57,6 +58,17 @@ const CAP = {w: 2880, h: 1490, x0: 330, x1: 2550};
 const GameCrop: React.FC<{innerW: number; children: React.ReactNode}> = ({innerW, children}) => {
   const k = innerW / (CAP.x1 - CAP.x0);
   return <div style={{position: 'absolute', left: -CAP.x0 * k, top: 0, width: CAP.w * k, height: CAP.h * k}}>{children}</div>;
+};
+
+/** For people who don't play Doom: what the cheat is and what changed. */
+const Newcomer: React.FC<{at: number}> = ({at}) => {
+  const f = useCurrentFrame();
+  const o = interpolate(f, [at, at + 10], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  return (
+    <div style={{position: 'absolute', top: 994, left: 0, right: 0, textAlign: 'center', opacity: o, fontFamily: BODY, fontWeight: 600, fontSize: 28, color: C.ink}}>
+      Same cheat: Doom's god mode (invincibility). Right side: one line of the agents' recovered C changed it to 200% health.
+    </div>
+  );
 };
 
 // 0:06 Problem: cartridge, recipe with its lines missing.
