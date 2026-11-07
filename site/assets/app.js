@@ -45,6 +45,16 @@
     return st;
   }
 
+  // ── menu (small widths) ───────────────────────────────────────────
+  var menu = $(".menu-btn"), nav = $(".nav");
+  if (menu) {
+    menu.addEventListener("click", function () {
+      var open = nav.classList.toggle("open"); menu.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    $$(".nav-links a").forEach(function (a) { a.addEventListener("click", function () { nav.classList.remove("open"); menu.setAttribute("aria-expanded", "false"); }); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && nav.classList.contains("open")) { nav.classList.remove("open"); menu.setAttribute("aria-expanded", "false"); menu.focus(); } });
+  }
+
   // ── counters ──────────────────────────────────────────────────────
   function count(el) {
     var to = parseFloat(el.dataset.to);
@@ -265,8 +275,11 @@
   window.addEventListener("load", function () {
     if (reduce || !window.gsap || !window.ScrollTrigger) return;
     var gsap = window.gsap; gsap.registerPlugin(window.ScrollTrigger);
-    var heroImg = $(".hero-img");
-    if (heroImg) gsap.fromTo(heroImg, { scale: 1.08, yPercent: -3 }, { scale: 1, yPercent: 4, ease: "none", scrollTrigger: { trigger: ".hero-stage", start: "top bottom", end: "bottom top", scrub: true } });
+    // iOS Safari: the address bar resizing the viewport must not re-run scroll animations (no jumps)
+    window.ScrollTrigger.config({ ignoreMobileResize: true });
+    // parallax the whole stage layer (art + marble track + marbles + labels) so they stay aligned
+    var layer = $("[data-parallax]");
+    if (layer) gsap.fromTo(layer, { scale: 1.06, yPercent: -2 }, { scale: 1, yPercent: 3, ease: "none", transformOrigin: "50% 60%", scrollTrigger: { trigger: ".hero-stage", start: "top bottom", end: "bottom top", scrub: true } });
     var mm = gsap.matchMedia();
     mm.add("(min-width: 901px)", function () {
       var panels = $$(".panel");

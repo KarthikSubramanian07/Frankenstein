@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Frankenstein · Lost games, rebuilt and proven</title>
 <meta name="description" content="Lost games, rebuilt and proven. AI agents bring a game's dead source code back from the cartridge, and a compiler checks every byte. Doom is our first patient.">
 <link rel="canonical" href="https://tryfrankenstein.pages.dev/">
@@ -31,7 +31,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&family=Press+Start+2P&display=swap">
 <link rel="preload" as="image" href="/assets/art/hero-1400.webp" imagesrcset="/assets/art/hero-800.webp 800w, /assets/art/hero-1400.webp 1400w, /assets/art/hero-full.webp 1584w" imagesizes="(max-width: 1240px) 100vw, 1200px">
-<link rel="stylesheet" href="/assets/site.css?v=14">
+<link rel="stylesheet" href="/assets/site.css?v=18">
 <noscript><style>[data-reveal]{opacity:1!important;transform:none!important}.msg{opacity:1!important;transform:none!important}.msg.typing{display:none}</style></noscript>
 
 <script type="application/ld+json">
@@ -65,14 +65,15 @@
 <header class="nav-wrap">
   <nav class="nav" aria-label="Main">
     <a class="logo" href="/" aria-label="Frankenstein home"><svg class="logo-bolt" aria-hidden="true"><use href="#bolt"/></svg><span>Frankenstein</span></a>
-    <ul class="nav-links">
-      <li><a href="#story">The story</a></li>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links"><span class="sr">Menu</span><i aria-hidden="true"></i><i aria-hidden="true"></i></button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#partners">Partners</a></li>
       <li><a href="#referee">The referee</a></li>
+      <li><a href="#story">The story</a></li>
       <li><a href="#numbers">Numbers</a></li>
-      <li><a href="#organs">Built with</a></li>
       <li><a href="#credits">Credits</a></li>
     </ul>
-    <a class="lcd-pill" href="#story"><span>PRESS START</span><i aria-hidden="true"></i></a>
+    <a class="start-btn" href="#story" aria-label="Press start: begin the story"><span><span class="ps-press">PRESS </span>START</span><i aria-hidden="true"></i></a>
   </nav>
 </header>
 
@@ -81,7 +82,7 @@
 <!-- ═════════════ HERO ═════════════ -->
 <section class="hero" aria-labelledby="hero-h">
   <div class="wrap hero-top">
-    <p class="kicker" data-reveal><span class="chip">Frankenstein's lab</span> open since 10:45 this morning</p>
+    <p class="kicker" data-reveal><span><span class="chip">Frankenstein's lab</span> open since 10:45 this morning</span><span class="kicker-r">AI Engineer Code Summit · Shack15, San Francisco · Nov 7, 2026</span></p>
     <h1 id="hero-h" class="display" data-reveal style="--i:1">Lost games,<br><span class="two">rebuilt and proven.</span></h1>
     <div class="hero-sub" data-reveal style="--i:2">
       <p>87% of classic games are endangered, and most of their source code is gone. Frankenstein's agents rebuild it from the cartridge, one piece at a time. <b>A compiler checks every byte.</b></p>
@@ -94,7 +95,7 @@
 
   <div class="wrap">
     <figure class="stage hero-stage" data-reveal style="--i:3">
-      <div class="stage-art" style="background-image:url(data:image/webp;base64,UklGRpIAAABXRUJQVlA4IIYAAAAwBACdASogAA4APu1iqU2ppaOiMAgBMB2JQBOgBER9AAvHe17SnOLQCQAA/up8eehCCQZsh1TG6swnO8DU9QqshlwZqYS7yacqwfGQ53niD1cr7CXzQ7DKRX2x3PNRKxtsEVy3znVSLfbBJBfos9QGrFvEPLOkUA46s7E2QOYyssKxossAAA==)">
+      <div class="stage-art" data-parallax style="background-image:url(data:image/webp;base64,UklGRpIAAABXRUJQVlA4IIYAAAAwBACdASogAA4APu1iqU2ppaOiMAgBMB2JQBOgBER9AAvHe17SnOLQCQAA/up8eehCCQZsh1TG6swnO8DU9QqshlwZqYS7yacqwfGQ53niD1cr7CXzQ7DKRX2x3PNRKxtsEVy3znVSLfbBJBfos9QGrFvEPLOkUA46s7E2QOYyssKxossAAA==)">
         <img class="hero-img" src="/assets/art/hero-1400.webp" srcset="/assets/art/hero-800.webp 800w, /assets/art/hero-1400.webp 1400w, /assets/art/hero-full.webp 1584w" sizes="(max-width: 1240px) 100vw, 1200px" width="1584" height="672" alt="A toy laboratory: a handheld game console lies on an operating table between two bolt electrodes; marbles roll out of it through a funnel and under a magnifying glass toward a glowing cartridge, and one red marble drops into a small bin." fetchpriority="high">
         <svg class="marble-track" viewBox="0 0 1584 672" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <path id="trackMain" d="M498 290 L 700 302 C 752 306, 784 326, 796 362 C 806 398, 826 424, 870 436 C 900 444, 920 448, 946 452 L 1320 480 L 1560 498"/>
@@ -110,7 +111,94 @@
         </ul>
       </div>
     </figure>
-    <p class="hero-cap" data-reveal>The lab, as Gemini rendered it for us today. Marbles are functions; only the byte-identical ones reach the cartridge.</p>
+    <p class="cap-bar" data-reveal><span>Marbles are functions. Only the byte-identical ones reach the cartridge.</span><span class="cap-meta"><img src="/assets/logos/gemini.svg" alt="" width="14" height="14">Illustration · Gemini · rendered today</span></p>
+  </div>
+</section>
+
+
+<!-- ═════════════ PARTNERS ═════════════ -->
+<section class="partners" id="partners" aria-labelledby="pt-h">
+  <div class="wrap">
+    <header class="sec-head pt-head" data-reveal>
+      <p class="tagpill">Built with</p>
+      <h2 id="pt-h" class="h2">Five partners. Five organs. <span class="two">Pull one and the creature dies.</span></h2>
+      <p class="sub">Muse writes it. Snap judges it. The compiler proves it. MongoDB remembers it. ASI:One lets anyone ask for it. Gemini gets a second look.</p>
+    </header>
+
+    <ul class="logo-rail" data-reveal aria-label="Partners">
+      <li><img src="/assets/logos/meta.svg" alt="Meta" width="40" height="40"><span>Muse Spark · Muse Wonder</span></li>
+      <li><img class="wide" src="/assets/logos/subquadratic.svg" alt="Subquadratic" width="212" height="34"><span>SubQ Snap</span></li>
+      <li><img class="wide fetch" src="/assets/logos/fetchai.svg" alt="Fetch.ai" width="122" height="20"><span><img class="asi" src="/assets/logos/asi-one.webp" alt="" width="18" height="18">ASI:One</span></li>
+      <li><img src="/assets/logos/mongodb.svg" alt="MongoDB" width="40" height="40"><span>MongoDB Atlas</span></li>
+      <li><img src="/assets/logos/gemini.svg" alt="Google Gemini" width="40" height="40"><span>Gemini</span></li>
+    </ul>
+
+    <ul class="pt-grid">
+      <li class="pt pt-meta" data-tilt data-reveal>
+        <div class="pt-top"><span class="pt-logo"><img src="/assets/logos/meta.svg" alt="" width="34" height="34"><b>Meta Model API</b></span><span class="pt-role">THE HANDS</span></div>
+        <div class="pt-anim anim-type" aria-hidden="true"><i style="--w:62%"></i><i style="--w:84%"></i><i style="--w:48%"></i><i class="caret"></i></div>
+        <h3>Writes every line of recovered C.</h3>
+        <ul class="pt-does">
+          <li>Every Digger is a Muse Spark loop with the referee as its tool.</li>
+          <li>Stubborn functions escalate to Muse Wonder when Snap says so.</li>
+          <li>Muse also writes the habits and the names.</li>
+        </ul>
+        <p class="pt-without"><b>Without it:</b> nothing writes the C. The referee has nothing to judge.</p>
+        <p class="pt-num"><span><b>103</b> + <b>11</b></span> Spark and Wonder calls in the first Doom run <code>doom_r01</code></p>
+      </li>
+
+      <li class="pt pt-subq" data-tilt data-reveal style="--i:1">
+        <div class="pt-top"><span class="pt-logo"><img class="wide" src="/assets/logos/subq-snap.svg" alt="SubQ Snap" width="120" height="24"></span><span class="pt-role">THE JUDGMENT</span></div>
+        <div class="pt-anim anim-gauge" aria-hidden="true"><svg viewBox="0 0 120 70"><path class="g-tr" d="M12 62 A 48 48 0 0 1 108 62"/><path class="g-on" d="M12 62 A 48 48 0 0 1 108 62" pathLength="100"/><g class="g-nd"><line x1="60" y1="62" x2="60" y2="22"/><circle cx="60" cy="62" r="5"/></g></svg></div>
+        <h3>Reads the whole game at once and decides where every attempt goes.</h3>
+        <ul class="pt-does">
+          <li>Triage: every game function's disassembly in one 384K window.</li>
+          <li>After each miss: keep going, escalate to Muse Wonder, or abandon.</li>
+          <li>Gates every match for fakes, and watches the live game to pick what to rebuild next.</li>
+        </ul>
+        <p class="pt-without"><b>Without it:</b> we pay Muse to dig dead ends, blind to the rest of the game.</p>
+        <p class="pt-num"><span><b>37</b></span> Snap decisions in <code>doom_r01</code>, 842 ms average; triage read 1.39M tokens</p>
+      </li>
+
+      <li class="pt pt-fetch" data-tilt data-reveal style="--i:2">
+        <div class="pt-top"><span class="pt-logo"><img class="wide fetch" src="/assets/logos/fetchai.svg" alt="Fetch.ai" width="110" height="18"><img class="asi" src="/assets/logos/asi-one.webp" alt="ASI:One" width="26" height="26"></span><span class="pt-role">THE FRONT DOOR</span></div>
+        <div class="pt-anim anim-chat" aria-hidden="true"><i class="q">recover the face</i><i class="a">MATCH, per the referee</i></div>
+        <h3>Ask for a recovery in a chat. Get proof back.</h3>
+        <ul class="pt-does">
+          <li>Ask in plain words in ASI:One.</li>
+          <li>The Excavator agent runs a crew job, then asks the Referee agent, agent to agent.</li>
+          <li>It answers only with the Referee's verdict.</li>
+        </ul>
+        <p class="pt-without"><b>Without it:</b> only our team can ask, and nobody can check our claims for themselves.</p>
+        <p class="pt-num"><span><b>2</b></span> agents live on Agentverse: Frankenstein Referee and Excavator</p>
+      </li>
+
+      <li class="pt pt-mongo" data-tilt data-reveal style="--i:3">
+        <div class="pt-top"><span class="pt-logo"><img src="/assets/logos/mongodb.svg" alt="" width="34" height="34"><b>MongoDB Atlas</b></span><span class="pt-role">THE MEMORY</span></div>
+        <div class="pt-anim anim-jar" aria-hidden="true"><span class="jar"><i></i><i></i><i></i><i></i><i></i><i class="drop"></i></span></div>
+        <h3>Remembers every trick, so the next game is faster.</h3>
+        <ul class="pt-does">
+          <li>Each habit library is its own collection; held-out libraries stay frozen.</li>
+          <li>Every run event and every run's metrics are mirrored to Atlas.</li>
+          <li>Habits are adopted or retired on evidence.</li>
+        </ul>
+        <p class="pt-without"><b>Without it:</b> every run starts from zero, and nothing remembers why.</p>
+        <p class="pt-num"><span><b>38</b></span> habits learned in the first Doom run <code>doom_r01</code></p>
+      </li>
+
+      <li class="pt pt-gemini" data-tilt data-reveal style="--i:4">
+        <div class="pt-top"><span class="pt-logo"><img src="/assets/logos/gemini.svg" alt="" width="34" height="34"><b>Google Gemini</b></span><span class="pt-role">THE SECOND OPINION</span></div>
+        <div class="pt-anim anim-lens" aria-hidden="true"><span class="lens"></span><i class="m"></i></div>
+        <h3>A different lab double-checks every match.</h3>
+        <ul class="pt-does">
+          <li>Reviews every byte match alongside Snap, in parallel, so it adds no wait.</li>
+          <li>A match is rejected when Snap is sure, both labs flag it, or Gemini is near-certain.</li>
+          <li>It also drew every illustration on this page.</li>
+        </ul>
+        <p class="pt-without"><b>Without it:</b> one lab's opinion on fakes, and a page with no pictures.</p>
+        <p class="pt-num"><span><b>8</b></span> illustrations on this page, generated today</p>
+      </li>
+    </ul>
   </div>
 </section>
 
@@ -174,7 +262,7 @@
   <!-- II -->
   <article class="panel p-ask" aria-labelledby="c2-h">
     <div class="panel-copy">
-      <p class="tagpill"><b>2</b> You ask</p>
+      <p class="tagpill"><b>2</b> You ask</p><p class="by"><span>with</span><img class="wide" src="/assets/logos/fetchai.svg" alt="Fetch.ai" height="18" loading="lazy"><img src="/assets/logos/asi-one.webp" alt="ASI:One" height="18" loading="lazy"><img class="wide snap" src="/assets/logos/subq-snap.svg" alt="SubQ Snap" height="18" loading="lazy"></p>
       <h2 id="c2-h" class="h2">"Bring back Doomguy's face." <span class="two">Typed in a chat.</span></h2>
       <p class="sub">The Frankenstein Referee agent on ASI:One takes plain words. SubQ Snap reads the whole game and points at the function behind them. Nothing is "done" until the referee says MATCH.</p>
     </div>
@@ -192,7 +280,7 @@
   <!-- III -->
   <article class="panel p-dig note-right" aria-labelledby="c3-h">
     <div class="panel-copy">
-      <p class="tagpill"><b>3</b> The crew digs</p>
+      <p class="tagpill"><b>3</b> The crew digs</p><p class="by"><span>with</span><img src="/assets/logos/meta.svg" alt="Meta" height="18" loading="lazy"><img class="wide snap" src="/assets/logos/subq-snap.svg" alt="SubQ Snap" height="18" loading="lazy"></p>
       <h2 id="c3-h" class="h2">Muse writes it. <span class="two">The referee checks it.</span></h2>
       <ol class="beats">
         <li><b>Dig.</b> Agents read the compiled game and write C, one function at a time.</li>
@@ -215,9 +303,9 @@
   <!-- III, the lie -->
   <article class="panel p-lie" id="liar" aria-labelledby="c3b-h">
     <div class="panel-copy">
-      <p class="tagpill"><b>3</b> The Checker catches a lie</p>
+      <p class="tagpill"><b>3</b> The Checker catches a lie</p><p class="by"><span>with</span><img class="wide snap" src="/assets/logos/subq-snap.svg" alt="SubQ Snap" height="18" loading="lazy"><img src="/assets/logos/gemini.svg" alt="Google Gemini" height="18" loading="lazy"></p>
       <h2 id="c3b-h" class="h2">Agents lie. <span class="two">The referee doesn't.</span></h2>
-      <p class="sub">A claim is just a claim until a fresh compile agrees. Every lie is logged and counted.</p>
+      <p class="sub">A claim is just a claim until a fresh compile agrees. Then SubQ Snap and Gemini judge what bytes can't. Every lie is logged and counted.</p>
       <div class="lie-actions">
         <button class="btn btn-cream btn-sm" type="button" data-replay>Let it lie again <span aria-hidden="true">&#8635;</span></button>
         <span class="lie-count" aria-live="polite">Lies caught on this page <b data-lies>0</b></span>
@@ -239,9 +327,9 @@
   <!-- III, learn -->
   <article class="panel p-learn" aria-labelledby="c3c-h">
     <div class="panel-copy">
-      <p class="tagpill"><b>3</b> The crew learns</p>
+      <p class="tagpill"><b>3</b> The crew learns</p><p class="by"><span>with</span><img src="/assets/logos/mongodb.svg" alt="MongoDB" height="18" loading="lazy"></p>
       <h2 id="c3c-h" class="h2">Every game we bring back <span class="two">makes the next one faster.</span></h2>
-      <p class="sub">Each match teaches the crew a habit, never an answer. Habits are adopted or retired on evidence, and we test them on functions they never saw.</p>
+      <p class="sub">Each match teaches the crew a habit, never an answer, kept in MongoDB Atlas. Habits are adopted or retired on evidence, and we test them on functions they never saw.</p>
     </div>
     <div class="panel-art">
       <img src="/assets/art/learn-800.webp" srcset="/assets/art/learn-800.webp 800w, /assets/art/learn-full.webp 1200w" sizes="(max-width: 900px) 92vw, 560px" width="1200" height="896" loading="lazy" decoding="async" alt="A shelf of glass jars, each full of marbles of one colour, with one more marble dropping into a jar.">
@@ -276,7 +364,7 @@ asrs r0, r0, #1</pre>
   <!-- V -->
   <article class="panel p-change note-right" aria-labelledby="c5-h">
     <div class="panel-copy">
-      <p class="tagpill"><b>5</b> It changes again</p>
+      <p class="tagpill"><b>5</b> It changes again</p><p class="by"><span>with</span><img class="wide snap" src="/assets/logos/subq-snap.svg" alt="SubQ Snap" height="18" loading="lazy"></p>
       <h2 id="c5-h" class="h2">One function patched. <span class="two">Phones play it.</span></h2>
       <p class="sub">Once the code is back, the game can be fixed. Change one constant and exactly one byte changes; Snap's eyes confirm the visible change, and nothing else.</p>
     </div>
@@ -333,25 +421,7 @@ asrs r0, r0, #1</pre>
       <li data-reveal style="--i:2"><span class="any-ico ico-pad" aria-hidden="true"></span><h3>Controllers</h3><p>Any standard gamepad over the Gamepad API.</p></li>
       <li data-reveal style="--i:3"><span class="any-ico ico-app" aria-hidden="true"></span><h3>Install it</h3><p>Add it to your home screen; it keeps working offline.</p></li>
     </ul>
-    <p class="any-note" data-reveal><span class="lcd-tag">SOON</span> The public player link lands here once it's published, after the license check on the shareware data.</p>
-  </div>
-</section>
-
-<!-- ═════════════ ORGANS ═════════════ -->
-<section class="organs" id="organs" aria-labelledby="org-h">
-  <div class="wrap">
-    <header class="sec-head" data-reveal>
-      <p class="tagpill">Built with</p>
-      <h2 id="org-h" class="h2">Sponsors are the organs, <span class="two">not the logos.</span></h2>
-      <p class="sub">Muse writes it. Snap judges it. The compiler proves it. MongoDB remembers it. ASI:One lets anyone ask for it.</p>
-    </header>
-    <ul class="org-grid">
-      <li class="org o-meta" data-tilt data-reveal><p class="org-tag">META · THE HANDS</p><h3>Writes every line of recovered C.</h3><p>Muse Spark on the Meta Model API; stubborn functions escalate to Muse Wonder.</p></li>
-      <li class="org o-subq" data-tilt data-reveal style="--i:1"><p class="org-tag">SUBQ · THE JUDGMENT</p><h3>Reads the whole game at once and decides where every attempt goes.</h3><p>SubQ Snap: triage, keep or escalate, the fake gate, and what to rebuild next.</p></li>
-      <li class="org o-fetch" data-tilt data-reveal style="--i:2"><p class="org-tag">FETCH.AI · THE FRONT DOOR</p><h3>Ask for a recovery in a chat. Get proof back.</h3><p>The Frankenstein Referee agent on ASI:One and Agentverse.</p></li>
-      <li class="org o-mongo" data-tilt data-reveal style="--i:3"><p class="org-tag">MONGODB · THE MEMORY</p><h3>Remembers every trick, so the next game is faster.</h3><p>The habit library and every attempt and verdict, in Atlas.</p></li>
-      <li class="org o-gemini" data-tilt data-reveal style="--i:4"><p class="org-tag">GEMINI · THE SECOND OPINION</p><h3>A different lab double-checks every match.</h3><p>And it rendered every illustration on this page, today.</p></li>
-    </ul>
+    <p class="cap-bar any-bar" data-reveal><span><span class="lcd-tag">SOON</span> The public player link lands here once it's published, after the license check on the shareware data.</span><span class="cap-meta">mGBA core · touch · gamepad · offline</span></p>
   </div>
 </section>
 
@@ -402,19 +472,19 @@ asrs r0, r0, #1</pre>
 <footer class="footer">
   <div class="wrap foot-grid">
     <div>
-      <p class="alive" data-reveal>It's alive<span class="q">?</span></p>
+      <p class="alive" data-reveal>It's <span class="nw">alive<span class="q">?</span></span></p>
       <p class="alive-note">Games don't have to die. The "?" stays violet until the compiler says otherwise.</p>
     </div>
     <div class="foot-links">
       <a class="btn btn-ink" href="https://github.com/KarthikSubramanian07/Frankenstein" rel="noopener">Source on GitHub <span aria-hidden="true">&#8599;</span></a>
       <p>Built at the AI Engineer Code Summit hackathon, Shack15, San Francisco, November 7, 2026. MIT licensed.</p>
-      <p class="legal">Doom is a trademark of id Software. Not affiliated with or endorsed by id Software, doomhack, Nintendo, or any platform named here. The handheld in our illustrations is our own generic design.</p>
+      <p class="legal">Doom is a trademark of id Software. Not affiliated with or endorsed by id Software, doomhack, Nintendo, or any platform named here. The handheld in our illustrations is our own generic design. Logos are trademarks of their owners, used to credit our partners.</p>
     </div>
   </div>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-<script src="/assets/app.js?v=12" defer></script>
+<script src="/assets/app.js?v=17" defer></script>
 </body>
 </html>
