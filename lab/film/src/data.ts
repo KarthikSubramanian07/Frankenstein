@@ -26,6 +26,8 @@ export const DATA = {
   // crew/exports/doom_hud02 attempts 2-4 at 90.0%; crew/exports/doom_hud03 verdict seq 186: MATCH on attempt 10
   warmStart: {fn: 'fn_0801ABC0', before: 90, beforeRun: 'doom_hud02', after: 'MATCH', afterRun: 'doom_hud03', attempt: 10},
   url: 'tryfrankenstein.pages.dev',
+  repo: 'github.com/KarthikSubramanian07/Frankenstein',
+  team: ['Eddy Zhao', 'Karthik Subramanian', 'Aiden Huang', 'Enzo Emami'],
   notOurs: ['Doom (id Software)', 'GBADoom (doomhack)', 'the shareware WAD', 'mGBA', 'devkitARM', 'Meta, Subquadratic, Fetch.ai, MongoDB, Google platforms'],
   builtToday: ['the agent crew', 'the referee', 'the Checker', 'the Stage', 'the patches', 'this film'],
 };

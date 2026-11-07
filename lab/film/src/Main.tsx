@@ -40,6 +40,13 @@ const Readout: React.FC<{at: number}> = ({at}) => {
   );
 };
 
+/** Shows only the game area of the 2880x1490 player capture (x 322..2557), dropping the key legend. */
+const CAP = {w: 2880, h: 1490, x0: 330, x1: 2550};
+const GameCrop: React.FC<{innerW: number; children: React.ReactNode}> = ({innerW, children}) => {
+  const k = innerW / (CAP.x1 - CAP.x0);
+  return <div style={{position: 'absolute', left: -CAP.x0 * k, top: 0, width: CAP.w * k, height: CAP.h * k}}>{children}</div>;
+};
+
 // 0:06 Problem: cartridge, recipe with its lines missing.
 const Problem: React.FC<{len: number}> = ({len}) => {
   const f = useCurrentFrame();
@@ -93,24 +100,24 @@ const How: React.FC<{len: number}> = ({len}) => {
   return (
     <Scene len={len}>
       <Caption size={70} lines={[{t: "Meta's Muse writes the C.", at: 0}, {t: "Byte for byte, or it doesn't count.", at: 120}, {t: `From memory alone: ${DATA.memoryProbe.compiled} of ${DATA.memoryProbe.of} compiled.`, at: 215}]} />
-      <Card style={{position: 'absolute', left: 110, top: 260, width: 780, height: 600, padding: 30, boxSizing: 'border-box', background: C.ink, borderColor: C.ink}}>
+      <Card style={{position: 'absolute', left: 90, top: 250, width: 800, height: 700, padding: 32, boxSizing: 'border-box', background: C.ink, borderColor: C.ink}}>
         <div style={{fontFamily: BODY, fontWeight: 700, fontSize: 26, color: C.lcd3, marginBottom: 16}}>MACHINE CODE · from the cartridge</div>
         {asm.length ? (
           asm.slice(0, Math.max(asmShown, 0)).slice(0, 14).map((l, k) => (
-            <div key={k} style={{fontFamily: MONO, fontSize: 24, color: C.cream, lineHeight: 1.45, whiteSpace: 'pre'}}>{l}</div>
+            <div key={k} style={{fontFamily: MONO, fontSize: 30, color: C.cream, lineHeight: 1.4, whiteSpace: 'pre'}}>{l}</div>
           ))
         ) : (
           <div style={{fontFamily: MONO, fontSize: 24, color: C.gray}}>asset pending: DATA.match.asm</div>
         )}
       </Card>
-      <svg width={120} height={80} style={{position: 'absolute', left: 900, top: 520}}>
+      <svg width={120} height={80} style={{position: 'absolute', left: 905, top: 560}}>
         <path d="M 10 40 L 100 40 M 80 18 L 104 40 L 80 62" stroke={C.coral} strokeWidth={9} fill="none" />
       </svg>
-      <Card style={{position: 'absolute', left: 1030, top: 260, width: 780, height: 600, padding: 30, boxSizing: 'border-box'}}>
+      <Card style={{position: 'absolute', left: 1030, top: 250, width: 800, height: 700, padding: 32, boxSizing: 'border-box'}}>
         <div style={{fontFamily: BODY, fontWeight: 700, fontSize: 26, color: C.lcd1, marginBottom: 16}}>C · written by Meta's Muse Spark</div>
-        <div style={{fontFamily: MONO, fontSize: 24, color: C.ink, lineHeight: 1.45, whiteSpace: 'pre-wrap'}}>{c ? c.slice(0, cShown) : 'asset pending: DATA.match.c'}</div>
+        <div style={{fontFamily: MONO, fontSize: 27, color: C.ink, lineHeight: 1.45, whiteSpace: 'pre-wrap'}}>{c ? c.slice(0, cShown) : 'asset pending: DATA.match.c'}</div>
       </Card>
-      <Stamp text="MATCH" at={205} color={C.lcd1} x={1420} y={760} />
+      <Stamp text="MATCH" at={205} color={C.lcd1} x={1500} y={830} />
       <Expert text={`ARM Thumb machine code → C → GCC → byte-identical · each check ${DATA.checkSeconds} s · ${DATA.match.fn}`} at={40} />
     </Scene>
   );
@@ -131,24 +138,24 @@ const Trust: React.FC<{len: number}> = ({len}) => {
   return (
     <Scene len={len}>
       <Caption size={76} lines={[{t: "Agents lie. Compilers don't.", at: 0}]} />
-      <Card style={{position: 'absolute', left: 140, top: 250, width: 700, padding: 34, boxSizing: 'border-box', opacity: clamp01(a * 1.5), transform: `scale(${0.9 + 0.1 * a})`}}>
+      <Card style={{position: 'absolute', left: 110, top: 290, width: 720, padding: 38, boxSizing: 'border-box', opacity: clamp01(a * 1.5), transform: `scale(${0.9 + 0.1 * a})`}}>
         <div style={{fontFamily: BODY, fontWeight: 700, fontSize: 26, color: C.gray}}>AGENT · claim</div>
-        <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 54, color: C.ink, marginTop: 8}}>“{L.claim}”</div>
+        <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 64, color: C.ink, marginTop: 8}}>“{L.claim}”</div>
       </Card>
-      <Card style={{position: 'absolute', left: 940, top: 250, width: 840, padding: 34, boxSizing: 'border-box', background: C.ink, opacity: clamp01(b * 1.5), transform: `scale(${0.9 + 0.1 * b})`}}>
+      <Card style={{position: 'absolute', left: 890, top: 290, width: 920, padding: 38, boxSizing: 'border-box', background: C.ink, opacity: clamp01(b * 1.5), transform: `scale(${0.9 + 0.1 * b})`}}>
         <div style={{fontFamily: BODY, fontWeight: 700, fontSize: 26, color: C.lcd3}}>REFEREE · re-runs the compiler</div>
-        <div style={{fontFamily: MONO, fontSize: 30, color: C.cream, marginTop: 14}}>{L.pct}% match · first difference at {L.offset}</div>
-        <div style={{fontFamily: MONO, fontSize: 30, color: C.mint, marginTop: 14}}>expected {L.expected}</div>
-        <div style={{fontFamily: MONO, fontSize: 30, color: C.coral, marginTop: 6}}>got&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L.got}</div>
+        <div style={{fontFamily: MONO, fontSize: 31, color: C.cream, marginTop: 14}}>{L.pct}% match · first difference at {L.offset}</div>
+        <div style={{fontFamily: MONO, fontSize: 36, color: C.mint, marginTop: 16}}>expected {L.expected}</div>
+        <div style={{fontFamily: MONO, fontSize: 36, color: C.coral, marginTop: 8}}>got&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L.got}</div>
       </Card>
-      <Stamp text="REJECTED" at={85} color={C.coral} x={1360} y={560} size={96} />
-      <div style={{position: 'absolute', top: 700, left: 0, right: 0, display: 'flex', justifyContent: 'center', gap: 70}}>
+      <Stamp text="REJECTED" at={85} color={C.coral} x={1530} y={760} size={96} />
+      <div style={{position: 'absolute', top: 640, left: 140, width: 1000, display: 'flex', justifyContent: 'center', gap: 80}}>
         {counts.map((c, k) => {
           const p = spring({frame: f - 120 - k * 8, fps, config: SPRING.pop});
           return (
             <div key={k} style={{textAlign: 'center', opacity: clamp01(p * 1.5), transform: `translateY(${(1 - p) * 30}px)`}}>
-              <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 110, color: c.col, lineHeight: 1}}>{c.n}</div>
-              <div style={{fontFamily: BODY, fontWeight: 700, fontSize: 32, color: C.ink}}>{c.t}</div>
+              <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 150, color: c.col, lineHeight: 1}}>{c.n}</div>
+              <div style={{fontFamily: BODY, fontWeight: 700, fontSize: 38, color: C.ink}}>{c.t}</div>
             </div>
           );
         })}
@@ -198,20 +205,20 @@ const Warm: React.FC<{len: number}> = ({len}) => {
   const W = DATA.warmStart;
   const w = interpolate(f, [8, 40], [0, W.before], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   const bar = (label: string, pct: number, col: string, top: number) => (
-    <div style={{position: 'absolute', left: 260, top, width: 1400}}>
-      <div style={{fontFamily: MONO, fontSize: 28, color: C.gray, marginBottom: 10}}>{label}</div>
-      <div style={{height: 64, background: '#DDD6C8', borderRadius: 14, overflow: 'hidden'}}>
-        <div style={{height: '100%', width: `${pct}%`, background: col, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', paddingRight: 18, boxSizing: 'border-box', fontFamily: HEAD, fontWeight: 800, fontSize: 36, color: C.ink}}>{Math.round(pct)}%</div>
+    <div style={{position: 'absolute', left: 200, top, width: 1520}}>
+      <div style={{fontFamily: MONO, fontSize: 34, color: C.ink, marginBottom: 12}}>{label}</div>
+      <div style={{height: 96, background: '#DDD6C8', borderRadius: 14, overflow: 'hidden'}}>
+        <div style={{height: '100%', width: `${pct}%`, background: col, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', paddingRight: 18, boxSizing: 'border-box', fontFamily: HEAD, fontWeight: 800, fontSize: 48, color: C.ink}}>{Math.round(pct)}%</div>
       </div>
     </div>
   );
   return (
     <Scene len={len}>
       <Caption size={64} lines={[{t: `Run over run: a ${W.before}% near-miss became a ${W.after}.`, at: 0}]} />
-      {bar(`${W.fn} · run ${W.beforeRun} · stuck`, w, C.lcd3, 330)}
-      {bar(`${W.fn} · next run ${W.afterRun}, from its best try · attempt ${W.attempt}`, interpolate(f, [45, 70], [0, 100], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}), C.mint, 530)}
-      <Stamp text={W.after} at={72} color={C.lcd1} x={1500} y={600} size={84} />
-      <div style={{position: 'absolute', top: 780, left: 0, right: 0, textAlign: 'center', fontFamily: BODY, fontWeight: 600, fontSize: 32, color: C.ink}}>(No held-out gain yet; we don't claim one.)</div>
+      {bar(`${W.fn} · run ${W.beforeRun} · stuck at ${W.before}%`, w, C.lcd3, 290)}
+      {bar(`${W.fn} · next run ${W.afterRun}, from its best try · ${W.after} on attempt ${W.attempt}`, interpolate(f, [45, 70], [0, 100], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}), C.mint, 520)}
+      <Stamp text={W.after} at={72} color={C.lcd1} x={1560} y={770} size={96} />
+      <div style={{position: 'absolute', top: 800, left: 200, fontFamily: BODY, fontWeight: 600, fontSize: 40, color: C.ink}}>(No held-out gain yet; we don't claim one.)</div>
     </Scene>
   );
 };
@@ -223,14 +230,15 @@ const Why: React.FC<{len: number}> = ({len}) => {
   return (
     <Scene len={len}>
       <Caption size={66} lines={[{t: 'One line of recovered C changed.', at: 0}, {t: `${fmt(DATA.equivalence.identical)} of ${fmt(DATA.equivalence.total)} identical in a browser.`, at: 90}]} />
-      <Lcd x={90} y={270} w={880} h={500} label="Change it: health 200%">
-        {/* The clip ends before the scene does; its real last frame holds underneath. */}
-        {has('clips/god_200_end.png') ? <Img src={staticFile('clips/god_200_end.png')} style={{position: 'absolute', width: '100%', height: '100%', objectFit: 'cover'}} /> : null}
-        <div style={{position: 'absolute', inset: 0}}>
+      <Lcd x={110} y={270} w={800} h={549} label="Change it: health 200%">
+        <GameCrop innerW={748}>
+          {has('clips/god_200_end.png') ? <Img src={staticFile('clips/god_200_end.png')} style={{position: 'absolute', width: '100%', height: '100%'}} /> : null}
           <Sequence durationInFrames={135} layout="none">
-            <Clip name="clips/god_200.mp4" from={140} />
+            <div style={{position: 'absolute', inset: 0}}>
+              <Clip name="clips/god_200.mp4" from={140} />
+            </div>
           </Sequence>
-        </div>
+        </GameCrop>
       </Lcd>
       <Card style={{position: 'absolute', left: 1030, top: 270, width: 800, height: 420, overflow: 'hidden', padding: 0}}>
         <Clip name="clips/equivalence.mp4" />
@@ -257,15 +265,15 @@ const Partners: React.FC<{len: number}> = ({len}) => {
   return (
     <Scene len={len}>
       <Caption size={62} lines={[{t: 'Muse writes · Snap judges · the compiler proves · ASI:One asks', at: 0}]} />
-      <div style={{position: 'absolute', top: 360, left: 0, right: 0, display: 'flex', justifyContent: 'center', gap: 40}}>
+      <div style={{position: 'absolute', top: 340, left: 0, right: 0, display: 'flex', justifyContent: 'center', gap: 36}}>
         {cards.map((c, k) => {
           const p = spring({frame: f - 12 - k * 14, fps, config: SPRING.pop});
           return (
-            <Card key={k} style={{width: 380, height: 300, padding: 30, boxSizing: 'border-box', opacity: clamp01(p * 1.5), transform: `translateY(${(1 - p) * 60}px) rotate(${(k % 2 ? 1.5 : -1.5) * p}deg)`}}>
-              <div style={{height: 14, width: 90, background: c.col, borderRadius: 7, marginBottom: 26}} />
-              <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 46, color: C.ink, lineHeight: 1.05}}>{c.who}</div>
-              <div style={{fontFamily: BODY, fontWeight: 600, fontSize: 32, color: C.gray, marginTop: 14}}>{c.job}</div>
-              {'line' in c && c.line ? <div style={{fontFamily: MONO, fontSize: 20, color: C.violet, marginTop: 18}}>{c.line}</div> : null}
+            <Card key={k} style={{width: 420, height: 440, padding: 38, boxSizing: 'border-box', opacity: clamp01(p * 1.5), transform: `translateY(${(1 - p) * 60}px) rotate(${(k % 2 ? 1.5 : -1.5) * p}deg)`}}>
+              <div style={{height: 18, width: 110, background: c.col, borderRadius: 9, marginBottom: 32}} />
+              <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 58, color: C.ink, lineHeight: 1.05}}>{c.who}</div>
+              <div style={{fontFamily: BODY, fontWeight: 600, fontSize: 40, color: C.gray, marginTop: 18}}>{c.job}</div>
+              {'line' in c && c.line ? <div style={{fontFamily: MONO, fontSize: 24, color: C.violet, marginTop: 22}}>{c.line}</div> : null}
             </Card>
           );
         })}
@@ -288,15 +296,17 @@ const End: React.FC<{len: number}> = ({len}) => {
   );
   return (
     <Scene len={len} bg={C.ink}>
-      <div style={{position: 'absolute', top: 150, left: 0, right: 0, textAlign: 'center', transform: `scale(${0.85 + 0.15 * p})`, opacity: clamp01(p * 1.5)}}>
+      <div style={{position: 'absolute', top: 110, left: 0, right: 0, textAlign: 'center', transform: `scale(${0.85 + 0.15 * p})`, opacity: clamp01(p * 1.5)}}>
         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 34}}>
           {has('assets/bolt.svg') ? <Img src={staticFile('assets/bolt.svg')} style={{width: 140, height: 140, imageRendering: 'pixelated'}} /> : null}
           <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 150, color: C.lcd3, letterSpacing: -3}}>FRANKENSTEIN</div>
         </div>
         <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 64, color: C.cream, marginTop: 4}}>Lost games, rebuilt and proven.</div>
         <div style={{fontFamily: MONO, fontSize: 34, color: C.mint, marginTop: 22}}>{DATA.url}</div>
+        <div style={{fontFamily: MONO, fontSize: 26, color: C.cream, marginTop: 10}}>{DATA.repo}</div>
+        <div style={{fontFamily: BODY, fontWeight: 600, fontSize: 28, color: C.cream, marginTop: 14}}>Team: {DATA.team.join(' · ')}</div>
       </div>
-      <div style={{position: 'absolute', top: 660, left: 0, right: 0, display: 'flex', justifyContent: 'center', gap: 120}}>
+      <div style={{position: 'absolute', top: 720, left: 0, right: 0, display: 'flex', justifyContent: 'center', gap: 120}}>
         {col('BUILT TODAY', DATA.builtToday, C.mint)}
         {col('NOT OURS', DATA.notOurs, C.gray)}
       </div>
