@@ -372,11 +372,14 @@ class Run:
         threading.Thread(target=steer_loop, daemon=True).start()
 
     def _permuter(self):
-        """crew.permuter on near-misses: in-process referee core when it is on this machine, else HTTP."""
+        """crew.permuter on near-misses: prefer in-process lab (instruction lists); else HTTP."""
         from . import permuter
 
-        check = permuter.lab_check if getattr(self.referee, "aligner", None) is not None else \
-            permuter.http_checker(self.referee.url)
+        try:
+            permuter._lab()
+            check = permuter.lab_check
+        except Exception:
+            check = permuter.http_checker(self.referee.url)
         budget = self.args.permute_s
 
         def run(fn: str, src: str) -> dict:
