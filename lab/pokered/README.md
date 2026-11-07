@@ -20,14 +20,29 @@ Candidates refer to other code and data by id, for example `call rt_00_3e5c` or 
 
 `check(routine_id, asm_src)` returns the same fields as the Doom referee: `status` (`MATCH`, `PARTIAL`, `NO_COMPILE`, `LINT_FAIL`), `match_pct`, `first_diff`, `diff`, `lint`, `compile`, `elapsed_ms`, plus `bank`, `size` and `got_size`. Each diff entry gives a byte offset, expected and got bytes; the `*_ins` fields are null because no SM83 disassembler is wired in yet.
 
-Lint rejects raw-byte and build-shaping directives (`db`, `dw`, `ds`, `INCBIN`, `INCLUDE`, `SECTION`, `MACRO`, `DEF`, `EQU`, `REPT` and similar) and new global labels. Without this, a candidate could emit the target bytes as data. Data blobs and text records (those that use `db`) therefore can't be submitted as routines.
+Candidates can also pass an id through `predef` and `predef_jump` (for example `predef rt_03_78a5`). Those macros paste a suffix onto their argument (`\1Predef`), so the referee also aliases `<id>Predef` and `<id>_id` (for `tx_pre`) to the real pointer-table entries, and scrubs them from the log the same way.
+
+Lint rejects build-shaping directives (`ds`, `INCBIN`, `INCLUDE`, `SECTION`, `MACRO`, `DEF`, `EQU`, `REPT` and similar) and new global labels.
+
+### Inline data rule
+
+Some routines really do carry data in the middle of their code: pointer tables, text records, `text_asm` headers. Bytes emitted as `db`/`dw`/`dl` or by any pokered macro that expands to them (`text`, `text_far`, `dw_const`, `dba` and the rest; the list is computed from `macros/`) are allowed only where the original routine has data:
+
+1. `python3 lab/pokered/referee.py ranges` builds the original source once with zero-byte marker labels inserted at every switch between code and data statements. The build must reproduce the reference ROM exactly. The `.sym` then gives each data run's exact offsets. The result is cached in `lab/secrets/pokered/data_ranges.json`, and each slice unit lists its ranges under `data`.
+2. Before building, lint rejects every data statement in a routine whose original has no data ranges.
+3. After building, the referee marks the candidate's own data runs the same way. Any run that isn't fully inside one of the original's ranges turns the result into `LINT_FAIL`, even when every byte matches.
+
+So `db $af` in place of `xor a` fails, while the original's own tables pass. Raw bytes can only land where the original has data, and they're compared against that data.
 
 ## Commands
 
 ```
 python3 lab/pokered/referee.py selftest                     # 5 routines: original source MATCH, one-byte edit PARTIAL
 python3 lab/pokered/referee.py check rt_01_4496 cand.asm     # one candidate, JSON result
-python3 lab/pokered/make_slice.py                            # rewrite slice.json and the secret names file
+python3 lab/pokered/referee.py ranges                        # rebuild the inline-data ranges cache (~10 s)
+python3 lab/pokered/make_slice.py                            # title/menu slice.json + secret names file
+python3 lab/pokered/make_slice.py interactions               # slice_interactions.json + secret names file
+python3 -m pytest -q lab/tests/test_pokered.py               # self-test + gap tests (skipped without lab/secrets/pokered)
 ```
 
 A check copies the source tree to a temp directory and rebuilds, which takes about 2 to 3 seconds. Checks don't share state, so they can run in parallel.
@@ -44,15 +59,18 @@ A check copies the source tree to a temp directory and rebuilds, which takes abo
 
 The same routines also MATCH when every original name in the source is rewritten to its anonymised id (tested on rt_01_4496 and rt_01_5e8a).
 
-## Slice
+## Slices
 
-`slice.json` lists the title screen and main menu slice: **148 routines, 8,708 bytes, in 12 banks** (62 in bank 0, 59 in bank 1, the rest spread across 10 others). It records ids, banks, addresses, sizes and call depth only. The original names are in `lab/secrets/pokered/names_slice.json`, which the crew must not read.
+Both slices record ids, banks, addresses, sizes, call depth, `kind` (code, or pure data such as a pointer table) and inline-data ranges only. Original names, entry points and stop points are in `lab/secrets/pokered/` (`names_*.json`, `slice_config*.json`), which the crew must not read.
 
-The slice is the static call closure from the three title and menu entry points, following `call`/`jp`/`jr`, the far-call macros and `predef`. It stops at five boundary routines: the new-game intro, entry to the overworld, the cable club menu, the debug paths and the soft reset. Jump tables and `jp hl` dispatch are not followed, so routines reached only that way are missing. A runtime trace would close that gap.
+The closure follows `call`/`jp`/`jr`, the far-call macros, `predef`, `dw`-style pointer entries, and `ld hl/de/bc, T` when `T` is a pointer table. That last rule catches jump-table dispatch through `CallFunctionInTable`, `JumpTable` and `jp hl`, which covers map script pointers and text pointers.
+
+- `slice.json`, title screen and main menu: **165 routines (164 code), 9,139 bytes, 12 banks** (0, 1, 2, 3, 4, 7, 8, 13, 15, 16, 28, 31). Following jump tables raised it from 148 routines and 8,708 bytes. Same three entry points and five boundaries as before: the new-game intro, overworld entry, cable club, debug paths and soft reset.
+- `slice_interactions.json`, new game to the first rival battle: **368 units (322 code, 46 data tables/text), 20,928 bytes, 20 banks** (0-8, 13-18, 22, 23, 28, 31, 44). Entry points: the new-game path and the intro speech, plus the scripts and text-pointer tables of Red's house (both floors), Pallet Town and Oak's lab. That covers naming, Oak stopping the player, choosing the starter, the rival's pick and the rival's challenge. It stops at 11 boundaries: overworld engine entry and loop, battle engine entry, start menu, soft reset, the later Pallet Town script, and every lab script after the rival battle starts (end of battle, rival leaving, Pokédex). The battle itself is not in this slice.
 
 ## Known limits
 
-- The `predef` macro takes a symbolic name, so a candidate can't pass an id through it. Candidates need to write the expanded form instead.
 - A routine's size runs from its label to the next global label in the same section. Data that sits between two routines counts toward the first one.
-- Only the routines that appear in the self-test have been checked end to end. Routines with inline data will LINT_FAIL until lint gets a per-routine allowance like Doom's.
-- Nothing here covers the first Pokémon interactions yet. The next step is to extend the closure from the new-game boundary (the intro, then Oak's lab).
+- Checked end to end: the self-test, one predef routine, and one title routine with inline data. A test in `lab/tests/test_pokered.py` covers each of the four fixes.
+- Routines whose original body uses `INCLUDE`, `DEF`, `MACRO` or `REPT` still LINT_FAIL on the original source (17 in the interaction slice, 7 in the title slice). They need a per-routine allowance.
+- Fallthrough between labels (one label running into the next with no jump) isn't an edge. Neither is any target computed at runtime. A runtime trace would close both.
