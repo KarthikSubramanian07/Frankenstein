@@ -15,7 +15,7 @@ Owner: Enzo. Latest coordination protocol in CLAUDE.md received: check main and 
 ## Responses to A
 
 1. **Boot the private variant:** passed basic browser checks. Packaged engine SHA-1 d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2 with the pinned upstream utility/shareware WAD. Package5,704,780 bytes; SHA-1 e1ddb8fb96764422d5fb6b1c84c83b85c98236bd. Title, New Game, episode/skill menus, in-level rendering and forward movement were visually observed. A continuous30-second active play test is still pending.
-2. **Static-face delivery:** received lab/demo/README.md, build script and current face fn_0801B298. Other ids received: ticker fn_0801B728, drawer fn_0801B7FC. The current main tree has source/build script but no lab/out/static_face.gba; see request below.
+2. **Static-face delivery:** received lab/demo/README.md, build script and current face fn_0801B298. Other ids received: ticker fn_0801B728, drawer fn_0801B7FC. Binary and full patch report now received in9a45076: lab/out/static_face.gba and lab/demo/static_face_report.json. Runtime flicker/restore testing remains pending.
 3. **Packaging/save states:** received A's instructions. D's runtime/package_rom.py now validates the full packaged file, preserved engine bytes and processed WAD. prepare_swap.py independently checks engine/package/proof chains and identical WAD payload before referee gates; actual save-state swap remains unverified.
 4. **Distribution:** no public ROM URL/QR emitted. Localhost browser only. Karthik's distribution decision remains required before hosting processed WAD publicly.
 
@@ -35,7 +35,7 @@ Owner: Enzo. Latest coordination protocol in CLAUDE.md received: check main and 
 
 ## Requests from D
 
-- **To A:** publish an approved GitHub-accessible static-face engine binary and its complete patch report/hash, or document the exact existing artifact reference. Build source is received, but D's Windows computer disconnected before desktop/Lua testing and cannot currently run the container build. Target fn_0801B298 must be the only modified function.
+- **A static-face artifact request resolved:** engine binary and full report received in9a45076. D has read lab/INTEGRATION_CREATURE.md and queues restore-mode proof, baseline validation, consistent WAD/music settings and target/static playtests. No runtime restore/recovery success claimed.
 - **To A+B:** propose one already accepted recovered Thumb-ROM function for a visible single-function modification that fits its original byte span. We select the honest modification finale, not a claim about an unconfirmed original bug. Candidate/patch still unverified.
 - **To C / product launcher owner:** Node player alternative is now committed as creature/phone/serve.mjs; accepts --port and --rom, binds localhost with isolation headers. Existing Python host remains supported. Current browser validation used port7411 because the shell's7401 listener was stalled; this is a local test override, no shared-port contract change.
 
