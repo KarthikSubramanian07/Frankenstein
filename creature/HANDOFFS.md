@@ -1,59 +1,34 @@
-> Current integration update: browser boot/menu/newgame/movement verified. Packaging and package-aware preflight implemented. B exports and C geometry/routes received. See [STATUS.md](STATUS.md) and [runtime/BOOT.md](runtime/BOOT.md). Only unresolved hero-cycle prerequisite is A's current static-face build/id/activation; older requests below are historical until reconciled by STATUS.
+# Lane D handoffs
 
-# Lane D handoffs and integration status
+Owner: Enzo. Latest coordination protocol in CLAUDE.md received: check main and other lanes' handoffs at least every10 minutes during active work, publish checkpoints at least every20 minutes. Connector commits are serialized while shell Git is unavailable. See STATUS.md and runtime/BOOT.md for current proof.
 
-Owner: Enzo / Lane D. Updated 2026-11-07, from main's current DECISIONS.md.
-Read this file alongside creature/README.md and WORKPLAN.md (active parallel ownership); EXPERIENCE_IDEA.md carries the SubQ extension proposal. This is a request/status document, not a change to contracts.
+## Responses to A
 
-## Current priority and status
+1. **Boot the private variant:** passed basic browser checks. Packaged engine SHA-1 d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2 with the pinned upstream utility/shareware WAD. Package5,704,780 bytes; SHA-1 e1ddb8fb96764422d5fb6b1c84c83b85c98236bd. Title, New Game, episode/skill menus, in-level rendering and forward movement were visually observed. A continuous30-second active play test is still pending.
+2. **Static-face delivery:** received lab/demo/README.md, build script and current face fn_0801B298. Other ids received: ticker fn_0801B728, drawer fn_0801B7FC. The current main tree has source/build script but no lab/out/static_face.gba; see request below.
+3. **Packaging/save states:** received A's instructions. D's runtime/package_rom.py now validates the full packaged file, preserved engine bytes and processed WAD. prepare_swap.py independently checks engine/package/proof chains and identical WAD payload before referee gates; actual save-state swap remains unverified.
+4. **Distribution:** no public ROM URL/QR emitted. Localhost browser only. Karthik's distribution decision remains required before hosting processed WAD publicly.
 
-- Primary demo: Doom running, static-face stub in the ROM, one verified recovered face function, face restored. OBS region-healing overlay is a bonus.
-- Follow DECISIONS.md: freeze 14:55 Pacific; record 16:10; submit 16:30. Finale bug or honest modification decided by 13:00.
-- Lane A has already committed the real manifest, asm/context and viz_map. The private variant regenerated all function ids. Always re-read the current manifest; the old face id is obsolete.
-- GitHub connector publishing works (handoff and workplan committed). Shell Git still has DNS failure; root serializes connector commits. No emulator boot, swap, physical-phone play or recording has been verified by D yet.
-- Coordinate through GitHub only. No cross-laptop LAN endpoints, hotspot sharing, or tunnels. Existing contracts remain authoritative. Do not commit secrets or ROMs.
+## Responses to B
 
-## Requests to A (Lab)
+1. **Real export:** received doom_r01 and verified all31 exported file hashes plus manifest/target identity. runtime/sync_inputs.mjs makes that repeatable from a pinned commit. This verifies export consistency, not an independent referee rerun.
+2. **Telemetry:** bridge/director_adapter.py targets the real crew.run --director endpoint :7112/heartbeat. It forwards only fresh observed ids and optional screenshot bytes; inspect-only by default. Local bridge/Lua end-to-end still needs the connected demo host.
+3. **Heartbeat aging/lifecycle:** B's handoff says stale samples now expire after12s and intake port closes when run ends; received.
+4. **Eyes:** received crew.eyes command. Will use on real before/after frames; no synthesized visual judgment is claimed.
+5. **Face recovery/finale:** face attempt status received (early attempts far off); keep the smaller-HUD fallback under consideration. Static-face display stub alone must not be presented as recovered source.
 
-Please publish responses and implementation details inside lab/ and reference this document in your commit message where useful.
+## Responses to C
 
-1. Confirm the static-face stub plan: how to build/select the unrecovered display state, how the recovered face function restores normal display, and the exact fn id(s). Keep the display rule honest; no claim that actual code recovery has happened when running a sample.
-2. Provide reproducible local boot/WAD-packaging commands for the committed engine ROM on Windows. Latest setup_referee.sh only starts the container and does not reconstruct the private source.
-3. Received: engine target.gba and link_info.json are committed; rebuild/patch now implemented (11:49 A update, object-splice contract method). D still needs a bootable WAD-packaged build and actual runtime validation.
-4. When ready, supply rebuild/patch usage and reports under the existing contracts. Byte-identical rebuild swap and intentionally changed patch are separate cases; a patch cannot pass the original-ROM identical-hash check.
-5. For a patch loaded over an existing save state, document whether code layout and game-state layout remain compatible. D will only claim uninterrupted play after testing; reboot/menu/recorded fallback is acceptable and labeled.
-6. Confirm license/distribution requirements before any public patched-ROM phone demo. A GitHub-hosted site/artifact route would need an explicit team-approved distribution plan; no tunnel assumed.
+1. Routes and exact Split x20/y92,960x640 received from stage/HANDOFF_D.md. OBS instructions updated.
+2. Actual ending credits scene is primary; standalone D endcard is fallback. Badge must remain original code until a real rom.swapped.
+3. No phone.published event or fake QR supplied. Public/physical phone play is not yet verified.
 
-## Requests to B (Crew)
+## Requests from D
 
-Please publish responses in crew/; real run artifacts must follow the team's GitHub-only coordination rule and existing schemas.
+- **To A:** publish an approved GitHub-accessible static-face engine binary and its complete patch report/hash, or document the exact existing artifact reference. Build source is received, but D's Windows computer disconnected before desktop/Lua testing and cannot currently run the container build. Target fn_0801B298 must be the only modified function.
+- **To A+B:** propose one already accepted recovered Thumb-ROM function for a visible single-function modification that fits its original byte span. We select the honest modification finale, not a claim about an unconfirmed original bug. Candidate/patch still unverified.
+- **To C / product launcher owner:** Node player alternative is now committed as creature/phone/serve.mjs; accepts --port and --rom, binds localhost with isolation headers. Existing Python host remains supported. Current browser validation used port7411 because the shell's7401 listener was stalled; this is a local test override, no shared-port contract change.
 
-1. Prioritize the face function once A confirms its current id and recoverability; report whether 1,160 bytes is feasible or whether a smaller hero function is needed.
-2. Provide a documented way for D to obtain an explicit real run snapshot on its own machine: events.jsonl, run id, accepted recovered C, and matching manifest/build identity. runs/ is ignored, so merely writing files locally does not deliver them to another laptop. Propose a GitHub artifact or approved sanitized export location in your own folder; do not silently add a new contract.
-3. Keep fixtures/replays labeled. D computes healing only from accepted fn.matched events, deduplicated per function and reset per run; names are not proof.
-4. Select one accepted recovered function for a visible, single-function finale modification with A. Provide accepted source and verification reference before D edits it.
+## Current blocker / next action
 
-## Requests to C (Stage)
-
-Please publish responses in stage/.
-
-1. Confirm actual local launch command, port and scene routes, especially split and ending.
-2. Confirm game opening geometry at 1920x1080: x/y/width/height, any crop, transparent background behavior, and whether capture is via OBS or embedded browser emulator.
-3. Agree that face restoration inside the ROM is primary; region-overlay healing can follow when the end-to-end path works.
-4. Read D's eventual rom.swapped / patch.verified / phone.published events using existing contracts. Never display a running-agent-code percentage before a confirmed swap.
-5. Provide a place in the ending scene for credits, actual recovery percentage, verified checksums and Built today / Not ours. Do not assume 100% completion.
-
-## What D will provide
-
-- Local bridge inputs for explicit event, manifest and viz_map paths; fixture and disconnected states identified.
-- Lua/emulator integration where supported by current mGBA APIs, with truthful readiness and swap status.
-- Optional transparent 240x160 region overlay on port 7302; bridge websocket 7301; phone page 7401.
-- Verified swap/patch/publication events only after successful real actions, never fixture success passed as live.
-- Controller/capture setup, credits/end card, and 60-second captioned recording workflow.
-- Phone shell can be prepared without a ROM; playable public distribution waits on a working core, real ROM and license/distribution review.
-
-## Ongoing synchronization
-
-During active implementation, D reads latest main and relevant DECISIONS/lab/crew/stage handoffs before each work chunk, before publishing, and after publishing. Small commits touch creature/ only. Normal Git uses pull --rebase before push. Connector fallback uses the contents API for small creature-only files, reading current main first and passing the current file blob SHA for updates. After publication, inspect the resulting commit and current main; retry conflicts only after reading incoming changes. Never overwrite a teammate.
-
-Update this document as requests resolve and implementation lands. This policy is executed during active work; it is not an unattended background monitor.
+Connected Windows environment became unavailable during desktop ROM-open action. No current desktop boot or Lua success is claimed. Resume host connection, package static-face engine, verify flicker vs normal face, run real telemetry through the bridge/Director, then test a verified source rebuild/swap. Browser boot evidence was saved locally as creature/shots/browser-boot.jpg before disconnection. Runtime/vendor, generated packages and core binaries stay ignored.
