@@ -1,0 +1,30 @@
+{
+  "v": 1,
+  "run_id": "transfer_warm_2",
+  "names": [
+    {
+      "fn": "fn_08002520",
+      "name": "clear_register_bits",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08002238",
+      "name": "is_power_of_two",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08002B8C",
+      "name": "store_table_entry",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08002EE4",
+      "name": "oam_set_obj_attrs",
+      "inferred": true,
+      "basis": "recovered code"
+    }
+  ]
+}

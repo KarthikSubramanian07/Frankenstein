@@ -1,0 +1,50 @@
+[
+ {
+  "run": "lab/exports/transfer/cold/r2",
+  "fn_total": 20,
+  "matched_crew": 4,
+  "matched_verified": 4,
+  "attempts_per_match": 1.75,
+  "minutes_per_match": 3.155,
+  "digger_cost_per_match_usd": 0.1073,
+  "run_cost_usd": 3.3323,
+  "run_cost_per_match_usd": 0.8331,
+  "attempts_total": 72,
+  "elapsed_s": 1202.3,
+  "library": "off",
+  "library_size": 0,
+  "case_memory": 0,
+  "idiom_offers": 0,
+  "case_offers": 0,
+  "verified_fns": [
+   "fn_080022E4",
+   "fn_08002520",
+   "fn_08002B8C",
+   "fn_08002EE4"
+  ]
+ },
+ {
+  "run": "lab/exports/transfer/warm/r2",
+  "fn_total": 20,
+  "matched_crew": 4,
+  "matched_verified": 4,
+  "attempts_per_match": 2.75,
+  "minutes_per_match": 3.4275,
+  "digger_cost_per_match_usd": 0.1168,
+  "run_cost_usd": 3.5397,
+  "run_cost_per_match_usd": 0.8849,
+  "attempts_total": 78,
+  "elapsed_s": 1198.1,
+  "library": "on",
+  "library_size": 38,
+  "case_memory": 28,
+  "idiom_offers": 180,
+  "case_offers": 8,
+  "verified_fns": [
+   "fn_08002238",
+   "fn_08002520",
+   "fn_08002B8C",
+   "fn_08002EE4"
+  ]
+ }
+]

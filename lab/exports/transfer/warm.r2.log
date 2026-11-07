@@ -1,0 +1,12 @@
+run transfer_warm_2 -> /Users/eddyz/Hackathon Destruction/frankenstein/runs/transfer_warm_2  referee=lab  manifest=manifest.json
+{
+  "run_id": "transfer_warm_2",
+  "label": "voxelburg transfer \u00b7 warm \u00b7 r2",
+  "matched": 4,
+  "fn_total": 20,
+  "match_rate": 0.2,
+  "attempts_per_match": 2.75,
+  "false_claims_caught": 3,
+  "cost_usd": 3.5397,
+  "elapsed_s": 1198.1
+}

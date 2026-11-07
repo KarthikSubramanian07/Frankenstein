@@ -1,0 +1,12 @@
+run transfer_cold_2 -> /Users/eddyz/Hackathon Destruction/frankenstein/runs/transfer_cold_2  referee=lab  manifest=manifest.json
+{
+  "run_id": "transfer_cold_2",
+  "label": "voxelburg transfer \u00b7 cold \u00b7 r2",
+  "matched": 4,
+  "fn_total": 20,
+  "match_rate": 0.2,
+  "attempts_per_match": 1.75,
+  "false_claims_caught": 1,
+  "cost_usd": 3.3323,
+  "elapsed_s": 1202.3
+}

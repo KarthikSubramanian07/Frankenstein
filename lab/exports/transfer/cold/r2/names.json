@@ -1,0 +1,30 @@
+{
+  "v": 1,
+  "run_id": "transfer_cold_2",
+  "names": [
+    {
+      "fn": "fn_08002520",
+      "name": "clear_bits",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08002B8C",
+      "name": "store_indexed_record_with_flag",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08002EE4",
+      "name": "set_oam_entry",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080022E4",
+      "name": "alloc_formatted_string",
+      "inferred": true,
+      "basis": "recovered code"
+    }
+  ]
+}
