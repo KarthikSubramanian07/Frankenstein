@@ -64,3 +64,6 @@ A dated log. Every assumption, contradiction, and partner-prize answer goes here
 - Consequence: the SubQ Cartographer (Lane B Step 4) is in scope again, right after the first real Digger match. It must be load-bearing and measured: run r04 (held-out, library on + cartographer) against r02 and report the difference honestly, plus the whole-program context size sent to SubQ. Get a SubQ key from the Subquadratic table now.
 - Prize stack we target: Overall + Meta ($5k) + Fetch.ai ($2.5k) + Subquadratic ($5k). Gemini stays optional (credits only).
 
+## 2026-11-07 11:20 · Lane A
+
+- 2026-11-07 11:20 (A): T1 passes. devkitARM r68, GCC 16.1.0 in Docker (digest in `lab/TOOLCHAIN.md`), GBADoom @7763f5f minus `-flto=8`. Target SHA-1 `a6c18b5d4d0f7fb503423a7350a88237f43f2bb1`, 840 functions in the ELF. Static helpers inline at -O3, so the face code is one function (`ST_updateFaceWidget`, 1,160 bytes).
