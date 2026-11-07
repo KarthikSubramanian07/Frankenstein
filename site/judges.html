@@ -30,7 +30,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Schibsted+Grotesk:wght@500;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&family=Press+Start+2P&display=swap">
 <link rel="stylesheet" href="/assets/site.css?v=23">
-<link rel="stylesheet" href="/assets/road.css?v=1">
+<link rel="stylesheet" href="/assets/road.css?v=2">
 <link rel="stylesheet" href="/assets/judges.css?v=5">
 
 <script type="application/ld+json">
@@ -88,24 +88,15 @@
         <dl>
           <div><dt>What it is</dt><dd><b>AI agents rebuild a lost game's source code from the cartridge.</b> It's for game preservation groups and rights holders, because 87% of classic US games are critically endangered and their code is gone.</dd></div>
           <div><dt>What's proven</dt><dd><b>A piece only counts if it's byte-identical:</b> the compiler turns the agents' C into the original's exact bytes. Put back into Doom, the rebuilt game has the same checksum.</dd></div>
-          <div><dt>The numbers</dt><dd><b>83 of Doom's 568 game functions are back.</b> That's 2.34% of the code by size, because the crew starts with the small ones.</dd></div>
+          <div><dt>The numbers</dt><dd><b>166 of Doom's 568 game functions are back, proven exact.</b> That's 4.62% of the code by size, because the crew starts with the small ones.</dd></div>
           <div><dt>Try it</dt><dd><b>Press Enter at our table</b> and watch two agents recover a function live. Then play Doom on the controller, or scan the QR code to play it on your phone.</dd></div>
           <div><dt>Not done yet</dt><dd><b>Doomguy's face (1,164 bytes) isn't recovered,</b> and the habit library hasn't beaten noise on unseen code. Both are said plainly below.</dd></div>
         </dl>
       </section>
 
-      <!-- PROOF: progress meter -->
-      <figure class="pc progress" id="progress" data-functions="83" data-total="568" data-pct="14.6" data-bytes-pct="2.34" data-asof="14:08" data-source="unique fn.matched across runs/*" data-cells="0 23 42 47 50 64 70 71 75 76 81 82 85 88 89 95 96 100 107 116 117 122 124 126 128 130 134 137 142 146 158 160 162 170 180 187 193 194 195 207 221 225 233 239 252 260 264 266 270 298 301 333 334 353 365 375 385 386 391 402 404 409 437 438 451 452 454 455 458 470 474 476 484 487 491 504 505 514 521 534 535 538 550">
-        <p class="pc-k"><span class="ev ev-proved">PROVED</span> game functions recovered</p>
-        <p class="big"><span class="count" data-to="83">83</span><span class="of"> of 568</span></p>
-        <p class="big-l"><b>14.6%</b> of functions &middot; <b class="bytes">2.34% by code size</b></p>
-        <div class="meter" role="img" aria-label="568 cells, one per Doom game function in address order; 83 are filled mint because the compiler proved them."></div>
-        <p class="hand note note-meter"><svg class="arr" aria-hidden="true"><use href="#arrow-down-left"/></svg>each mint cell is one function the compiler proved</p>
-        <figcaption>Source: unique <code>fn.matched</code> across <code>runs/*</code>, 14:08. Small functions go first, so the byte share trails the count.</figcaption>
-      </figure>
+      <!-- PROOF: the road to 100% (assets/road.js, from data/union.json) -->
+      <div id="progress" data-road aria-label="The road to 100%: how much of Doom is back, from crew/exports/union/UNION.json"></div>
     </div>
-
-    <div data-road aria-label="The road to 100%: how much of Doom is back, from crew/exports/union/UNION.json"></div>
 
     <div class="table-row">
       <section class="try" aria-labelledby="try-h">
@@ -191,7 +182,7 @@
         <div><dt>Implementation Difficulty <span class="pct">30%</span></dt><dd>Agents must write C that compiles to Doom's exact bytes at <code>-O3</code>, past a referee, a fake detector and a full ROM rebuild we built today. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/tree/main/lab">lab/</a></dd></div>
         <div><dt>Impact Potential <span class="pct">20%</span></dt><dd>87% of classic US games are critically endangered, and source code is what lets a game be fixed and ported again. <span class="src">VGHF and SPN, 2023</span></dd></div>
         <div><dt>Creativity <span class="pct">15%</span></dt><dd>A lab where agents lie and the referee can't be fooled; play the game, and Snap rebuilds what's on your screen first. <a class="src" href="#subquadratic">Play to recover</a></dd></div>
-        <div><dt>Progress so far</dt><dd>83 of 568 game functions are back, every one proved by the compiler, and the rebuilt game keeps its checksum. <a class="src" href="#progress">see the meter</a></dd></div>
+        <div><dt>Progress so far</dt><dd>166 of 568 game functions are back (4.62% of the code bytes), every one proved by the compiler, and the rebuilt game keeps its checksum. <a class="src" href="#progress">see the meter</a></dd></div>
       </dl>
       <div class="proof">
         <figure class="pc rebuild" id="rebuild-proof">
@@ -567,6 +558,6 @@
   </div>
 </footer>
 <script src="/assets/judges.js?v=4" defer></script>
-<script src="/assets/road.js?v=1" defer></script>
+<script src="/assets/road.js?v=2" defer></script>
 </body>
 </html>

@@ -65,3 +65,4 @@
 @media (max-width:480px){.rd-cells i{height:12px}.rd-q b{font-size:1.7rem}.rd-bands{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.road *{transition:none!important;animation:none!important}}
 .rd-cells::after{content:"";flex-grow:9999}
+.tldr-grid:has(> .road){grid-template-columns:minmax(0,1fr)}.tldr-grid>.road{margin-top:0}
