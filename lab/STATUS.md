@@ -1,6 +1,6 @@
 # Lane A status
 
-Updated 12:35. Owner: Eddy.
+Updated 12:46. Owner: Eddy.
 
 | Gate | State | Proof |
 |---|---|---|
@@ -11,6 +11,7 @@ Updated 12:35. Owner: Eddy.
 | rebuild / patch | done | relinking unchanged C: 0 bytes differ; one constant: 1 byte, one function |
 | ASI:One agent | done | verified live in ASI:One at 12:18 (MATCH and REJECTED) |
 | Memory probe, both builds | blocked | needs Eddy's `META_API_KEY` |
-| Static-face demo ROMs for D | in progress | ETA 13:15, `lab/demo/` |
+| Static-face demo ROMs for D | done | `python3 -m lab.demo.build_demo_roms`; one function changed (`fn_0801B298`) |
+| Globals labelled in asm and ctx | done | 761 literal-pool words annotated, 425 ctx headers list their globals |
 
-Next: static-face ROMs; literal-pool globals in asm and ctx (helps the crew match); lint bypass hardening; crew-to-referee integration check.
+Next: lint bypass hardening and the crew-to-referee integration check (both running), then the memory probe once the Meta key lands.
