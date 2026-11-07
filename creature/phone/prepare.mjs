@@ -1,0 +1,11 @@
+import { copyFile, mkdir, access } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+const root = fileURLToPath(new URL('.', import.meta.url));
+const source = resolve(root, 'node_modules/@thenick775/mgba-wasm/dist');
+const target = resolve(root, 'core');
+await access(resolve(source, 'mgba.js'));
+await access(resolve(source, 'mgba.wasm'));
+await mkdir(target, { recursive: true });
+for (const name of ['mgba.js', 'mgba.wasm']) await copyFile(resolve(source, name), resolve(target, name));
+console.log('Prepared same-origin mGBA core. Serve this directory with server.py.');
