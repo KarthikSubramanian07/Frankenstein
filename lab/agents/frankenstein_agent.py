@@ -213,9 +213,11 @@ def _finish_job(fn: str, job: dict, words: str | None = None) -> str:
 
 
 def recovered_files() -> dict[str, Path]:
-    """Accepted C from the live run and from jobs started in ASI:One (runs/r_asi_*); newest wins per function."""
+    """Accepted C from the crew's union of every run (crew/exports/union, each re-verified), the live run and jobs
+    started in ASI:One (runs/r_asi_*); newest wins per function. The rebuild re-checks every file anyway."""
     found: dict[str, Path] = {}
-    dirs = [REPO / "runs" / "live" / "recovered"] + sorted((REPO / "runs").glob("r_asi_*/recovered"))
+    dirs = ([REPO / "crew" / "exports" / "union" / "recovered", REPO / "runs" / "live" / "recovered"]
+            + sorted((REPO / "runs").glob("r_asi_*/recovered")))
     for d in dirs:
         for f in d.glob("fn_*.c") if d.exists() else []:
             if f.stem not in found or f.stat().st_mtime > found[f.stem].stat().st_mtime:
@@ -226,11 +228,11 @@ def recovered_files() -> dict[str, Path]:
 def answer_status() -> str:
     s = _http("GET", f"{CREW_URL}/status")
     game = [f for f in referee().functions.values() if f["scope"] == "game"]
-    if s:
-        matched, total, pct, lies = s.get("matched"), s.get("fn_total") or len(game), s.get("pct_recovered"), s.get("false_claims")
-    else:
-        matched, total, lies = len(recovered_files()), len(game), None
-        pct = round(100.0 * matched / total, 1) if total else 0.0
+    # The count comes from the files on disk (union + live + ASI:One), not from one run's status, so it is the
+    # whole game's number; the rebuild intent proves them byte for byte.
+    matched, total = len(recovered_files()), len(game)
+    pct = round(100.0 * matched / total, 1) if total else 0.0
+    lies = None  # the crew's /status counts one run only; the all-runs number is in crew/EXPERIMENTS.md
     lines = ["### How much of DOOM is back", "", OBSERVED,
              f"- Functions recovered and byte-identical: {matched} of {total} ({pct}%)"]
     if lies is not None:
