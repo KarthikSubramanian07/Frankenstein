@@ -44,13 +44,13 @@ rehearsal first.
 
 | Time | Screen | The judge does | Karthik says (exact words) | Rubric · problem · prize | Fallback |
 |---|---|---|---|---|---|
-| **0:00 to 0:12** | Doom running full screen. | Watches. | "Most old games survive only as a cartridge: the source code is gone. Our agents read the cartridge's machine code and write the C back, and a compiler proves every piece. This is Doom." | Impact 20 (identity in 10 s) · Software Archaeology | No playable ROM on the demo laptop: start on the Stage's Split scene and say the same words. |
+| **0:00 to 0:12** | Doom running full screen. | Watches. | "For most old games, only the cartridge survives. The recipe, the source code, is gone. It's like being handed a cake and asked for the exact recipe. Our agents write the recipe back from the cartridge, and a compiler bakes it to check it's the same cake, byte for byte. This is Doom." | Impact 20 (identity in 10 s) · Software Archaeology | No playable ROM on the demo laptop: start on the Stage's Split scene and say the same words. |
 | **0:12 to 0:20** | Terminal: `Judge: press ENTER to hire the agents.` | **Presses Enter.** | "Press Enter. You just hired two agents." | Technical Demo 35 (judge triggers it) | Referee down: "the referee is down, so nothing can count; here's the last real run", key `1` on the replay (REPLAY badge stays visible). |
 | **0:20 to 0:55** | Stage Split (open `http://localhost:5173/?legacy=1&scene=split`; the default Stage is the log plus the ending card): machine code on one side, Muse writing C on the other, the MATCH stamp, then the judgment rail. | Watches the stamp. | "Left: what's on the cartridge. Right: C that Meta's Muse Spark is writing right now. One rule: it only counts if it compiles to the exact same bytes." (at MATCH) "There. Byte for byte, checked in a fifth of a second. Then SubQ Snap screens it for tricks." | Difficulty 30 · Meta (Muse writes every line) · Subquadratic (Snap's decision line on screen) | Nothing lands by 0:50: "Agents are slow; the referee isn't." Key `1` on the replay. |
 | **0:55 to 1:15** | Versus or the Road scene: a claimed match, the referee's re-run, REJECTED with the first wrong instruction. | Reads the red line. | "Agents lie. Today they told us 'it matches' 24 times when it didn't. The referee re-runs every claim, and one instruction gives each of them away." | Trust but Verify · Difficulty 30 | Versus has no live lie: show the FALSE CLAIM card on `/judges` (real event from `doom_r12`). |
 | **1:15 to 1:35** | Ending: ORIGINAL and REBUILT checksums, IDENTICAL. Then the meter. | Compares the two lines. | "We put the agents' code back into Doom: 170 functions. Same checksum as the original. Not similar: identical. That's 170 of Doom's 568 functions so far, the small ones first." | Software Archaeology (observed vs inferred) · Overall | Ending says NOT REBUILT YET: show the `/judges` rebuild card. |
-| **1:35 to 2:00** | Doom (original build), controller in the judge's hands. | **Presses Up Up Down Down Left Left Right Right**; god mode turns on (health 100%). | "Doom's god-mode cheat on the Game Boy is a button sequence. Press up, up, down, down, left, left, right, right. That just ran the god-mode function our agents rebuilt from machine code; the code that reads the buttons is still the original." | Technical Demo 35 (hands on) · Creativity 15 | Cheat doesn't trigger: say "the god-mode function is one we rebuilt", move on. Sequence and source: `lab/demo/iddqd.md`. **UNTESTED: confirm the sequence on our player and its key mapping.** |
-| **2:00 to 2:30** | Same cheat in the changed build: the status bar reads **200%**. Optional: Snap's eyes line "CHANGE CONFIRMED". | Presses the sequence again. | "And this is why source matters. An emulator can only play the game. We changed one line in the agents' god-mode C, rebuilt, and now god mode gives you 200% health. Everything else is byte for byte the same." | Creativity 15 · Software Archaeology ("extend") · Subquadratic (eyes) | `god_200` not playtested or doesn't boot: use `instant_raise` ("we changed the weapon-raise function, and now your gun appears instantly"). Neither works: cut the beat, say "Recovered code can be changed and rebuilt; that's next." **UNTESTED: both ROMs need packaging with the WAD and a playtest.** |
+| **1:35 to 2:00** | Doom (original build), controller in the judge's hands. | **Presses Up Up Down Down Left Left Right Right**; god mode turns on (health 100%). | "Doom's god-mode cheat on the Game Boy is a button sequence. Press up, up, down, down, left, left, right, right. That just ran the god-mode function our agents rebuilt from machine code; the code that reads the buttons is still the original." | Technical Demo 35 (hands on) · Creativity 15 | Cheat doesn't trigger: say "the god-mode function is one we rebuilt", move on. Sequence and source: `lab/demo/iddqd.md`. Tested 15:07 in the browser player: arrow keys, "DEGREELESSNESS MODE ON", HEALTH 100% (`lab/demo/shots/original_god_after.png`). |
+| **2:00 to 2:30** | Same cheat in the changed build: the status bar reads **200%**. Optional: Snap's eyes line "CHANGE CONFIRMED". | Presses the sequence again. | "And this is why source matters. An emulator can only play the game. We changed one line in the agents' god-mode C, rebuilt, and now god mode gives you 200% health. Everything else is byte for byte the same." | Creativity 15 · Software Archaeology ("extend") · Subquadratic (eyes) | `god_200` not playtested or doesn't boot: use `instant_raise` ("we changed the weapon-raise function, and now your gun appears instantly"). Neither works: cut the beat, say "Recovered code can be changed and rebuilt; that's next." `god_200` tested 15:07: HEALTH 200% (`lab/demo/shots/god_200_after.png`, package 5d434437…). `instant_raise` is still untested, so god_200 is the beat. |
 | **2:30 to 2:45** | QR on screen; Enzo hands Phone A to a judge. | Scans or takes the phone. | "Scan it. That's the rebuilt game on your phone, in a browser emulator." | Impact 20 · Overall | No QR: hand over Phone A. No phone works: skip. |
 | **2:45 to 3:00** | Credits card: built today / not ours. | Reads. | "Ask for any function in ASI:One and the Fetch.ai agents bring back the proof. Muse writes it, Snap judges it, the compiler proves it. On the left, everything we built today; on the right, everyone else's work. Lost games, rebuilt and proven." | Disqualifier rule (built today) · Fetch.ai | none |
 
@@ -67,23 +67,26 @@ Stop at 3:00, even mid-sentence.
 - The System That Gets Better is a Q&A answer, not a scene: our held-out result shows no measured gain, and
   the guide asks for changes "that held-out evaluation confirms". Saying it plainly is stronger than a weak curve.
 
-## The 60-second video (record 16:30, one take of the real system, captions burned in)
+## The 60-second video (record 16:30, one take of the real system, narrated, captions burned in)
 
-Today's work only. Real capture only. REPLAY badges stay on screen.
+Today's work only. Real capture only. REPLAY badges stay on screen. The playbook (`04_strategy/demo_video_patterns.md`,
+`judging_psychology_and_pitch.md`) says: open on a hard claim, product on screen by 0:15, one proof moment, measured
+numbers said aloud, and a narrated video (narrated videos won about twice as often at HackMIT 2026). So the video opens
+on the most visible thing we have, the changed game, and then explains it. Raw clips: `lab/demo/clips/` (fork F6).
 
-| Time | Shot | Caption |
-|---|---|---|
-| 0 to 5 | Doom running | Lost games, rebuilt and proven. Agents read Doom's cartridge and write the C back. |
-| 5 to 12 | Enter pressed, Split: machine code next to Muse writing C | Meta's Muse Spark writes C from machine code. LIVE. |
-| 12 to 20 | MATCH stamp and the judgment rail | It only counts if it compiles to the exact same bytes. SubQ Snap screens every match. |
-| 20 to 28 | REJECTED card with the first wrong instruction | Agents lie: 24 false claims caught, 30 fakes rejected, 0 let through. |
-| 28 to 36 | Ending: two identical checksums, then the meter | 170 agent-written functions rebuilt into Doom. Identical checksum. 170 of 568 so far. |
-| 36 to 44 | God-mode button sequence, god mode on (if rehearsed) | This cheat runs a function our agents rebuilt. |
-| 44 to 52 | Same cheat in the changed build: health 200% (if playtested); otherwise a phone playing | Change one line of recovered C, and the game changes. |
-| 52 to 60 | Credits card | Built today: the referee, the agents, the Stage, the phone page. Not ours: Doom, GBADoom, the WAD, mGBA, devkitARM, the partner platforms. |
+| Time | Shot | Voice (Karthik) | Caption |
+|---|---|---|---|
+| 0 to 6 | Side by side: the god-mode cheat, HEALTH 100% (left) and 200% (right) | "Same cheat, same game. On the right, we changed one line of code that AI rebuilt from the cartridge." | Doom, rebuilt by AI agents from machine code. Then changed. |
+| 6 to 14 | Stage Split: machine code on the left, Muse writing C on the right | "For most old games only the cartridge survives. Our agents read its machine code and write the source back." | Meta's Muse Spark writes the C. LIVE. |
+| 14 to 22 | The MATCH stamp | "It only counts if a compiler turns it into the exact same bytes. Checked in a fifth of a second." | Byte for byte, or it doesn't count. |
+| 22 to 30 | REJECTED card, first wrong instruction | "Agents lie. 24 times today they said it matched when it didn't. The referee caught every one." | 24 false claims caught. 30 fakes rejected. 0 let through. |
+| 30 to 40 | Ending: two identical checksums, then the meter | "170 of Doom's functions are back, and the rebuilt game has the same checksum as the original." | 170 of 568 functions, proven. Identical checksum. |
+| 40 to 48 | The god-mode cheat on the changed build, full screen, in the judge's hands or on a phone | "That's what source buys you. An emulator can only play a game. With the source, you can fix it, change it, and move it." | One line of recovered C changed. Health 200%. |
+| 48 to 54 | The equivalence page: 20,000 of 20,000 identical | "The same recovered code gives identical results in a browser as on the original chip." | Same answers on a phone as on the Game Boy. |
+| 54 to 60 | Credits card | "Lost games, rebuilt and proven." | Built today: the agents, the referee, the Stage, the patches. Not ours: Doom, GBADoom, the WAD, mGBA, devkitARM, the partner platforms. |
 
-If the cheat or the change beat isn't rehearsed by 16:20, swap in the phone shot (36 to 44) and the ASI:One proof card
-(44 to 52): "Ask in ASI:One: 'prove the rebuild is exact.' The Fetch.ai agent answers with both checksums."
+If the live dig can't run at 16:30 (the team's Meta key hit its spend limit at 14:20; check `make preflight`), shoot
+6 to 22 from the replay and keep its REPLAY badge on screen.
 
 ## Q&A additions (one breath each)
 
