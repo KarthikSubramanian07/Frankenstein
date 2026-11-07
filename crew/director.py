@@ -69,6 +69,7 @@ class Director:
         self.lock = threading.Lock()
         self.boosted: list[str] = []
         self.last = None
+        self.pending = None  # optional callable -> set of fn ids still queued in this run; Snap only picks from these
 
     def heartbeat(self, running: list[str], frame_png: bytes | None = None) -> None:
         ids = [f for f in running if f in self.target.fns]
@@ -85,13 +86,15 @@ class Director:
             while self.recent and now - self.recent[0][0] > self.STALE_S:
                 self.recent.popleft()
             c = Counter(f for _, ids in self.recent for f in ids)
+        queued = self.pending() if self.pending else None
         return [(f, n) for f, n in c.most_common() if self.target.fns[f]["scope"] == "game"
-                and f not in self.target.recovered]
+                and f not in self.target.recovered and (queued is None or f in queued)]
 
     def steer(self, timeout: float = 8) -> dict:
         hot = self.hot()[:MAX_OPTIONS]
         if not hot:
-            return {"action": "none", "reason": "no unrecovered game code running"}
+            return {"action": "none", "reason": "no unrecovered game code running"
+                    + (" among this run's pending functions" if self.pending else "")}
         state = {
             "what": "A Game Boy Advance game is being played live while agents rebuild its source code. "
                     "These functions executed in the last few seconds (count = frames seen running). "

@@ -245,3 +245,20 @@ def test_referee_lint_allows_system_headers():
     from lab.referee.lint import lint
 
     assert lint(f"#include <stdint.h>\n#include <string.h> // memcpy\nint {FN}(void){{return 1;}}", 50)["ok"]
+
+
+def test_director_only_offers_functions_this_run_still_has_to_claim():
+    """Play to recover: Snap may only boost heartbeat ids that are unrecovered AND still queued in this run."""
+    from types import SimpleNamespace
+
+    from crew.director import Director
+
+    fns = {f: {"scope": "game", "size": 16} for f in ("fn_08000001", "fn_08000002", "fn_08000003")}
+    target = SimpleNamespace(fns=fns, recovered={"fn_08000003"})
+    d = Director(cfg=None, target=target)
+    d.heartbeat(["fn_08000001", "fn_08000002", "fn_08000003", "fn_0BADBEEF"])
+    assert {f for f, _ in d.hot()} == {"fn_08000001", "fn_08000002"}  # recovered and unknown ids drop out
+    d.pending = lambda: {"fn_08000002"}
+    assert [f for f, _ in d.hot()] == ["fn_08000002"]
+    d.pending = lambda: set()
+    assert d.steer()["action"] == "none"  # nothing to steer: no Snap call, no boost

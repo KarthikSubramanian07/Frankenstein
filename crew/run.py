@@ -256,6 +256,11 @@ class Run:
             self._start_director()
         queue = list(fns)
         qlock = threading.Lock()
+        if self.director is not None:  # boosts only matter for functions this run still has to claim
+            def _pending():
+                with qlock:
+                    return {f["id"] for f in queue}
+            self.director.pending = _pending
 
         def worker(i: int):
             snap_decide = None
