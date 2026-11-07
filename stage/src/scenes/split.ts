@@ -1,20 +1,49 @@
-// Scene 1: Split. Left 1000 px is the game (OBS puts mGBA under it), right is the rebuild:
-// hi-score table and the code window. One hero number: NOW RUNNING ON NN% AGENT-WRITTEN CODE.
+// Scene 1: Split. Left 1000 px is the game (OBS puts mGBA under it; otherwise the cartridge map), right is
+// the rebuild: the hi-score table (who wrote each match), the code window, and the proof chain:
+// Muse writes it. Snap judges it. The compiler proves it.
 import type { Ctx, Scene } from '../types.ts';
 import { h, esc, diffIns } from '../types.ts';
-import type { Effect, FalseClaim, State } from '../state.ts';
+import type { Effect, FalseClaim, SnapDecision, State } from '../state.ts';
+import { modelName } from '../state.ts';
 import type { Region } from '../data.ts';
 import { coin, reject } from '../audio.ts';
-import { hudHtml, renderHud, tickerHtml, renderTicker, renderRows, drawMeter, setText, gameName, gameTotal } from './common.ts';
+import { hudHtml, renderHud, tickerHtml, renderTicker, renderRows, setText, gameName, gameTotal, writer } from './common.ts';
 import { Mosaic } from './mosaic.ts';
 import type { RowsMemo } from './common.ts';
 
 const FRAME = { x: 20, y: 92, scale: 4 }; // 240x160 GBA at 4x = 960x640
 const ROW0 = { x: 1040, y: 196 }; // the top hi-score row, where beams start
 const STATUS_TEXT: Record<string, string> = { MATCH: 'MATCH', PARTIAL: 'PARTIAL', LINT_FAIL: 'LINT FAIL', NO_COMPILE: 'NO COMPILE' };
+const HOLD_MS = 3200; // a steering decision (triage, escalate, director) stays up this long before fake-gate reviews replace it
+
+const pc = (x: number | null | undefined) => (x == null ? '--' : `${(x * 100).toFixed(1)}%`);
+const short = (m: string | null | undefined) => modelName(m).replace(/^MUSE /, '');
 
 export function regionRect(r: Region) {
   return { x: FRAME.x + r.x * FRAME.scale, y: FRAME.y + r.y * FRAME.scale, w: r.w * FRAME.scale, h: r.h * FRAME.scale };
+}
+
+/** One line of what SubQ Snap (or Gemini, the second lab) just decided, in plain words. */
+export function snapLine(d: SnapDecision, s: State): { tag: string; text: string; cls: string } {
+  const p = d.p ?? {};
+  const conf = typeof p.confidence === 'number' ? ` ${Math.round(p.confidence * 100)}%` : '';
+  switch (d.op) {
+    case 'review': {
+      const lab = String(p.reviewer ?? 'snap');
+      return { tag: lab === 'gemini' ? 'GEMINI' : 'SNAP', text: `${pc(p.fakematch_p)} CHANCE OF FAKE`, cls: lab === 'gemini' ? 'gem' : 'snap' };
+    }
+    case 'decide_next': {
+      const a = String(p.action ?? 'keep');
+      const text = a === 'escalate' ? `ESCALATE TO ${short(s.escalationModel ?? 'muse-wonder-1.0')}${conf}`
+        : a === 'abandon' ? `ABANDON IT${conf}` : `KEEP DIGGING${conf}`;
+      return { tag: 'SNAP', text, cls: 'snap hold' };
+    }
+    case 'triage': return { tag: 'SNAP', text: `READ ${p.functions ?? '?'} FUNCTIONS AT ONCE`, cls: 'snap hold' };
+    case 'director': return { tag: 'SNAP', text: `PLAY PICKED ${d.fn ?? (p.fns?.[0] ?? '?')}`, cls: 'snap hold' };
+    case 'eyes': return { tag: 'SNAP', text: 'CHECKED THE GAME FRAMES', cls: 'snap hold' };
+    case 'route': return { tag: 'SNAP', text: 'ROUTED A PLAIN-WORDS ASK', cls: 'snap hold' };
+    default: return { tag: 'SNAP', text: d.op.toUpperCase(), cls: 'snap' };
+  }
 }
 
 export class SplitScene implements Scene {
@@ -25,7 +54,6 @@ export class SplitScene implements Scene {
   private stampEl: HTMLElement;
   private pipEl: HTMLElement;
   private badgeEl: HTMLElement;
-  private meter: HTMLCanvasElement;
   private memo: RowsMemo = { key: '', top: '' };
   private typing: { text: string; shown: number; t0: number; cps: number } | null = null;
   private codeKey = '';
@@ -35,6 +63,9 @@ export class SplitScene implements Scene {
   private total = 0;
   private game = 'DOOM';
   private ph: HTMLElement;
+  private snapShown: SnapDecision | null = null;
+  private snapAt = 0;
+  private proofKey = '';
 
   constructor() {
     this.el.innerHTML = `
@@ -43,14 +74,18 @@ export class SplitScene implements Scene {
       <div class="badge orig"><div class="l1">NOW RUNNING ON</div><div class="l2" data-k="badge">ORIGINAL CODE</div></div>
       <div class="divider"></div>
       <div class="panel">
-        <h2><span>HI-SCORE</span><small>MATCH</small></h2>
+        <h2><span>HI-SCORE</span><small>WRITTEN BY</small></h2>
         <div class="rows"></div>
         <div class="codewin">
           <div class="bar"><span class="who" data-k="who">WAITING</span><span data-k="fn"></span><span class="try" data-k="try"></span></div>
           <pre></pre>
           <div class="stamp"></div>
         </div>
-        <div class="meter"><div class="lbl">CARTRIDGE</div><canvas width="852" height="48"></canvas></div>
+        <div class="chain">
+          <div class="pl muse"><b>MUSE</b><span data-k="pMuse">WAITING FOR A DIGGER</span></div>
+          <div class="pl snap"><b data-k="pSnapTag">SNAP</b><span data-k="pSnap">WAITING FOR A DECISION</span></div>
+          <div class="pl proof"><b>PROOF</b><span data-k="pProof">WAITING FOR THE COMPILER</span></div>
+        </div>
         <div class="keyline"><em>? = our guess.</em> Everything else is proved.</div>
         <div class="pip"></div>
       </div>
@@ -60,7 +95,6 @@ export class SplitScene implements Scene {
     this.stampEl = this.el.querySelector('.stamp')!;
     this.pipEl = this.el.querySelector('.pip')!;
     this.badgeEl = this.el.querySelector('.badge')!;
-    this.meter = this.el.querySelector('canvas')!;
     this.ph = this.el.querySelector('.ph')!;
     this.el.querySelector('.game-frame')!.prepend(this.mosaic.cv);
   }
@@ -68,12 +102,12 @@ export class SplitScene implements Scene {
   render(ctx: Ctx) {
     const s = ctx.state;
     renderHud(this.el, s);
-    renderRows(this.rowsEl, ctx, 6, this.memo, null);
+    renderRows(this.rowsEl, ctx, 6, this.memo, null, writer);
     this.renderCode(ctx);
+    this.renderProof(ctx);
     this.total = gameTotal(ctx);
     this.game = gameName(s);
     this.renderBadge(s);
-    drawMeter(this.meter, ctx);
     renderTicker(this.el, s, ctx.reduced);
     // the game window: live capture in OBS; otherwise the cartridge map (a bench run is not Doom)
     const ph = s.bench ? 'BENCH RUN<br>NOT DOOM' : '';
@@ -82,7 +116,7 @@ export class SplitScene implements Scene {
     if (!s.bench && !ctx.obs) this.mosaic.draw(ctx, performance.now());
   }
 
-  /** the map animates its static, so Split keeps rendering */
+  /** the map animates its static and the proof chain holds decisions on a timer, so Split keeps rendering */
   animating(ctx: Ctx) { return !ctx.obs && !ctx.reduced; }
 
   effect(ctx: Ctx, e: Effect) {
@@ -106,6 +140,8 @@ export class SplitScene implements Scene {
       this.rowsEl.innerHTML = '';
       this.codeKey = '';
       this.badgeKey = '';
+      this.proofKey = '';
+      this.snapShown = null;
       this.typing = null;
       this.pre.textContent = '';
       this.stampEl.className = 'stamp';
@@ -115,6 +151,46 @@ export class SplitScene implements Scene {
 
   /** the code window is still typing (main loop keeps rendering while true) */
   busy() { return !!this.typing && this.typing.shown < this.typing.text.length; }
+
+  /** Muse writes it. Snap judges it. The compiler proves it. Each line from the newest real event. */
+  private renderProof(ctx: Ctx) {
+    const s = ctx.state;
+    const a = s.lastAttempt;
+    const muse = a ? `${short(a.model ?? s.model)} WROTE ${a.fn}` : 'WAITING FOR A DIGGER';
+    // steering decisions stay up for a moment; the per-match fake gate replaces them after that
+    const latest = s.snap[s.snap.length - 1] ?? null;
+    const now = performance.now();
+    if (latest && latest !== this.snapShown) {
+      const holding = this.snapShown && this.snapShown.op !== 'review' && now - this.snapAt < HOLD_MS;
+      if (!holding || latest.op !== 'review') { this.snapShown = latest; this.snapAt = now; }
+    }
+    const sn = this.snapShown ? snapLine(this.snapShown, s) : { tag: 'SNAP', text: s.snapOn ? 'WAITING FOR A DECISION' : 'OFF IN THIS RUN', cls: 'snap' };
+    const v = s.lastVerdict;
+    const proof = !v ? 'WAITING FOR THE COMPILER'
+      : v.claim_was_true === false ? `LIE CAUGHT · ${v.match_pct.toFixed(1)}%`
+      : v.status === 'MATCH' ? '100% BYTE-IDENTICAL'
+      : `${STATUS_TEXT[v.status] ?? v.status}${v.status === 'PARTIAL' ? ` ${v.match_pct.toFixed(1)}%` : ''} · OUT`;
+    const key = `${muse}|${sn.tag}|${sn.text}|${proof}`;
+    if (key === this.proofKey) return;
+    const old = this.proofKey.split('|');
+    this.proofKey = key;
+    setText(this.el, 'pMuse', muse);
+    setText(this.el, 'pSnapTag', sn.tag);
+    setText(this.el, 'pSnap', sn.text);
+    setText(this.el, 'pProof', proof);
+    const line = (k: string) => this.el.querySelector(`[data-k="${k}"]`)!.parentElement as HTMLElement;
+    line('pSnap').className = `pl ${sn.cls}`;
+    line('pProof').className = `pl proof${v && (v.status !== 'MATCH' || v.claim_was_true === false) ? ' bad' : ''}`;
+    // a line that changed blinks once
+    const changed = [old[0] !== muse, old[2] !== sn.text, old[3] !== proof];
+    if (!ctx.reduced) (['pMuse', 'pSnap', 'pProof'] as const).forEach((k, i) => {
+      if (!changed[i]) return;
+      const el = line(k);
+      el.classList.remove('tick');
+      void el.offsetWidth;
+      el.classList.add('tick');
+    });
+  }
 
   private renderCode(ctx: Ctx) {
     const a = ctx.state.lastAttempt;
@@ -134,7 +210,7 @@ export class SplitScene implements Scene {
     const target = Math.min(t.text.length, Math.floor(((performance.now() - t.t0) / 1000) * t.cps));
     if (target !== t.shown || !this.pre.childNodes.length) {
       t.shown = Math.max(t.shown, target);
-      const lines = t.text.slice(0, t.shown).split('\n').slice(-9).join('\n');
+      const lines = t.text.slice(0, t.shown).split('\n').slice(-7).join('\n');
       this.pre.innerHTML = `<span>${esc(lines)}${t.shown < t.text.length ? '<i class="caret"></i>' : ''}</span>`;
     }
   }

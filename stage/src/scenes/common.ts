@@ -1,8 +1,8 @@
 // Pieces shared by several scenes: HUD, narrator ticker, hi-score rows, cartridge meter.
 import type { Ctx } from '../types.ts';
 import { esc } from '../types.ts';
-import type { State } from '../state.ts';
-import { elapsedS, fmtClock, pctOf } from '../state.ts';
+import type { Matched, State } from '../state.ts';
+import { elapsedS, fmtClock, pctOf, modelName } from '../state.ts';
 import { displayName } from '../data.ts';
 
 export const ORD = (n: number) => `${n}${['TH', 'ST', 'ND', 'RD'][n % 100 > 10 && n % 100 < 14 ? 0 : n % 10 < 4 ? n % 10 : 0]}`;
@@ -54,7 +54,30 @@ export function renderTicker(root: HTMLElement, s: State, reduced: boolean) {
 
 // ---------- hi-score rows ----------
 export type RowsMemo = { key: string; top: string };
-export function renderRows(el: HTMLElement, ctx: Ctx, n: number, memo: RowsMemo, liar: string | null) {
+/** Right-hand column of a row: "100%" on Hi-score, the Muse model that wrote it on Split. */
+export type RowRight = (m: Matched) => { html: string; cls?: string };
+const PCT: RowRight = () => ({ html: '100%' });
+/** Which Muse model wrote a match, from fn.matched.models (attempts per model). */
+export const writer: RowRight = (m) => {
+  const ms = Object.keys(m.models ?? {});
+  const short = (x: string) => modelName(x).replace(/^MUSE /, '');
+  if (!ms.length) return { html: '' };
+  if (ms.length === 1) return { html: short(ms[0]), cls: /wonder/.test(ms[0]) ? 'w-wonder' : 'w-spark' };
+  return { html: ms.map(short).join('+'), cls: 'w-both' };
+};
+
+/** Long guessed names shrink (never below 34 px) instead of being cut off. */
+export function fitNames(root: HTMLElement) {
+  root.querySelectorAll<HTMLElement>('.nm.guess').forEach((el) => {
+    if (el.dataset.fit === el.textContent) return;
+    el.dataset.fit = el.textContent ?? '';
+    el.style.fontSize = '';
+    let px = parseFloat(getComputedStyle(el).fontSize);
+    while (el.scrollWidth > el.clientWidth + 1 && px > 34) { px -= 2; el.style.fontSize = `${px}px`; }
+  });
+}
+
+export function renderRows(el: HTMLElement, ctx: Ctx, n: number, memo: RowsMemo, liar: string | null, right: RowRight = PCT) {
   const s = ctx.state;
   const newest = s.matched.slice(-n).reverse();
   const ids = newest.map((m) => m.fn);
@@ -72,9 +95,11 @@ export function renderRows(el: HTMLElement, ctx: Ctx, n: number, memo: RowsMemo,
     const rank = total - i;
     const nm = displayName(ctx.side, m.fn);
     const isNew = i === 0 && prevTop !== m.fn && !ctx.reduced;
-    html += `<div class="row c${(rank - 1) % 3}${isNew ? ' new' : ''}"><span class="rk">${ORD(rank)}</span><span class="nm${nm.guess ? ' guess' : ''}">${esc(nm.text)}</span><span class="pc">100%</span></div>`;
+    const r = right(m);
+    html += `<div class="row c${(rank - 1) % 3}${isNew ? ' new' : ''}"><span class="rk">${ORD(rank)}</span><span class="nm${nm.guess ? ' guess' : ''}">${esc(nm.text)}</span><span class="pc ${r.cls ?? ''}">${r.html}</span></div>`;
   }
   el.innerHTML = html;
+  fitNames(el);
 }
 
 // ---------- cartridge meter: one cell per manifest function ----------

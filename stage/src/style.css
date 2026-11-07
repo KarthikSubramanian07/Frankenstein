@@ -180,10 +180,24 @@ body.obs .split .game-frame .ph { display: none; }
 .pip .ko { position: absolute; left: 0; right: 0; bottom: 16px; text-align: center; font: italic 48px/1 'Russo One', sans-serif; color: var(--ko); -webkit-text-stroke: 2px #000; }
 .diff { color: var(--alarm); }
 
-.meter { position: absolute; left: 36px; right: 28px; top: 826px; }
-.meter .lbl { font-size: 28px; color: var(--dim); }
-.meter canvas { display: block; margin-top: 14px; width: 852px; height: 48px; }
-.keyline { position: absolute; left: 36px; right: 28px; top: 912px; font: 40px/1 var(--code); color: var(--dim); white-space: nowrap; }
+/* proof chain: Muse writes it, Snap judges it, the compiler proves it */
+.split .codewin { height: 296px; }
+.split .pip { height: 296px; }
+.chain { position: absolute; left: 36px; right: 28px; top: 758px; display: grid; gap: 8px; }
+.pl { display: grid; grid-template-columns: 196px minmax(0,1fr); align-items: center; height: 48px; white-space: nowrap; overflow: hidden; }
+.pl b { font: 28px/1 var(--hud); font-weight: normal; padding: 10px 0 10px 14px; border-left: 8px solid currentColor; }
+.pl span { font: 44px/1 var(--code); color: var(--ink); letter-spacing: 1px; overflow: hidden; }
+.pl.muse b { color: var(--cyan); }
+.pl.snap b { color: var(--magenta); }
+.pl.gem b { color: var(--yellow); }
+.pl.proof b { color: var(--mint); } .pl.proof span { color: var(--mint); }
+.pl.proof.bad span { color: var(--alarm); }
+.pl.tick span { animation: plpulse 0.5s steps(2); }
+@keyframes plpulse { 50% { color: #fff; background: rgba(255,255,255,0.12); } }
+.row .pc.w-spark { color: var(--cyan); } .row .pc.w-wonder { color: var(--magenta); } .row .pc.w-both { color: var(--yellow); }
+.split .row { grid-template-columns: 136px minmax(0,1fr) 230px; }
+.split .row .pc { font: 40px/1 var(--code); letter-spacing: 1px; }
+.keyline { position: absolute; left: 36px; right: 28px; top: 916px; font: 40px/1 var(--code); color: var(--dim); white-space: nowrap; }
 .keyline em { font-style: normal; color: var(--guess); }
 
 /* ---------- VERSUS ---------- */
