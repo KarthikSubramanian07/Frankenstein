@@ -39,6 +39,8 @@ Take any one of these away and something specific stops working.
 
 **MongoDB Atlas: the memory.** Atlas holds the idiom library, which is what makes run N+1 faster, and it is meant to be the system of record. Today only the idiom library goes to Atlas; attempts and verdicts live in `events.jsonl`, and mirroring them to Atlas is not wired yet. **Until `MONGODB_URI` is set, the library falls back to a local JSON file**, and `metrics.json` says so in `library_backend`. Demo runs set the URI.
 
+**Gemini (credits only): a second opinion.** With `GEMINI_API_KEY` set, Gemini reviews every byte MATCH in parallel with Snap, so it adds no wait. It rejects on its own only at 0.95 or higher, or at 0.7 or higher when Snap also leans the same way. It is never on the critical path, and `--no-gemini` turns it off.
+
 ## Quickstart
 
 ```bash
@@ -119,7 +121,8 @@ What we do about it:
 |---|---|
 | `run.py` | The run: scheduler, threads, acceptance, Distiller, director HTTP server, `metrics.json` and `names.json` |
 | `digger.py` | The Digger's tool-calling loop, attempt budget, effort ladder, escalation, claims |
-| `checker.py` | Verdicts (cached), fresh claim re-verification, fakematch rules and the Snap gate |
+| `checker.py` | Verdicts (cached), fresh claim re-verification, fakematch rules, the Snap gate and the Gemini second opinion |
+| `gemini.py` | Gemini second-opinion review of a MATCH (advisory) |
 | `snap.py` | SubQ Snap Decisions API: triage, review, decide_next, route, usage stats |
 | `director.py` | Play to recover (heartbeats and frames, then Snap picks) and `eyes()` |
 | `cartographer.py` | Whole-program `types.h` pass on `subq-preview`, validated with a real compiler |
@@ -136,4 +139,4 @@ What we do about it:
 | `doctor.py` | Dependency check |
 | `config.py` | The one place that reads the environment |
 | `bench/` | Real-compiler bench: 20 original functions and a contract-compatible referee ([`TOOLCHAIN.md`](bench/TOOLCHAIN.md)) |
-| `tests/` | Offline tests: archivist, cartographer, checker, digger, guard, library, llm, run, serve, snap |
+| `tests/` | Offline tests: archivist, cartographer, checker, digger, guard, library, llm, run, serve, snap, two-lab review |

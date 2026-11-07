@@ -67,6 +67,7 @@ the loop continues inside the same attempt budget. The Digger never marks anythi
 - **Escalation.** With Snap on, `decide_next` runs after every failed attempt from the second on. `escalate` moves the rest of the function to `META_ESCALATION_MODEL` (default `muse-wonder-1.0`). `abandon` takes effect only at confidence 0.6 or more and after 3 or more failures; it ends the budget there. With Snap off, a fixed rule escalates after 3 failures.
 - **Two referee paths.** `judge` serves the Digger's working attempts and is cached by `(fn, sha1(src))`. `verify_claim` always makes a fresh call. A claim is true only if that fresh call says MATCH with lint ok; anything else counts as a false claim.
 - **A forgotten claim.** If the last attempt matched but the model never called `submit_claim` before the budget ran out, the crew submits it through the same Checker path. A match is never auto-accepted.
+- **The fakematch review.** The hard rules run first. Then the Snap review and, when `GEMINI_API_KEY` is set, a Gemini review run in parallel (25 s cap). Snap alone rejects at `fakematch_p` or `recital_p` of 0.85 or more. Gemini alone rejects only at 0.95 or more, or at 0.7 or more when Snap is at 0.5 or more on the same question. Both reviews are advisory: the referee is the floor.
 - **What the Digger sees.** The first user message holds the asm, the ctx header, up to 3 idioms, up to 3 recovered neighbours and the Cartographer's slice of `types.h`. The system prompt and the four tool schemas never change, so the provider's prompt cache can hit.
 
 ## 2. The run process
@@ -165,7 +166,7 @@ All events share the contract 5 envelope (`v`, `ts`, `run_id`, `seq`, `type`, `a
 | type | actor | When | Payload beyond the contract |
 |---|---|---|---|
 | `run.started` | scheduler | Once, after triage and before any Digger starts | `referee`, `reasoning_effort`, `escalation_model`, `cartographer`, `snap` |
-| `snap.decision` | scheduler, checker, creature | Every Snap call that changes what the crew does | `op` is `triage`, `decide_next`, `review`, `director` or `eyes`, plus `latency_ms` and the probabilities |
+| `snap.decision` | scheduler, checker, creature | Every Snap call that changes what the crew does | `op` is `triage`, `decide_next`, `review`, `director` or `eyes`, plus `latency_ms` and the probabilities. Gemini reviews also log as `op: review`, with `reviewer: "gemini"` |
 | `fn.claimed` | scheduler | A Digger takes a function | |
 | `idiom.used` | digger-N | An idiom goes into the first prompt or a `search_idioms` result | |
 | `attempt.submitted` | digger-N | Every `referee_check` call | `model`, `effort` |
@@ -189,7 +190,7 @@ The contract 6 fields are `v`, `run_id`, `label`, `split`, `library`, `model`, `
 |---|---|
 | `muse` | Contract 6c: `calls`, `tool_calls`, `image_calls`, `tokens_in`, `tokens_out`, `reasoning_effort`, `cost_usd`, and `by_model` (`{model: {calls, cost_usd}}`), filled from the API's usage fields |
 | `snap` | `null` when Snap was not loaded. Otherwise `on`, `model` (`subq-snap-1.1`), `snap_calls`, `errors`, `latency_ms_mean`, `input_tokens`, `cost_usd` (input at $0.04 per 1M tokens; output is free) and `by_op` (`{op: {calls, latency_ms_total, input_tokens}}`) |
-| `snap_reviews` | Fakematch reviews Snap actually answered |
+| `snap_reviews`, `second_opinion_reviews` | Fakematch reviews Snap and Gemini actually answered |
 | `attempts_total`, `elapsed_s` | All attempts, including on abandoned functions; wall-clock seconds |
 | `referee` | `lab` or `mock` |
 | `fixture_target`, `fixture` | `fixture: true` whenever the referee is the mock or the manifest is the fixture, so the run can never pass for a result |
@@ -205,7 +206,7 @@ The contract 6 fields are `v`, `run_id`, `label`, `split`, `library`, `model`, `
 | Meta API, any other HTTP error | `LLMError`. On the escalation model, the crew clears `escalation_model` for the rest of the process and carries on with Spark. On the base model, the function ends as `failed` with an `fn.abandoned` event. |
 | Escalation model missing | Same as above: the first failed call switches the crew back to Spark, and `crew.doctor` reports which models the key can reach. |
 | Snap `decide_next` error or timeout (8 s, 1 retry) | Never raises. It returns `keep` with confidence 0, the `snap.decision` event carries the `error`, and the Digger carries on as if Snap were absent. |
-| Snap review error | Advisory. `evidence.snap_error` is recorded, and the referee plus the hard rules decide alone. |
+| Snap or Gemini review error | Advisory. `evidence.snap_error` or `evidence.gemini_error` is recorded, and the rest of the gate decides. With both down, the referee and the hard rules decide alone. |
 | Snap triage error | `snap_scores` is empty, and the manifest's difficulty sets order and budgets. |
 | Snap director error | Boosts the most-seen running function (`fallback: "hottest"`). |
 | Snap 429 or 5xx (all ops) | Up to 3 retries with `min(8, 0.5 * 2^n + jitter)` s backoff (1 retry for `decide_next`). |
