@@ -4,7 +4,21 @@
 
 This page covers one function's life, the run process and the play-to-recover loop. File formats are the contracts in [`../contracts/CONTRACTS.md`](../contracts/CONTRACTS.md) (4b jobs API, 5 events, 6 metrics), and the reasons are in [`../DECISIONS.md`](../DECISIONS.md). Everything is stdlib Python plus optional `pymongo`.
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="../docs/diagrams/system-dark.svg">
+  <img src="../docs/diagrams/system-light.svg" width="1200" alt="System architecture: four lanes share one append-only event stream, runs/live/events.jsonl. Lane A, the Lab, runs the referee on :7101, builds the target (manifest, asm, ctx), hosts the ASI:One agent on Fetch.ai, and keeps the answer key that only the referee reads. Lane B, the Crew, runs the Diggers on Muse Spark, the Checker, SubQ Snap judgment, a Gemini review, the MongoDB habit library, the jobs API on :7111 and the director on :7112. The Crew calls POST /check and POST /rebuild on the Lab, and the ASI:One agent sends the user's words to POST /jobs. The Lab writes build.rom and the Crew appends every event to the stream. Lane D, the Creature, runs mGBA with a tap, the heal overlay, hot-swap and the phone page on :7401; it reads fn.matched and build.rom, writes rom.swapped and patch.verified, and sends heartbeats to the director. Lane C, the Stage, tails the stream over ws :7202. In the room, judges watch the projector and everyone plays on a phone through the QR code.">
+</picture>
+
+The crew is Lane B above: the Diggers, the Checker, Snap's judgment, the Gemini review, the habit library, the jobs API and the director.
+
 ## 1. One function's life
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="../docs/diagrams/how-it-works-dark.svg">
+  <img src="../docs/diagrams/how-it-works-light.svg" width="1200" alt="How Frankenstein works. Left: the compiled game, its source marked lost. Middle: the loop. Diggers (Muse Spark) write C, the referee compiles it and compares bytes, the Checker re-runs every claim, and two labs (SubQ Snap and Gemini) screen each match for fakes. SubQ Snap's judgment (triage, keep, escalate or abandon, and the fake gate) steers the loop without proving anything. A rejected claim goes back to the Diggers with the first wrong byte: agents lie, the referee doesn't. Each accepted match teaches the habit library in MongoDB, which feeds the next attempt. Right: it's alive, a rebuilt ROM with an identical SHA-1, playing on a phone.">
+</picture>
+
+The overview above, in full detail:
 
 ```text
 +--------------------------------+
@@ -126,6 +140,13 @@ outside: Meta API (Muse)   referee :7101 (Lab) or :7121 (bench)   SubQ /v1/syste
 - **The jobs API.** `crew.serve` runs each `POST /jobs` as its own one-function run in `runs/r_asi_NN/` with 1 Digger, library `on`, no rebuild, and `max_usd` clamped to $0.10..$5.00. A `{"query": …}` body is first routed by Snap, and the top candidate is started. `GET /status` is computed from `runs/live/events.jsonl`.
 
 ## 3. Play to recover
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="../docs/diagrams/play-to-recover-dark.svg">
+  <img src="../docs/diagrams/play-to-recover-light.svg" width="1200" alt="Play to recover, a loop. You play on a controller or phone, and the screen shows static where code is still lost. The tap samples the running functions and frames. SubQ Snap's director picks the next function from what is on screen (a judgment). The crew recovers it with the Diggers and the Checker. The Lab rebuilds the ROM with an identical SHA-1 (proved). The rebuilt ROM is hot-swapped into the running game, and that region of the screen heals, back in front of you.">
+</picture>
+
+The crew's half of that loop:
 
 ```text
 +------------------------------+                              +--------------------------------+
