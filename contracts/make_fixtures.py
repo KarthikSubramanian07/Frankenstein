@@ -250,6 +250,10 @@ def build_run(manifest, sub_of, rng: random.Random):
                 idioms_ids.append(iid)
                 idiom_n += 1
                 emit(t + 1.2, "idiom.learned", "distiller", fn=fid, idiom_id=iid, title=title, applies_when=when, do=do)
+                if idiom_n in (4, 8):
+                    emit(t + 1.6, "idiom.judged", "distiller", fn=fid, idiom_id=f"idm_{idiom_n - 2:03d}",
+                         status="adopted" if idiom_n == 4 else "retired", tries=4, wins=3 if idiom_n == 4 else 1,
+                         rate=0.75 if idiom_n == 4 else 0.25, baseline=0.6, title=IDIOMS[idiom_n - 3][0])
             if idioms_ids and rng.random() < 0.5:
                 emit(digger_free[d] + 0.2, "idiom.used", dg, fn=fid, idiom_id=rng.choice(idioms_ids))
             if rng.random() < 0.35:

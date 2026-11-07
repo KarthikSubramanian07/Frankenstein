@@ -29,6 +29,7 @@
         "fn.abandoned",
         "fn.claimed",
         "fn.matched",
+        "idiom.judged",
         "idiom.learned",
         "idiom.used",
         "metric.tick",
@@ -885,6 +886,56 @@
             },
             "required": [
               "op"
+            ],
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "idiom.judged"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "idiom_id": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "adopted",
+                  "retired",
+                  "candidate"
+                ]
+              },
+              "tries": {
+                "type": "integer"
+              },
+              "wins": {
+                "type": "integer"
+              },
+              "rate": {
+                "type": "number"
+              },
+              "baseline": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "idiom_id",
+              "status",
+              "tries",
+              "wins"
             ],
             "additionalProperties": true
           }

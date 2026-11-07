@@ -250,6 +250,9 @@ class Run:
                 out = d.dig(f["id"])
                 with self._lock:
                     self.outcomes.append(out)
+                if out.idioms and self.args.library != "off":
+                    for ch in self.library.record_outcome(out.idioms, out.status == "matched", out.attempts):
+                        self.log.emit("idiom.judged", "distiller", fn=out.fn, **ch)
                 if out.status == "matched":
                     self.accept(out)
 
@@ -360,6 +363,7 @@ class Run:
             "attempts_total": total_attempts, "elapsed_s": round(el, 1),
             "referee": getattr(self.referee, "kind", "lab"), "fixture_target": self.target.fixture,
             "library_backend": self.library.backend, "library_size": len(self.library.items),
+            "library_status": self.library.counts(), "library_baseline": round(self.library.baseline(), 3),
             "snap_reviews": self.checker.snap_reviews, "second_opinion_reviews": self.checker.second_reviews, "cartographer": bool(self.args.cartographer),
             "snap": self._snap_stats(),
             "cost_estimated": any(m not in ("muse-spark-1.3",) for m in self.usage.by_model),

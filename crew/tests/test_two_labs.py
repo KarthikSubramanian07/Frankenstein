@@ -48,3 +48,21 @@ def test_reviewer_errors_are_advisory():
     c = Checker(None, Log(), snap_review=boom, second_review=boom)
     ok, _, ev = c.review("f", "", SRC, "", 2)
     assert ok and "snap_error" in ev and "gemini_error" in ev
+
+
+def test_idioms_are_adopted_or_retired_on_evidence(tmp_path):
+    from crew.config import Config
+    from crew.library import Library
+    lib = Library(Config(), mode="learning", path=tmp_path / "lib.json")
+    good = lib.add({"title": "count down loops", "applies_when": "subs then bne", "do": "for (i=n;i;i--)"}, "x", "f1")
+    bad = lib.add({"title": "short locals sign extend", "applies_when": "lsls 16 asrs 16", "do": "use short"}, "y", "f2")
+    for _ in range(4):
+        lib.record_outcome([], True, 1)             # baseline: quick matches
+    ch = []
+    for _ in range(3):
+        ch += lib.record_outcome([good["idiom_id"]], True, 1)
+    for _ in range(4):
+        ch += lib.record_outcome([bad["idiom_id"]], False, 6)
+    st = {c["idiom_id"]: c["status"] for c in ch}
+    assert st[good["idiom_id"]] == "adopted" and st[bad["idiom_id"]] == "retired"
+    assert all(h["idiom_id"] != bad["idiom_id"] for h in lib.search("lsls asrs short sign extend"))

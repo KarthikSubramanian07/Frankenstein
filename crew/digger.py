@@ -33,6 +33,7 @@ class Outcome:
     false_claims: int = 0
     journey: list = field(default_factory=list)  # (attempt, status, pct, first_diff ins) for the Distiller
     model_calls: dict = field(default_factory=dict)
+    idioms: list = field(default_factory=list)  # idiom ids this Digger was given (credited or blamed afterwards)
 
 
 def attempt_budget(difficulty: float) -> int:
@@ -83,6 +84,7 @@ class Digger:
         messages = [{"role": "system", "content": DIGGER_SYSTEM},
                     {"role": "user", "content": digger_user(fn, asm, ctx, idioms, self.target.neighbors(fn_id), types)}]
         out = Outcome(fn=fn_id, status="abandoned")
+        out.idioms = [i["idiom_id"] for i in idioms]
         budget = attempt_budget(fn["difficulty"])
         last_src, last_attempt, best_src, failures, turns = None, 0, None, 0, 0
         escalated = False  # set by SubQ Snap (or by the fixed fallback rule when Snap is off)
@@ -170,6 +172,7 @@ class Digger:
                     messages.append(self._tool_result(c["id"], {"verdict": "REJECTED", "reason": out.journey[-1][-1]}))
                 elif name == "search_idioms":
                     hits = self.library.search(args.get("query", ""), k=5)
+                    out.idioms += [h["idiom_id"] for h in hits if h["idiom_id"] not in out.idioms]
                     for i in hits:
                         self.log.emit("idiom.used", self.name, fn=fn_id, idiom_id=i["idiom_id"])
                     messages.append(self._tool_result(c["id"], hits or "No idioms (library empty or off)."))
