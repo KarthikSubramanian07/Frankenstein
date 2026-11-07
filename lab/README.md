@@ -13,7 +13,7 @@ The ground truth. Builds GBADoom reproducibly with pinned devkitARM GCC (no LTO)
 
 Commit only inside `lab/`. Build against `contracts/fixtures/` until the real thing exists.
 
-## Running the referee (live since 11:35)
+## Running the referee (live since 11:24)
 
 ```
 docker run -d --name frank-lab -v "$PWD":/work -w /work $(grep -o 'devkitpro/devkitarm@sha256:[0-9a-f]*' lab/build_target.sh) sleep infinity
