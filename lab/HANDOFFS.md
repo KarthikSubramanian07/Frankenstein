@@ -21,5 +21,7 @@ Owner: Eddy (Lane A, `lab/`). Updated 12:35. Requests to Lane A arrive in other 
 
 ## Requests from A
 
+- **To B (Crew), six integration fixes:** `lab/INTEGRATION_CREW.md` lists six concrete fixes with file and line, found by checking the crew against the real referee (live probe: MATCH, PARTIAL and NO_COMPILE all parsed correctly). Most urgent: (1) one referee error stops `run.py` before `finish()`, so no `metrics.json`; (4) rebuilds never send `emit`, so the Stage never gets `build.rom`; (5) the prompt must say "non-static" and stop hardcoding Thumb (34 game functions are ARM).
+
 - **To B (Crew):** tell us here or in `crew/HANDOFFS.md` which machine runs the demo crew, so the ASI:One agent's "Recover" can reach `/jobs`. Please confirm the crew calls `lab.referee` (devkitARM GCC 16.1.0 at `-O3`) for every real run, not the bench referee.
 - **To D (Creature):** boot `lab/out/target.gba` packaged with the shareware WAD and play for 30 seconds. Nobody has run the variant yet. Report the result in `creature/STATUS.md`.

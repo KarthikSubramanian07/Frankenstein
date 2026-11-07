@@ -23,7 +23,7 @@ REPO = Path(__file__).resolve().parents[2]
 CREW_URL = os.environ.get("CREW_URL", "http://127.0.0.1:7111")
 FN_RE = re.compile(r"\bfn_[0-9A-Fa-f]{8}\b")
 CODE_RE = re.compile(r"```(?:c|C)?\s*\n(.*?)```", re.S)
-JOB_TIMEOUT_S = 90
+JOB_TIMEOUT_S = 300  # a real Digger job takes several model turns; the chat gets an 'on it' reply first
 MIN_SUGGEST_BYTES = 8  # 2-byte functions are a bare return; too trivial to show anyone
 OBSERVED = "**Observed** (proved by the compiler)"
 INFERRED = "**Inferred** (our reading, not proof)"
@@ -126,14 +126,24 @@ def answer_recover(fn: str) -> str:
     return "\n".join(lines)
 
 
+def recovered_files() -> dict[str, Path]:
+    """Accepted C from the live run and from jobs started in ASI:One (runs/r_asi_*); newest wins per function."""
+    found: dict[str, Path] = {}
+    dirs = [REPO / "runs" / "live" / "recovered"] + sorted((REPO / "runs").glob("r_asi_*/recovered"))
+    for d in dirs:
+        for f in d.glob("fn_*.c") if d.exists() else []:
+            if f.stem not in found or f.stat().st_mtime > found[f.stem].stat().st_mtime:
+                found[f.stem] = f
+    return found
+
+
 def answer_status() -> str:
     s = _http("GET", f"{CREW_URL}/status")
     game = [f for f in referee().functions.values() if f["scope"] == "game"]
     if s:
         matched, total, pct, lies = s.get("matched"), s.get("fn_total") or len(game), s.get("pct_recovered"), s.get("false_claims")
     else:
-        recovered = list((REPO / "runs" / "live" / "recovered").glob("fn_*.c")) if (REPO / "runs" / "live").exists() else []
-        matched, total, lies = len(recovered), len(game), None
+        matched, total, lies = len(recovered_files()), len(game), None
         pct = round(100.0 * matched / total, 1) if total else 0.0
     lines = ["### How much of DOOM is back", "", OBSERVED,
              f"- Functions recovered and byte-identical: {matched} of {total} ({pct}%)"]
@@ -144,8 +154,13 @@ def answer_status() -> str:
 
 
 def answer_prove() -> str:
+    import shutil
+    import tempfile
     from lab.referee.romlink import RomLinker
-    r = RomLinker(referee()).rebuild(str(REPO / "runs" / "live" / "recovered"))
+    with tempfile.TemporaryDirectory() as pool:
+        for fn, path in recovered_files().items():
+            shutil.copy(path, Path(pool) / f"{fn}.c")
+        r = RomLinker(referee()).rebuild(pool)
     lines = ["### Is the rebuilt game exact?", "", OBSERVED,
              f"- Original ROM SHA-1: `{r['original_sha1']}`",
              f"- ROM built from the agents' code: `{r['rom_sha1']}`",
@@ -158,7 +173,7 @@ def answer_prove() -> str:
 
 
 def answer_candidates() -> str:
-    done = {p.stem for p in (REPO / "runs" / "live" / "recovered").glob("fn_*.c")} if (REPO / "runs" / "live").exists() else set()
+    done = set(recovered_files())
     small = sorted((f for f in referee().functions.values() if f["scope"] == "game" and f["id"] not in done and f["mode"] == "thumb" and f["size"] >= MIN_SUGGEST_BYTES),
                    key=lambda f: f["size"])[:8]
     rows = "\n".join(f"- `{f['id']}`: {f['size']} bytes, Thumb" for f in small)
@@ -239,6 +254,9 @@ def build_agent():
         text = msg.text()
         if not text.strip():
             return
+        if FN_RE.search(text) and re.search(r"\b(recover|bring back|decompile)\b", text.lower()) and not _code(text):
+            await ctx.send(sender, ChatMessage(content=[TextContent(text="On it: the crew is writing C for that function now. "
+                                                                      "I'll check their answer with the referee before I report back (usually 1 to 5 minutes).")]))
         reply = await asyncio.to_thread(answer, text)
         ctx.logger.info(f"answered {sender[:16]}…: {reply.splitlines()[0][:80]}")
         await ctx.send(sender, ChatMessage(content=[TextContent(text=reply), EndSessionContent()]))
