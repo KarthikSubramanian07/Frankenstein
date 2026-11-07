@@ -4,7 +4,8 @@
   context --fn fn_0801B7D4
   serve   [--port 7101]          real referee over HTTP
   mock    serve [--port 7101]    fixture-backed fake for other lanes
-rebuild and patch arrive with the 14:30 gate and answer 501 until then.
+  rebuild --recovered runs/live/recovered [--emit]   ROM from the agents' code; SHA-1 must equal the original
+  patch   --fn fn_X --src fixed.c                   fixed function in place; lists every changed function
 """
 import argparse
 import json
@@ -63,7 +64,17 @@ def make_handler(referee, mock: bool):
                 if mock:
                     name = "rebuild_result" if self.path == "/rebuild" else "patch_result"
                     return self._send(200, json.loads((FIXTURES / f"{name}.sample.json").read_text()))
-                return self._send(501, {"error": f"{self.path} lands at the 14:30 gate"})
+                from .romlink import RomLinker
+                linker = RomLinker(referee)
+                try:
+                    if self.path == "/rebuild":
+                        return self._send(200, linker.rebuild(str(body.get("recovered_dir", "runs/live/recovered")), emit=bool(body.get("emit"))))
+                    fn, src = body.get("fn"), body.get("src")
+                    if not isinstance(fn, str) or not isinstance(src, str):
+                        return self._send(400, {"error": "need {fn, src} strings"})
+                    return self._send(200, linker.patch(fn, src))
+                except (KeyError, ValueError) as e:
+                    return self._send(400, {"error": str(e)})
             self._send(404, {"error": "not found"})
 
         def log_message(self, fmt: str, *args) -> None:
@@ -74,7 +85,9 @@ def make_handler(referee, mock: bool):
 
 def main() -> None:
     p = argparse.ArgumentParser(prog="python -m lab.referee")
-    p.add_argument("command", choices=["check", "context", "serve", "mock"])
+    p.add_argument("command", choices=["check", "context", "serve", "mock", "rebuild", "patch"])
+    p.add_argument("--recovered", default="runs/live/recovered")
+    p.add_argument("--emit", action="store_true")
     p.add_argument("sub", nargs="?")
     p.add_argument("--fn")
     p.add_argument("--src")
@@ -95,6 +108,13 @@ def main() -> None:
         result = referee.check(a.fn, Path(a.src).read_text())
         print(json.dumps(result, indent=None if a.json else 1))
         sys.exit(0 if result["status"] == "MATCH" else 1)
+    elif a.command in ("rebuild", "patch"):
+        from .romlink import RomLinker
+        linker = RomLinker(referee)
+        result = linker.rebuild(a.recovered, emit=a.emit) if a.command == "rebuild" else linker.patch(a.fn, Path(a.src).read_text())
+        print(json.dumps(result, indent=None if a.json else 1))
+        ok = result.get("identical") if a.command == "rebuild" else "error" not in result and len(result["changed_functions"]) == 1
+        sys.exit(0 if ok else 1)
 
 
 def _referee():

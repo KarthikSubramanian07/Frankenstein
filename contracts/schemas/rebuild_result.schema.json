@@ -31,7 +31,8 @@
     },
     "method": {
       "enum": [
-        "source-tree"
+        "source-tree",
+        "object-splice"
       ]
     }
   },

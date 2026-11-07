@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/KarthikSubramanian07/Frankenstein/contracts/schemas/link_info.schema.json",
+  "title": "ROM link info (Lane A): section layout and compiler runtime helper addresses, used by patch",
+  "type": "object",
+  "properties": {
+    "v": {"const": 1},
+    "sections": {"type": "array", "items": {"type": "object", "properties": {
+      "name": {"type": "string"}, "vma": {"type": "integer"}, "lma": {"type": "integer"}, "size": {"type": "integer"}},
+      "required": ["name", "vma", "lma", "size"]}},
+    "runtime": {"type": "object", "additionalProperties": {"type": "integer"}}
+  },
+  "required": ["v", "sections", "runtime"],
+  "additionalProperties": true
+}

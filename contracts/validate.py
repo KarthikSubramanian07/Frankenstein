@@ -21,7 +21,7 @@ BY_NAME = {
     "manifest": "manifest", "viz_map": "viz_map", "referee_result": "referee_result",
     "rebuild_result": "rebuild_result", "patch_result": "patch_result", "memory_probe": "memory_probe",
     "metrics": "metrics", "names": "names", "sprite_frame": "sprite_frame",
-    "crew_job": "crew_job", "crew_status": "crew_status",
+    "crew_job": "crew_job", "crew_status": "crew_status", "link_info": "link_info",
 }
 
 

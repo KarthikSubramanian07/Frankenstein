@@ -46,7 +46,12 @@ class Referee:
 
     # ---------- public API (contract section 4) ----------
     def check(self, fn: str, src: str) -> dict:
+        return self.check_items(fn, src)[0]
+
+    def check_items(self, fn: str, src: str) -> tuple[dict, list[dict], list[dict]]:
+        """check() plus the normalized target and candidate instructions (used by rebuild)."""
         started = time.time()
+        got: list[dict] = []
         meta = self.functions.get(fn)
         if meta is None or meta["scope"] != "game":
             raise KeyError(f"unknown game function {fn}")
@@ -63,7 +68,7 @@ class Referee:
             else:
                 result.update(self._compare(target, got))
         result["elapsed_ms"] = int((time.time() - started) * 1000)
-        return result
+        return result, target, got
 
     def context(self, fn: str) -> str:
         return (OUT / "ctx" / f"{fn}.h").read_text()

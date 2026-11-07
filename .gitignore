@@ -10,12 +10,14 @@ lab/out/*
 !lab/out/asm/
 !lab/out/ctx/
 !lab/out/target/
+!lab/out/link_info.json
 runs/*
 !runs/.gitkeep
 node_modules/
 __pycache__/
 .pytest_cache/
 *.gba
+!lab/out/target.gba
 *.elf
 *.o
 *.wad

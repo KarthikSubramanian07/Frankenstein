@@ -30,6 +30,39 @@ def main() -> None:
             sys.exit(f"{fn}: original names would leak: {leaked[:3]}")
         (target_dir / f"{fn}.json").write_text(text + "\n")
     print(f"exported {len(game)} targets to lab/out/target/")
+    export_link_info()
+
+
+def export_link_info() -> None:
+    """Section layout (VMA to ROM offset) and compiler runtime helper addresses, so patch works on any machine."""
+    from lab.referee.core import SECRETS, _docker, OBJDUMP
+    sections = []
+    for line in _docker(f"{OBJDUMP} -h lab/secrets/target.elf", check=True).stdout.splitlines():
+        parts = line.split()
+        if len(parts) >= 6 and parts[0].isdigit() and parts[1].startswith(".") and int(parts[2], 16) > 0:
+            vma, lma = int(parts[3], 16), int(parts[4], 16)
+            if 0x08000000 <= lma < 0x0A000000:
+                sections.append({"name": parts[1], "vma": vma, "lma": lma, "size": int(parts[2], 16)})
+    runtime = {}
+    for line in (SECRETS / "dump" / "elf_nm.txt").read_text().splitlines():
+        parts = line.split()
+        if len(parts) in (3, 4) and parts[-1].startswith("__") and parts[-2] in "tT":
+            runtime[parts[-1]] = int(parts[0], 16) | _thumb_bit(int(parts[0], 16))
+    (OUT / "link_info.json").write_text(json.dumps({"v": 1, "sections": sections, "runtime": runtime}, indent=1) + "\n")
+    print(f"link_info: {len(sections)} ROM sections, {len(runtime)} runtime helpers")
+
+
+def _thumb_bit(addr: int) -> int:
+    from lab.referee.core import SECRETS
+    kind = "$t"
+    for line in (SECRETS / "dump" / "elf_nm.txt").read_text().splitlines():
+        parts = line.split()
+        if len(parts) == 3 and parts[2] in ("$a", "$t"):
+            a = int(parts[0], 16)
+            if a > addr:
+                break
+            kind = parts[2]
+    return 1 if kind == "$t" else 0
 
 
 if __name__ == "__main__":

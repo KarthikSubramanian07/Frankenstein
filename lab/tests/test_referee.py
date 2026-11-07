@@ -73,3 +73,27 @@ def test_teammate_mode_without_the_answer_key_gives_the_same_verdicts(referee, f
     for fn, src in cands.items():
         live, offline = referee.check(fn, src), team.check(fn, src)
         assert (live["status"], live["match_pct"], live["first_diff"]) == (offline["status"], offline["match_pct"], offline["first_diff"])
+
+
+def _gun(fid):
+    g, sm, fs = fid("A_GunFlash"), fid("P_SetMobjState"), fid("A_FireSomething")
+    return g, f"void {sm}(void *m, int s);\nvoid {fs}(void *p, int a);\nvoid {g}(void **p, void *u) {{ (void)u; {sm}(*p, 155); {fs}(p, 0); }}\n"
+
+
+def test_rebuild_from_agent_code_is_identical_and_rejects_partial(referee, fid, tmp_path):
+    from lab.referee.romlink import RomLinker
+    g, gun = _gun(fid)
+    (tmp_path / f"{g}.c").write_text(gun)
+    tick = fid("ST_Ticker")
+    (tmp_path / f"{tick}.c").write_text(f"void {tick}(void){{}}")
+    result = RomLinker(referee).rebuild(str(tmp_path))
+    assert result["identical"] and result["recovered"] == 1 and result["rejected"] == {tick: "PARTIAL"}
+
+
+def test_patch_links_calls_exactly_and_changes_one_function(referee, fid):
+    from lab.referee.romlink import RomLinker
+    linker = RomLinker(referee)
+    g, gun = _gun(fid)
+    assert linker.patch(g, gun)["changed_functions"] == []  # relinking the same C reproduces the ROM
+    result = linker.patch(g, gun.replace("155", "156"))
+    assert result["changed_functions"] == [g]
