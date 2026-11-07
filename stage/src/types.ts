@@ -12,6 +12,7 @@ export type Ctx = {
   obs: boolean;
   go: (id: SceneId) => void;
   current: () => SceneId;
+  invalidate: () => void;
 };
 
 export interface Scene {
@@ -23,6 +24,10 @@ export interface Scene {
   effect?(ctx: Ctx, e: Effect): void;
   enter?(ctx: Ctx): void;
   leave?(ctx: Ctx): void;
+  /** a key the scene handles itself (true = handled) */
+  key?(ctx: Ctx, key: string): boolean;
+  /** true/false when this scene's numbers come from its own files (Time trial); null/undefined = the stream */
+  sample?(ctx: Ctx): boolean | null;
 }
 
 export const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);

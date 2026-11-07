@@ -15,6 +15,7 @@ const SHOTS = [
   { name: 'title', q: '?scene=title&replay=fx01&speed=20&t=300', wait: 1500 },
   { name: 'split', q: '?scene=split&replay=fx01&speed=4&t=200', wait: 2600 },
   { name: 'split-live', q: '?scene=split', wait: 1500 },
+  { name: 'hiscore', q: '?scene=hiscore&replay=fx01&speed=4&t=200', wait: 2600 },
   { name: 'versus', q: '?scene=versus&replay=fx01&speed=1&t=300', wait: 2200 },
 ];
 

@@ -10,6 +10,7 @@ import { h } from './types.ts';
 import { SplitScene } from './scenes/split.ts';
 import { VersusScene } from './scenes/versus.ts';
 import { TitleScene } from './scenes/title.ts';
+import { HiscoreScene } from './scenes/hiscore.ts';
 
 const params = new URLSearchParams(location.search);
 const host = params.get('server') || '127.0.0.1';
@@ -33,7 +34,8 @@ const scenes: Partial<Record<SceneId, Scene>> = {};
 const split = new SplitScene();
 const versus = new VersusScene();
 const title = new TitleScene(reduced);
-for (const s of [title, split, versus] as Scene[]) { scenes[s.id] = s; stageEl.appendChild(s.el); }
+const hiscore = new HiscoreScene();
+for (const s of [title, split, hiscore, versus] as Scene[]) { scenes[s.id] = s; stageEl.appendChild(s.el); }
 stageEl.append(fxCanvas, flashEl, markEl);
 
 let current: SceneId = 'split';
@@ -45,6 +47,7 @@ const ctx: Ctx = {
   obs,
   go: (id) => go(id),
   current: () => current,
+  invalidate: () => { dirty = true; },
 };
 
 function show(id: SceneId) {
@@ -76,10 +79,12 @@ function renderMark() {
   const s = ctx.state;
   const parts: string[] = [];
   if (!connected) parts.push('NO SIGNAL · RECONNECTING');
-  if (s.fixture || ctx.side.fixture) parts.push('SAMPLE DATA');
-  if (s.mode === 'replay') parts.push(`REPLAY · ${s.speed}X${s.ended ? ' · END' : ''}`);
-  const t = parts.join(' · ');
-  if (markEl.textContent !== t) markEl.textContent = t;
+  const own = scenes[current]?.sample?.(ctx);
+  const streamScene = own == null;
+  if (own ?? (s.fixture || ctx.side.fixture)) parts.push('SAMPLE DATA');
+  if (streamScene && s.mode === 'replay') parts.push(`REPLAY · ${s.speed}X${s.ended ? ' · END' : ''}`);
+  const html = parts.map((p) => `<span>${p}</span>`).join('<i> · </i>');
+  if (markEl.innerHTML !== html) markEl.innerHTML = html;
   markEl.classList.toggle('show', parts.length > 0);
   markEl.classList.toggle('bad', !connected);
 }
@@ -89,8 +94,16 @@ let backlogLeft = 0;
 let dirty = true;
 let sideDir: string | null | undefined;
 
+let versusCut = false;
 function onEffects(list: Effect[]) {
   for (const e of list) {
+    // a false claim during Hi-score: liar row, hold 1 s, Versus for 4 s, back to Hi-score
+    if (e.kind === 'falseClaim' && current === 'hiscore' && !versusCut) {
+      versusCut = true;
+      hiscore.showLiar(ctx, e.c);
+      setTimeout(() => go('versus'), 1000);
+      setTimeout(() => { if (current === 'versus') go('hiscore'); versusCut = false; }, 5300);
+    }
     for (const s of Object.values(scenes)) {
       // the visible scene animates; hidden scenes still hear resets
       if (s!.id === current || e.kind === 'reset') s!.effect?.(ctx, e);
@@ -149,11 +162,12 @@ function frame() {
 }
 
 // ---------- keys (the presenter never touches the mouse) ----------
-const KEYS: Record<string, SceneId> = { '0': 'title', '1': 'split', '2': 'versus' };
+const KEYS: Record<string, SceneId> = { '0': 'title', '1': 'split', '2': 'versus', '3': 'timetrial', '4': 'ending', '5': 'hiscore', h: 'hiscore' };
 addEventListener('keydown', (k) => {
   unlockAudio();
+  if (scenes[current]?.key?.(ctx, k.key)) { dirty = true; return; }
   if (KEYS[k.key]) go(KEYS[k.key]);
-  else if (k.key === ' ' && current === 'title') go('split');
+  else if (k.key === ' ' && current === 'title') go('hiscore');
   else if (k.key === 'm') { setMuted(!isMuted()); }
 });
 addEventListener('pointerdown', unlockAudio);
