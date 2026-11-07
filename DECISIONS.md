@@ -42,7 +42,7 @@ A dated log. Every assumption, contradiction, and partner-prize answer goes here
 - Fetch.ai: one ASI:One agent must answer by 12:20 or the layer is dropped (the gameplan overrides the kit's "never cut"); Excavator and Curator are bonus.
 - Models: Diggers start on `muse-spark-1.3`; escalate to `muse-wonder` (confirm the id with `GET /v1/models`) after 3 failed attempts. Gemini as a second-model Checker is optional. If Muse matches 0 of 5 at the 11:20 spike, another model writes first attempts and metrics report per-model counts.
 - Hero shot: the static-face stub built into the ROM (an honest display rule: "code we haven't recovered yet shows as static") is the primary; the OBS heal overlay is a bonus.
-- Scope: keep the existing contract tests, but add no more tests or CI outside the referee and crew core. SubQ Cartographer is cut unless everything else works.
+- Scope: keep the existing contract tests, but add no more tests or CI outside the referee and crew core. SubQ Cartographer is back in scope (see the 11:10 prize update below).
 
 ## Seed decisions
 
@@ -55,3 +55,12 @@ A dated log. Every assumption, contradiction, and partner-prize answer goes here
 - Check the Doom shareware license before hosting the patched ROM publicly; fallback is venue network only or demo screen only.
 - Fixtures: `metrics.sample.json` wraps three runs as `{"fixture": true, "runs": [...]}`. `make sample-runs` installs them as real-looking run dirs (`runs/fx01..fx03`, each marked `fixture: true`) for Stage and Creature development. The sample live run is about 11 minutes long (60 matched, 9 false claims, 3 lint fails).
 - Added `contracts/tests/` (pytest) and `make test`. No CI or root frameworks, per Lane 0.
+
+## 2026-11-07 11:10 · Prize update (Cerebral Valley blast, 10:54)
+
+- Overall: 1st $3,000, 2nd $2,000, 3rd $1,000 (each plus Gemini API credits, Google DeepMind swag, $500 MongoDB credits).
+- Best Use of Meta Model API: $5,000. Best Use of Fetch.ai: $2,500 1st, $2,500 2nd.
+- **Best Use of Subquadratic: $5,000 + 5,000 credits 1st, $1,000 + 1,000 credits 2nd (new cash prize).**
+- Consequence: the SubQ Cartographer (Lane B Step 4) is in scope again, right after the first real Digger match. It must be load-bearing and measured: run r04 (held-out, library on + cartographer) against r02 and report the difference honestly, plus the whole-program context size sent to SubQ. Get a SubQ key from the Subquadratic table now.
+- Prize stack we target: Overall + Meta ($5k) + Fetch.ai ($2.5k) + Subquadratic ($5k). Gemini stays optional (credits only).
+
