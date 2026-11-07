@@ -106,3 +106,14 @@ def test_play_lists_devices_and_refuses_unapproved_downloads(monkeypatch, tmp_pa
     monkeypatch.setattr(fa, "PLAYER_URL", "https://example.test/play")
     reply = answer("let me play the rebuilt Doom on my TV")
     assert "(https://example.test/play)" in reply and "download the ROM" in reply
+
+
+def test_excavator_reports_spend_cap_instead_of_crew_down():
+    import io, json, urllib.error
+    from unittest import mock
+    from lab.agents import excavator_agent as ex
+    err = urllib.error.HTTPError("u", 429, "x", {}, io.BytesIO(json.dumps({"error": "hourly spend cap reached"}).encode()))
+    with mock.patch("urllib.request.urlopen", side_effect=err):
+        _, fn, st = ex.run_crew_job(None, "x" * 500)
+    assert st["status"] == "refused" and st["http_status"] == 429
+    assert "spend cap" in ex.crew_failure_reply(fn, st)

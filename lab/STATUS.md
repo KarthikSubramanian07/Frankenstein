@@ -1,6 +1,6 @@
 # Lane A status
 
-Updated 13:05. Owner: Eddy.
+Updated 14:10. Owner: Eddy.
 
 | Gate | State | Proof |
 |---|---|---|
@@ -17,5 +17,6 @@ Updated 13:05. Owner: Eddy.
 | Memory probe, both builds | done | memory alone: 0 of 20 compile (0 refusals); memory plus real headers: 3 of 20 exact, mean 22% |
 | Static-face demo ROMs for D | done | `python3 -m lab.demo.build_demo_roms`; one function changed (`fn_0801B298`) |
 | Globals labelled in asm and ctx | done | 761 literal-pool words annotated, 425 ctx headers list their globals |
+| Security requests from B | done | `frank-lab` net=none with empty `.env`; excavator caps query, reports 429; 62 lab tests pass |
 
 Next: memory probe once the Meta key lands.
