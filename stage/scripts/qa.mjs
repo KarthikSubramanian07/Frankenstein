@@ -6,13 +6,10 @@ const BASE = process.env.STAGE_URL || 'http://127.0.0.1:5173';
 const RUN = process.env.RUN || 'doom_r01';
 const CHROME = process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 export const SCENES = [
-  ['title', '?scene=title&replay=' + RUN + '&speed=20&t=300'],
-  ['split', '?scene=split&replay=' + RUN + '&speed=4&t=200'],
-  ['split-end', '?scene=split'],
-  ['versus', '?scene=versus&replay=' + RUN + '&speed=1&t=300'],
-  ['timetrial', '?scene=timetrial'],
-  ['ending', '?scene=ending'],
-  ['ending-credits', '?scene=ending&page=credits'],
+  ['log', '?replay=' + RUN + '&speed=4&t=200'],
+  ['log-sample', '?replay=fx01&speed=1&t=40'],
+  ['card', '?scene=card&replay=' + RUN + '&speed=20&t=999'],
+  ['card-sample', '?scene=card'],
 ];
 const only = process.argv.slice(2);
 const browser = await chromium.launch({ executablePath: CHROME });

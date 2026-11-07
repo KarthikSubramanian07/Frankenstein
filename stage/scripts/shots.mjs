@@ -13,13 +13,11 @@ const CHROME = process.env.CHROME_PATH || '/Applications/Google Chrome.app/Conte
 const only = process.argv.slice(2);
 
 const SHOTS = [
-  { name: 'title', q: '?scene=title&replay=' + RUN + '&speed=20&t=300', wait: 1500 },
-  { name: 'split', q: '?scene=split&replay=' + RUN + '&speed=4&t=200', wait: 2600 },
-  { name: 'split-live', q: '?scene=split', wait: 1500 },
-  { name: 'timetrial', q: '?scene=timetrial', wait: 1500 },
-  { name: 'ending', q: '?scene=ending', wait: 1500 },
-  { name: 'ending-credits', q: '?scene=ending&page=credits', wait: 1000 },
-  { name: 'versus', q: '?scene=versus&replay=' + RUN + '&speed=1&t=300', wait: 2200 },
+  { name: 'log', q: '?replay=' + RUN + '&speed=4&t=200', wait: 2600 },
+  { name: 'log-sample', q: '?replay=fx01&speed=1&t=40', wait: 2600 },
+  { name: 'card', q: '?scene=card&replay=' + RUN + '&speed=20&t=999', wait: 1500 },
+  { name: 'card-sample', q: '?scene=card', wait: 1500 },
+  { name: 'legacy-split', q: '?legacy=1&scene=split&replay=' + RUN + '&speed=4&t=200', wait: 2600 },
 ];
 
 fs.mkdirSync(OUT, { recursive: true });

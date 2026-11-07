@@ -20,3 +20,10 @@
 - **Alive (`?scene=ending`):** IDENTICAL plus both checksums and IT'S ALIVE only when `build.rom` says identical and the hashes agree; the QR only after `phone.published` (it loads `qr_png` through `http://127.0.0.1:7201/file?path=…`). Credits unchanged in content (`space`, or `?page=credits`).
 - **Keys:** Hi-score is gone; `5`/`h` open Rebuild. Director beats: Title, Rebuild (replay 8x), Caught, Rebuild live, Faster, Alive, credits.
 - **Frozen demo build:** `cd stage && npm run demo` (no hot reload).
+
+## Update 14:05 (Lane C): one screen plus an ending card
+
+- **Default Stage (`http://127.0.0.1:5173/`):** one main screen. The game window stays at **x 20, y 92, 960×640** (transparent with `?obs=1`, your browser player with `?game=http://127.0.0.1:7401/`); on the right a big "N / 568 pieces rebuilt" and a plain-English log, newest first (✓ name? proved / ✗ name? REJECTED, claimed right, why). Silent: no sounds, voice or beams.
+- **`space`** toggles the main screen and the ending card (IDENTICAL + both checksums + IT'S ALIVE only when `build.rom` proves it; "Play it on your phone: <url>" after `phone.published`). **`c`** on the card shows Built today / Not ours.
+- **Old scenes and director mode** are kept but only with `?legacy=1`.
+- Replay (`?replay=doom_r01&speed=8`), REPLAY / SAMPLE DATA labels and `npm run demo` are unchanged.

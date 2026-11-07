@@ -35,6 +35,10 @@ Keys: `0` Title · `1` Rebuild · `2` Caught · `3` Faster · `4` Alive · `spac
 - **Server** (`server/index.mjs`): tails `runs/live/events.jsonl`, follows the symlink when it moves, rebuilds from the full file on truncation, and sends every line unchanged over ws :7202 after a `stage.hello` (contracts §8). Replay paces a finished file by its `ts` at 1–20x. HTTP :7201 serves `runs/<id>/{metrics,names}.json`, `/metrics` (all runs), `/lab/{viz_map,manifest,memory_probe}` (real `lab/out` files for real runs, `contracts/fixtures` samples for fixture runs) and `/file?path=` (PNGs under `creature/` only, for the QR).
 - **Page** (`src/`): `state.ts` is a pure reducer over events; every number comes from it, `names.json`, `metrics.json` or the lab files. Sample data shows **SAMPLE DATA** in a corner; replay shows **REPLAY · Nx**; a dropped socket shows **NO SIGNAL**.
 
+## Default: one log screen and an ending card
+
+`/` shows the game window (x 20, y 92, 960×640) and, on the right, "N / 568 pieces rebuilt" with a plain-English log, newest first: "✓ name? proved" in green, "✗ name? REJECTED, claimed right, why" in red (real verdicts and fake rejections only, at most 8 lines). `space` toggles the ending card (IDENTICAL, both checksums, IT'S ALIVE, the phone link; NOT REBUILT YET until `build.rom` proves it); `c` on the card shows Built today / Not ours. Silent: no sounds, voice or beams. Everything below is the earlier multi-scene Stage, still available with `?legacy=1`.
+
 ## Screens (minimal, Doom-inspired: one idea per screen)
 
 - **Title** (`0`): FRANKENSTEIN, "Lost games, rebuilt and proven.", PRESS START.

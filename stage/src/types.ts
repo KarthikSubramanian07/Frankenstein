@@ -2,7 +2,7 @@ import type { State, Effect } from './state.ts';
 import type { Side } from './data.ts';
 import type { Fx } from './fx.ts';
 
-export type SceneId = 'title' | 'split' | 'versus' | 'timetrial' | 'ending';
+export type SceneId = 'log' | 'card' | 'title' | 'split' | 'versus' | 'timetrial' | 'ending';
 
 export type Ctx = {
   state: State;

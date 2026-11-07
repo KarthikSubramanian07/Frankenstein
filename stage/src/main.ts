@@ -12,6 +12,8 @@ import { VersusScene } from './scenes/versus.ts';
 import { TitleScene } from './scenes/title.ts';
 import { TimeTrialScene } from './scenes/timetrial.ts';
 import { EndingScene } from './scenes/ending.ts';
+import { LogScene } from './scenes/log.ts';
+import { CardScene } from './scenes/card.ts';
 import { Director } from './director.ts';
 import type { Source } from './director.ts';
 
@@ -22,7 +24,9 @@ const WS = `ws://${host}:7202`;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const obs = params.get('obs') === '1';
 if (obs) document.body.classList.add('obs');
-if (reduced) setMuted(true);
+// default: the log and the ending card only, silent (no sounds, voice or beams); ?legacy=1 brings the old scenes back
+const legacy = params.get('legacy') === '1';
+if (reduced || !legacy) setMuted(true);
 
 const stageEl = document.getElementById('stage')!;
 const fxCanvas = h('canvas');
@@ -34,12 +38,14 @@ markEl.id = 'mark';
 const fx = new Fx(fxCanvas, flashEl, stageEl, reduced);
 
 const scenes: Partial<Record<SceneId, Scene>> = {};
-const split = new SplitScene();
-const versus = new VersusScene();
-const title = new TitleScene(reduced);
-const timetrial = new TimeTrialScene(HTTP);
-const ending = new EndingScene(HTTP, reduced);
-for (const s of [title, split, versus, timetrial, ending] as Scene[]) { scenes[s.id] = s; stageEl.appendChild(s.el); }
+const log = new LogScene();
+const card = new CardScene();
+const split = legacy ? new SplitScene() : null;
+const ending = legacy ? new EndingScene(HTTP, reduced) : null;
+const list: Scene[] = legacy
+  ? [new TitleScene(reduced), split!, new VersusScene(), new TimeTrialScene(HTTP), ending!]
+  : [log, card];
+for (const s of list) { scenes[s.id] = s; stageEl.appendChild(s.el); }
 // sponsors are one line on Rebuild (minimal redesign); the judgment rail's reducer still runs (judgment.ts)
 stageEl.append(fxCanvas, flashEl, markEl);
 
@@ -174,7 +180,7 @@ setInterval(() => { void refreshNames(HTTP, ctx.side).then(() => { dirty = true;
 
 // ---------- render loop ----------
 function frame() {
-  if (dirty || split.busy() || scenes[current]?.animating?.(ctx)) {
+  if (dirty || split?.busy() || scenes[current]?.animating?.(ctx)) {
     dirty = false;
     scenes[current]?.render(ctx);
     renderMark();
@@ -188,6 +194,7 @@ addEventListener('keydown', (k) => {
   unlockAudio();
   if (director?.key(k.key)) { k.preventDefault(); dirty = true; return; }
   if (scenes[current]?.key?.(ctx, k.key)) { dirty = true; return; }
+  if (!legacy) { if (k.key === ' ') { k.preventDefault(); show(current === 'card' ? 'log' : 'card'); } return; }
   if (KEYS[k.key]) go(KEYS[k.key]);
   else if (k.key === ' ' && current === 'title') go('split');
   else if (k.key === 'm') { setMuted(!isMuted()); }
@@ -199,10 +206,10 @@ const cueEl = h('div');
 cueEl.id = 'cue';
 stageEl.append(cueEl);
 let cueTimer = 0;
-const director = params.get('director') === '1' ? new Director({
+const director = legacy && params.get('director') === '1' ? new Director({
   go: (id, instant) => (instant ? show(id) : go(id)),
   setSource,
-  setPage: (p) => { ending.setPage(p); dirty = true; },
+  setPage: (p) => { ending?.setPage(p); dirty = true; },
   cue: (text) => {
     cueEl.textContent = text;
     cueEl.classList.add('on');
@@ -212,6 +219,6 @@ const director = params.get('director') === '1' ? new Director({
 }) : null;
 
 const want = params.get('scene') as SceneId | null;
-show(want && scenes[want] ? want : 'title');
+show(want && scenes[want] ? want : legacy ? 'title' : 'log');
 director?.start();
 requestAnimationFrame(frame);
