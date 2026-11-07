@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Frankenstein, the game — scenes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;600&family=Jersey+10&family=Bungee&family=Russo+One&family=Audiowide&display=swap" rel="stylesheet">
+<style>
+  :root { color-scheme: dark; --bg:#07071F; --ink:#ECEAF6; --soft:#A7A3C9; }
+  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { color-scheme: light; --bg:#ECEAF3; --ink:#120B2E; --soft:#5C5780; } }
+  :root[data-theme="light"] { color-scheme: light; --bg:#ECEAF3; --ink:#120B2E; --soft:#5C5780; }
+  :root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: "Pixelify Sans", system-ui, sans-serif; line-height: 1.5; }
+  header, footer { max-width: 70ch; margin: 0 auto; padding: 48px 20px 8px; }
+  header h1 { font-family: "Jersey 10", sans-serif; font-weight: 400; font-size: clamp(2.6rem, 7vw, 4.4rem); line-height: .9; margin: 0 0 14px; }
+  header p, footer { color: var(--soft); }
+  .scene { max-width: 1120px; margin: 40px auto; padding: 0 20px; }
+  .scene h2 { font-weight: 600; font-size: 1.45rem; margin: 0 0 2px; }
+  .scene p.why { color: var(--soft); margin: 0 0 12px; max-width: 72ch; }
+  .frame { aspect-ratio: 16 / 9; width: 100%; container-type: inline-size; position: relative; overflow: hidden; border-radius: 4px; box-shadow: 0 20px 40px -24px rgba(0,0,0,.7); image-rendering: pixelated; color: #fff; }
+  .frame > * { position: absolute; }
+  .px { font-family: "Press Start 2P", monospace; }
+  .key { right: 2.4cqw; bottom: 1.4cqw; font-family: "Press Start 2P"; font-size: 1cqw; color: #9A9AFF; }
+  .guess { color: #9A9AFF; }
+  .stars { inset: 0; background: radial-gradient(#fff .15cqw, transparent .2cqw) 0 0 / 6cqw 6cqw, radial-gradient(#FFD9FF .12cqw, transparent .17cqw) 3cqw 2cqw / 9cqw 9cqw; opacity: .7; }
+  .palette { display: flex; flex-wrap: wrap; gap: 10px 16px; max-width: 1120px; margin: 0 auto; padding: 0 20px; font-size: .9rem; color: var(--soft); }
+  .palette i { width: 18px; height: 18px; border-radius: 50%; display: inline-block; vertical-align: -4px; margin-right: 6px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.25); }
+
+  /* Scene 0 Title */
+  .s0 { background: radial-gradient(120% 90% at 50% 0%, #3E2C7A, #0B0B2E 70%); }
+  .logo { left: 0; right: 0; text-align: center; font-family: "Jersey 10", sans-serif; line-height: .85; color: #fff; text-shadow: 0 .6cqw 0 #7B5CFF, 0 1.2cqw 0 #3A2390, 0 0 3cqw rgba(160,130,255,.6); }
+  .s0 .logo { top: 6cqw; font-size: 13cqw; }
+  .s0 .tag { left: 0; right: 0; top: 20cqw; text-align: center; font-size: 1.6cqw; color: #CDBFFF; }
+  .files { left: 24cqw; right: 24cqw; border: .45cqw solid #fff; background: rgba(11,11,46,.85); padding: 1.6cqw 2cqw; font-family: "Press Start 2P"; font-size: 1.6cqw; line-height: 2.2; }
+  .s0 .files { top: 26cqw; }
+  .files .sel::before { content: "▶ "; color: #FFD23F; }
+  .files .dim { opacity: .55; }
+  .files b { color: #FFD23F; font-weight: 400; }
+  .press { left: 0; right: 0; bottom: 4cqw; text-align: center; font-family: "Press Start 2P"; font-size: 2cqw; color: #FFD23F; }
+
+
+  /* Split scene */
+  .sp { background: #0B0B2E; }
+  .sp .hud { left: 1.2cqw; right: 1.2cqw; top: .6cqw; display: flex; justify-content: space-between; font-family: "Press Start 2P"; font-size: 1.15cqw; }
+  .sp .hud b { color: #FF3B3B; font-weight: 400; }
+  .sp .game { left: 1.2cqw; top: 4.4cqw; width: 50cqw; height: 33.3cqw; background: linear-gradient(#3a2a22 0 40%, #5b3b2a 40% 82%, #2b2b2b 82%); box-shadow: 0 0 0 .35cqw #3E2C7A; overflow: hidden; }
+  .sp .game .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 18%; background: #4a4a4a; }
+  .sp .game .face { position: absolute; left: 46%; bottom: 2%; width: 8%; height: 14%; background: #c98f5d; box-shadow: inset 0 -.6cqw 0 #8a5a33; }
+  .sp .game .static { position: absolute; left: 0; right: 0; top: 0; bottom: 18%; background: repeating-linear-gradient(0deg, rgba(255,255,255,.10) 0 .25cqw, rgba(0,0,0,.18) .25cqw .5cqw), repeating-linear-gradient(90deg, rgba(255,107,214,.10) 0 .6cqw, rgba(59,199,255,.10) .6cqw 1.2cqw); }
+  .sp .game .gun { position: absolute; left: 44%; bottom: 18%; width: 12%; height: 22%; background: #6b6b6b; clip-path: polygon(30% 0, 70% 0, 85% 100%, 15% 100%); }
+  .sp .badge { left: 1.2cqw; top: 38.4cqw; width: 50cqw; text-align: center; font-family: "Press Start 2P"; font-size: 1.15cqw; color: #7CF2C8; }
+  .sp .lbl { font-family: "Press Start 2P"; font-size: .9cqw; color: #9A9AFF; }
+  .sp .l1 { left: 1.2cqw; top: 2.9cqw; } .sp .l2 { left: 53.6cqw; top: 2.9cqw; }
+  .sp .rows { left: 53.6cqw; right: 1.2cqw; top: 4cqw; font-family: "Press Start 2P"; font-size: 1cqw; line-height: 2.2; }
+  .sp .rows div { display: grid; grid-template-columns: 1fr 6cqw; white-space: nowrap; }
+  .sp .code { left: 53.6cqw; right: 1.2cqw; top: 18.4cqw; height: 15.5cqw; background: #120B2E; border: .25cqw solid #3E2C7A; padding: .9cqw 1.1cqw; font-family: monospace; font-size: 1.05cqw; line-height: 1.45; color: #CDBFFF; white-space: pre; overflow: hidden; }
+  .sp .stamp { right: 2.6cqw; top: 29.6cqw; font-family: "Press Start 2P"; font-size: 1.6cqw; color: #0B0B2E; background: #7CF2C8; padding: .5cqw 1cqw; transform: rotate(-6deg); }
+  .sp .meter { left: 53.6cqw; right: 1.2cqw; top: 35.2cqw; display: grid; grid-template-columns: repeat(60, 1fr); gap: .12cqw; height: 1.6cqw; }
+  .sp .meter span { background: #2A2A55; } .sp .meter span.on { background: #7CF2C8; }
+  .sp .beam { inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .sp .ticker { left: 1.2cqw; right: 1.2cqw; bottom: 1cqw; font-family: "Pixelify Sans"; font-size: 1.5cqw; white-space: nowrap; overflow: hidden; }
+  .sp .ticker b { color: #FFD23F; font-weight: 600; }
+
+  /* Scene 1 Hi-score */
+  .s1 { background: radial-gradient(#ffffff55 .12cqw, transparent .14cqw) 0 0 / 5cqw 5cqw, #0B0B2E; }
+  .s1 .top { left: 4cqw; right: 4cqw; top: 2.4cqw; display: flex; justify-content: space-between; font-family: "Press Start 2P"; font-size: 1.8cqw; }
+  .s1 .top b { color: #FF3B3B; font-weight: 400; }
+  .s1 .alogo { left: 0; right: 0; top: 6.6cqw; text-align: center; font-family: "Bungee", sans-serif; font-size: 6.6cqw; color: #FFD23F; text-shadow: .35cqw .35cqw 0 #E8333A, .7cqw .7cqw 0 #3BC7FF; }
+  .s1 .table { left: 14cqw; right: 14cqw; top: 17.6cqw; font-family: "Press Start 2P"; font-size: 1.6cqw; line-height: 2.25; }
+  .s1 .table div { display: grid; grid-template-columns: 8cqw 1fr 11cqw; white-space: nowrap; }
+  .s1 .table .h { color: #9A9AFF; }
+  .c1 { color: #3BC7FF; } .c2 { color: #FFD23F; } .c3 { color: #FF6BD6; } .c4 { color: #FF3B3B; }
+  .s1 .meter { left: 4cqw; right: 4cqw; bottom: 6.2cqw; display: grid; grid-template-columns: repeat(84, 1fr); gap: .18cqw; height: 2.6cqw; }
+  .s1 .meter span { background: #2A2A55; } .s1 .meter span.on { background: #7CF2C8; } .s1 .meter span.lib { background: #55557A; }
+  .s1 .ticker { left: 4cqw; right: 31cqw; bottom: 1.6cqw; font-family: "Pixelify Sans"; font-size: 1.9cqw; color: #fff; white-space: nowrap; overflow: hidden; }
+  .s1 .ticker b { color: #FFD23F; font-weight: 600; }
+
+  /* Scene 2 Versus */
+  .s2 { background: linear-gradient(115deg, #1D3FD1 0 49.6%, #FFFFFF 49.6% 50.4%, #D1281D 50.4%); font-family: "Russo One", sans-serif; }
+  .s2 .bars { left: 3cqw; right: 3cqw; top: 2.6cqw; display: grid; grid-template-columns: 1fr 8cqw 1fr; gap: 1.6cqw; align-items: center; font-family: "Press Start 2P"; font-size: 1.4cqw; }
+  .s2 .hp { height: 2.6cqw; background: #3A0D0D; box-shadow: 0 0 0 .35cqw #fff; position: relative; }
+  .s2 .hp i { position: absolute; top: 0; bottom: 0; left: 0; background: linear-gradient(#FFE36B, #FF9F1C); }
+  .s2 .timer { text-align: center; font-size: 3.4cqw; font-family: "Russo One"; }
+  .s2 .lbl { display: flex; justify-content: space-between; margin-top: .8cqw; }
+  .s2 .n1 { left: 4cqw; top: 12cqw; font-size: 6.8cqw; font-style: italic; text-shadow: .5cqw .5cqw 0 #0A1A66; }
+  .s2 .n2 { right: 4cqw; top: 12cqw; font-size: 6.8cqw; font-style: italic; text-shadow: .5cqw .5cqw 0 #6B0F0A; }
+  .s2 .vs { left: 50%; top: 11cqw; transform: translateX(-50%); font-size: 8cqw; color: #FFE36B; -webkit-text-stroke: .35cqw #111; font-style: italic; }
+  .s2 .quote { left: 4cqw; top: 21.5cqw; font-family: "Pixelify Sans"; font-size: 2cqw; background: #fff; color: #111; padding: .6cqw 1.2cqw; }
+  .s2 .ev { left: 50%; top: 28cqw; transform: translateX(-50%); background: rgba(10,10,30,.88); border: .4cqw solid #fff; padding: 1.4cqw 2.4cqw; font-family: "Press Start 2P"; font-size: 1.8cqw; line-height: 2; white-space: nowrap; }
+  .s2 .ev .bad { color: #FF3B3B; }
+  .s2 .ev small { color: #A7A3C9; font-size: 1.2cqw; margin-right: 1.2cqw; }
+  .s2 .ko { left: 0; right: 0; top: 43.5cqw; text-align: center; font-size: 4.2cqw; color: #FFE36B; -webkit-text-stroke: .2cqw #111; }
+  .s2 .round { left: 0; right: 0; bottom: 1.8cqw; text-align: center; font-family: "Press Start 2P"; font-size: 1.4cqw; }
+
+  /* Scene 3 Time trial */
+  .s3 { background: linear-gradient(#FF7E5F, #FEB47B 40%, #4B3B6E 40% 41%, #2E2A3E 41%); font-family: "Audiowide", sans-serif; }
+  .s3 .sun { left: 50%; top: 14cqw; width: 20cqw; height: 10cqw; transform: translateX(-50%); background: repeating-linear-gradient(#FFE06B 0 1.2cqw, transparent 1.2cqw 1.8cqw); border-radius: 10cqw 10cqw 0 0; }
+  .s3 .road { left: 50%; bottom: 0; transform: translateX(-50%); width: 100cqw; height: 32cqw; background: #3B3650; clip-path: polygon(44% 0, 56% 0, 100% 100%, 0 100%); }
+  .s3 .stripe { left: 50%; bottom: 0; width: 2cqw; height: 32cqw; transform: translateX(-50%); background: repeating-linear-gradient(#FFF 0 3cqw, transparent 3cqw 7cqw); clip-path: polygon(40% 0, 60% 0, 100% 100%, 0 100%); }
+  .s3 .car { bottom: 4cqw; width: 9cqw; height: 4.4cqw; }
+  .s3 .car::before { content: ""; position: absolute; inset: 0; background: #FF3B3B; clip-path: polygon(12% 30%, 30% 0, 70% 0, 88% 30%, 100% 30%, 100% 100%, 0 100%, 0 30%); }
+  .s3 .me { left: 52cqw; } .s3 .ghost { left: 40cqw; bottom: 9cqw; opacity: .45; transform: scale(.8); }
+  .s3 .ghost::before { background: #CDBFFF; }
+  .s3 .ttl { left: 3cqw; top: 2.8cqw; font-size: 3.6cqw; }
+  .s3 .board { left: 3cqw; top: 9cqw; font-family: "Press Start 2P"; font-size: 1.45cqw; line-height: 2.1; background: rgba(20,14,40,.72); padding: 1.4cqw 1.8cqw; }
+  .s3 .best { color: #7CF2C8; }
+  .s3 .gh { color: #CDBFFF; }
+  .s3 .gauge { right: 4cqw; top: 3.6cqw; width: 22cqw; }
+  .s3 .pen { right: 4cqw; top: 18cqw; font-family: "Press Start 2P"; font-size: 1.4cqw; line-height: 2; color: #FFE06B; background: rgba(179,38,44,.92); padding: 1cqw 1.4cqw; }
+  .s3 .record { right: 4cqw; bottom: 3cqw; font-family: "Press Start 2P"; font-size: 1.8cqw; color: #7CF2C8; text-shadow: .25cqw .25cqw 0 #111; }
+
+  /* Scene 4 Ending */
+  .s4 { background: radial-gradient(120% 90% at 50% 0%, #4A2C8A, #0B0B2E 70%); }
+  .s4 .logo { top: 3.6cqw; font-size: 9.6cqw; }
+  .s4 .files { left: 6cqw; right: 40cqw; top: 15.5cqw; font-size: 1.32cqw; line-height: 2.25; }
+  .s4 .files .ok { color: #7CF2C8; }
+  .s4 .patch { left: 6cqw; right: 40cqw; top: 39cqw; font-family: "Press Start 2P"; font-size: 1.45cqw; color: #FFD23F; line-height: 1.8; }
+  .s4 .qr { right: 6cqw; top: 15.5cqw; width: 28cqw; aspect-ratio: 1; background: #fff; display: grid; place-items: center; color: #0B0B2E; font-family: "Press Start 2P"; font-size: 1.4cqw; text-align: center; box-shadow: 0 0 0 .6cqw #FFD23F; }
+  .s4 .p2 { right: 6cqw; width: 28cqw; top: 46.5cqw; text-align: center; font-family: "Press Start 2P"; font-size: 1.6cqw; color: #FFD23F; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Frankenstein, the game</h1>
+  <p>The demo is one retro video game played in scenes, with the live Play / Rebuild split at its heart, each in the genre that fits the moment. Same midnight sky, same pixel HUD, same narrator, same evidence rule throughout. Lane C builds these exactly; Lane D's OBS scenes use the same names.</p>
+  <p>Fonts load from Google Fonts. All numbers here are placeholders; on stage they come only from real run files.</p>
+</header>
+
+<section class="scene" aria-labelledby="t0"><h2 id="t0">Scene 0. Title</h2>
+<p class="why">Opening of the talk and the first shot of the video. Pressing start begins the run.</p>
+<div class="frame s0"><div class="stars"></div>
+  <div class="logo">FRANKENSTEIN</div>
+  <div class="tag px">LOST GAMES, REBUILT AND PROVEN</div>
+  <div class="files"><div class="sel">FILE 1 &nbsp; DOOM &nbsp; <b>0%</b></div><div>&nbsp;&nbsp; SOURCE CODE: LOST</div><div class="dim">&nbsp;&nbsp; FILE 2 &nbsp; NEW GAME</div></div>
+  <div class="press">PRESS START</div>
+</div></section>
+
+<section class="scene" aria-labelledby="tsp"><h2 id="tsp">Scene 1. Split: Play / Rebuild (home during the run)</h2>
+<p class="why">One side plays, the other side rebuilds. A judge holds the controller while the agents' code streams in on the right; each accepted function fires a beam to the part of the game it controls, which heals, and the live game is hot-swapped onto the rebuilt code without stopping.</p>
+<div class="frame sp">
+  <div class="hud"><span><b>RECOVERED</b> 63%</span><span><b>LIES</b> 9</span><span><b>TIME</b> 01:47</span></div>
+  <div class="lbl l1">PLAY</div><div class="lbl l2">REBUILD</div>
+  <div class="game"><div class="static"></div><div class="gun"></div><div class="bar"></div><div class="face"></div></div>
+  <div class="badge">NOW RUNNING ON 63% AGENT-WRITTEN CODE</div>
+  <div class="rows">
+    <div class="c1"><span class="guess">DOOMGUY FACE?</span><span>100%</span></div>
+    <div class="c2"><span class="guess">AMMO COUNTER?</span><span>100%</span></div>
+    <div class="c3"><span>FN_0801A2C4</span><span>100%</span></div>
+    <div class="c4"><span>FN_0801B010 LIAR</span><span>92%</span></div>
+  </div>
+  <div class="code">void fn_0801A2C4(struct s_14 *p) {
+    int i = p-&gt;f_08 &gt;&gt; 2;
+    if (p-&gt;f_0c &lt; 0x40)
+        i += data_0303A1[p-&gt;f_10];
+    fn_08019F00(p, i);
+}</div>
+  <div class="stamp">MATCH</div>
+  <div class="meter" id="meter2"></div>
+  <svg class="beam" viewBox="0 0 100 56.25" preserveAspectRatio="none" aria-hidden="true"><path d="M54 5.6 C 44 12, 36 30, 27.5 35.2" fill="none" stroke="#FFD23F" stroke-width=".45" stroke-dasharray="1.2 .6"/><circle cx="27.5" cy="35.2" r=".9" fill="#FFD23F"/></svg>
+  <div class="ticker"><b>ARCHIVIST:</b> Doomguy is back. Your judge is now playing on code our agents wrote.</div>
+</div></section>
+
+<section class="scene" aria-labelledby="t1"><h2 id="t1">Scene 1b. Hi-score (full screen)</h2>
+<p class="why">Home during the run. Recovered functions slide into the table with a coin sound, the cartridge meter fills one cell per function, the narrator ticker scrolls along the bottom.</p>
+<div class="frame s1">
+  <div class="top"><span><b>1UP</b> 62</span><span><b>HI-SCORE</b> 84</span><span><b>LIES</b> 9</span></div>
+  <div class="alogo">FRANKENSTEIN</div>
+  <div class="table">
+    <div class="h"><span>RANK</span><span>RECOVERED</span><span>MATCH</span></div>
+    <div class="c1"><span>62ND</span><span class="guess">SHOTGUN FIRE?</span><span>100%</span></div>
+    <div class="c2"><span>61ST</span><span class="guess">DOOMGUY FACE?</span><span>100%</span></div>
+    <div class="c3"><span>60TH</span><span>FN_08000D2E</span><span>100%</span></div>
+    <div class="c4"><span>---</span><span>FN_08000B40 LIAR</span><span>92%</span></div>
+    <div class="c1"><span>59TH</span><span class="guess">IMP THINKER?</span><span>100%</span></div>
+  </div>
+  <div class="meter" id="meter"></div>
+  <div class="ticker"><b>ARCHIVIST:</b> Another claim, another lie. Instruction four disagrees.</div>
+  <div class="key">? = OUR GUESS. ALL ELSE PROVED.</div>
+</div></section>
+
+<section class="scene" aria-labelledby="t2"><h2 id="t2">Scene 2. Versus</h2>
+<p class="why">Every false claim. The Stage cuts here automatically, shows the exact instruction that lied, then returns to Hi-score after four seconds.</p>
+<div class="frame s2">
+  <div class="bars"><div><div class="hp"><i style="right:8%"></i></div><div class="lbl"><span>DIGGER</span><span>CLAIM 92%</span></div></div><div class="timer">63</div><div><div class="hp"><i style="right:0"></i></div><div class="lbl"><span>REFEREE</span><span>100%</span></div></div></div>
+  <div class="n1">DIGGER</div><div class="vs">VS</div><div class="n2">REFEREE</div>
+  <div class="quote">“Matched it. Pretty sure.”</div>
+  <div class="ev"><div><small>EXPECTED</small>adds r0, r1, #0</div><div><small>GOT</small>adds r0, <span class="bad">r2</span>, #0</div></div>
+  <div class="ko">K.O. CLAIM REJECTED</div>
+  <div class="round">FN_08000B40 &nbsp; ATTEMPT 3</div>
+</div></section>
+
+<section class="scene" aria-labelledby="t3"><h2 id="t3">Scene 3. Time trial</h2>
+<p class="why">The results. Each run is a lap; lap times fall as the agents learn. On held-out functions, the library-off run is the ghost car you're racing.</p>
+<div class="frame s3">
+  <div class="sun"></div><div class="road"></div><div class="stripe"></div>
+  <div class="car ghost"></div><div class="car me"></div>
+  <div class="ttl">TIME TRIAL</div>
+  <div class="board">RUN 1 TRAINING &nbsp; [__] MIN / PIECE<br>RUN 2 HELD-OUT &nbsp; <span class="best">[__] MIN / PIECE</span><br><span class="gh">GHOST: LIBRARY OFF [__] MIN / PIECE</span><br>MATCH RATE &nbsp; [__]% VS <span class="gh">[__]%</span><br>MEMORY TEST &nbsp; [__] OF 20 MATCHED<br>MUSE SPARK &nbsp; [__] CALLS, $[__] PER PIECE</div>
+  <svg class="gauge" viewBox="0 0 200 120" aria-hidden="true"><path d="M20 110 A80 80 0 0 1 180 110" fill="none" stroke="#fff" stroke-width="8"/><path d="M20 110 A80 80 0 0 1 150 45" fill="none" stroke="#7CF2C8" stroke-width="8"/><path d="M100 110 L146 54" stroke="#FFE06B" stroke-width="5" stroke-linecap="round"/><text x="100" y="102" text-anchor="middle" fill="#fff" font-family="Audiowide" font-size="24">[__]%</text></svg>
+  <div class="pen">PENALTIES<br>FALSE CLAIMS [__]<br>FAKES REJECTED [__]</div>
+  <div class="record">NEW LAP RECORD</div>
+</div></section>
+
+<section class="scene" aria-labelledby="t4"><h2 id="t4">Scene 4. Ending</h2>
+<p class="why">The finale. The save file shows the game recovered, both checksums identical, the patch for the bug, and the QR code for the room.</p>
+<div class="frame s4"><div class="stars"></div>
+  <div class="logo">IT'S ALIVE</div>
+  <div class="files"><div class="sel">FILE 1 &nbsp; DOOM &nbsp; <b>100%</b></div><div>&nbsp;&nbsp; ORIGINAL CHECKSUM</div><div>&nbsp;&nbsp; [40 HEX CHARACTERS]</div><div>&nbsp;&nbsp; REBUILT CHECKSUM</div><div>&nbsp;&nbsp; [40 HEX CHARACTERS]</div><div class="ok">&nbsp;&nbsp; IDENTICAL</div></div>
+  <div class="patch">PATCH 1.01: 1 FUNCTION CHANGED.<br>BUG FIXED.</div>
+  <div class="qr">QR CODE<br>FROM<br>PHONE.PUBLISHED</div>
+  <div class="p2">PLAYER 2, PRESS START</div>
+</div></section>
+
+<div class="palette" aria-label="Palette">
+  <span><i style="background:#0B0B2E"></i>Midnight</span><span><i style="background:#3E2C7A"></i>Night violet</span><span><i style="background:#FFD23F"></i>Marquee yellow</span><span><i style="background:#3BC7FF"></i>Cyan</span><span><i style="background:#FF6BD6"></i>Magenta</span><span><i style="background:#FF3B3B"></i>Alarm red</span><span><i style="background:#1D3FD1"></i>Player blue</span><span><i style="background:#D1281D"></i>Player red</span><span><i style="background:#FFE36B"></i>K.O. gold</span><span><i style="background:#FF7E5F"></i>Sunset</span><span><i style="background:#7CF2C8"></i>Mint</span><span><i style="background:#9A9AFF"></i>Guess violet</span>
+</div>
+<footer>Type: Press Start 2P (HUD), Jersey 10 (title and ending logo), Bungee (hi-score), Russo One (versus), Audiowide (time trial), Pixelify Sans (narration), Chakra Petch (long documents). Full rules in 02_DESIGN.md.</footer>
+<script>
+  const m2 = document.getElementById('meter2');
+  for (let i = 0; i < 60; i++) { const s = document.createElement('span'); if (i < 38) s.className = 'on'; m2.appendChild(s); }
+  const m = document.getElementById('meter');
+  for (let i = 0; i < 84; i++) { const s = document.createElement('span'); if (i < 62) s.className = 'on'; m.appendChild(s); }
+</script>
+</body>
+</html>
