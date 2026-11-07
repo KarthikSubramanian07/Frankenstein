@@ -31,7 +31,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&family=Press+Start+2P&display=swap">
 <link rel="preload" as="image" href="/assets/art/hero-1400.webp" imagesrcset="/assets/art/hero-800.webp 800w, /assets/art/hero-1400.webp 1400w, /assets/art/hero-full.webp 1584w" imagesizes="(max-width: 1240px) 100vw, 1200px">
-<link rel="stylesheet" href="/assets/site.css?v=19">
+<link rel="stylesheet" href="/assets/site.css?v=20">
 <noscript><style>[data-reveal]{opacity:1!important;transform:none!important}.msg{opacity:1!important;transform:none!important}.msg.typing{display:none}</style></noscript>
 
 <script type="application/ld+json">
@@ -67,13 +67,14 @@
     <a class="logo" href="/" aria-label="Frankenstein home"><svg class="logo-bolt" aria-hidden="true"><use href="#bolt"/></svg><span>Frankenstein</span></a>
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links"><span class="sr">Menu</span><i aria-hidden="true"></i><i aria-hidden="true"></i></button>
     <ul class="nav-links" id="nav-links">
+      <li class="nl-judges"><a href="/judges"><i class="led" aria-hidden="true"></i>For judges <span aria-hidden="true">&#8594;</span></a></li>
       <li><a href="#partners">Partners</a></li>
       <li><a href="#referee">The referee</a></li>
       <li><a href="#story">The story</a></li>
       <li><a href="#numbers">Numbers</a></li>
       <li><a href="#credits">Credits</a></li>
-      <li><a href="/judges">For judges</a></li>
     </ul>
+    <a class="judges-pill" href="/judges"><i class="led" aria-hidden="true"></i><span>For judges</span><b aria-hidden="true">&#8594;</b></a>
     <a class="start-btn" href="#story" aria-label="Press start: begin the story"><span><span class="ps-press">PRESS </span>START</span><i aria-hidden="true"></i></a>
   </nav>
 </header>
@@ -83,6 +84,7 @@
 <!-- ═════════════ HERO ═════════════ -->
 <section class="hero" aria-labelledby="hero-h">
   <div class="wrap hero-top">
+    <aside class="judge-chip" aria-label="For judges"><a href="/judges"><i class="led" aria-hidden="true"></i><span><b>Judging?</b> Every track, criterion by criterion</span><span class="arr" aria-hidden="true">&#8594;</span></a><button class="judge-x" type="button" aria-label="Dismiss" hidden>&#215;</button></aside>
     <h1 id="hero-h" class="display" data-reveal style="--i:1">Lost games,<br><span class="two">rebuilt and proven.</span></h1>
     <div class="hero-sub" data-reveal style="--i:2">
       <p>87% of classic games are endangered, and most of their source code is gone. Frankenstein's agents rebuild it from the cartridge, one piece at a time. <b>A compiler checks every byte.</b></p>
@@ -485,6 +487,6 @@ asrs r0, r0, #1</pre>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-<script src="/assets/app.js?v=17" defer></script>
+<script src="/assets/app.js?v=18" defer></script>
 </body>
 </html>
