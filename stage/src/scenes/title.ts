@@ -54,7 +54,8 @@ export class TitleScene implements Scene {
     if (q('pct').textContent !== p) q('pct').textContent = p;
     const g = gameName(s);
     if (q('game').textContent !== g) q('game').textContent = g;
-    const l = `${s.matched.length} PROVED · ${s.falseClaims.length} LIES CAUGHT`;
-    if (q('lies').textContent !== l) q('lies').textContent = l;
+    // proved in mint, lies in red: alarm red only ever means a lie
+    const l = `<b>${s.matched.length} PROVED</b> · ${s.falseClaims.length} LIES`;
+    if (q('lies').innerHTML !== l) q('lies').innerHTML = l;
   }
 }

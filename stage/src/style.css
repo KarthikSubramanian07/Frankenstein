@@ -267,7 +267,8 @@ body.obs .split .game-frame .ph { display: none; }
 .title .menu .f { display: grid; grid-template-columns: 64px 300px 1fr auto; align-items: center; padding: 14px 0; white-space: nowrap; }
 .title .menu .cur { color: var(--yellow); }
 .title .menu .pct { color: var(--mint); }
-.title .menu .sub { padding: 6px 0 18px 364px; font-size: 28px; color: var(--alarm); }
+.title .menu .sub { padding: 6px 0 18px 364px; font-size: 28px; color: var(--alarm); white-space: nowrap; }
+.title .menu .sub b { font-weight: normal; color: var(--mint); }
 .title .menu .f.new { color: var(--dim); }
 .title .press { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; top: 920px; text-align: center; font-size: 40px; color: var(--yellow); }
 .title .press.blink { animation: blink 1s steps(1) infinite; }
@@ -294,8 +295,9 @@ body.obs .split .game-frame .ph { display: none; }
 .hiscore .rows { height: 420px; margin-top: 0; }
 .hiscore .row { height: 70px; grid-template-columns: 190px minmax(0,1fr) 170px; font-size: 40px; }
 .hiscore .row .nm { white-space: nowrap; }
-.hiscore .hero { position: absolute; left: 1320px; top: 360px; width: 500px; text-align: center; }
-.hiscore .hero .num { font: 220px/1 'Bungee', sans-serif; color: var(--mint); text-shadow: 8px 8px 0 var(--night-violet); }
+.hiscore .row .nm.guess { font-size: 56px; }
+.hiscore .hero { position: absolute; left: 1300px; top: 360px; width: 560px; text-align: center; }
+.hiscore .hero .num { font: 170px/1 'Bungee', sans-serif; color: var(--mint); text-shadow: 8px 8px 0 var(--night-violet); white-space: nowrap; }
 .hiscore .hero .cap { font-size: 32px; line-height: 1.6; margin-top: 26px; color: var(--ink); }
 .hiscore .hero .run { font-size: 28px; margin-top: 22px; color: var(--dim); }
 .hiscore .cart { position: absolute; left: 120px; top: 830px; width: 1680px; }

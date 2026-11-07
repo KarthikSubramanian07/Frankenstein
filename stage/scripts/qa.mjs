@@ -50,6 +50,8 @@ for (const [name, q] of SCENES) {
       while (a && a !== scene) { if (a.getAnimations().some((x) => x.playState === 'running')) moving = true; a = a.parentElement; }
       if (parseFloat(cs.fontSize) < 28) out.push(`small ${cs.fontSize}: "${t}"`);
       if (el.scrollWidth > el.clientWidth + 2 && cs.overflow !== 'visible' && !el.classList.contains('scroll')) out.push(`clipped: "${t}"`);
+      // text wider than its own block box (runs into a neighbour or off the edge)
+      if (['block', 'grid', 'flex'].includes(cs.display) && cs.overflow === 'visible' && el.scrollWidth > el.clientWidth + 4) out.push(`overflows its box: "${t}"`);
       const r = el.getBoundingClientRect();
       if (!moving && r.right > 1922 || r.left < -2 || r.bottom > 1082 || r.top < -2) out.push(`off-stage: "${t}"`);
       if (mr && r.right > mr.left && r.left < mr.right && r.bottom > mr.top && r.top < mr.bottom && !mark.contains(el)) out.push(`under mark: "${t}"`);

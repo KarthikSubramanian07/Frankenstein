@@ -62,7 +62,7 @@ export class HiscoreScene implements Scene {
     if (capEl.innerHTML !== cap) capEl.innerHTML = cap;
     setText(this.el, 'run', s.fnTotal && s.fnTotal !== total ? `${s.matched.length}/${s.fnTotal} THIS RUN` : '');
     renderRows(this.rowsEl, ctx, 6, this.memo, this.liar);
-    this.fitNames();
+    // long guessed names are fitted by renderRows (fitNames in common.ts)
     drawMeter(this.meter, ctx);
     renderTicker(this.el, s, ctx.reduced);
   }
