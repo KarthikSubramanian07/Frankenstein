@@ -1,27 +1,38 @@
 """Split the target ELF into anonymous functions: manifest, asm, ctx headers, viz_map, hidden names.
 
-Run lab/dump_target.sh first (writes lab/secrets/dump/). Then: python3 lab/split.py
+Run lab/dump_target.sh first (writes lab/secrets/dump/). Then: python3 lab/split.py [--game voxelburg]
+Game config: lab/games/<game>.json (--game or FRANK_GAME, default doom). Other games write under their own out/secrets dirs.
 Outputs (contract section 3): lab/out/manifest.json, lab/out/asm/<id>.s, lab/out/ctx/<id>.h,
 lab/out/viz_map.json, and the answer key lab/secrets/names.json (never committed).
 """
+import argparse
 import bisect
 import hashlib
 import json
 import random
 import re
 import subprocess
+import sys
 from pathlib import Path
 
 LAB = Path(__file__).resolve().parent
-SECRETS, OUT = LAB / "secrets", LAB / "out"
-DUMP, SRC = SECRETS / "dump", SECRETS / "gbadoom" / "source"
+sys.path.insert(0, str(LAB.parent))
+from lab.games import load as load_game  # noqa: E402
+
 SEED, HELDOUT_PER_10 = 7, 3
 
-SUBSYSTEMS = [  # (id, label, source-file prefixes); first match wins, the rest is "world"
-    ("hud", "Doomguy's face and the status bar", ("st_",)),
-    ("weapons", "the weapons", ("p_pspr",)),
-    ("enemies", "the monsters", ("p_enemy",)),
-]
+
+def configure(game=None):
+    """Set the module paths from lab/games/<game>.json (Doom: lab/out, lab/secrets, gbadoom/source)."""
+    global GAME, SECRETS, OUT, DUMP, SRC, SUBSYSTEMS
+    GAME = load_game(game)
+    SECRETS, OUT = GAME["secrets"], GAME["out"]
+    DUMP, SRC = SECRETS / "dump", GAME["src_dir"] / GAME["c_dirs"][0]
+    # (id, label, source-file prefixes); first match wins, the rest is "world"
+    SUBSYSTEMS = [(sid, label, tuple(prefixes)) for sid, label, prefixes in GAME["subsystems"]]
+
+
+configure()
 SYM_RE = re.compile(r"<([^<>+]+)(\+0x[0-9a-f]+)?>")
 HEAD_RE = re.compile(r"^([0-9a-f]{8}) <(.+)>:$")
 WORD_RE = re.compile(r"\.word\s+0x([0-9a-f]+)\s*$")
@@ -50,12 +61,14 @@ def object_of():
 
 
 def scope_of(obj):
-    """Game = C files directly in GBADoom's source/; everything else counts as library."""
+    """Game = C files directly in the game's C dirs (GBADoom: source/); everything else counts as library."""
     if obj is None:
         return "library", "toolchain (crt0, libgcc, newlib, libgba)"
-    stem = obj[: -len(".o")]
-    if (SRC / f"{stem}.c").exists():
-        return "game", f"source/{stem}.c"
+    stem = obj[: -len(GAME["obj_suffix"])]
+    for c_dir in GAME["c_dirs"]:
+        if (GAME["src_dir"] / c_dir / f"{stem}.c").exists():
+            origin = f"{c_dir}/{stem}.c"
+            return ("library", f"excluded {origin}") if origin in GAME["exclude_sources"] else ("game", origin)
     for pattern, why in (("libtimidity/*.c", "third-party libtimidity"), ("*.cpp", "C++ platform layer"), ("*.s", "hand-written assembly")):
         if list(SRC.glob(pattern.replace("*", stem))):
             return "library", why
@@ -138,7 +151,7 @@ def main():
         callees[fid] = sorted({ids[t] for t in re.findall(r"\bbl\w*\s+[0-9a-f]+ <([^<>+]+)>", "\n".join(body)) if t in funcs and ids[t] != fid})
         branches = sum(1 for l in body if re.search(r"\tb(?:eq|ne|cs|cc|mi|pl|vs|vc|hi|ls|ge|lt|gt|le|x)?\s", l))
         entry = {"id": fid, "addr": f"0x{addr:08X}", "size": size, "mode": mode(addr), "scope": scope,
-                 "split": "train", "asm_path": f"lab/out/asm/{fid}.s", "callees": callees[fid], "callers": [],
+                 "split": "train", "asm_path": f"{GAME['out_rel']}/asm/{fid}.s", "callees": callees[fid], "callers": [],
                  "difficulty": round(min(1.0, 0.6 * size / 1024 + 0.4 * branches / 60), 3),
                  "iwram": addr >= 0x03000000}
         entries.append(entry)
@@ -163,18 +176,18 @@ def main():
 
     elf_sha1 = hashlib.sha1((SECRETS / "target.elf").read_bytes()).hexdigest()
     rom_sha1 = hashlib.sha1((OUT / "target.gba").read_bytes()).hexdigest()
-    gcc = subprocess.run(["git", "-C", str(SECRETS / "gbadoom"), "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip()
+    gcc = subprocess.run(["git", "-C", str(GAME["src_dir"]), "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip()
     manifest = {"v": 1, "game": {
-        "id": "doom", "title": "GBADoom (prBoom, Doom shareware)", "license": "GPL-2.0-or-later (GBADoom source headers); see DECISIONS.md",
-        "rom_path": "lab/out/target.gba", "rom_sha1": rom_sha1, "elf_sha1": elf_sha1, "upstream": f"doomhack/GBADoom@{gcc}",
+        "id": GAME["id"], "title": GAME["title"], "license": GAME["license"],
+        "rom_path": f"{GAME['out_rel']}/target.gba", "rom_sha1": rom_sha1, "elf_sha1": elf_sha1, "upstream": f"{GAME['upstream_repo']}@{gcc}",
         "compiler": {"name": "devkitARM GCC", "version": "devkitARM r68 (gcc 16.1.0)",
-                     "flags": "GBADoom Makefile flags minus -flto=8 (see lab/TOOLCHAIN.md)"}},
+                     "flags": GAME["flags_note"]}},
         "split_seed": SEED, "functions": entries}
     (OUT / "manifest.json").write_text(json.dumps(manifest, indent=1) + "\n")
     (SECRETS / "names.json").write_text(json.dumps(names, indent=1) + "\n")
 
     subs = {sid: {"id": sid, "label": label, "functions": []} for sid, label, _ in SUBSYSTEMS}
-    subs["world"] = {"id": "world", "label": "the renderer and the rest of the world", "functions": []}
+    subs["world"] = {"id": "world", "label": GAME["world_label"], "functions": []}
     for e in game:
         src = Path(names[e["id"]]["origin"]).name
         sid = next((s for s, _, prefixes in SUBSYSTEMS if src.startswith(prefixes)), "world")
@@ -212,4 +225,7 @@ def leak_check(names, game):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--game", default=None, help="lab/games/<game>.json (default: FRANK_GAME or doom)")
+    configure(parser.parse_args().game)
     main()

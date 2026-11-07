@@ -10,11 +10,14 @@ import time
 import uuid
 from pathlib import Path
 
+from lab.games import load as load_game
+
 from .lint import lint, lint_expanded
 
 REPO = Path(__file__).resolve().parents[2]
 LAB = REPO / "lab"
-SECRETS, OUT = LAB / "secrets", LAB / "out"
+GAME = load_game()  # FRANK_GAME, default doom: lab/out and lab/secrets
+SECRETS, OUT = GAME["secrets"], GAME["out"]
 CONTAINER = "frank-lab"
 OBJDUMP = "$DEVKITARM/bin/arm-none-eabi-objdump"
 GCC = "$DEVKITARM/bin/arm-none-eabi-gcc"
@@ -25,11 +28,10 @@ DIAG_FLAGS = "-fmax-errors=20 -fno-diagnostics-show-caret"  # diagnostics only; 
 # (an include that slipped past lint) would print another file's lines, so the whole log is withheld.
 LOG_PATH_RE = re.compile(r"^(?:In file included from|\s+from)?\s*([^\s:]+):\d+(?::\d+)?[:,]", re.M)
 LOG_ALLOWED = ("lab/out/tmp/", "lab/out/ctx/", "/opt/devkitpro/", "<command-line>", "<built-in>")
+LOG_ALLOWED += tuple(f"lab/out/games/{g}/{d}/" for g in (p.stem for p in (LAB / "games").glob("*.json")) for d in ("tmp", "ctx"))
 
-# GBADoom's Makefile CFLAGS minus -flto=8 (lab/TOOLCHAIN.md). -g and include paths do not change code.
-THUMB_FLAGS = ("-O3 -mcpu=arm7tdmi -mtune=arm7tdmi -fgcse-after-reload -fallow-store-data-races -ffast-math "
-               "-fno-inline-functions-called-once -DGBA -mthumb -mthumb-interwork -std=gnu23")
-ARM_FLAGS = THUMB_FLAGS.replace("-fno-inline-functions-called-once", "") + " -fno-lto -marm -finline-functions-called-once"
+# From lab/games/<game>.json (Doom: its Makefile CFLAGS minus -flto=8, lab/TOOLCHAIN.md). -g and include paths do not change code.
+THUMB_FLAGS, ARM_FLAGS = GAME["thumb_flags"], GAME["arm_flags"]
 
 INSN_RE = re.compile(r"^\s*([0-9a-f]+):\t([0-9a-f ]+?)\s*\t(.*)$")
 RELOC_RE = re.compile(r"^\s*([0-9a-f]+): (R_ARM_\w+)\t(\S+)$")
@@ -40,13 +42,16 @@ SYMTAB_RE = re.compile(r"^([0-9a-f]{8}) (.{7}) (\S+)\t([0-9a-f]{8}) (.+)$")
 
 
 class Referee:
-    def __init__(self) -> None:
-        manifest = json.loads((OUT / "manifest.json").read_text())
+    def __init__(self, game: str | None = None) -> None:
+        self.game = load_game(game)
+        self.out, self.secrets = self.game["out"], self.game["secrets"]
+        self.thumb_flags, self.arm_flags = self.game["thumb_flags"], self.game["arm_flags"]
+        manifest = json.loads((self.out / "manifest.json").read_text())
         self.functions = {f["id"]: f for f in manifest["functions"]}
         # The answer key exists only on Lane A's machine. Everyone else judges against lab/out/target/*.json.
-        names_path = SECRETS / "names.json"
+        names_path = self.secrets / "names.json"
         self.names = json.loads(names_path.read_text()) if names_path.exists() else {}
-        self.ids = _elf_ids() if (SECRETS / "dump" / "elf_nm.txt").exists() else {}
+        self.ids = _elf_ids(self.secrets) if (self.secrets / "dump" / "elf_nm.txt").exists() else {}
         self._targets: dict[str, list[dict]] = {}
         self._symtabs: dict[str, list[tuple[str, int, int, str]]] = {}
 
@@ -62,7 +67,7 @@ class Referee:
         if meta is None or meta["scope"] != "game":
             raise KeyError(f"unknown game function {fn}")
         target = self._target(fn)
-        asm_path = OUT / "asm" / f"{fn}.s"
+        asm_path = self.out / "asm" / f"{fn}.s"
         lint_result = lint(src, len(target), asm_path.read_text() if asm_path.exists() else "")
         result = {"v": 1, "fn": fn, "status": "LINT_FAIL", "match_pct": 0.0, "first_diff": None, "diff": [],
                   "lint": lint_result, "compile": {"ok": False, "log": ""}, "elapsed_ms": 0, "referee": _git_sha()}
@@ -79,21 +84,21 @@ class Referee:
         return result, target, got
 
     def context(self, fn: str) -> str:
-        return (OUT / "ctx" / f"{fn}.h").read_text()
+        return (self.out / "ctx" / f"{fn}.h").read_text()
 
     def self_check(self, fn: str, edit: tuple[str, str] | None = None) -> dict:
         """T2 (tests only): compile the hidden original source of fn's file and compare fn. Never exposed over HTTP."""
         name, origin = self.names[fn]["name"], self.names[fn]["origin"]
-        src = (SECRETS / "gbadoom" / origin).read_text()
+        src = (self.game["src_dir"] / origin).read_text()
         if edit:
             assert src.count(edit[0]) == 1, f"edit anchor not unique: {edit[0]!r}"
             src = src.replace(edit[0], edit[1])
-        work = OUT / "tmp" / uuid.uuid4().hex[:10]
+        work = self.out / "tmp" / uuid.uuid4().hex[:10]
         work.mkdir(parents=True)
         (work / "orig.c").write_text(src)
         rel = work.relative_to(REPO)
-        inc = "-iquote lab/secrets/gbadoom/include -iquote lab/secrets/gbadoom/include/libtimidity -iquote lab/secrets/gbadoom/source -I/opt/devkitpro/libgba/include"
-        flags = ARM_FLAGS if self.functions[fn]["mode"] == "arm" else THUMB_FLAGS
+        inc = self.game["source_includes"]
+        flags = self.arm_flags if self.functions[fn]["mode"] == "arm" else self.thumb_flags
         proc = _docker(f"{GCC} {flags} {inc} -c {rel}/orig.c -o {rel}/o.o 2>&1 && {OBJDUMP} -dr {rel}/o.o > {rel}/o.dis && {OBJDUMP} -t {rel}/o.o > {rel}/o.sym")
         if proc.returncode != 0:
             return {"status": "NO_COMPILE", "log": proc.stdout[-2000:]}
@@ -104,11 +109,11 @@ class Referee:
     # ---------- compile ----------
     def _compile(self, fn: str, src: str, mode: str) -> tuple[bool, str, list[dict], dict]:
         """Preprocess, lint the expansion, then compile. Returns (ok, log, items, expanded lint result)."""
-        work = OUT / "tmp" / uuid.uuid4().hex[:10]
+        work = self.out / "tmp" / uuid.uuid4().hex[:10]
         work.mkdir(parents=True)
         (work / "cand.c").write_text(src)
         rel = work.relative_to(REPO)
-        flags = f"{ARM_FLAGS if mode == 'arm' else THUMB_FLAGS} {DIAG_FLAGS} -include lab/out/ctx/{fn}.h"
+        flags = f"{self.arm_flags if mode == 'arm' else self.thumb_flags} {DIAG_FLAGS} -include {self.game['out_rel']}/ctx/{fn}.h"
         proc = _docker(f"{GCC} {flags} -E {rel}/cand.c -o {rel}/cand.i 2>&1", timeout=COMPILE_TIMEOUT_S)
         if proc.returncode != 0:
             return False, scrub_log(proc.stdout + proc.stderr), [], {"ok": True, "violations": []}
@@ -129,18 +134,19 @@ class Referee:
 
     # ---------- target ----------
     def _target(self, fn: str) -> list[dict]:
-        exported = OUT / "target" / f"{fn}.json"
+        exported = self.out / "target" / f"{fn}.json"
         if fn not in self._targets and exported.exists() and not self.names:
             items = json.loads(exported.read_text())["items"]
             self._targets[fn] = [{**i, "key": tuple(i["key"]) if i["key"] else None, "reloc": None} for i in items]
         if fn not in self._targets:
             name, obj = self.names[fn]["name"], self.names[fn]["object"]
-            cache = SECRETS / "dump" / "obj"
+            cache = self.secrets / "dump" / "obj"
             dis, sym = cache / f"{obj}.dis", cache / f"{obj}.sym"
             if not dis.exists():
                 cache.mkdir(parents=True, exist_ok=True)
-                o = f"lab/secrets/gbadoom/build/{obj}"
-                _docker(f"{OBJDUMP} -dr {o} > lab/secrets/dump/obj/{obj}.dis && {OBJDUMP} -t {o} > lab/secrets/dump/obj/{obj}.sym", check=True)
+                o = next(f"{self.game['src_dir_rel']}/{d}/{obj}" for d in self.game["obj_dirs"] if (self.game["src_dir"] / d / obj).exists())
+                c = f"{self.game['secrets_rel']}/dump/obj"
+                _docker(f"{OBJDUMP} -dr {o} > {c}/{obj}.dis && {OBJDUMP} -t {o} > {c}/{obj}.sym", check=True)
             symtab = self._symtabs.setdefault(obj, _symtab(sym.read_text()))
             items = [self._normalize(i, symtab, own_ids=False) for i in _blocks(dis.read_text())[name]]
             self._targets[fn] = [{**i, "text": self._anonymize(i["text"])} for i in items]
@@ -241,11 +247,11 @@ def _resolve(symtab: list, section: str, offset: int) -> tuple[str, int] | None:
     return None
 
 
-def _elf_ids() -> dict[str, str]:
+def _elf_ids(secrets: Path = SECRETS) -> dict[str, str]:
     """Every named ELF symbol -> fn_/data_ id, including sizeless ones from assembly and the linker script.
     Compiler runtime helpers (__aeabi_idiv and friends) keep their names: candidates call them by name too."""
     ids = {}
-    for line in (SECRETS / "dump" / "elf_nm.txt").read_text().splitlines():
+    for line in (secrets / "dump" / "elf_nm.txt").read_text().splitlines():
         parts = line.split()
         if len(parts) not in (3, 4) or parts[-1].startswith("$"):
             continue

@@ -1,4 +1,4 @@
-"""rebuild and patch (contract section 4). Works on any machine: needs lab/out/target.gba, manifest, link_info.
+"""rebuild and patch (contract section 4). Works on any machine: needs the game's out dir (Doom: lab/out/target.gba), manifest, link_info.
 
 rebuild: for every recovered function the referee re-checks the candidate (it must MATCH), then the ROM is
   assembled from the agent's own compiled bytes. At relocation sites, where the referee proved both sides point
@@ -14,7 +14,7 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
-from .core import COMPILE_TIMEOUT_S, DIAG_FLAGS, GCC, OBJDUMP, OUT, REPO, ARM_FLAGS, THUMB_FLAGS, Referee, _docker, scrub_log
+from .core import COMPILE_TIMEOUT_S, DIAG_FLAGS, GCC, OBJDUMP, REPO, Referee, _docker, scrub_log
 from .lint import lint
 
 ROM_BASE = 0x08000000
@@ -27,8 +27,9 @@ THUMB_NOP = bytes.fromhex("c046")
 class RomLinker:
     def __init__(self, referee: Referee | None = None) -> None:
         self.referee = referee or Referee()
-        self.info = json.loads((OUT / "link_info.json").read_text())
-        self.original = (OUT / "target.gba").read_bytes()
+        self.out = self.referee.out
+        self.info = json.loads((self.out / "link_info.json").read_text())
+        self.original = (self.out / "target.gba").read_bytes()
         self.game = {fn: m for fn, m in self.referee.functions.items() if m["scope"] == "game"}
 
     # ---------- addresses ----------
@@ -76,7 +77,7 @@ class RomLinker:
             agent_bytes += self.game[fn]["size"]
         sha1 = hashlib.sha1(rom).hexdigest()
         original_sha1 = hashlib.sha1(self.original).hexdigest()
-        out = OUT / "rebuilt.gba"
+        out = self.out / "rebuilt.gba"
         out.write_bytes(rom)
         total = sum(m["size"] for m in self.game.values())
         result = {"v": 1, "rom_sha1": sha1, "original_sha1": original_sha1, "identical": sha1 == original_sha1,
@@ -114,7 +115,7 @@ class RomLinker:
         filler = THUMB_NOP * ((meta["size"] - len(code)) // 2)
         rom[off: off + meta["size"]] = code + filler + bytes(meta["size"] - len(code) - len(filler))
         changed = self.changed_functions(rom)
-        out = OUT / "patched.gba"
+        out = self.out / "patched.gba"
         out.write_bytes(rom)
         return {"v": 1, "rom_path": str(out.relative_to(REPO)), "rom_sha1": hashlib.sha1(rom).hexdigest(),
                 "changed_functions": changed, "unchanged": len(self.game) - len(changed),
@@ -132,12 +133,12 @@ class RomLinker:
         return sorted(changed)
 
     def _compile_and_link(self, fn: str, src: str, addr: int, mode: str) -> bytes | str:
-        work = OUT / "tmp" / uuid.uuid4().hex[:10]
+        work = self.out / "tmp" / uuid.uuid4().hex[:10]
         work.mkdir(parents=True)
         (work / "fix.c").write_text(src)
         rel = work.relative_to(REPO)
-        flags = ARM_FLAGS if mode == "arm" else THUMB_FLAGS
-        proc = _docker(f"{GCC} {flags} {DIAG_FLAGS} -include lab/out/ctx/{fn}.h -c {rel}/fix.c -o {rel}/fix.o 2>&1 && {NM} -u {rel}/fix.o",
+        flags = self.referee.arm_flags if mode == "arm" else self.referee.thumb_flags
+        proc = _docker(f"{GCC} {flags} {DIAG_FLAGS} -include {self.referee.game['out_rel']}/ctx/{fn}.h -c {rel}/fix.c -o {rel}/fix.o 2>&1 && {NM} -u {rel}/fix.o",
                        timeout=COMPILE_TIMEOUT_S)
         if proc.returncode != 0:
             return scrub_log(proc.stdout + proc.stderr)

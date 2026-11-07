@@ -1,0 +1,23 @@
+{
+ "id": "doom",
+ "title": "GBADoom (prBoom, Doom shareware)",
+ "license": "GPL-2.0-or-later (GBADoom source headers); see DECISIONS.md",
+ "upstream_repo": "doomhack/GBADoom",
+ "flags_note": "GBADoom Makefile flags minus -flto=8 (see lab/TOOLCHAIN.md)",
+ "out": "lab/out",
+ "secrets": "lab/secrets",
+ "src_dir": "lab/secrets/gbadoom",
+ "c_dirs": ["source"],
+ "obj_dirs": ["build"],
+ "obj_suffix": ".o",
+ "exclude_sources": [],
+ "thumb_flags": "-O3 -mcpu=arm7tdmi -mtune=arm7tdmi -fgcse-after-reload -fallow-store-data-races -ffast-math -fno-inline-functions-called-once -DGBA -mthumb -mthumb-interwork -std=gnu23",
+ "arm_flags": "-O3 -mcpu=arm7tdmi -mtune=arm7tdmi -fgcse-after-reload -fallow-store-data-races -ffast-math  -DGBA -mthumb -mthumb-interwork -std=gnu23 -fno-lto -marm -finline-functions-called-once",
+ "source_includes": "-iquote lab/secrets/gbadoom/include -iquote lab/secrets/gbadoom/include/libtimidity -iquote lab/secrets/gbadoom/source -I/opt/devkitpro/libgba/include",
+ "subsystems": [
+  ["hud", "Doomguy's face and the status bar", ["st_"]],
+  ["weapons", "the weapons", ["p_pspr"]],
+  ["enemies", "the monsters", ["p_enemy"]]
+ ],
+ "world_label": "the renderer and the rest of the world"
+}

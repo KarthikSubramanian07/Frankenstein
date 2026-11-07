@@ -1,0 +1,28 @@
+{
+ "id": "voxelburg",
+ "title": "Attack on Voxelburg (MutantStargoat)",
+ "license": "GPL-3.0-or-later (COPYING); see lab/GAME2.md",
+ "upstream_repo": "MutantStargoat/voxelburg",
+ "flags_note": "voxelburg Makefile flags: -O3 -fomit-frame-pointer -fcommon -mthumb -mthumb-interwork -DBUILD_GBA -DNOSOUND (see lab/GAME2.md)",
+ "out": "lab/out/games/voxelburg",
+ "secrets": "lab/secrets/games/voxelburg",
+ "src_dir": "lab/secrets/game2/voxelburg",
+ "build_cmd": "export PATH=$DEVKITARM/bin:$DEVKITPRO/tools/bin:$PATH; make clean >/dev/null && make >/dev/null 2>build.log || { tail -40 build.log; exit 1; }",
+ "elf": "voxelburg.elf",
+ "gba": "voxelburg.gba",
+ "c_dirs": ["src", "src/gba"],
+ "obj_dirs": ["src", "src/gba"],
+ "obj_suffix": ".arm.o",
+ "exclude_sources": ["src/debug.c"],
+ "thumb_flags": "-O3 -fomit-frame-pointer -fcommon -mcpu=arm7tdmi -mtune=arm7tdmi -mthumb -mthumb-interwork -DBUILD_GBA -DNOSOUND",
+ "arm_flags_note": "same as thumb_flags: the Makefile builds every file -mthumb and ARM_IWRAM functions carry target(\"arm\") themselves, so candidates must too",
+ "arm_flags": "-O3 -fomit-frame-pointer -fcommon -mcpu=arm7tdmi -mtune=arm7tdmi -mthumb -mthumb-interwork -DBUILD_GBA -DNOSOUND",
+ "source_includes": "-I lab/secrets/game2/voxelburg -I lab/secrets/game2/voxelburg/src -I lab/secrets/game2/voxelburg/src/gba -I lab/secrets/game2/voxelburg/libs/maxmod",
+ "subsystems": [
+  ["terrain", "the voxel terrain", ["voxscape"]],
+  ["3d", "the 3D models", ["xgl", "polyfill"]],
+  ["game", "the game screen", ["gamescr"]],
+  ["menus", "the menus and title screens", ["menuscr", "logoscr", "ctrlscr"]]
+ ],
+ "world_label": "the rest of the world"
+}

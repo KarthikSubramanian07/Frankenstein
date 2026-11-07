@@ -47,3 +47,7 @@ Everything is Doom-hardcoded today. Steps:
 5. **`lab/referee/core.py`**: `THUMB_FLAGS`, `ARM_FLAGS`, the `-iquote lab/secrets/gbadoom/...` includes, the `gbadoom/` source and object paths, and `romlink.py`'s `OUT/target.gba` all move to the config. Voxelburg Thumb flags: `-O3 -fomit-frame-pointer -fcommon -mcpu=arm7tdmi -mtune=arm7tdmi -mthumb -mthumb-interwork -DBUILD_GBA -DNOSOUND -I. -Isrc -Isrc/gba -Ilibs/maxmod`. The 9 `ARM_IWRAM` functions carry their own `target("arm")` attribute, so the file-level ARM/Thumb choice doesn't matter for them. Check that `ctx/<id>.h` keeps the `ARM_IWRAM` macro.
 6. **`lab/export_targets.py`**: same path parameterisation.
 7. Check: run the T1 double build for Voxelburg, then rebuild one known function through the referee and confirm a byte match before the agents start.
+
+## Lane A decision (13:09)
+
+Doom stays the demo. Voxelburg is ready as game 2 (`FRANK_GAME=voxelburg`), but its 13 ARM-mode functions carry `__attribute__((target("arm")))`, which lint rule L003 bans. Until we allow exactly that attribute for ARM-mode functions, agents should target its 79 Thumb functions only.
