@@ -13,9 +13,9 @@ Actual private-variant Doom now boots in the browser mGBA core. Title/menu/new-g
 
 ## Handoffs
 
-A: **still need current static-face stub build, function id and activation instructions.** The boot/package path is now available to test it. A verified recovered-function rebuild and actual observed swap remain required before the running-agent-code badge changes.
+A: static-face source/build instructions received in lab/demo/README.md (fn_0801B298). Current main has no static_face.gba binary; requested an approved GitHub artifact. A verified recovered-function rebuild and actual observed swap remain required before the running-agent-code badge changes.
 
-B: real export delivery resolved. Director endpoint exists in crew.run --director at localhost7112/heartbeat; D's explicit --forward adapter is ready. B-owned remaining review: age-expire old Director samples and close intake server on run completion.
+B: real export delivery resolved. Director endpoint exists in crew.run --director at localhost7112/heartbeat; D's explicit --forward adapter is ready. B handoff reports 12-second stale-sample expiry and listener shutdown implemented; received.
 
 C: geometry/routes/ending handoff resolved through stage/HANDOFF_D.md. Exact Split rectangle x20/y92,960x640; credits route ending&page=credits. Updated OBS instructions in obs/RUN_OF_SHOW.md.
 
@@ -36,3 +36,9 @@ Desktop mGBA/Lua tap, live socket bridge, actual recovered-code swap, static-fac
 - Swap checks: runtime/PACKAGE_SWAP.md
 - Phone setup: phone/README.md
 - Recording: obs/RUN_OF_SHOW.md
+
+## Host availability update
+
+The connected Windows environment became unavailable during the desktop ROM-open action. Desktop boot and Lua telemetry remain unverified. All source checkpoints and browser boot/package evidence notes are committed. Real static-face playtest, live tap and swap require the host connection to return. Browser screenshot was saved on that host at creature/shots/browser-boot.jpg before disconnection.
+
+Finale path chosen: honest visible modification rather than an unconfirmed original bug. A/B still need to nominate an accepted function and verify the patch; do not present this as completed.
