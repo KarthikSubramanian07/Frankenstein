@@ -34,8 +34,9 @@ def load_env() -> None:
     if env.exists():
         for line in env.read_text().splitlines():
             key, sep, value = line.partition("=")
-            if sep and key.strip() and not key.startswith("#"):
-                os.environ.setdefault(key.strip(), value.strip())
+            value = value.split(" #", 1)[0].strip()  # drop inline comments like "   # optional"
+            if sep and key.strip() and not key.startswith("#") and value:
+                os.environ.setdefault(key.strip(), value)
 
 
 def function_span(src: str, name: str) -> tuple[int, int] | None:
