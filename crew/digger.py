@@ -67,7 +67,9 @@ class Digger:
         self.types_slice = types_slice  # callable(fn) -> str, or None (cartographer off)
         self.budget_ok = budget_ok
         self.snap_decide = snap_decide  # callable(fn_id, asm, history) -> dict, or None (SubQ Snap off)
-        self.allow_claim_first = True  # Diggers may stake a claim before seeing the verdict (real lies, caught)
+        self.allow_claim_first = True
+        # Diggers may stake a claim before seeing the verdict (real lies, caught)
+        self.cases = getattr(library, "cases", None)  # CaseMemory: solved training functions, by similarity
 
     def _tool_result(self, call_id: str, content) -> dict:
         return {"role": "tool", "tool_call_id": call_id,
@@ -82,10 +84,14 @@ class Digger:
         for i in idioms:
             self.log.emit("idiom.used", self.name, fn=fn_id, idiom_id=i["idiom_id"])
         types = self.types_slice(fn_id) if self.types_slice else ""
+        cases = self.cases.similar(asm, k=2, exclude=fn_id) if self.cases is not None else []
+        for c in cases:
+            self.log.emit("idiom.used", self.name, fn=fn_id, idiom_id=f"case:{c['fn']}", similarity=c["similarity"])
         messages = [{"role": "system", "content": DIGGER_SYSTEM},
-                    {"role": "user", "content": digger_user(fn, asm, ctx, idioms, self.target.neighbors(fn_id), types)}]
+                    {"role": "user", "content": digger_user(fn, asm, ctx, idioms, self.target.neighbors(fn_id), types, cases)}]
         out = Outcome(fn=fn_id, status="abandoned")
         out.idioms = [i["idiom_id"] for i in idioms]
+        out.cases = [c["fn"] for c in cases]
         budget = attempt_budget(fn["difficulty"])
         last_src, last_attempt, best_src, failures, turns = None, 0, None, 0, 0
         escalated = False  # set by SubQ Snap (or by the fixed fallback rule when Snap is off)

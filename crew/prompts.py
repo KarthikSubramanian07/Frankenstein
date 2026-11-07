@@ -52,7 +52,8 @@ TOOLS = [
 ]
 
 
-def digger_user(fn: dict, asm: str, ctx: str, idioms: list[dict], neighbors: dict, types_slice: str = "") -> str:
+def digger_user(fn: dict, asm: str, ctx: str, idioms: list[dict], neighbors: dict, types_slice: str = "",
+                cases: list[dict] | None = None) -> str:
     parts = [f"Target: {fn['id']} at {fn['addr']}, {fn['size']} bytes, {fn['mode']} mode, "
              f"difficulty {fn['difficulty']:.2f}.",
              "## Disassembly (the only view of the original you get)\n```asm\n" + asm.strip() + "\n```",
@@ -64,6 +65,12 @@ def digger_user(fn: dict, asm: str, ctx: str, idioms: list[dict], neighbors: dic
     if rec:
         parts.append("## Already recovered neighbours\n" + "\n".join(
             f"```c\n{n['recovered_c'].strip()}\n```" for n in rec[:3]))
+    if cases:
+        parts.append("## Solved before: verified C for DIFFERENT functions with similar code (from training runs)\n"
+                     "Use them to learn how this compiler turns C into these instruction shapes. They are not this "
+                     "function's answer.\n" + "\n".join(
+                         f"### {c['fn']} (similarity {c['similarity']:.2f}, {c['size']} bytes)\n```c\n{c['src']}\n```"
+                         for c in cases))
     if idioms:
         parts.append("## Idioms from the library (generic habits, not answers)\n" + "\n".join(
             f"- {i['title']}: when {i['applies_when']} -> {i['do']}" for i in idioms))

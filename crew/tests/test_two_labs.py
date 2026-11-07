@@ -198,3 +198,19 @@ def test_one_failed_escalation_call_does_not_disable_escalation_run_wide(tmp_pat
 def test_missing_escalation_model_is_turned_off_for_everyone(tmp_path):
     cfg, models = _escalation_digger(tmp_path, "HTTP 404: b'model not found'")
     assert cfg.escalation_model == ""
+
+
+def test_case_memory_never_stores_heldout_and_finds_similar(tmp_path):
+    from crew.config import Config
+    from crew.library import CaseMemory, Library, asm_signature, similarity
+    lib = Library(Config(), mode="learning", path=tmp_path / "lib.json")
+    mem = CaseMemory(lib)
+    a1 = " 8000000:\t6903      \tldr\tr3, [r0, #16]\n 8000002:\t3301      \tadds\tr3, #1\n 8000004:\t6103      \tstr\tr3, [r0, #16]\n 8000006:\t4770      \tbx\tlr\n"
+    a2 = a1.replace("#16", "#20")
+    assert mem.add("fn_08000000", a1, "void fn_08000000(int *p){p[4]++;}", "train", 8)
+    assert not mem.add("fn_08000100", a1, "x", "heldout", 8)   # held-out answers never stored
+    hits = mem.similar(a2, exclude="fn_08000200")
+    assert hits and hits[0]["fn"] == "fn_08000000" and hits[0]["similarity"] > 0.5
+    lib.mode = "off"
+    assert mem.similar(a2) == []
+    assert similarity(asm_signature(a1), asm_signature(a1)) > 0.9

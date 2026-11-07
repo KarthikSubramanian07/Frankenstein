@@ -63,6 +63,9 @@ class Run:
         self.llm = LLM(cfg, self.usage)
         lib_path = Path(args.library_path) if args.library_path else None
         self.library = Library(cfg, mode=args.library, path=lib_path)
+        from .library import CaseMemory
+
+        self.library.cases = CaseMemory(self.library)  # solved-before memory (training solutions only)
         snap_review = None
         self.snap_scores = {}
         if args.snap and cfg.subq_key:
@@ -144,6 +147,8 @@ class Run:
                       cost_usd=round(out.cost_usd, 4), src_path=rel, lines=len(out.src.strip().splitlines()),
                       models=out.model_calls)
         self.archivist.milestone(n, self.fn_total)
+        f = self.target.fns.get(out.fn, {})
+        self.library.cases.add(out.fn, self.target.asm(out.fn), out.src, f.get("split", ""), f.get("size", 0), self.run_id)
         if self.args.library != "off" or self.args.names:
             self.distill_futs.append(self.distill_pool.submit(self.distill, out))
         if n % 3 == 0 and getattr(self.referee, "kind", "") == "lab" and not self.args.no_rebuild:
@@ -398,7 +403,7 @@ class Run:
             "attempts_total": total_attempts, "elapsed_s": round(el, 1),
             "referee": getattr(self.referee, "kind", "lab"), "fixture_target": self.target.fixture,
             "library_backend": self.library.backend, "library_size": len(self.library.items),
-            "library_status": self.library.counts(), "library_baseline": round(self.library.baseline(), 3),
+            "library_status": self.library.counts(), "case_memory": len(self.library.cases.items), "library_baseline": round(self.library.baseline(), 3),
             "snap_reviews": self.checker.snap_reviews, "second_opinion_reviews": self.checker.second_reviews, "cartographer": bool(self.args.cartographer),
             "snap": self._snap_stats(),
             "cost_estimated": any(m not in ("muse-spark-1.3",) for m in self.usage.by_model),

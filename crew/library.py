@@ -158,3 +158,82 @@ class Library:
                 self.coll.insert_one(dict(item))
             self._save()
             return item
+
+# ------------------------------------------------------------------------------------------- case memory
+# "Solved before": verified C for TRAINING functions, retrieved by instruction-sequence similarity.
+# Human decompilers speed up exactly this way. Held-out functions are never stored, so a held-out run can
+# only ever see training solutions (no answer leakage). Mode "off" sees nothing.
+
+_MNEM = re.compile(r"^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2,8}\s+)+\t?([a-z][a-z0-9.]*)", re.M)
+_MNEM2 = re.compile(r"^\s+([a-z][a-z0-9.]*)\s", re.M)
+
+
+def asm_signature(asm: str) -> dict:
+    ops = _MNEM.findall(asm) or _MNEM2.findall(asm)
+    ops = [o.split(".")[0] for o in ops if o not in ("nop",)]
+    grams = {}
+    for a, b in zip(ops, ops[1:]):
+        grams[a + ">" + b] = grams.get(a + ">" + b, 0) + 1
+    for o in ops:
+        grams[o] = grams.get(o, 0) + 1
+    return {"g": grams, "n": len(ops)}
+
+
+def similarity(a: dict, b: dict) -> float:
+    ga, gb = a["g"], b["g"]
+    if not ga or not gb:
+        return 0.0
+    inter = sum(min(v, gb.get(k, 0)) for k, v in ga.items())
+    union = sum(max(v, gb.get(k, 0)) for k, v in {**ga, **gb}.items() if True) or 1
+    size = min(a["n"], b["n"]) / max(a["n"], b["n"], 1)
+    return round((inter / union) * (0.5 + 0.5 * size), 4)
+
+
+class CaseMemory:
+    def __init__(self, library: "Library"):
+        self.lib = library
+        self.path = library.path.with_suffix(".cases.json")
+        self._lock = threading.Lock()
+        self.coll = None
+        if library.coll is not None:
+            try:
+                self.coll = library.coll.database["cases_" + library.collection_name.removeprefix("idioms_")]
+                self.coll.create_index("fn", unique=True)
+                if self.coll.estimated_document_count() == 0 and self.path.exists():
+                    seed = json.loads(self.path.read_text())
+                    if seed:
+                        self.coll.insert_many([dict(c) for c in seed], ordered=False)
+            except Exception:
+                self.coll = None
+        if self.coll is not None:
+            self.items = list(self.coll.find({}, {"_id": 0}))
+        else:
+            self.items = json.loads(self.path.read_text()) if self.path.exists() else []
+
+    def add(self, fn: str, asm: str, src: str, split: str, size: int, run_id: str = "") -> bool:
+        if self.lib.mode != "learning" or split != "train":  # never store held-out answers
+            return False
+        with self._lock:
+            if any(c["fn"] == fn for c in self.items):
+                return False
+            case = {"fn": fn, "size": size, "split": split, "sig": asm_signature(asm), "src": src.strip()[:6000],
+                    "run_id": run_id}
+            self.items.append(case)
+            if self.coll is not None:
+                try:
+                    self.coll.insert_one(dict(case))
+                except Exception:
+                    pass
+            self.path.parent.mkdir(parents=True, exist_ok=True)
+            self.path.write_text(json.dumps(self.items))
+        return True
+
+    def similar(self, asm: str, *, k: int = 2, exclude: str = "", min_sim: float = 0.25) -> list[dict]:
+        if self.lib.mode == "off" or not self.items:
+            return []
+        sig = asm_signature(asm)
+        scored = [(similarity(sig, c["sig"]), c) for c in self.items if c["fn"] != exclude and c.get("split") == "train"]
+        scored = [x for x in scored if x[0] >= min_sim]
+        scored.sort(key=lambda x: -x[0])
+        return [{"fn": c["fn"], "similarity": s, "size": c["size"], "src": c["src"]} for s, c in scored[:k]]
+
