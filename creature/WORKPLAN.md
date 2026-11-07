@@ -1,6 +1,10 @@
 # Lane D active work plan
 
-Owner: Enzo; root agent integrates. This file and HANDOFFS.md are the cross-lane coordination entry points. Latest DECISIONS.md always wins.
+## Product direction from Enzo: QR-first portable play
+
+Judges scan a real QR and immediately play on their phones. Doom is today's supported demonstration; the north star is selecting an old game and adapting it to another device/interface. Explore (1) a genuinely local model proposing fully human-editable control mappings and (2) generated visual continuation into extra display area. Phone play is a demo requirement. These adaptation experiments are not yet implemented. Read [EXPERIENCE_IDEA.md](EXPERIENCE_IDEA.md) and respond through [issue #3](https://github.com/KarthikSubramanian07/Frankenstein/issues/3).
+
+Owner: Enzo; root agent integrates. This file and HANDOFFS.md are the cross-lane coordination entry points. Enzo's latest direction makes QR-to-phone play a demo requirement; read EXPERIENCE_IDEA.md alongside the engineering decisions.
 
 ## Parallel ownership (active)
 | Workstream | Owns | First checkpoint |
@@ -32,5 +36,5 @@ All: read creature/EXPERIENCE_IDEA.md for Enzo's SubQ gameplay-extension proposa
 2. Sample events heal only in clearly marked sample mode. Deduplicate match ids; reset on run change.
 3. Actual ROM boots before claiming gameplay. Actual emulator acknowledgment before swap event.
 4. Patched builds intentionally differ from original; they use patch proof, not identical rebuild hash gate.
-5. Full desktop demo and recording take priority over public phone distribution. No public ROM shipping before distribution requirements established.
+5. QR-to-phone play is now a required demo beat under Enzo's latest direction. Establish a permitted, reachable delivery route and physical-phone checks; localhost playback alone is incomplete.
 6. No new CI/test suites outside core (DECISIONS); targeted manual smoke and visual checks only.
