@@ -1,0 +1,122 @@
+{"v":1,"ts":"2026-11-07T22:29:58.502Z","run_id":"doom_relay3","seq":1,"type":"run.started","actor":"scheduler","fn":null,"payload":{"label":"doom \u00b7 relay run 3 (same 15 functions)","split":"train","library":"learning","diggers":6,"model":"muse-spark-1.3","budget_usd":3.0,"game_id":"doom","fn_total":15,"referee":"lab","reasoning_effort":"high","escalation_model":"muse-wonder-1.0","cartographer":false,"library_backend":"mongodb-atlas:idioms__relay_lib","snap":true}}
+{"v":1,"ts":"2026-11-07T22:29:58.513Z","run_id":"doom_relay3","seq":2,"type":"idiom.used","actor":"digger-4","fn":"fn_0801C150","payload":{"idiom_id":"idm_005"}}
+{"v":1,"ts":"2026-11-07T22:29:58.513Z","run_id":"doom_relay3","seq":3,"type":"idiom.used","actor":"digger-4","fn":"fn_0801C150","payload":{"idiom_id":"idm_009"}}
+{"v":1,"ts":"2026-11-07T22:29:58.514Z","run_id":"doom_relay3","seq":4,"type":"idiom.used","actor":"digger-4","fn":"fn_0801C150","payload":{"idiom_id":"idm_007"}}
+{"v":1,"ts":"2026-11-07T22:29:58.514Z","run_id":"doom_relay3","seq":5,"type":"idiom.used","actor":"digger-4","fn":"fn_0801C150","payload":{"idiom_id":"case:fn_080127AC","similarity":0.3653}}
+{"v":1,"ts":"2026-11-07T22:29:58.515Z","run_id":"doom_relay3","seq":6,"type":"idiom.used","actor":"digger-4","fn":"fn_0801C150","payload":{"idiom_id":"case:fn_08010D9C","similarity":0.2535}}
+{"v":1,"ts":"2026-11-07T22:29:58.516Z","run_id":"doom_relay3","seq":7,"type":"idiom.used","actor":"digger-2","fn":"fn_0801C990","payload":{"idiom_id":"idm_005"}}
+{"v":1,"ts":"2026-11-07T22:29:58.516Z","run_id":"doom_relay3","seq":8,"type":"idiom.used","actor":"digger-2","fn":"fn_0801C990","payload":{"idiom_id":"idm_007"}}
+{"v":1,"ts":"2026-11-07T22:29:58.516Z","run_id":"doom_relay3","seq":9,"type":"idiom.used","actor":"digger-2","fn":"fn_0801C990","payload":{"idiom_id":"idm_009"}}
+{"v":1,"ts":"2026-11-07T22:29:58.516Z","run_id":"doom_relay3","seq":10,"type":"idiom.used","actor":"digger-3","fn":"fn_08001B3C","payload":{"idiom_id":"idm_007"}}
+{"v":1,"ts":"2026-11-07T22:29:58.517Z","run_id":"doom_relay3","seq":11,"type":"idiom.used","actor":"digger-3","fn":"fn_08001B3C","payload":{"idiom_id":"idm_009"}}
+{"v":1,"ts":"2026-11-07T22:29:58.517Z","run_id":"doom_relay3","seq":12,"type":"idiom.used","actor":"digger-3","fn":"fn_08001B3C","payload":{"idiom_id":"idm_005"}}
+{"v":1,"ts":"2026-11-07T22:29:58.517Z","run_id":"doom_relay3","seq":13,"type":"idiom.used","actor":"digger-3","fn":"fn_08001B3C","payload":{"idiom_id":"case:fn_0801C990","similarity":0.361}}
+{"v":1,"ts":"2026-11-07T22:29:58.517Z","run_id":"doom_relay3","seq":14,"type":"idiom.used","actor":"digger-3","fn":"fn_08001B3C","payload":{"idiom_id":"case:fn_080127AC","similarity":0.3348}}
+{"v":1,"ts":"2026-11-07T22:29:58.517Z","run_id":"doom_relay3","seq":15,"type":"idiom.used","actor":"digger-6","fn":"fn_0801A95C","payload":{"idiom_id":"idm_005"}}
+{"v":1,"ts":"2026-11-07T22:29:58.518Z","run_id":"doom_relay3","seq":16,"type":"idiom.used","actor":"digger-2","fn":"fn_0801C990","payload":{"idiom_id":"case:fn_08001990","similarity":0.37}}
+{"v":1,"ts":"2026-11-07T22:29:58.518Z","run_id":"doom_relay3","seq":17,"type":"idiom.used","actor":"digger-2","fn":"fn_0801C990","payload":{"idiom_id":"case:fn_080127AC","similarity":0.3357}}
+{"v":1,"ts":"2026-11-07T22:29:58.518Z","run_id":"doom_relay3","seq":18,"type":"idiom.used","actor":"digger-6","fn":"fn_0801A95C","payload":{"idiom_id":"idm_007"}}
+{"v":1,"ts":"2026-11-07T22:29:58.518Z","run_id":"doom_relay3","seq":19,"type":"idiom.used","actor":"digger-6","fn":"fn_0801A95C","payload":{"idiom_id":"idm_009"}}
+{"v":1,"ts":"2026-11-07T22:29:58.518Z","run_id":"doom_relay3","seq":20,"type":"idiom.used","actor":"digger-6","fn":"fn_0801A95C","payload":{"idiom_id":"case:fn_08001990","similarity":0.2794}}
+{"v":1,"ts":"2026-11-07T22:29:58.519Z","run_id":"doom_relay3","seq":21,"type":"idiom.used","actor":"digger-6","fn":"fn_0801A95C","payload":{"idiom_id":"case:fn_080127AC","similarity":0.2575}}
+{"v":1,"ts":"2026-11-07T22:29:58.519Z","run_id":"doom_relay3","seq":22,"type":"idiom.used","actor":"digger-1","fn":"fn_08005A4C","payload":{"idiom_id":"idm_007"}}
+{"v":1,"ts":"2026-11-07T22:29:58.519Z","run_id":"doom_relay3","seq":23,"type":"idiom.used","actor":"digger-1","fn":"fn_08005A4C","payload":{"idiom_id":"idm_009"}}
+{"v":1,"ts":"2026-11-07T22:29:58.519Z","run_id":"doom_relay3","seq":24,"type":"idiom.used","actor":"digger-1","fn":"fn_08005A4C","payload":{"idiom_id":"idm_010"}}
+{"v":1,"ts":"2026-11-07T22:29:58.520Z","run_id":"doom_relay3","seq":25,"type":"idiom.used","actor":"digger-5","fn":"fn_08001990","payload":{"idiom_id":"idm_005"}}
+{"v":1,"ts":"2026-11-07T22:29:58.520Z","run_id":"doom_relay3","seq":26,"type":"idiom.used","actor":"digger-5","fn":"fn_08001990","payload":{"idiom_id":"idm_009"}}
+{"v":1,"ts":"2026-11-07T22:29:58.520Z","run_id":"doom_relay3","seq":27,"type":"idiom.used","actor":"digger-5","fn":"fn_08001990","payload":{"idiom_id":"idm_007"}}
+{"v":1,"ts":"2026-11-07T22:29:58.520Z","run_id":"doom_relay3","seq":28,"type":"idiom.used","actor":"digger-5","fn":"fn_08001990","payload":{"idiom_id":"case:fn_0801C990","similarity":0.336}}
+{"v":1,"ts":"2026-11-07T22:29:58.520Z","run_id":"doom_relay3","seq":29,"type":"idiom.used","actor":"digger-5","fn":"fn_08001990","payload":{"idiom_id":"case:fn_08010D9C","similarity":0.2888}}
+{"v":1,"ts":"2026-11-07T22:29:58.601Z","run_id":"doom_relay3","seq":30,"type":"narration","actor":"archivist","fn":"fn_0801A95C","payload":{"text":"fn_0801A95C: picking up where we left off at 87.5%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:29:58.602Z","run_id":"doom_relay3","seq":31,"type":"fn.claimed","actor":"scheduler","fn":"fn_0801A95C","payload":{"digger":"digger-6","difficulty":0.044}}
+{"v":1,"ts":"2026-11-07T22:29:58.603Z","run_id":"doom_relay3","seq":32,"type":"narration","actor":"archivist","fn":"fn_0801C150","payload":{"text":"fn_0801C150: picking up where we left off at 34.6%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:29:58.604Z","run_id":"doom_relay3","seq":33,"type":"narration","actor":"archivist","fn":"fn_08005A4C","payload":{"text":"fn_08005A4C: picking up where we left off at 88.0%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:29:58.604Z","run_id":"doom_relay3","seq":34,"type":"narration","actor":"archivist","fn":"fn_0801C990","payload":{"text":"fn_0801C990: picking up where we left off at 7.3%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:29:58.604Z","run_id":"doom_relay3","seq":35,"type":"fn.claimed","actor":"scheduler","fn":"fn_0801C990","payload":{"digger":"digger-2","difficulty":0.061}}
+{"v":1,"ts":"2026-11-07T22:29:58.604Z","run_id":"doom_relay3","seq":36,"type":"fn.claimed","actor":"scheduler","fn":"fn_0801C150","payload":{"digger":"digger-4","difficulty":0.075}}
+{"v":1,"ts":"2026-11-07T22:29:58.604Z","run_id":"doom_relay3","seq":37,"type":"narration","actor":"archivist","fn":"fn_08001B3C","payload":{"text":"fn_08001B3C: picking up where we left off at 43.5%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:29:58.604Z","run_id":"doom_relay3","seq":38,"type":"fn.claimed","actor":"scheduler","fn":"fn_08001B3C","payload":{"digger":"digger-3","difficulty":0.065}}
+{"v":1,"ts":"2026-11-07T22:29:58.605Z","run_id":"doom_relay3","seq":39,"type":"narration","actor":"archivist","fn":"fn_08001990","payload":{"text":"fn_08001990: picking up where we left off at 96.6%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:29:58.605Z","run_id":"doom_relay3","seq":40,"type":"fn.claimed","actor":"scheduler","fn":"fn_08001990","payload":{"digger":"digger-5","difficulty":0.044}}
+{"v":1,"ts":"2026-11-07T22:29:58.605Z","run_id":"doom_relay3","seq":41,"type":"fn.claimed","actor":"scheduler","fn":"fn_08005A4C","payload":{"digger":"digger-1","difficulty":0.047}}
+{"v":1,"ts":"2026-11-07T22:29:58.980Z","run_id":"doom_relay3","seq":42,"type":"fn.abandoned","actor":"digger-4","fn":"fn_0801C150","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:29:58.980Z","run_id":"doom_relay3","seq":43,"type":"narration","actor":"archivist","fn":null,"payload":{"text":"fn_0801C150 keeps its secrets for now. Best was 0.0%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:29:58.981Z","run_id":"doom_relay3","seq":44,"type":"fn.abandoned","actor":"digger-5","fn":"fn_08001990","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:29:59.083Z","run_id":"doom_relay3","seq":45,"type":"fn.abandoned","actor":"digger-2","fn":"fn_0801C990","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:29:59.084Z","run_id":"doom_relay3","seq":46,"type":"fn.abandoned","actor":"digger-1","fn":"fn_08005A4C","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:29:59.120Z","run_id":"doom_relay3","seq":47,"type":"fn.abandoned","actor":"digger-3","fn":"fn_08001B3C","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:29:59.197Z","run_id":"doom_relay3","seq":48,"type":"fn.abandoned","actor":"digger-6","fn":"fn_0801A95C","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:29:59.267Z","run_id":"doom_relay3","seq":49,"type":"idiom.judged","actor":"distiller","fn":"fn_0801C150","payload":{"idiom_id":"idm_007","status":"adopted","tries":13,"wins":0,"rate":0.0,"baseline":0.0,"title":"struct field via literal-pool offset plus register-indexed load-store"}}
+{"v":1,"ts":"2026-11-07T22:29:59.268Z","run_id":"doom_relay3","seq":50,"type":"idiom.judged","actor":"distiller","fn":"fn_0801C150","payload":{"idiom_id":"idm_009","status":"adopted","tries":4,"wins":0,"rate":0.0,"baseline":0.0,"title":"mirrored loop compares"}}
+{"v":1,"ts":"2026-11-07T22:29:59.269Z","run_id":"doom_relay3","seq":51,"type":"idiom.used","actor":"digger-4","fn":"fn_08005174","payload":{"idiom_id":"idm_007"}}
+{"v":1,"ts":"2026-11-07T22:29:59.269Z","run_id":"doom_relay3","seq":52,"type":"idiom.used","actor":"digger-4","fn":"fn_08005174","payload":{"idiom_id":"idm_005"}}
+{"v":1,"ts":"2026-11-07T22:29:59.269Z","run_id":"doom_relay3","seq":53,"type":"idiom.used","actor":"digger-4","fn":"fn_08005174","payload":{"idiom_id":"idm_009"}}
+{"v":1,"ts":"2026-11-07T22:29:59.269Z","run_id":"doom_relay3","seq":54,"type":"idiom.used","actor":"digger-4","fn":"fn_08005174","payload":{"idiom_id":"case:fn_08001990","similarity":0.3178}}
+{"v":1,"ts":"2026-11-07T22:29:59.285Z","run_id":"doom_relay3","seq":55,"type":"narration","actor":"archivist","fn":"fn_08005174","payload":{"text":"fn_08005174: picking up where we left off at 88.5%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:29:59.285Z","run_id":"doom_relay3","seq":56,"type":"fn.claimed","actor":"scheduler","fn":"fn_08005174","payload":{"digger":"digger-4","difficulty":0.049}}
+{"v":1,"ts":"2026-11-07T22:29:59.505Z","run_id":"doom_relay3","seq":57,"type":"idiom.used","actor":"digger-5","fn":"fn_08004928","payload":{"idiom_id":"idm_005"}}
+{"v":1,"ts":"2026-11-07T22:29:59.505Z","run_id":"doom_relay3","seq":58,"type":"idiom.used","actor":"digger-5","fn":"fn_08004928","payload":{"idiom_id":"idm_007"}}
+{"v":1,"ts":"2026-11-07T22:29:59.505Z","run_id":"doom_relay3","seq":59,"type":"idiom.used","actor":"digger-5","fn":"fn_08004928","payload":{"idiom_id":"idm_009"}}
+{"v":1,"ts":"2026-11-07T22:29:59.505Z","run_id":"doom_relay3","seq":60,"type":"idiom.used","actor":"digger-5","fn":"fn_08004928","payload":{"idiom_id":"case:fn_080127AC","similarity":0.3886}}
+{"v":1,"ts":"2026-11-07T22:29:59.505Z","run_id":"doom_relay3","seq":61,"type":"idiom.used","actor":"digger-5","fn":"fn_08004928","payload":{"idiom_id":"case:fn_08010D9C","similarity":0.2723}}
+{"v":1,"ts":"2026-11-07T22:29:59.521Z","run_id":"doom_relay3","seq":62,"type":"narration","actor":"archivist","fn":"fn_08004928","payload":{"text":"fn_08004928: picking up where we left off at 9.7%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:29:59.521Z","run_id":"doom_relay3","seq":63,"type":"fn.claimed","actor":"scheduler","fn":"fn_08004928","payload":{"digger":"digger-5","difficulty":0.051}}
+{"v":1,"ts":"2026-11-07T22:29:59.659Z","run_id":"doom_relay3","seq":64,"type":"fn.abandoned","actor":"digger-4","fn":"fn_08005174","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:29:59.732Z","run_id":"doom_relay3","seq":65,"type":"idiom.used","actor":"digger-2","fn":"fn_08010D9C","payload":{"idiom_id":"idm_009"}}
+{"v":1,"ts":"2026-11-07T22:29:59.732Z","run_id":"doom_relay3","seq":66,"type":"idiom.used","actor":"digger-2","fn":"fn_08010D9C","payload":{"idiom_id":"idm_005"}}
+{"v":1,"ts":"2026-11-07T22:29:59.732Z","run_id":"doom_relay3","seq":67,"type":"idiom.used","actor":"digger-2","fn":"fn_08010D9C","payload":{"idiom_id":"idm_007"}}
+{"v":1,"ts":"2026-11-07T22:29:59.732Z","run_id":"doom_relay3","seq":68,"type":"idiom.used","actor":"digger-2","fn":"fn_08010D9C","payload":{"idiom_id":"case:fn_080127AC","similarity":0.2988}}
+{"v":1,"ts":"2026-11-07T22:29:59.732Z","run_id":"doom_relay3","seq":69,"type":"idiom.used","actor":"digger-2","fn":"fn_08010D9C","payload":{"idiom_id":"case:fn_08001990","similarity":0.2923}}
+{"v":1,"ts":"2026-11-07T22:29:59.750Z","run_id":"doom_relay3","seq":70,"type":"narration","actor":"archivist","fn":"fn_08010D9C","payload":{"text":"fn_08010D9C: picking up where we left off at 94.4%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:29:59.750Z","run_id":"doom_relay3","seq":71,"type":"fn.claimed","actor":"scheduler","fn":"fn_08010D9C","payload":{"digger":"digger-2","difficulty":0.054}}
+{"v":1,"ts":"2026-11-07T22:29:59.774Z","run_id":"doom_relay3","seq":72,"type":"fn.abandoned","actor":"digger-5","fn":"fn_08004928","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:30:00.038Z","run_id":"doom_relay3","seq":73,"type":"idiom.judged","actor":"distiller","fn":"fn_08005A4C","payload":{"idiom_id":"idm_010","status":"adopted","tries":4,"wins":0,"rate":0.0,"baseline":0.0,"title":"signed modulo is a call"}}
+{"v":1,"ts":"2026-11-07T22:30:00.042Z","run_id":"doom_relay3","seq":74,"type":"idiom.used","actor":"digger-1","fn":"fn_0801B248","payload":{"idiom_id":"idm_007"}}
+{"v":1,"ts":"2026-11-07T22:30:00.042Z","run_id":"doom_relay3","seq":75,"type":"idiom.used","actor":"digger-1","fn":"fn_0801B248","payload":{"idiom_id":"idm_009"}}
+{"v":1,"ts":"2026-11-07T22:30:00.042Z","run_id":"doom_relay3","seq":76,"type":"idiom.used","actor":"digger-1","fn":"fn_0801B248","payload":{"idiom_id":"idm_005"}}
+{"v":1,"ts":"2026-11-07T22:30:00.042Z","run_id":"doom_relay3","seq":77,"type":"idiom.used","actor":"digger-1","fn":"fn_0801B248","payload":{"idiom_id":"case:fn_080127AC","similarity":0.4432}}
+{"v":1,"ts":"2026-11-07T22:30:00.042Z","run_id":"doom_relay3","seq":78,"type":"idiom.used","actor":"digger-1","fn":"fn_0801B248","payload":{"idiom_id":"case:fn_08001990","similarity":0.3662}}
+{"v":1,"ts":"2026-11-07T22:30:00.070Z","run_id":"doom_relay3","seq":79,"type":"narration","actor":"archivist","fn":"fn_0801B248","payload":{"text":"fn_0801B248: picking up where we left off at 75.8%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:30:00.070Z","run_id":"doom_relay3","seq":80,"type":"fn.claimed","actor":"scheduler","fn":"fn_0801B248","payload":{"digger":"digger-1","difficulty":0.054}}
+{"v":1,"ts":"2026-11-07T22:30:00.199Z","run_id":"doom_relay3","seq":81,"type":"fn.abandoned","actor":"digger-2","fn":"fn_08010D9C","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:30:00.692Z","run_id":"doom_relay3","seq":82,"type":"idiom.used","actor":"digger-3","fn":"fn_080127AC","payload":{"idiom_id":"idm_005"}}
+{"v":1,"ts":"2026-11-07T22:30:00.692Z","run_id":"doom_relay3","seq":83,"type":"idiom.used","actor":"digger-3","fn":"fn_080127AC","payload":{"idiom_id":"idm_007"}}
+{"v":1,"ts":"2026-11-07T22:30:00.692Z","run_id":"doom_relay3","seq":84,"type":"idiom.used","actor":"digger-3","fn":"fn_080127AC","payload":{"idiom_id":"idm_009"}}
+{"v":1,"ts":"2026-11-07T22:30:00.692Z","run_id":"doom_relay3","seq":85,"type":"idiom.used","actor":"digger-3","fn":"fn_080127AC","payload":{"idiom_id":"case:fn_0801C990","similarity":0.3094}}
+{"v":1,"ts":"2026-11-07T22:30:00.692Z","run_id":"doom_relay3","seq":86,"type":"idiom.used","actor":"digger-3","fn":"fn_080127AC","payload":{"idiom_id":"case:fn_08010D9C","similarity":0.2957}}
+{"v":1,"ts":"2026-11-07T22:30:00.706Z","run_id":"doom_relay3","seq":87,"type":"narration","actor":"archivist","fn":"fn_080127AC","payload":{"text":"fn_080127AC: picking up where we left off at 41.0%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:30:00.706Z","run_id":"doom_relay3","seq":88,"type":"fn.claimed","actor":"scheduler","fn":"fn_080127AC","payload":{"digger":"digger-3","difficulty":0.056}}
+{"v":1,"ts":"2026-11-07T22:30:00.787Z","run_id":"doom_relay3","seq":89,"type":"fn.abandoned","actor":"digger-1","fn":"fn_0801B248","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:30:00.928Z","run_id":"doom_relay3","seq":90,"type":"idiom.used","actor":"digger-6","fn":"fn_08013290","payload":{"idiom_id":"idm_005"}}
+{"v":1,"ts":"2026-11-07T22:30:00.929Z","run_id":"doom_relay3","seq":91,"type":"idiom.used","actor":"digger-6","fn":"fn_08013290","payload":{"idiom_id":"idm_009"}}
+{"v":1,"ts":"2026-11-07T22:30:00.929Z","run_id":"doom_relay3","seq":92,"type":"idiom.used","actor":"digger-6","fn":"fn_08013290","payload":{"idiom_id":"idm_007"}}
+{"v":1,"ts":"2026-11-07T22:30:00.929Z","run_id":"doom_relay3","seq":93,"type":"idiom.used","actor":"digger-6","fn":"fn_08013290","payload":{"idiom_id":"case:fn_080127AC","similarity":0.3775}}
+{"v":1,"ts":"2026-11-07T22:30:00.929Z","run_id":"doom_relay3","seq":94,"type":"idiom.used","actor":"digger-6","fn":"fn_08013290","payload":{"idiom_id":"case:fn_08010D9C","similarity":0.291}}
+{"v":1,"ts":"2026-11-07T22:30:00.943Z","run_id":"doom_relay3","seq":95,"type":"narration","actor":"archivist","fn":"fn_08013290","payload":{"text":"fn_08013290: picking up where we left off at 9.3%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:30:00.944Z","run_id":"doom_relay3","seq":96,"type":"fn.claimed","actor":"scheduler","fn":"fn_08013290","payload":{"digger":"digger-6","difficulty":0.061}}
+{"v":1,"ts":"2026-11-07T22:30:00.995Z","run_id":"doom_relay3","seq":97,"type":"fn.abandoned","actor":"digger-3","fn":"fn_080127AC","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:30:01.174Z","run_id":"doom_relay3","seq":98,"type":"idiom.used","actor":"digger-4","fn":"fn_08004DB4","payload":{"idiom_id":"idm_009"}}
+{"v":1,"ts":"2026-11-07T22:30:01.174Z","run_id":"doom_relay3","seq":99,"type":"idiom.used","actor":"digger-4","fn":"fn_08004DB4","payload":{"idiom_id":"idm_005"}}
+{"v":1,"ts":"2026-11-07T22:30:01.174Z","run_id":"doom_relay3","seq":100,"type":"idiom.used","actor":"digger-4","fn":"fn_08004DB4","payload":{"idiom_id":"idm_007"}}
+{"v":1,"ts":"2026-11-07T22:30:01.189Z","run_id":"doom_relay3","seq":101,"type":"narration","actor":"archivist","fn":"fn_08004DB4","payload":{"text":"fn_08004DB4: picking up where we left off at 62.5%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:30:01.189Z","run_id":"doom_relay3","seq":102,"type":"fn.claimed","actor":"scheduler","fn":"fn_08004DB4","payload":{"digger":"digger-4","difficulty":0.063}}
+{"v":1,"ts":"2026-11-07T22:30:01.411Z","run_id":"doom_relay3","seq":103,"type":"fn.abandoned","actor":"digger-6","fn":"fn_08013290","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:30:01.637Z","run_id":"doom_relay3","seq":104,"type":"idiom.used","actor":"digger-5","fn":"fn_08006214","payload":{"idiom_id":"idm_005"}}
+{"v":1,"ts":"2026-11-07T22:30:01.637Z","run_id":"doom_relay3","seq":105,"type":"idiom.used","actor":"digger-5","fn":"fn_08006214","payload":{"idiom_id":"idm_007"}}
+{"v":1,"ts":"2026-11-07T22:30:01.637Z","run_id":"doom_relay3","seq":106,"type":"idiom.used","actor":"digger-5","fn":"fn_08006214","payload":{"idiom_id":"idm_009"}}
+{"v":1,"ts":"2026-11-07T22:30:01.637Z","run_id":"doom_relay3","seq":107,"type":"idiom.used","actor":"digger-5","fn":"fn_08006214","payload":{"idiom_id":"case:fn_080127AC","similarity":0.3071}}
+{"v":1,"ts":"2026-11-07T22:30:01.654Z","run_id":"doom_relay3","seq":108,"type":"narration","actor":"archivist","fn":"fn_08006214","payload":{"text":"fn_08006214: picking up where we left off at 93.2%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:30:01.654Z","run_id":"doom_relay3","seq":109,"type":"fn.claimed","actor":"scheduler","fn":"fn_08006214","payload":{"digger":"digger-5","difficulty":0.072}}
+{"v":1,"ts":"2026-11-07T22:30:01.793Z","run_id":"doom_relay3","seq":110,"type":"fn.abandoned","actor":"digger-4","fn":"fn_08004DB4","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:30:01.840Z","run_id":"doom_relay3","seq":111,"type":"idiom.used","actor":"digger-2","fn":"fn_08005DF4","payload":{"idiom_id":"idm_007"}}
+{"v":1,"ts":"2026-11-07T22:30:01.840Z","run_id":"doom_relay3","seq":112,"type":"idiom.used","actor":"digger-2","fn":"fn_08005DF4","payload":{"idiom_id":"idm_009"}}
+{"v":1,"ts":"2026-11-07T22:30:01.840Z","run_id":"doom_relay3","seq":113,"type":"idiom.used","actor":"digger-2","fn":"fn_08005DF4","payload":{"idiom_id":"idm_005"}}
+{"v":1,"ts":"2026-11-07T22:30:01.841Z","run_id":"doom_relay3","seq":114,"type":"idiom.used","actor":"digger-2","fn":"fn_08005DF4","payload":{"idiom_id":"case:fn_0801C990","similarity":0.3455}}
+{"v":1,"ts":"2026-11-07T22:30:01.841Z","run_id":"doom_relay3","seq":115,"type":"idiom.used","actor":"digger-2","fn":"fn_08005DF4","payload":{"idiom_id":"case:fn_080127AC","similarity":0.3123}}
+{"v":1,"ts":"2026-11-07T22:30:01.857Z","run_id":"doom_relay3","seq":116,"type":"narration","actor":"archivist","fn":"fn_08005DF4","payload":{"text":"fn_08005DF4: picking up where we left off at 32.7%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:30:01.857Z","run_id":"doom_relay3","seq":117,"type":"fn.claimed","actor":"scheduler","fn":"fn_08005DF4","payload":{"digger":"digger-2","difficulty":0.077}}
+{"v":1,"ts":"2026-11-07T22:30:01.947Z","run_id":"doom_relay3","seq":118,"type":"fn.abandoned","actor":"digger-5","fn":"fn_08006214","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:30:02.250Z","run_id":"doom_relay3","seq":119,"type":"fn.abandoned","actor":"digger-2","fn":"fn_08005DF4","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:30:03.512Z","run_id":"doom_relay3","seq":120,"type":"metric.tick","actor":"scheduler","fn":null,"payload":{"pct_recovered":0.0,"matched":0,"attempted":15,"false_claims":0,"cost_usd":0.0,"elapsed_s":5.0}}
+{"v":1,"ts":"2026-11-07T22:30:03.909Z","run_id":"doom_relay3","seq":121,"type":"metric.tick","actor":"scheduler","fn":null,"payload":{"pct_recovered":0.0,"matched":0,"attempted":15,"false_claims":0,"cost_usd":0.0,"elapsed_s":5.4}}
+{"v":1,"ts":"2026-11-07T22:30:03.909Z","run_id":"doom_relay3","seq":122,"type":"run.finished","actor":"scheduler","fn":null,"payload":{"matched":0,"abandoned":15,"pct_recovered":0.0,"cost_usd":0.0,"elapsed_s":5.4}}

@@ -1,0 +1,2 @@
+{"v":1,"ts":"2026-11-07T22:50:24.912Z","run_id":"repair03","seq":1,"type":"run.started","actor":"scheduler","fn":null,"payload":{"label":"unlock Checker-rejected MATCH orphans","split":"train","library":"off","diggers":0,"model":"repair","budget_usd":0,"game_id":"doom","fn_total":4,"referee":"lab"}}
+{"v":1,"ts":"2026-11-07T22:50:27.517Z","run_id":"repair03","seq":2,"type":"run.finished","actor":"scheduler","fn":null,"payload":{"matched":0,"abandoned":4,"pct_recovered":0,"cost_usd":0,"elapsed_s":0}}

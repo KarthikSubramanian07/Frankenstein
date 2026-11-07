@@ -1,0 +1,24 @@
+{
+  "v": 1,
+  "run_id": "doom_relay1",
+  "names": [
+    {
+      "fn": "fn_0801C990",
+      "name": "decrement_and_reset_counter",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08001990",
+      "name": "catch_up_pending_ticks",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080127AC",
+      "name": "clear_matching_table_slot",
+      "inferred": true,
+      "basis": "recovered code"
+    }
+  ]
+}

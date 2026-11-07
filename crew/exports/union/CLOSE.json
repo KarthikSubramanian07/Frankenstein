@@ -1,6 +1,6 @@
 {
   "v": 1,
-  "generated_at": "2026-11-07T22:53:05+00:00",
+  "generated_at": "2026-11-07T22:56:07+00:00",
   "rule": "game function not in UNION.json and never fn.matched, whose best match_pct over every verdict is >= 90",
   "label": "close = best attempt >=90% byte-match, not accepted, not counted",
   "threshold_pct": 90.0,
@@ -9,7 +9,7 @@
   "of": 568,
   "proven_exact": 170,
   "matched_pending_union": 0,
-  "runs_scanned": 41,
+  "runs_scanned": 42,
   "rows": [
     {
       "fn": "fn_0800060C",

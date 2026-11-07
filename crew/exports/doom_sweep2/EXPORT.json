@@ -1,0 +1,16 @@
+{
+  "v": 1,
+  "run_id": "doom_sweep2",
+  "manifest": "lab/out/manifest.json",
+  "manifest_sha1": "a6ff9e7ec03e776f5a539f9db47f925d32e5c5d7",
+  "target_rom_sha1": "d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2",
+  "game_id": "doom",
+  "recovered": 1,
+  "files": {
+    "events.jsonl": "073f887c0e9076a043c474edb27d4ae80e5020bf",
+    "metrics.json": "c75547141b115be367564e982769fc6f9b492663",
+    "names.json": "a65e1530099d1a588f9c62fdb370588cdac9673e",
+    "recovered/fn_08019ABC.c": "a87c45503493152465b2c45fe1fbcfd691b7c1e4"
+  },
+  "fixture": false
+}

@@ -1,0 +1,112 @@
+{"v":1,"ts":"2026-11-07T22:59:40.914Z","run_id":"doom_dig01","seq":1,"type":"run.started","actor":"scheduler","fn":null,"payload":{"label":"dig close near-misses","split":"train","library":"learning","diggers":4,"model":"muse-spark-1.3","budget_usd":25.0,"game_id":"doom","fn_total":40,"referee":"lab","reasoning_effort":"high","escalation_model":"muse-wonder-1.0","cartographer":false,"library_backend":"mongodb-atlas:idioms_idioms","snap":false}}
+{"v":1,"ts":"2026-11-07T22:59:41.003Z","run_id":"doom_dig01","seq":2,"type":"narration","actor":"archivist","fn":"fn_0800060C","payload":{"text":"fn_0800060C: picking up where we left off at 95.3%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:41.003Z","run_id":"doom_dig01","seq":3,"type":"fn.claimed","actor":"scheduler","fn":"fn_0800060C","payload":{"digger":"digger-3","difficulty":0.084}}
+{"v":1,"ts":"2026-11-07T22:59:41.005Z","run_id":"doom_dig01","seq":4,"type":"narration","actor":"archivist","fn":"fn_08005960","payload":{"text":"fn_08005960: picking up where we left off at 92.9%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:41.005Z","run_id":"doom_dig01","seq":5,"type":"narration","actor":"archivist","fn":"fn_08006558","payload":{"text":"fn_08006558: picking up where we left off at 93.8%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:41.005Z","run_id":"doom_dig01","seq":6,"type":"fn.claimed","actor":"scheduler","fn":"fn_08006558","payload":{"digger":"digger-2","difficulty":0.03}}
+{"v":1,"ts":"2026-11-07T22:59:41.005Z","run_id":"doom_dig01","seq":7,"type":"fn.claimed","actor":"scheduler","fn":"fn_08005960","payload":{"digger":"digger-4","difficulty":0.028}}
+{"v":1,"ts":"2026-11-07T22:59:41.005Z","run_id":"doom_dig01","seq":8,"type":"narration","actor":"archivist","fn":"fn_08006F70","payload":{"text":"fn_08006F70: picking up where we left off at 97.3%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:41.005Z","run_id":"doom_dig01","seq":9,"type":"fn.claimed","actor":"scheduler","fn":"fn_08006F70","payload":{"digger":"digger-1","difficulty":0.054}}
+{"v":1,"ts":"2026-11-07T22:59:42.005Z","run_id":"doom_dig01","seq":10,"type":"fn.abandoned","actor":"digger-4","fn":"fn_08005960","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:42.005Z","run_id":"doom_dig01","seq":11,"type":"narration","actor":"archivist","fn":null,"payload":{"text":"fn_08005960 keeps its secrets for now. Best was 0.0%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:42.021Z","run_id":"doom_dig01","seq":12,"type":"narration","actor":"archivist","fn":"fn_08005A28","payload":{"text":"fn_08005A28: picking up where we left off at 92.9%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:42.021Z","run_id":"doom_dig01","seq":13,"type":"fn.claimed","actor":"scheduler","fn":"fn_08005A28","payload":{"digger":"digger-4","difficulty":0.028}}
+{"v":1,"ts":"2026-11-07T22:59:42.228Z","run_id":"doom_dig01","seq":14,"type":"fn.abandoned","actor":"digger-1","fn":"fn_08006F70","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:42.252Z","run_id":"doom_dig01","seq":15,"type":"narration","actor":"archivist","fn":"fn_0800591C","payload":{"text":"fn_0800591C: picking up where we left off at 92.9%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:42.252Z","run_id":"doom_dig01","seq":16,"type":"fn.claimed","actor":"scheduler","fn":"fn_0800591C","payload":{"digger":"digger-1","difficulty":0.047}}
+{"v":1,"ts":"2026-11-07T22:59:42.541Z","run_id":"doom_dig01","seq":17,"type":"fn.abandoned","actor":"digger-3","fn":"fn_0800060C","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:42.542Z","run_id":"doom_dig01","seq":18,"type":"fn.abandoned","actor":"digger-2","fn":"fn_08006558","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:42.575Z","run_id":"doom_dig01","seq":19,"type":"narration","actor":"archivist","fn":"fn_08012234","payload":{"text":"fn_08012234: picking up where we left off at 86.7%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:42.576Z","run_id":"doom_dig01","seq":20,"type":"fn.claimed","actor":"scheduler","fn":"fn_08012234","payload":{"digger":"digger-2","difficulty":0.03}}
+{"v":1,"ts":"2026-11-07T22:59:42.582Z","run_id":"doom_dig01","seq":21,"type":"narration","actor":"archivist","fn":"fn_08005A4C","payload":{"text":"fn_08005A4C: picking up where we left off at 88.0%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:42.582Z","run_id":"doom_dig01","seq":22,"type":"fn.claimed","actor":"scheduler","fn":"fn_08005A4C","payload":{"digger":"digger-3","difficulty":0.047}}
+{"v":1,"ts":"2026-11-07T22:59:43.157Z","run_id":"doom_dig01","seq":23,"type":"fn.abandoned","actor":"digger-1","fn":"fn_0800591C","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:43.159Z","run_id":"doom_dig01","seq":24,"type":"fn.abandoned","actor":"digger-4","fn":"fn_08005A28","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:43.201Z","run_id":"doom_dig01","seq":25,"type":"narration","actor":"archivist","fn":"fn_0801D568","payload":{"text":"fn_0801D568: picking up where we left off at 73.3%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:43.201Z","run_id":"doom_dig01","seq":26,"type":"fn.claimed","actor":"scheduler","fn":"fn_0801D568","payload":{"digger":"digger-4","difficulty":0.025}}
+{"v":1,"ts":"2026-11-07T22:59:43.202Z","run_id":"doom_dig01","seq":27,"type":"narration","actor":"archivist","fn":"fn_0801D4E0","payload":{"text":"fn_0801D4E0: picking up where we left off at 80.0%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:43.202Z","run_id":"doom_dig01","seq":28,"type":"fn.claimed","actor":"scheduler","fn":"fn_0801D4E0","payload":{"digger":"digger-1","difficulty":0.025}}
+{"v":1,"ts":"2026-11-07T22:59:43.289Z","run_id":"doom_dig01","seq":29,"type":"fn.abandoned","actor":"digger-3","fn":"fn_08005A4C","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:43.305Z","run_id":"doom_dig01","seq":30,"type":"narration","actor":"archivist","fn":"fn_08019178","payload":{"text":"fn_08019178: picking up where we left off at 65.0%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:43.306Z","run_id":"doom_dig01","seq":31,"type":"fn.claimed","actor":"scheduler","fn":"fn_08019178","payload":{"digger":"digger-3","difficulty":0.105}}
+{"v":1,"ts":"2026-11-07T22:59:43.602Z","run_id":"doom_dig01","seq":32,"type":"fn.abandoned","actor":"digger-1","fn":"fn_0801D4E0","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:43.602Z","run_id":"doom_dig01","seq":33,"type":"fn.abandoned","actor":"digger-4","fn":"fn_0801D568","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:43.629Z","run_id":"doom_dig01","seq":34,"type":"narration","actor":"archivist","fn":"fn_08015120","payload":{"text":"fn_08015120: picking up where we left off at 51.9%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:43.630Z","run_id":"doom_dig01","seq":35,"type":"narration","actor":"archivist","fn":"fn_08006FC0","payload":{"text":"fn_08006FC0: picking up where we left off at 58.3%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:43.630Z","run_id":"doom_dig01","seq":36,"type":"fn.claimed","actor":"scheduler","fn":"fn_08006FC0","payload":{"digger":"digger-1","difficulty":0.037}}
+{"v":1,"ts":"2026-11-07T22:59:43.630Z","run_id":"doom_dig01","seq":37,"type":"fn.claimed","actor":"scheduler","fn":"fn_08015120","payload":{"digger":"digger-4","difficulty":0.103}}
+{"v":1,"ts":"2026-11-07T22:59:43.970Z","run_id":"doom_dig01","seq":38,"type":"fn.abandoned","actor":"digger-3","fn":"fn_08019178","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:43.988Z","run_id":"doom_dig01","seq":39,"type":"narration","actor":"archivist","fn":"fn_08011C1C","payload":{"text":"fn_08011C1C: picking up where we left off at 40.0%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:43.988Z","run_id":"doom_dig01","seq":40,"type":"fn.claimed","actor":"scheduler","fn":"fn_08011C1C","payload":{"digger":"digger-3","difficulty":0.032}}
+{"v":1,"ts":"2026-11-07T22:59:44.126Z","run_id":"doom_dig01","seq":41,"type":"fn.abandoned","actor":"digger-4","fn":"fn_08015120","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:44.152Z","run_id":"doom_dig01","seq":42,"type":"narration","actor":"archivist","fn":"fn_080048F4","payload":{"text":"fn_080048F4: picking up where we left off at 3.8%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:44.152Z","run_id":"doom_dig01","seq":43,"type":"fn.claimed","actor":"scheduler","fn":"fn_080048F4","payload":{"digger":"digger-4","difficulty":0.037}}
+{"v":1,"ts":"2026-11-07T22:59:44.187Z","run_id":"doom_dig01","seq":44,"type":"fn.abandoned","actor":"digger-1","fn":"fn_08006FC0","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:44.202Z","run_id":"doom_dig01","seq":45,"type":"narration","actor":"archivist","fn":"fn_08009A28","payload":{"text":"fn_08009A28: picking up where we left off at 97.1%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:44.202Z","run_id":"doom_dig01","seq":46,"type":"fn.claimed","actor":"scheduler","fn":"fn_08009A28","payload":{"digger":"digger-1","difficulty":0.051}}
+{"v":1,"ts":"2026-11-07T22:59:44.239Z","run_id":"doom_dig01","seq":47,"type":"fn.abandoned","actor":"digger-2","fn":"fn_08012234","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:44.258Z","run_id":"doom_dig01","seq":48,"type":"narration","actor":"archivist","fn":"fn_08004E84","payload":{"text":"fn_08004E84: picking up where we left off at 93.3%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:44.259Z","run_id":"doom_dig01","seq":49,"type":"fn.claimed","actor":"scheduler","fn":"fn_08004E84","payload":{"digger":"digger-2","difficulty":0.032}}
+{"v":1,"ts":"2026-11-07T22:59:44.476Z","run_id":"doom_dig01","seq":50,"type":"fn.abandoned","actor":"digger-3","fn":"fn_08011C1C","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:44.501Z","run_id":"doom_dig01","seq":51,"type":"narration","actor":"archivist","fn":"fn_08006214","payload":{"text":"fn_08006214: picking up where we left off at 93.2%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:44.501Z","run_id":"doom_dig01","seq":52,"type":"fn.claimed","actor":"scheduler","fn":"fn_08006214","payload":{"digger":"digger-3","difficulty":0.072}}
+{"v":1,"ts":"2026-11-07T22:59:44.983Z","run_id":"doom_dig01","seq":53,"type":"fn.abandoned","actor":"digger-1","fn":"fn_08009A28","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:44.983Z","run_id":"doom_dig01","seq":54,"type":"fn.abandoned","actor":"digger-2","fn":"fn_08004E84","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:45.009Z","run_id":"doom_dig01","seq":55,"type":"narration","actor":"archivist","fn":"fn_08018E08","payload":{"text":"fn_08018E08: picking up where we left off at 91.7%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:45.009Z","run_id":"doom_dig01","seq":56,"type":"fn.claimed","actor":"scheduler","fn":"fn_08018E08","payload":{"digger":"digger-2","difficulty":0.025}}
+{"v":1,"ts":"2026-11-07T22:59:45.010Z","run_id":"doom_dig01","seq":57,"type":"narration","actor":"archivist","fn":"fn_08005AB0","payload":{"text":"fn_08005AB0: picking up where we left off at 92.3%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:45.010Z","run_id":"doom_dig01","seq":58,"type":"fn.claimed","actor":"scheduler","fn":"fn_08005AB0","payload":{"digger":"digger-1","difficulty":0.025}}
+{"v":1,"ts":"2026-11-07T22:59:45.225Z","run_id":"doom_dig01","seq":59,"type":"fn.abandoned","actor":"digger-3","fn":"fn_08006214","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:45.246Z","run_id":"doom_dig01","seq":60,"type":"narration","actor":"archivist","fn":"fn_08005174","payload":{"text":"fn_08005174: picking up where we left off at 88.5%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:45.246Z","run_id":"doom_dig01","seq":61,"type":"fn.claimed","actor":"scheduler","fn":"fn_08005174","payload":{"digger":"digger-3","difficulty":0.049}}
+{"v":1,"ts":"2026-11-07T22:59:45.371Z","run_id":"doom_dig01","seq":62,"type":"fn.abandoned","actor":"digger-2","fn":"fn_08018E08","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:45.372Z","run_id":"doom_dig01","seq":63,"type":"fn.abandoned","actor":"digger-1","fn":"fn_08005AB0","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:45.407Z","run_id":"doom_dig01","seq":64,"type":"narration","actor":"archivist","fn":"fn_08019244","payload":{"text":"fn_08019244: picking up where we left off at 81.0%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:45.407Z","run_id":"doom_dig01","seq":65,"type":"fn.claimed","actor":"scheduler","fn":"fn_08019244","payload":{"digger":"digger-1","difficulty":0.037}}
+{"v":1,"ts":"2026-11-07T22:59:45.415Z","run_id":"doom_dig01","seq":66,"type":"narration","actor":"archivist","fn":"fn_0801A95C","payload":{"text":"fn_0801A95C: picking up where we left off at 87.5%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:45.415Z","run_id":"doom_dig01","seq":67,"type":"fn.claimed","actor":"scheduler","fn":"fn_0801A95C","payload":{"digger":"digger-2","difficulty":0.044}}
+{"v":1,"ts":"2026-11-07T22:59:45.663Z","run_id":"doom_dig01","seq":68,"type":"fn.abandoned","actor":"digger-4","fn":"fn_080048F4","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:45.664Z","run_id":"doom_dig01","seq":69,"type":"fn.abandoned","actor":"digger-3","fn":"fn_08005174","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:45.691Z","run_id":"doom_dig01","seq":70,"type":"narration","actor":"archivist","fn":"fn_08004DB4","payload":{"text":"fn_08004DB4: picking up where we left off at 62.5%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:45.691Z","run_id":"doom_dig01","seq":71,"type":"fn.claimed","actor":"scheduler","fn":"fn_08004DB4","payload":{"digger":"digger-3","difficulty":0.063}}
+{"v":1,"ts":"2026-11-07T22:59:45.696Z","run_id":"doom_dig01","seq":72,"type":"narration","actor":"archivist","fn":"fn_0801B248","payload":{"text":"fn_0801B248: picking up where we left off at 75.8%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:45.696Z","run_id":"doom_dig01","seq":73,"type":"fn.claimed","actor":"scheduler","fn":"fn_0801B248","payload":{"digger":"digger-4","difficulty":0.054}}
+{"v":1,"ts":"2026-11-07T22:59:45.919Z","run_id":"doom_dig01","seq":74,"type":"metric.tick","actor":"scheduler","fn":null,"payload":{"pct_recovered":0.0,"matched":0,"attempted":25,"false_claims":0,"cost_usd":0.0,"elapsed_s":5.0}}
+{"v":1,"ts":"2026-11-07T22:59:46.054Z","run_id":"doom_dig01","seq":75,"type":"fn.abandoned","actor":"digger-2","fn":"fn_0801A95C","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:46.055Z","run_id":"doom_dig01","seq":76,"type":"fn.abandoned","actor":"digger-1","fn":"fn_08019244","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:46.080Z","run_id":"doom_dig01","seq":77,"type":"fn.claimed","actor":"scheduler","fn":"fn_080039B8","payload":{"digger":"digger-1","difficulty":0.028}}
+{"v":1,"ts":"2026-11-07T22:59:46.083Z","run_id":"doom_dig01","seq":78,"type":"narration","actor":"archivist","fn":"fn_0800A458","payload":{"text":"fn_0800A458: picking up where we left off at 50.0%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:46.083Z","run_id":"doom_dig01","seq":79,"type":"fn.claimed","actor":"scheduler","fn":"fn_0800A458","payload":{"digger":"digger-2","difficulty":0.032}}
+{"v":1,"ts":"2026-11-07T22:59:46.212Z","run_id":"doom_dig01","seq":80,"type":"fn.abandoned","actor":"digger-3","fn":"fn_08004DB4","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:46.227Z","run_id":"doom_dig01","seq":81,"type":"fn.claimed","actor":"scheduler","fn":"fn_0801D7A4","payload":{"digger":"digger-3","difficulty":0.031}}
+{"v":1,"ts":"2026-11-07T22:59:46.368Z","run_id":"doom_dig01","seq":82,"type":"fn.abandoned","actor":"digger-2","fn":"fn_0800A458","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:46.385Z","run_id":"doom_dig01","seq":83,"type":"fn.claimed","actor":"scheduler","fn":"fn_08019BC4","payload":{"digger":"digger-2","difficulty":0.032}}
+{"v":1,"ts":"2026-11-07T22:59:46.438Z","run_id":"doom_dig01","seq":84,"type":"fn.abandoned","actor":"digger-4","fn":"fn_0801B248","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:46.438Z","run_id":"doom_dig01","seq":85,"type":"fn.abandoned","actor":"digger-1","fn":"fn_080039B8","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:46.466Z","run_id":"doom_dig01","seq":86,"type":"fn.claimed","actor":"scheduler","fn":"fn_08005BC4","payload":{"digger":"digger-1","difficulty":0.035}}
+{"v":1,"ts":"2026-11-07T22:59:46.466Z","run_id":"doom_dig01","seq":87,"type":"fn.claimed","actor":"scheduler","fn":"fn_08005458","payload":{"digger":"digger-4","difficulty":0.034}}
+{"v":1,"ts":"2026-11-07T22:59:46.583Z","run_id":"doom_dig01","seq":88,"type":"fn.abandoned","actor":"digger-3","fn":"fn_0801D7A4","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:46.598Z","run_id":"doom_dig01","seq":89,"type":"fn.claimed","actor":"scheduler","fn":"fn_08019B64","payload":{"digger":"digger-3","difficulty":0.035}}
+{"v":1,"ts":"2026-11-07T22:59:46.755Z","run_id":"doom_dig01","seq":90,"type":"fn.abandoned","actor":"digger-2","fn":"fn_08019BC4","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:46.769Z","run_id":"doom_dig01","seq":91,"type":"fn.claimed","actor":"scheduler","fn":"fn_08019014","payload":{"digger":"digger-2","difficulty":0.037}}
+{"v":1,"ts":"2026-11-07T22:59:46.809Z","run_id":"doom_dig01","seq":92,"type":"fn.abandoned","actor":"digger-1","fn":"fn_08005BC4","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:46.822Z","run_id":"doom_dig01","seq":93,"type":"fn.claimed","actor":"scheduler","fn":"fn_08019144","payload":{"digger":"digger-1","difficulty":0.037}}
+{"v":1,"ts":"2026-11-07T22:59:46.956Z","run_id":"doom_dig01","seq":94,"type":"fn.abandoned","actor":"digger-4","fn":"fn_08005458","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:46.972Z","run_id":"doom_dig01","seq":95,"type":"narration","actor":"archivist","fn":"fn_0801D500","payload":{"text":"fn_0801D500: picking up where we left off at 0.0%.","mood":"dry","speak":false,"priority":0}}
+{"v":1,"ts":"2026-11-07T22:59:46.972Z","run_id":"doom_dig01","seq":96,"type":"fn.claimed","actor":"scheduler","fn":"fn_0801D500","payload":{"digger":"digger-4","difficulty":0.037}}
+{"v":1,"ts":"2026-11-07T22:59:47.100Z","run_id":"doom_dig01","seq":97,"type":"fn.abandoned","actor":"digger-3","fn":"fn_08019B64","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:47.114Z","run_id":"doom_dig01","seq":98,"type":"fn.claimed","actor":"scheduler","fn":"fn_0801D534","payload":{"digger":"digger-3","difficulty":0.037}}
+{"v":1,"ts":"2026-11-07T22:59:47.219Z","run_id":"doom_dig01","seq":99,"type":"fn.abandoned","actor":"digger-2","fn":"fn_08019014","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:47.232Z","run_id":"doom_dig01","seq":100,"type":"fn.claimed","actor":"scheduler","fn":"fn_08005C74","payload":{"digger":"digger-2","difficulty":0.039}}
+{"v":1,"ts":"2026-11-07T22:59:47.283Z","run_id":"doom_dig01","seq":101,"type":"fn.abandoned","actor":"digger-1","fn":"fn_08019144","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:47.296Z","run_id":"doom_dig01","seq":102,"type":"fn.claimed","actor":"scheduler","fn":"fn_08006FF4","payload":{"digger":"digger-1","difficulty":0.039}}
+{"v":1,"ts":"2026-11-07T22:59:47.627Z","run_id":"doom_dig01","seq":103,"type":"fn.abandoned","actor":"digger-4","fn":"fn_0801D500","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:47.627Z","run_id":"doom_dig01","seq":104,"type":"fn.abandoned","actor":"digger-3","fn":"fn_0801D534","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:47.652Z","run_id":"doom_dig01","seq":105,"type":"fn.claimed","actor":"scheduler","fn":"fn_08014254","payload":{"digger":"digger-4","difficulty":0.039}}
+{"v":1,"ts":"2026-11-07T22:59:47.652Z","run_id":"doom_dig01","seq":106,"type":"fn.claimed","actor":"scheduler","fn":"fn_0800DE04","payload":{"digger":"digger-3","difficulty":0.041}}
+{"v":1,"ts":"2026-11-07T22:59:47.891Z","run_id":"doom_dig01","seq":107,"type":"fn.abandoned","actor":"digger-1","fn":"fn_08006FF4","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:47.891Z","run_id":"doom_dig01","seq":108,"type":"fn.abandoned","actor":"digger-2","fn":"fn_08005C74","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:48.067Z","run_id":"doom_dig01","seq":109,"type":"fn.abandoned","actor":"digger-4","fn":"fn_08014254","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:48.068Z","run_id":"doom_dig01","seq":110,"type":"fn.abandoned","actor":"digger-3","fn":"fn_0800DE04","payload":{"attempts":0,"best_pct":0.0}}
+{"v":1,"ts":"2026-11-07T22:59:48.068Z","run_id":"doom_dig01","seq":111,"type":"metric.tick","actor":"scheduler","fn":null,"payload":{"pct_recovered":0.0,"matched":0,"attempted":40,"false_claims":0,"cost_usd":0.0,"elapsed_s":7.2}}
+{"v":1,"ts":"2026-11-07T22:59:48.068Z","run_id":"doom_dig01","seq":112,"type":"run.finished","actor":"scheduler","fn":null,"payload":{"matched":0,"abandoned":40,"pct_recovered":0.0,"cost_usd":0.0,"elapsed_s":7.2}}

@@ -1,0 +1,125 @@
+{
+  "v": 1,
+  "run_id": "doom_r03",
+  "label": "doom \u00b7 heldout \u00b7 library off \u00b7 snap on",
+  "split": "heldout",
+  "library": "off",
+  "model": "muse-spark-1.3",
+  "reasoning_effort": "high",
+  "fn_total": 40,
+  "matched": 28,
+  "match_rate": 0.7,
+  "attempts_per_match": 1.5,
+  "minutes_per_match": 1.04,
+  "cost_per_match_usd": 0.0806,
+  "false_claims_caught": 0,
+  "fakematches_rejected": 4,
+  "cost_usd": 2.2577,
+  "curve": [
+    {
+      "t_min": 0,
+      "matched": 0
+    },
+    {
+      "t_min": 1,
+      "matched": 5
+    },
+    {
+      "t_min": 2,
+      "matched": 8
+    },
+    {
+      "t_min": 3,
+      "matched": 11
+    },
+    {
+      "t_min": 4,
+      "matched": 15
+    },
+    {
+      "t_min": 5,
+      "matched": 18
+    },
+    {
+      "t_min": 6,
+      "matched": 20
+    },
+    {
+      "t_min": 7,
+      "matched": 24
+    },
+    {
+      "t_min": 8,
+      "matched": 26
+    },
+    {
+      "t_min": 9,
+      "matched": 26
+    },
+    {
+      "t_min": 10,
+      "matched": 27
+    },
+    {
+      "t_min": 11,
+      "matched": 28
+    },
+    {
+      "t_min": 12,
+      "matched": 28
+    },
+    {
+      "t_min": 13,
+      "matched": 28
+    }
+  ],
+  "muse": {
+    "calls": 190,
+    "tool_calls": 162,
+    "image_calls": 0,
+    "tokens_in": 371670,
+    "tokens_out": 421913,
+    "reasoning_effort": "high",
+    "cost_usd": 2.2577,
+    "by_model": {
+      "muse-spark-1.3": {
+        "calls": 174,
+        "cost_usd": 2.0246
+      },
+      "muse-wonder-1.0": {
+        "calls": 16,
+        "cost_usd": 0.2331
+      }
+    }
+  },
+  "attempts_total": 78,
+  "elapsed_s": 728.2,
+  "referee": "lab",
+  "fixture_target": false,
+  "library_backend": "local-json",
+  "library_size": 0,
+  "snap_reviews": 28,
+  "cartographer": false,
+  "snap": {
+    "on": true,
+    "model": "subq-snap-1.1",
+    "snap_calls": 48,
+    "errors": 0,
+    "latency_ms_mean": 657.5,
+    "input_tokens": 47318,
+    "cost_usd": 0.001893,
+    "by_op": {
+      "review": {
+        "calls": 28,
+        "latency_ms_total": 19531.037539069075,
+        "input_tokens": 27255
+      },
+      "decide_next": {
+        "calls": 20,
+        "latency_ms_total": 12029.853749991162,
+        "input_tokens": 20063
+      }
+    }
+  },
+  "cost_estimated": true
+}

@@ -1,0 +1,83 @@
+{
+  "v": 1,
+  "run_id": "r01",
+  "label": "LIVE on stage",
+  "split": "train",
+  "library": "on",
+  "model": "muse-spark-1.3",
+  "reasoning_effort": "high",
+  "fn_total": 2,
+  "matched": 2,
+  "match_rate": 1.0,
+  "attempts_per_match": 1.0,
+  "minutes_per_match": 0.63,
+  "cost_per_match_usd": 0.0224,
+  "false_claims_caught": 0,
+  "fakematches_rejected": 0,
+  "cost_usd": 0.0448,
+  "curve": [
+    {
+      "t_min": 0,
+      "matched": 0
+    },
+    {
+      "t_min": 1,
+      "matched": 2
+    },
+    {
+      "t_min": 2,
+      "matched": 2
+    }
+  ],
+  "muse": {
+    "calls": 6,
+    "tool_calls": 4,
+    "image_calls": 0,
+    "tokens_in": 7779,
+    "tokens_out": 8257,
+    "reasoning_effort": "high",
+    "cost_usd": 0.0448,
+    "by_model": {
+      "muse-spark-1.3": {
+        "calls": 6,
+        "cost_usd": 0.0448
+      }
+    }
+  },
+  "attempts_total": 2,
+  "elapsed_s": 60.2,
+  "referee": "lab",
+  "fixture_target": false,
+  "library_backend": "local-json",
+  "library_size": 0,
+  "library_status": {
+    "candidate": 0,
+    "adopted": 0,
+    "retired": 0
+  },
+  "library_baseline": 0.5,
+  "snap_reviews": 2,
+  "second_opinion_reviews": 2,
+  "cartographer": false,
+  "snap": {
+    "on": true,
+    "model": "subq-snap-1.1",
+    "snap_calls": 2,
+    "errors": 0,
+    "latency_ms_mean": 1874.5,
+    "input_tokens": 1529,
+    "cost_usd": 6.1e-05,
+    "by_op": {
+      "review": {
+        "calls": 2,
+        "latency_ms_total": 3749.0050819760654,
+        "input_tokens": 1529
+      }
+    }
+  },
+  "cost_estimated": false,
+  "memory": {
+    "backend": "none",
+    "error": null
+  }
+}

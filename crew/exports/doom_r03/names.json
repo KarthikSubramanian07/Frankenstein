@@ -1,0 +1,174 @@
+{
+  "v": 1,
+  "run_id": "doom_r03",
+  "names": [
+    {
+      "fn": "fn_08004680",
+      "name": "init_struct_defaults",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080032B8",
+      "name": "set_byte_flag",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08003B44",
+      "name": "store_zero_halfword_indirect",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08006B44",
+      "name": "clear_two_array_entries",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08019BB0",
+      "name": "store_is_nonzero_flag",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08003D20",
+      "name": "store_value_and_set_status_byte",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080184FC",
+      "name": "store_member_address_to_two_fields",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801C8FC",
+      "name": "init_state",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800A174",
+      "name": "forward_deref_plus_const_call",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08019B44",
+      "name": "is_entry_nonzero",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800A270",
+      "name": "constant_forwarding_thunk",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08004798",
+      "name": "conditional_struct_init",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08019220",
+      "name": "deref_short_pointer",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005788",
+      "name": "call_helper_with_offset_global",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800A43C",
+      "name": "decrement_counter_and_fire_on_zero",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080039DC",
+      "name": "set_byte_and_call",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005404",
+      "name": "forward_zeroed_buffer",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801C130",
+      "name": "forward_with_transformed_last_arg",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08001A94",
+      "name": "init_state_slot",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080184D8",
+      "name": "list_unlink_and_mark",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08004E68",
+      "name": "disable_interrupts_around_call",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08004AC4",
+      "name": "call_two_helpers_with_offsets",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005B9C",
+      "name": "reset_state_fields",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08004E4C",
+      "name": "disable_interrupts_around_call",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08013028",
+      "name": "lookup_table_value_and_call",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005D7C",
+      "name": "guarded_counter_call",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080035CC",
+      "name": "clear_flags_update_counter_and_forward",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801D19C",
+      "name": "signed_byte_state_dispatch",
+      "inferred": true,
+      "basis": "recovered code"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "v": 1,
+  "run_id": "doom_r11",
+  "names": [
+    {
+      "fn": "fn_0800684C",
+      "name": "set_control_block_params",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080056FC",
+      "name": "toggle_flag_and_advance_pointer",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08019D74",
+      "name": "conditional_clear_pointer_table",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800DE40",
+      "name": "decrement_countdown_and_patch_byte",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08013370",
+      "name": "clamp_counter_and_dispatch",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08012FBC",
+      "name": "check_table_threshold",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08008F54",
+      "name": "update_from_next",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800A30C",
+      "name": "spawn_entity",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08011E6C",
+      "name": "spawn_entity_with_clamped_stat",
+      "inferred": true,
+      "basis": "recovered code"
+    }
+  ]
+}

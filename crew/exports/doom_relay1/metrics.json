@@ -1,0 +1,139 @@
+{
+  "v": 1,
+  "run_id": "doom_relay1",
+  "label": "doom \u00b7 relay run 1 (same 15 functions)",
+  "split": "train",
+  "library": "learning",
+  "model": "muse-spark-1.3",
+  "reasoning_effort": "high",
+  "fn_total": 15,
+  "matched": 3,
+  "match_rate": 0.2,
+  "attempts_per_match": 3.33,
+  "minutes_per_match": 2.62,
+  "cost_per_match_usd": 0.9159,
+  "false_claims_caught": 2,
+  "fakematches_rejected": 0,
+  "cost_usd": 2.7478,
+  "curve": [
+    {
+      "t_min": 0,
+      "matched": 0
+    },
+    {
+      "t_min": 1,
+      "matched": 0
+    },
+    {
+      "t_min": 2,
+      "matched": 1
+    },
+    {
+      "t_min": 3,
+      "matched": 2
+    },
+    {
+      "t_min": 4,
+      "matched": 2
+    },
+    {
+      "t_min": 5,
+      "matched": 2
+    },
+    {
+      "t_min": 6,
+      "matched": 2
+    },
+    {
+      "t_min": 7,
+      "matched": 2
+    },
+    {
+      "t_min": 8,
+      "matched": 2
+    },
+    {
+      "t_min": 9,
+      "matched": 3
+    },
+    {
+      "t_min": 10,
+      "matched": 3
+    },
+    {
+      "t_min": 11,
+      "matched": 3
+    },
+    {
+      "t_min": 12,
+      "matched": 3
+    },
+    {
+      "t_min": 13,
+      "matched": 3
+    }
+  ],
+  "muse": {
+    "calls": 113,
+    "tool_calls": 109,
+    "image_calls": 0,
+    "tokens_in": 615206,
+    "tokens_out": 465602,
+    "reasoning_effort": "high",
+    "cost_usd": 2.7478,
+    "by_model": {
+      "muse-spark-1.3": {
+        "calls": 63,
+        "cost_usd": 1.6902
+      },
+      "muse-wonder-1.0": {
+        "calls": 50,
+        "cost_usd": 1.0576
+      }
+    }
+  },
+  "attempts_total": 72,
+  "elapsed_s": 727.6,
+  "referee": "lab",
+  "fixture_target": false,
+  "library_backend": "mongodb-atlas:idioms__relay_lib",
+  "library_size": 6,
+  "library_status": {
+    "candidate": 2,
+    "adopted": 4,
+    "retired": 0
+  },
+  "case_memory": 3,
+  "library_baseline": 0.0,
+  "snap_reviews": 3,
+  "second_opinion_reviews": 3,
+  "cartographer": false,
+  "snap": {
+    "on": true,
+    "model": "subq-snap-1.1",
+    "snap_calls": 48,
+    "errors": 0,
+    "latency_ms_mean": 495.5,
+    "input_tokens": 81460,
+    "cost_usd": 0.003258,
+    "by_op": {
+      "decide_next": {
+        "calls": 45,
+        "latency_ms_total": 22039.85912288772,
+        "input_tokens": 75886
+      },
+      "review": {
+        "calls": 3,
+        "latency_ms_total": 1743.7984590651467,
+        "input_tokens": 5574
+      }
+    }
+  },
+  "aligned_feedback": true,
+  "cost_estimated": true,
+  "memory": {
+    "backend": "mongodb-atlas",
+    "events_written": 500,
+    "error": null
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "v": 1,
+  "run_id": "doom_relay2",
+  "names": [
+    {
+      "fn": "fn_0801C990",
+      "name": "decrement_counter_and_conditionally_reset",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08010D9C",
+      "name": "find_anim_frame",
+      "inferred": true,
+      "basis": "recovered code"
+    }
+  ]
+}

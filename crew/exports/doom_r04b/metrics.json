@@ -1,0 +1,126 @@
+{
+  "v": 1,
+  "run_id": "doom_r04b",
+  "label": "doom \u00b7 heldout v1 rerun \u00b7 library on (idioms + cases) \u00b7 snap off",
+  "split": "heldout",
+  "library": "on",
+  "model": "muse-spark-1.3",
+  "reasoning_effort": "high",
+  "fn_total": 40,
+  "matched": 30,
+  "match_rate": 0.75,
+  "attempts_per_match": 1.47,
+  "minutes_per_match": 0.78,
+  "cost_per_match_usd": 0.0859,
+  "false_claims_caught": 0,
+  "fakematches_rejected": 3,
+  "cost_usd": 2.577,
+  "curve": [
+    {
+      "t_min": 0,
+      "matched": 0
+    },
+    {
+      "t_min": 1,
+      "matched": 6
+    },
+    {
+      "t_min": 2,
+      "matched": 13
+    },
+    {
+      "t_min": 3,
+      "matched": 17
+    },
+    {
+      "t_min": 4,
+      "matched": 18
+    },
+    {
+      "t_min": 5,
+      "matched": 20
+    },
+    {
+      "t_min": 6,
+      "matched": 23
+    },
+    {
+      "t_min": 7,
+      "matched": 27
+    },
+    {
+      "t_min": 8,
+      "matched": 27
+    },
+    {
+      "t_min": 9,
+      "matched": 29
+    },
+    {
+      "t_min": 10,
+      "matched": 29
+    },
+    {
+      "t_min": 11,
+      "matched": 30
+    },
+    {
+      "t_min": 12,
+      "matched": 30
+    },
+    {
+      "t_min": 13,
+      "matched": 30
+    },
+    {
+      "t_min": 14,
+      "matched": 30
+    },
+    {
+      "t_min": 15,
+      "matched": 30
+    }
+  ],
+  "muse": {
+    "calls": 185,
+    "tool_calls": 151,
+    "image_calls": 0,
+    "tokens_in": 482639,
+    "tokens_out": 464410,
+    "reasoning_effort": "high",
+    "cost_usd": 2.577,
+    "by_model": {
+      "muse-spark-1.3": {
+        "calls": 168,
+        "cost_usd": 2.2433
+      },
+      "muse-wonder-1.0": {
+        "calls": 17,
+        "cost_usd": 0.3337
+      }
+    }
+  },
+  "attempts_total": 84,
+  "elapsed_s": 879.9,
+  "referee": "lab",
+  "fixture_target": false,
+  "library_backend": "mongodb-atlas:idioms__doom_lib_v1_frozen",
+  "library_size": 38,
+  "library_status": {
+    "candidate": 38,
+    "adopted": 0,
+    "retired": 0
+  },
+  "case_memory": 28,
+  "library_baseline": 0.5,
+  "snap_reviews": 0,
+  "second_opinion_reviews": 30,
+  "cartographer": false,
+  "snap": null,
+  "cost_estimated": true,
+  "memory": {
+    "backend": "mongodb-atlas",
+    "events_written": 808,
+    "error": null
+  }
+}

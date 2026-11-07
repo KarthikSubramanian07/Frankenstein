@@ -1,0 +1,18 @@
+{
+  "v": 1,
+  "run_id": "r01",
+  "names": [
+    {
+      "fn": "fn_080154F0",
+      "name": "check_eq_9_or_bit7",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800FDE8",
+      "name": "zero_word_via_global_base",
+      "inferred": true,
+      "basis": "recovered code"
+    }
+  ]
+}

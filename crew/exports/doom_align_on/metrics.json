@@ -1,0 +1,167 @@
+{
+  "v": 1,
+  "run_id": "doom_align_on",
+  "label": "doom \u00b7 heldout \u00b7 aligned feedback on",
+  "split": "train",
+  "library": "off",
+  "model": "muse-spark-1.3",
+  "reasoning_effort": "high",
+  "fn_total": 20,
+  "matched": 7,
+  "match_rate": 0.35,
+  "attempts_per_match": 2.86,
+  "minutes_per_match": 2.08,
+  "cost_per_match_usd": 0.5103,
+  "false_claims_caught": 2,
+  "fakematches_rejected": 0,
+  "cost_usd": 3.5719,
+  "curve": [
+    {
+      "t_min": 0,
+      "matched": 0
+    },
+    {
+      "t_min": 1,
+      "matched": 1
+    },
+    {
+      "t_min": 2,
+      "matched": 1
+    },
+    {
+      "t_min": 3,
+      "matched": 3
+    },
+    {
+      "t_min": 4,
+      "matched": 4
+    },
+    {
+      "t_min": 5,
+      "matched": 5
+    },
+    {
+      "t_min": 6,
+      "matched": 5
+    },
+    {
+      "t_min": 7,
+      "matched": 5
+    },
+    {
+      "t_min": 8,
+      "matched": 5
+    },
+    {
+      "t_min": 9,
+      "matched": 5
+    },
+    {
+      "t_min": 10,
+      "matched": 5
+    },
+    {
+      "t_min": 11,
+      "matched": 6
+    },
+    {
+      "t_min": 12,
+      "matched": 7
+    },
+    {
+      "t_min": 13,
+      "matched": 7
+    },
+    {
+      "t_min": 14,
+      "matched": 7
+    },
+    {
+      "t_min": 15,
+      "matched": 7
+    },
+    {
+      "t_min": 16,
+      "matched": 7
+    },
+    {
+      "t_min": 17,
+      "matched": 7
+    },
+    {
+      "t_min": 18,
+      "matched": 7
+    },
+    {
+      "t_min": 19,
+      "matched": 7
+    },
+    {
+      "t_min": 20,
+      "matched": 7
+    }
+  ],
+  "muse": {
+    "calls": 136,
+    "tool_calls": 127,
+    "image_calls": 0,
+    "tokens_in": 784656,
+    "tokens_out": 609655,
+    "reasoning_effort": "high",
+    "cost_usd": 3.5719,
+    "by_model": {
+      "muse-spark-1.3": {
+        "calls": 78,
+        "cost_usd": 2.3075
+      },
+      "muse-wonder-1.0": {
+        "calls": 58,
+        "cost_usd": 1.2644
+      }
+    }
+  },
+  "attempts_total": 93,
+  "elapsed_s": 1145.7,
+  "referee": "lab",
+  "fixture_target": false,
+  "library_backend": "mongodb-atlas:idioms_idioms",
+  "library_size": 0,
+  "library_status": {
+    "candidate": 0,
+    "adopted": 0,
+    "retired": 0
+  },
+  "case_memory": 0,
+  "library_baseline": 0.5,
+  "snap_reviews": 7,
+  "second_opinion_reviews": 7,
+  "cartographer": false,
+  "snap": {
+    "on": true,
+    "model": "subq-snap-1.1",
+    "snap_calls": 63,
+    "errors": 0,
+    "latency_ms_mean": 506.4,
+    "input_tokens": 143007,
+    "cost_usd": 0.00572,
+    "by_op": {
+      "review": {
+        "calls": 7,
+        "latency_ms_total": 3064.6974570991006,
+        "input_tokens": 15386
+      },
+      "decide_next": {
+        "calls": 56,
+        "latency_ms_total": 28840.428755036555,
+        "input_tokens": 127621
+      }
+    }
+  },
+  "aligned_feedback": true,
+  "cost_estimated": true,
+  "memory": {
+    "backend": "mongodb-atlas",
+    "events_written": 565,
+    "error": null
+  }
+}

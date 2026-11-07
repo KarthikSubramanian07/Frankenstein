@@ -1,0 +1,73 @@
+{
+  "v": 1,
+  "run_id": "doom_relay3",
+  "label": "doom \u00b7 relay run 3 (same 15 functions)",
+  "split": "train",
+  "library": "learning",
+  "model": "muse-spark-1.3",
+  "reasoning_effort": "high",
+  "fn_total": 15,
+  "matched": 0,
+  "match_rate": 0.0,
+  "attempts_per_match": 0.0,
+  "minutes_per_match": 0.0,
+  "cost_per_match_usd": 0.0,
+  "false_claims_caught": 0,
+  "fakematches_rejected": 0,
+  "cost_usd": 0.0,
+  "curve": [
+    {
+      "t_min": 0,
+      "matched": 0
+    },
+    {
+      "t_min": 1,
+      "matched": 0
+    }
+  ],
+  "muse": {
+    "calls": 0,
+    "tool_calls": 0,
+    "image_calls": 0,
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "reasoning_effort": "high",
+    "cost_usd": 0.0,
+    "by_model": {}
+  },
+  "attempts_total": 0,
+  "elapsed_s": 5.4,
+  "referee": "lab",
+  "fixture_target": false,
+  "library_backend": "mongodb-atlas:idioms__relay_lib",
+  "library_size": 10,
+  "library_status": {
+    "candidate": 1,
+    "adopted": 4,
+    "retired": 5
+  },
+  "case_memory": 4,
+  "library_baseline": 0.0,
+  "snap_reviews": 0,
+  "second_opinion_reviews": 0,
+  "cartographer": false,
+  "snap": {
+    "on": true,
+    "model": "subq-snap-1.1",
+    "snap_calls": 0,
+    "errors": 0,
+    "latency_ms_mean": 0.0,
+    "input_tokens": 0,
+    "cost_usd": 0.0,
+    "by_op": {}
+  },
+  "aligned_feedback": true,
+  "draft": true,
+  "draft_used": 0,
+  "cost_estimated": false,
+  "memory": {
+    "backend": "mongodb-atlas",
+    "events_written": 122,
+    "error": null
+  }
+}

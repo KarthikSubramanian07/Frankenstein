@@ -1,0 +1,42 @@
+{
+  "v": 1,
+  "run_id": "doom_r13",
+  "names": [
+    {
+      "fn": "fn_08013CA4",
+      "name": "init_and_clear_state",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080077E4",
+      "name": "alloc_init_link_child",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08009468",
+      "name": "update_if_linked",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800DF24",
+      "name": "alloc_task_entry",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801102C",
+      "name": "conditional_counter_trigger",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08008D04",
+      "name": "fire_three_way_spread",
+      "inferred": true,
+      "basis": "recovered code"
+    }
+  ]
+}

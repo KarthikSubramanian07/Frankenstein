@@ -1,0 +1,180 @@
+{
+  "v": 1,
+  "run_id": "doom_r04",
+  "names": [
+    {
+      "fn": "fn_080032B8",
+      "name": "set_byte_flag_via_global_pointer",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08019BB0",
+      "name": "store_nonzero_as_byte",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08004680",
+      "name": "init_struct",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08003D20",
+      "name": "store_arg_and_set_flag",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08003B44",
+      "name": "clear_halfword_through_global_ptr",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08006B44",
+      "name": "zero_two_fields",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080184FC",
+      "name": "store_base_plus_offset_to_two_fields",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08006B20",
+      "name": "advance_wrapping_counter_and_lookup_byte",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801C8FC",
+      "name": "init_data_state",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08019B44",
+      "name": "is_table_entry_nonzero",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800A174",
+      "name": "wrap_deref_call_with_const",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800A270",
+      "name": "call_helper_with_constants",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08019220",
+      "name": "get_short_via_pointer",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005788",
+      "name": "forward_offset_pointer_to_helper",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080039DC",
+      "name": "store_byte_and_trigger_update",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800A43C",
+      "name": "dec_counter_and_fire_on_zero",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08004798",
+      "name": "init_struct_conditionally",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801C130",
+      "name": "forward_with_transformed_last_arg",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005404",
+      "name": "forward_zero_initialized_buffer",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08001A94",
+      "name": "init_global_state",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080184D8",
+      "name": "doubly_linked_list_unlink",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08004AC4",
+      "name": "call_two_offset_helpers",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005B9C",
+      "name": "reset_state_flags",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08004E68",
+      "name": "call_with_interrupts_disabled",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08013028",
+      "name": "lookup_and_forward",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005D7C",
+      "name": "conditional_call_on_global_match",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08009F9C",
+      "name": "conditional_handler_call",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080035CC",
+      "name": "invalidate_clear_flags_and_increment",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801D19C",
+      "name": "dispatch_state_machine",
+      "inferred": true,
+      "basis": "recovered code"
+    }
+  ]
+}

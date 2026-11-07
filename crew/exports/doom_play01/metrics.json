@@ -1,0 +1,67 @@
+{
+  "v": 1,
+  "run_id": "doom_play01",
+  "label": "doom \u00b7 play to recover (live)",
+  "split": "train",
+  "library": "on",
+  "model": "muse-spark-1.3",
+  "reasoning_effort": "high",
+  "fn_total": 9,
+  "matched": 0,
+  "match_rate": 0.0,
+  "attempts_per_match": 0.0,
+  "minutes_per_match": 0.0,
+  "cost_per_match_usd": 0.0,
+  "false_claims_caught": 0,
+  "fakematches_rejected": 0,
+  "cost_usd": 0.0,
+  "curve": [
+    {
+      "t_min": 0,
+      "matched": 0
+    },
+    {
+      "t_min": 1,
+      "matched": 0
+    }
+  ],
+  "muse": {
+    "calls": 0,
+    "tool_calls": 0,
+    "image_calls": 0,
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "reasoning_effort": "high",
+    "cost_usd": 0.0,
+    "by_model": {}
+  },
+  "attempts_total": 0,
+  "elapsed_s": 0.6,
+  "referee": "lab",
+  "fixture_target": false,
+  "library_backend": "local-json",
+  "library_size": 38,
+  "library_status": {
+    "candidate": 38,
+    "adopted": 0,
+    "retired": 0
+  },
+  "case_memory": 28,
+  "library_baseline": 0.5,
+  "snap_reviews": 0,
+  "second_opinion_reviews": 0,
+  "cartographer": false,
+  "snap": null,
+  "aligned_feedback": true,
+  "permuter": {
+    "on": true,
+    "budget_s": 45.0
+  },
+  "draft": true,
+  "draft_used": 3,
+  "cost_estimated": false,
+  "memory": {
+    "backend": "none",
+    "error": null
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "v": 1,
+  "run_id": "doom_r14",
+  "names": [
+    {
+      "fn": "fn_08013CA4",
+      "name": "reset_global_state",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080077E4",
+      "name": "alloc_and_link_sub",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08009468",
+      "name": "process_next_item",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08009850",
+      "name": "update_entity_position_from_template",
+      "inferred": true,
+      "basis": "recovered code"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "v": 1,
+  "run_id": "doom_face02",
+  "manifest": "lab/out/manifest.json",
+  "manifest_sha1": "a6ff9e7ec03e776f5a539f9db47f925d32e5c5d7",
+  "target_rom_sha1": "d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2",
+  "game_id": "doom",
+  "recovered": 0,
+  "files": {
+    "events.jsonl": "45dc0d647f5d553ac235ed91dab32dbb3871807d",
+    "metrics.json": "ec0649a6384788ede4f7f43b06ee6bee1a7f9f03",
+    "names.json": "374698856d3660552f7f5b35ba40dc0c00045efc"
+  },
+  "fixture": false
+}

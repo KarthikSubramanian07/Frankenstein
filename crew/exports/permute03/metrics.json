@@ -1,0 +1,45 @@
+{
+  "v": 1,
+  "run_id": "permute03",
+  "label": "permuter >= 60.0%",
+  "split": "train",
+  "library": "off",
+  "model": "permuter",
+  "reasoning_effort": "none",
+  "fn_total": 17,
+  "matched": 0,
+  "match_rate": 0.0,
+  "attempts_per_match": 0.0,
+  "minutes_per_match": 0.0,
+  "cost_per_match_usd": 0.0,
+  "false_claims_caught": 0,
+  "fakematches_rejected": 0,
+  "cost_usd": 0.0,
+  "elapsed_s": 226.6,
+  "curve": [
+    {
+      "t_min": 0,
+      "matched": 0
+    },
+    {
+      "t_min": 4,
+      "matched": 0
+    }
+  ],
+  "muse": {
+    "calls": 0,
+    "tool_calls": 0,
+    "image_calls": 0,
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "reasoning_effort": "none",
+    "cost_usd": 0.0
+  },
+  "permuter": {
+    "matched": 0,
+    "improved": 1,
+    "checks": 1962,
+    "rejected": 0,
+    "budget_s": 75.0
+  }
+}

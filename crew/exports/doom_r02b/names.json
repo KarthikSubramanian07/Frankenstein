@@ -1,0 +1,180 @@
+{
+  "v": 1,
+  "run_id": "doom_r02b",
+  "names": [
+    {
+      "fn": "fn_080032B8",
+      "name": "set_global_byte_flag",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08003D20",
+      "name": "store_param_and_set_byte_flag",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08004680",
+      "name": "init_struct_fields",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08019BB0",
+      "name": "store_nonzero_flag",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08003B44",
+      "name": "clear_halfword_field",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08006B44",
+      "name": "clear_two_array_slots",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080184FC",
+      "name": "init_buffer_pointers",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801C8FC",
+      "name": "init_shared_fields",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08019B44",
+      "name": "slot_is_nonzero",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08004798",
+      "name": "conditional_struct_init",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800A270",
+      "name": "forward_const_args_thunk",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800A174",
+      "name": "forward_first_element_with_const",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005788",
+      "name": "forward_global_with_offset",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08019220",
+      "name": "get_short_value",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080039DC",
+      "name": "store_byte_then_call",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800A43C",
+      "name": "decrement_byte_and_call_on_zero",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005404",
+      "name": "call_with_zeroed_buffer",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801C130",
+      "name": "forward_with_last_arg_transformed",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080184D8",
+      "name": "list_unlink_and_mark_or_cleanup",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08001A94",
+      "name": "init_shared_slot",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005B9C",
+      "name": "clear_state_flags",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08004E68",
+      "name": "save_disable_restore_ime_around_call",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08004AC4",
+      "name": "call_two_helpers_with_table_offsets",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08004E4C",
+      "name": "temporarily_clear_register_around_call",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08013028",
+      "name": "forward_table_halfword_arg",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005D7C",
+      "name": "guarded_call_on_match",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080035CC",
+      "name": "clear_flags_and_trigger_update",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801D19C",
+      "name": "signed_status_dispatch",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080050DC",
+      "name": "mmio_write_then_call",
+      "inferred": true,
+      "basis": "recovered code"
+    }
+  ]
+}

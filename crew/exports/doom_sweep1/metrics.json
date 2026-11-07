@@ -1,0 +1,155 @@
+{
+  "v": 1,
+  "run_id": "doom_sweep1",
+  "label": "doom \u00b7 recovery sweep (186 functions up to 120 bytes)",
+  "split": "train",
+  "library": "learning",
+  "model": "muse-spark-1.3",
+  "reasoning_effort": "high",
+  "fn_total": 186,
+  "matched": 67,
+  "match_rate": 0.36,
+  "attempts_per_match": 1.24,
+  "minutes_per_match": 0.52,
+  "cost_per_match_usd": 0.0899,
+  "false_claims_caught": 2,
+  "fakematches_rejected": 3,
+  "cost_usd": 6.0203,
+  "curve": [
+    {
+      "t_min": 0,
+      "matched": 0
+    },
+    {
+      "t_min": 1,
+      "matched": 13
+    },
+    {
+      "t_min": 2,
+      "matched": 15
+    },
+    {
+      "t_min": 3,
+      "matched": 17
+    },
+    {
+      "t_min": 4,
+      "matched": 21
+    },
+    {
+      "t_min": 5,
+      "matched": 24
+    },
+    {
+      "t_min": 6,
+      "matched": 24
+    },
+    {
+      "t_min": 7,
+      "matched": 28
+    },
+    {
+      "t_min": 8,
+      "matched": 28
+    },
+    {
+      "t_min": 9,
+      "matched": 30
+    },
+    {
+      "t_min": 10,
+      "matched": 31
+    },
+    {
+      "t_min": 11,
+      "matched": 34
+    },
+    {
+      "t_min": 12,
+      "matched": 40
+    },
+    {
+      "t_min": 13,
+      "matched": 50
+    },
+    {
+      "t_min": 14,
+      "matched": 63
+    },
+    {
+      "t_min": 15,
+      "matched": 67
+    },
+    {
+      "t_min": 16,
+      "matched": 67
+    },
+    {
+      "t_min": 17,
+      "matched": 67
+    }
+  ],
+  "muse": {
+    "calls": 453,
+    "tool_calls": 400,
+    "image_calls": 0,
+    "tokens_in": 1520304,
+    "tokens_out": 969393,
+    "reasoning_effort": "high",
+    "cost_usd": 6.0203,
+    "by_model": {
+      "muse-spark-1.3": {
+        "calls": 357,
+        "cost_usd": 4.2878
+      },
+      "muse-wonder-1.0": {
+        "calls": 96,
+        "cost_usd": 1.7325
+      }
+    }
+  },
+  "attempts_total": 224,
+  "elapsed_s": 1002.7,
+  "referee": "lab",
+  "fixture_target": false,
+  "library_backend": "mongodb-atlas:idioms__sweep_lib",
+  "library_size": 109,
+  "library_status": {
+    "candidate": 57,
+    "adopted": 8,
+    "retired": 44
+  },
+  "case_memory": 53,
+  "library_baseline": 0.299,
+  "snap_reviews": 67,
+  "second_opinion_reviews": 67,
+  "cartographer": false,
+  "snap": {
+    "on": true,
+    "model": "subq-snap-1.1",
+    "snap_calls": 145,
+    "errors": 0,
+    "latency_ms_mean": 521.8,
+    "input_tokens": 169007,
+    "cost_usd": 0.00676,
+    "by_op": {
+      "review": {
+        "calls": 67,
+        "latency_ms_total": 36239.19987300178,
+        "input_tokens": 66657
+      },
+      "decide_next": {
+        "calls": 78,
+        "latency_ms_total": 39420.572547242045,
+        "input_tokens": 102350
+      }
+    }
+  },
+  "aligned_feedback": true,
+  "cost_estimated": true,
+  "memory": {
+    "backend": "mongodb-atlas",
+    "events_written": 2727,
+    "error": null
+  }
+}

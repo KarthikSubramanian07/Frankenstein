@@ -1,0 +1,390 @@
+{
+  "v": 1,
+  "run_id": "doom_sweep1",
+  "names": [
+    {
+      "fn": "fn_0800FDE4",
+      "name": "empty_stub",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801C8D0",
+      "name": "empty_stub",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800504C",
+      "name": "empty_stub",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08002E58",
+      "name": "return_zero",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08011B54",
+      "name": "empty_stub",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08013AA0",
+      "name": "store_constant_to_indexed_slot",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08009FC8",
+      "name": "clear_bit_flag",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800478C",
+      "name": "decrement_if_nonzero",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080067DC",
+      "name": "clear_data_fields",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08001BA0",
+      "name": "init_global_state",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080067F8",
+      "name": "set_value_and_clear_flag",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080143EC",
+      "name": "increment_table_counter",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08001B10",
+      "name": "decrement_counter_and_flag_on_underflow",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801851C",
+      "name": "doubly_linked_list_insert_front",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08010D78",
+      "name": "conditionally_reset_callback_on_flag",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080032E4",
+      "name": "conditional_status_update",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080153C0",
+      "name": "select_flag_check",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08018588",
+      "name": "load_field_with_default_and_sentinel_null",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801C8D4",
+      "name": "set_multiple_fields_to_minus_one",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080100E4",
+      "name": "unlink_from_two_lists",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08003B18",
+      "name": "set_global_struct_fields",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800DD94",
+      "name": "countdown_reload",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08004698",
+      "name": "buffer_append_char",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800549C",
+      "name": "update_bounds",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08014564",
+      "name": "double_indirect_ffff_check",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08018558",
+      "name": "link_node_if_unlinked_and_set_handler",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08006814",
+      "name": "decrement_counter_and_toggle_on_expire",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080054C8",
+      "name": "toggle_flag_and_update_cached_state",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801271C",
+      "name": "mark_matching_items",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08006F18",
+      "name": "find_and_activate_matching_entry",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800DDC4",
+      "name": "bounce_offset_step",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801D1D4",
+      "name": "register_ptr_and_init_defaults",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080126B8",
+      "name": "update_matching_entries",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801CB04",
+      "name": "init_global_state",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005010",
+      "name": "void_call_through_wrapper",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08004DA8",
+      "name": "forwarding_wrapper",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080050D0",
+      "name": "wrapper_thunk",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005764",
+      "name": "forwarding_wrapper_stub",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800A370",
+      "name": "forward_call_wrapper",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801C230",
+      "name": "call_forwarder",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08019970",
+      "name": "simple_call_wrapper",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08009758",
+      "name": "call_with_fixed_second_arg",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08009F8C",
+      "name": "wrapper_call_with_31",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800A164",
+      "name": "forward_deref_with_const_arg",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800A260",
+      "name": "forward_consts_to_helper",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08009FD4",
+      "name": "forward_embedded_pointer_with_fixed_size",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08013B5C",
+      "name": "forward_deref_with_const",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08019230",
+      "name": "load_signed_short_member",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800A484",
+      "name": "wrapper_forwarding_sign_extended_short",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080184C4",
+      "name": "list_unlink_and_free",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08001A5C",
+      "name": "store_helper_result_via_global_pointer",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08019048",
+      "name": "parse_unless_leading_dash",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080057B8",
+      "name": "call_helper_with_offset_flag",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005770",
+      "name": "forward_adjusted_global",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080057A0",
+      "name": "wrapper_call_with_offset",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800A134",
+      "name": "call_two_helpers",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080057D0",
+      "name": "forward_global_offset_with_zero",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800A11C",
+      "name": "call_two_functions_with_same_arg",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800A14C",
+      "name": "forward_arg_to_two_calls",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080133B4",
+      "name": "forward_deref_then_reset",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800A184",
+      "name": "call_pair_with_deref_first",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08001A74",
+      "name": "store_computed_value_to_global",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08012800",
+      "name": "memset_zero_128_wrapper",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801CAE4",
+      "name": "set_flag_and_call",
+      "inferred": true,
+      "basis": "recovered code"
+    }
+  ]
+}

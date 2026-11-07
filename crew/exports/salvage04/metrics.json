@@ -1,0 +1,9 @@
+{
+  "v": 1,
+  "run_id": "salvage04",
+  "matched": 4,
+  "fn_total": 4,
+  "label": "salvage mmio",
+  "model": "salvage",
+  "cost_usd": 0
+}

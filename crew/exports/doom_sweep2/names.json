@@ -1,0 +1,12 @@
+{
+  "v": 1,
+  "run_id": "doom_sweep2",
+  "names": [
+    {
+      "fn": "fn_08019ABC",
+      "name": "store_parsed_buffer_entry",
+      "inferred": true,
+      "basis": "recovered code"
+    }
+  ]
+}

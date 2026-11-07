@@ -1,0 +1,15 @@
+{
+  "v": 1,
+  "run_id": "permute03",
+  "manifest": "lab/out/manifest.json",
+  "manifest_sha1": "a6ff9e7ec03e776f5a539f9db47f925d32e5c5d7",
+  "target_rom_sha1": "d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2",
+  "game_id": "doom",
+  "recovered": 0,
+  "files": {
+    "events.jsonl": "9107360fef6da8482bdd6aa80ea803b5d3366e20",
+    "metrics.json": "96b030a518b7067cfe5caf615f8337b1fe6cf7f0",
+    "names.json": "c5fafeccf8aefddddb3bbe4e45f02a3875d0896b"
+  },
+  "fixture": false
+}
