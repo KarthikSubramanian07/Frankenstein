@@ -126,3 +126,8 @@ body.obs .lg-game .ttl { display: none; }
 .lg-raw li .t { color: #646464; }
 .lg-raw li .w { color: #939393; }
 .lg-raw li .f { color: #767676; }
+/* one more small step dimmer */
+.lg-raw li { color: #787878; }
+.lg-raw li .t { color: #595959; }
+.lg-raw li .w { color: #868686; }
+.lg-raw li .f { color: #6a6a6a; }
