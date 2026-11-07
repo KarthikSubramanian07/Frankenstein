@@ -27,17 +27,17 @@
 <div id="screen" aria-label="Game screen"><canvas id="game" width="240" height="160" aria-label="Game Boy Advance emulator output"></canvas></div>
 
 <div id="controls" aria-label="Touch controller">
-  <button class="pill shoulder" data-key="l" aria-label="Strafe left (L)"><b>◀ STRAFE</b><small>L</small></button>
-  <button class="pill shoulder" data-key="r" aria-label="Strafe right (R)"><b>STRAFE ▶</b><small>R</small></button>
+  <button class="pill shoulder" data-slot="l" aria-label="Strafe left (L)"><b>◀ STRAFE</b><small>L</small></button>
+  <button class="pill shoulder" data-slot="r" aria-label="Strafe right (R)"><b>STRAFE ▶</b><small>R</small></button>
   <div id="dpad" role="group" aria-label="Move and turn (D-pad)">
-    <i data-key="up"></i><i data-key="left"></i><i data-key="right"></i><i data-key="down"></i><span class="hub"></span>
+    <i data-slot="up"></i><i data-slot="left"></i><i data-slot="right"></i><i data-slot="down"></i><span class="hub"></span>
   </div>
   <div id="actions" role="group" aria-label="Fire and use">
-    <i class="fire" data-key="b"><b>FIRE</b><small>B</small></i>
-    <i class="use" data-key="a"><b>USE</b><small>A</small></i>
+    <i class="fire" data-slot="fire"><b>FIRE</b><small>B</small></i>
+    <i class="use" data-slot="use"><b>USE</b><small>A</small></i>
   </div>
-  <button class="pill sys" data-key="select" aria-label="Automap (Select)"><b>MAP</b><small>SELECT</small></button>
-  <button class="pill sys" data-key="start" aria-label="Doom menu (Start)"><b>MENU</b><small>START</small></button>
+  <button class="pill sys" data-slot="select" aria-label="Automap (Select)"><b>MAP</b><small>SELECT</small></button>
+  <button class="pill sys" data-slot="start" aria-label="Doom menu (Start)"><b>MENU</b><small>START</small></button>
   <button id="pause" class="round" aria-label="Pause and options">❚❚</button>
   <p id="rotate">↻ Turn sideways for the big screen.</p>
 </div>
@@ -54,6 +54,7 @@
     <p id="progress-text" class="fine">&nbsp;</p>
     <button id="start" class="cta">PRESS START</button>
     <button id="retry" class="cta ghost">TRY AGAIN</button>
+    <button id="device-chip" class="chip device-chip"></button>
     <label id="pick" class="link-button">Have the .gba? Load it from this device<input id="rom" type="file" accept=".gba,application/octet-stream"></label>
     <p id="gate-note" class="fine">Real emulator, real ROM. This page doesn't vouch for how the ROM was built.</p>
     <button class="link" data-open-sheet>Controls, credits &amp; other devices</button>
@@ -67,6 +68,7 @@
       <button id="resume" class="cta">RESUME</button>
       <button id="mute" class="chip">SOUND ON</button>
       <button id="fullscreen" class="chip">FULL SCREEN</button>
+      <button id="open-howto" class="chip">HOW YOU'LL PLAY · REMAP</button>
     </div>
     <p id="sheet-label" class="fine"></p>
     <h3>How to play</h3>
@@ -97,6 +99,17 @@
     </div>
     <a class="source" href="https://github.com/KarthikSubramanian07/Frankenstein" target="_blank" rel="noopener">FRANKENSTEIN SOURCE ↗</a>
     <button id="close-sheet" class="link">Close</button>
+  </div>
+</section>
+<section id="howto" role="dialog" aria-modal="true" aria-labelledby="howto-title" hidden>
+  <div class="sheet-inner">
+    <div class="sheet-head"><h2 id="howto-title">HOW YOU'LL PLAY</h2><p id="howto-lines"></p></div>
+    <div id="devices" role="group" aria-label="Choose your controller"></div>
+    <div id="map"></div>
+    <p id="remap-prompt" role="status" aria-live="assertive"></p>
+    <div id="binds"></div>
+    <p id="unmapped" class="fine"></p>
+    <div class="sheet-actions"><button id="swap-ab" class="chip" aria-pressed="false">NINTENDO A/B SWAP: OFF</button><button id="reset-map" class="chip">RESET TO DEFAULT</button><button id="howto-done" class="cta">DONE</button></div>
   </div>
 </section>
 <script type="module" src="player.js"></script>
