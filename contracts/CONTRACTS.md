@@ -251,6 +251,23 @@ Report both numbers. A high unmodified score is the reason the variant exists; a
 
 `{ "v": 1, "frame": 18231, "running": ["fn_08000A1C", "fn_08003F10"] }` — functions observed executing in the last frame. Only real samples; never synthesized.
 
+## 7c. Play to recover — Lane D tap → crew director (HTTP 127.0.0.1:7112, v1.1 additive)
+
+Started by `python -m crew.run --director ...` (the live run). Lane D posts what the game is doing right now:
+
+`POST /heartbeat {"running": ["fn_0801B298", "fn_08004698"], "frame_png_b64": "<optional PNG, base64, no data: prefix>"}`
+→ `{"ok": true, "boosted": ["fn_0801B298"]}`  ·  `GET /heartbeat` → `{"boosted": [...], "last": <last decision>}`
+
+- `running`: function ids observed executing (program-counter samples mapped through the manifest). Only real samples; never synthesized. Unknown ids are ignored.
+- Every few seconds SubQ Snap looks at the frame plus the running code and picks what the crew rebuilds next; those functions jump the queue. Each decision is a `snap.decision` event with `op: "director"` in the live run's `events.jsonl`.
+- Send at most ~4 heartbeats per second; frames at most once per second (240×160 PNG is plenty).
+
+## 7d. Run exports (GitHub, so every lane gets real runs)
+
+`runs/` is gitignored. Finished runs are published with `python -m crew.export <run_id>` to `crew/exports/<run_id>/`
+(`events.jsonl`, `metrics.json`, `names.json`, `recovered/`, `EXPORT.json` with the manifest SHA-1, target ROM SHA-1
+and a hash of every file). Point the Stage or the bridge at an export directory to replay a real run.
+
 ## 8. Stage websocket — Lane C server → browser (ws://127.0.0.1:7202)
 
 Lane C's tiny server tails `runs/live/events.jsonl` and pushes each line unchanged as a websocket message, plus `{"type":"stage.hello","run_id":…,"backlog":N}` on connect. Replay mode serves any finished run's file at a chosen speed. No other lane talks to this socket.

@@ -1,0 +1,56 @@
+{
+  "v": 1,
+  "run_id": "bench_r01",
+  "label": "bench \u00b7 train \u00b7 library learning",
+  "split": "train",
+  "library": "learning",
+  "model": "muse-spark-1.3",
+  "reasoning_effort": "high",
+  "fn_total": 14,
+  "matched": 14,
+  "match_rate": 1.0,
+  "attempts_per_match": 1.14,
+  "minutes_per_match": 0.28,
+  "cost_per_match_usd": 0.021,
+  "false_claims_caught": 0,
+  "fakematches_rejected": 0,
+  "cost_usd": 0.2943,
+  "curve": [
+    {
+      "t_min": 0,
+      "matched": 0
+    },
+    {
+      "t_min": 1,
+      "matched": 14
+    },
+    {
+      "t_min": 2,
+      "matched": 14
+    }
+  ],
+  "muse": {
+    "calls": 44,
+    "tool_calls": 30,
+    "image_calls": 0,
+    "tokens_in": 75861,
+    "tokens_out": 46930,
+    "reasoning_effort": "high",
+    "cost_usd": 0.2943,
+    "by_model": {
+      "muse-spark-1.3": {
+        "calls": 44,
+        "cost_usd": 0.2943
+      }
+    }
+  },
+  "attempts_total": 16,
+  "elapsed_s": 80.2,
+  "referee": "lab",
+  "fixture_target": false,
+  "library_backend": "local-json",
+  "library_size": 24,
+  "snap_reviews": 0,
+  "cartographer": false,
+  "cost_estimated": false
+}

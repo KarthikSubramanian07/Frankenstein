@@ -1,0 +1,174 @@
+{
+  "v": 1,
+  "run_id": "doom_r01",
+  "names": [
+    {
+      "fn": "fn_08002E5C",
+      "name": "return_zero",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800501C",
+      "name": "do_nothing",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005050",
+      "name": "empty_stub",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005048",
+      "name": "empty_stub",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08006284",
+      "name": "empty_stub",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801B724",
+      "name": "return_zero",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08003D1C",
+      "name": "add_constant",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801C8CC",
+      "name": "empty_stub",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801C8C8",
+      "name": "do_nothing_stub",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08019240",
+      "name": "empty_stub",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080185B0",
+      "name": "store_int",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08013A98",
+      "name": "zero_int_array_slot",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08015504",
+      "name": "get_byte_bit",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08013AA8",
+      "name": "array_element_constant_store",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08004670",
+      "name": "init_struct_zero_and_one",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08001B2C",
+      "name": "set_byte_via_indirect_pointer",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080032C8",
+      "name": "write_two_bytes_via_shared_base",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005488",
+      "name": "init_int_min_max",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801853C",
+      "name": "store_function_pointer_at_offset",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_03000D94",
+      "name": "absolute_value",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08003604",
+      "name": "store_const_byte_indirect",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08019060",
+      "name": "struct_zero_init_with_global_tail",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08018548",
+      "name": "doubly_linked_node_unlink",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_03002660",
+      "name": "mul_s32_shift_16",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800197C",
+      "name": "set_flag_byte",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080050C0",
+      "name": "set_global_array_element",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800FDFC",
+      "name": "sum_of_abs_minus_half_min",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801AC0C",
+      "name": "guarded_array_field_clear",
+      "inferred": true,
+      "basis": "recovered code"
+    }
+  ]
+}

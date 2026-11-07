@@ -1,0 +1,90 @@
+{
+  "v": 1,
+  "run_id": "bench_r01",
+  "names": [
+    {
+      "fn": "fn_080002F8",
+      "name": "abs_diff",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080002E4",
+      "name": "count_set_bits",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080002E0",
+      "name": "and_not",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080003F4",
+      "name": "init_struct_defaults",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08000454",
+      "name": "integrate_velocity_with_friction_and_clamped_gra",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08000230",
+      "name": "lcg_rand_next",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080004C0",
+      "name": "div_round_to_nearest",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08000304",
+      "name": "increment_counter_and_toggle_every_64",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08000340",
+      "name": "apply_damage_and_check_death",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08000200",
+      "name": "max_plus_scaled_min",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080003C4",
+      "name": "find_first_matching_entry",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08000264",
+      "name": "handle_command",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080004E4",
+      "name": "find_free_slot_and_initialize",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08000408",
+      "name": "accumulate_capped_value",
+      "inferred": true,
+      "basis": "recovered code"
+    }
+  ]
+}
