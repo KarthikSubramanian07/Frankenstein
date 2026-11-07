@@ -12,7 +12,7 @@ from pathlib import Path
 
 from lab.games import load as load_game
 
-from .lint import lint, lint_expanded
+from .lint import arm_attrs, lint, lint_expanded
 
 REPO = Path(__file__).resolve().parents[2]
 LAB = REPO / "lab"
@@ -68,7 +68,7 @@ class Referee:
             raise KeyError(f"unknown game function {fn}")
         target = self._target(fn)
         asm_path = self.out / "asm" / f"{fn}.s"
-        lint_result = lint(src, len(target), asm_path.read_text() if asm_path.exists() else "")
+        lint_result = lint(src, len(target), asm_path.read_text() if asm_path.exists() else "", meta["mode"])
         result = {"v": 1, "fn": fn, "status": "LINT_FAIL", "match_pct": 0.0, "first_diff": None, "diff": [],
                   "lint": lint_result, "compile": {"ok": False, "log": ""}, "elapsed_ms": 0, "referee": _git_sha()}
         if lint_result["ok"]:
@@ -117,7 +117,7 @@ class Referee:
         proc = _docker(f"{GCC} {flags} -E {rel}/cand.c -o {rel}/cand.i 2>&1", timeout=COMPILE_TIMEOUT_S)
         if proc.returncode != 0:
             return False, scrub_log(proc.stdout + proc.stderr), [], {"ok": True, "violations": []}
-        expanded = lint_expanded((work / "cand.i").read_text(), f"{rel}/cand.c")
+        expanded = lint_expanded((work / "cand.i").read_text(), f"{rel}/cand.c", mode, arm_attrs(src, mode))
         if not expanded["ok"]:
             return False, "", [], expanded
         cmd = (f"{GCC} {flags} -c {rel}/cand.c -o {rel}/cand.o 2>&1 && "

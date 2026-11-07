@@ -30,6 +30,10 @@ LINEMARKER = re.compile(r'^# \d+ "((?:[^"\\]|\\.)*)"')
 # Unary && (label address) follows an operator or `return`; binary `a && b` follows an operand and is fine.
 COMPUTED_GOTO = re.compile(r"goto\s*\*|(?:[=(,?:{\[]|\breturn)\s*&&\s*[A-Za-z_]")
 GOTO_LABEL = re.compile(r"^\s*[A-Za-z_]\w*\s*:(?!:)", re.M)
+# The one L003 exception: target("arm") on a function definition, for functions the manifest marks mode "arm"
+# (Voxelburg builds every file -mthumb and marks its IWRAM functions this way). Not on a directive line,
+# and the lookahead requires the next ; { } = to be the `) {` that opens a body.
+ARM_ATTR = re.compile(r'^([^#\n]*?)__attribute__\s*\(\(\s*target\s*\(\s*"arm"\s*\)\s*\)\)(?=[^;{}=#]*\)\s*\{)', re.M)
 
 
 # String and char literals are matched first so a "/*" inside a string cannot hide the code after it.
@@ -47,6 +51,19 @@ def strip_comments(src: str) -> str:
     return src
 
 
+def _allow_arm(code: str, mode: str, limit: int = 1) -> tuple[str, int]:
+    """Blank (same length, so line numbers hold) up to `limit` allowed target("arm") attributes; return (code, count)."""
+    if mode != "arm" or limit <= 0:
+        return code, 0
+    blanked = ARM_ATTR.sub(lambda m: m.group(1) + " " * (m.end() - m.end(1)), code, count=limit)
+    return blanked, len(ARM_ATTR.findall(code)[:limit])
+
+
+def arm_attrs(src: str, mode: str) -> int:
+    """How many allowed attributes the raw source spells out literally (0 or 1); the expanded pass may allow no more."""
+    return _allow_arm(strip_comments(src), mode)[1]
+
+
 def _rule_hits(code: str, only: tuple[str, ...] | None = None) -> list[dict]:
     violations = [{"rule": rule, "line": code.count("\n", 0, m.start()) + 1, "reason": reason}
                   for rule, pattern, reason in RULES if only is None or rule in only for m in pattern.finditer(code)
@@ -56,9 +73,10 @@ def _rule_hits(code: str, only: tuple[str, ...] | None = None) -> list[dict]:
     return violations
 
 
-def lint_expanded(expanded: str, cand_path: str) -> dict:
+def lint_expanded(expanded: str, cand_path: str, mode: str = "thumb", allowed: int = 0) -> dict:
     """Second pass over `gcc -E` output: only lines the linemarkers attribute to the candidate file,
-    so token pasting and macros can't assemble asm, _Pragma or attributes that the raw pass missed."""
+    so token pasting and macros can't assemble asm, _Pragma or attributes that the raw pass missed.
+    `allowed` is arm_attrs(src, mode): a macro-built target("arm") has no literal twin in the raw source, so it stays banned."""
     keep, mine = [], False
     for line in expanded.splitlines():
         m = LINEMARKER.match(line)
@@ -66,16 +84,16 @@ def lint_expanded(expanded: str, cand_path: str) -> dict:
             mine = m.group(1) == cand_path
             continue
         keep.append(line if mine else "")
-    violations = _rule_hits(strip_comments("\n".join(keep)), EXPANDED_RULES)
+    violations = _rule_hits(_allow_arm(strip_comments("\n".join(keep)), mode, allowed)[0], EXPANDED_RULES)
     for v in violations:
         v["reason"] += " (after macro expansion)"
     return {"ok": not violations, "violations": violations}
 
 
-def lint(src: str, target_insns: int, asm_text: str = "") -> dict:
-    """Return {"ok": bool, "violations": [{"rule", "line", "reason"}]}."""
+def lint(src: str, target_insns: int, asm_text: str = "", mode: str = "thumb") -> dict:
+    """Return {"ok": bool, "violations": [{"rule", "line", "reason"}]}. mode is the manifest's "arm"/"thumb"."""
     code = strip_comments(src)
-    violations = _rule_hits(code)
+    violations = _rule_hits(_allow_arm(code, mode)[0])
     for m in INCLUDE_LINE.finditer(code):  # allow-list: every include must be a plain <system> header
         arg = m.group(2)
         line = code.count("\n", 0, m.start()) + 1
