@@ -25,7 +25,7 @@ export class VersusScene implements Scene {
       <div class="fight">
         <div class="top">
           <div><div class="hbar"><i data-k="hpL"></i></div><div class="cap" data-k="capL"></div></div>
-          <div class="round">ROUND<b data-k="round">1</b></div>
+          <div class="round">TRY<b data-k="round">1</b></div>
           <div><div class="hbar r"><i data-k="hpR" style="width:100%"></i></div><div class="cap r">PROOF 100%</div></div>
         </div>
         <div class="names"><span data-k="digger">DIGGER</span><span>REFEREE</span></div>
@@ -57,7 +57,7 @@ export class VersusScene implements Scene {
       && (performance.now() - this.checkedAt > 4000 || !this.checked)) this.upheld(ctx, s.lastChecked);
     const tl = this.el.querySelector('[data-k="tally"]')!;
     const tt = this.shown ? `LIE ${this.shown.index} OF ${s.falseClaims.length} CAUGHT · ${s.claimsMade} CLAIMS CHECKED`
-      : this.checked ? `${s.claimsMade} CLAIMS RE-CHECKED · ${s.falseClaims.length} LIES` : '';
+      : this.checked ? `${s.claimsMade} CLAIMS RE-CHECKED. ${s.falseClaims.length} LIES.` : '';
     if (tl.textContent !== tt) tl.textContent = tt;
   }
 
@@ -80,9 +80,11 @@ export class VersusScene implements Scene {
     q('digger').textContent = c.actor.toUpperCase();
     q('speech').textContent = `"${c.text}"`;
     q('refline').innerHTML = `RE-RAN THE COMPILER<br>${esc(c.status)} · ${c.match_pct.toFixed(0)}%`;
-    const lines = [`<div class="where">${esc(c.fn)} · WRITTEN BY ${esc(modelName(c.model ?? s.model))}</div>`,
-      `<div><span class="lbl">COMPILER</span><span class="exp">${c.status === 'MATCH' ? 'BYTE-IDENTICAL' : esc(c.status)}</span></div>`];
+    // Muse wrote it. Snap checked it. The compiler proved it (largest line, last).
+    const lines = [`<div class="where">${esc(c.fn)} · THE CLAIM, CHECKED THREE WAYS</div>`,
+      `<div class="m"><span class="lbl">MUSE</span>${esc(modelName(c.model ?? s.model).replace(/^MUSE /, ''))} WROTE IT</div>`];
     lines.push(...gateLines(s, c.reviews));
+    lines.push(`<div class="c"><span class="lbl">COMPILER</span><span class="exp">${c.status === 'MATCH' ? 'BYTE-IDENTICAL' : esc(c.status)}</span></div>`);
     q('evidence').innerHTML = lines.join('');
     const ko = q('ko');
     ko.innerHTML = c.upheld ? '<b>TRUE</b><span>CLAIM UPHELD</span>' : '<b>NO</b><span>NOT ACCEPTED</span>';
@@ -129,9 +131,9 @@ export class VersusScene implements Scene {
 /** The fake gate on a match: per-lab scores when they belong to this match, else the run's screening so far. */
 function gateLines(s: State, reviews: Review[]): string[] {
   if (reviews.length) {
-    return reviews.map((r) => `<div><span class="lbl">${esc(LAB[r.reviewer] ?? r.reviewer.toUpperCase())}</span>FAKE ${pc(r.fakematch_p)} · RECITED ${pc(r.recital_p)}</div>`);
+    return reviews.map((r) => `<div class="g"><span class="lbl">${esc(LAB[r.reviewer] ?? r.reviewer.toUpperCase())}</span>${pc(r.fakematch_p)} FAKE · ${pc(r.recital_p)} COPIED</div>`);
   }
   if (!s.reviews.length) return [];
   const worst = Math.max(...s.reviews.map((r) => r.fakematch_p ?? 0));
-  return [`<div><span class="lbl">SUBQ SNAP</span>SCREENED ${s.reviews.length} · WORST FAKE ${pc(worst)}</div>`];
+  return [`<div class="g"><span class="lbl">SUBQ SNAP</span>CHECKED ${s.reviews.length} · WORST ${pc(worst)} FAKE</div>`];
 }

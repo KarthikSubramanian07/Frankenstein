@@ -422,3 +422,13 @@ body.obs .split .game-frame .ph { display: none; }
 .split .legend .sw { display: inline-grid; place-items: center; width: 40px; height: 40px; font-size: 28px; color: var(--midnight); }
 .split .legend .sw.ok { background: var(--mint); }
 .split .legend .sw.q { background: var(--guess); margin-left: 34px; }
+
+/* ---------- VERSUS v2: verdict clear of the evidence, plain words, the tally promoted ---------- */
+.versus .evidence { top: 528px; padding: 26px 44px; font-size: 40px; line-height: 1.55; }
+.versus .evidence .lbl { width: 410px; color: #c9c6e8; font-size: 40px; }
+.versus .evidence .where { font-size: 28px; color: #c9c6e8; margin-bottom: 8px; }
+.versus .evidence .m { color: var(--cyan); }
+.versus .evidence .g { color: #ffb3ec; }
+.versus .evidence .c { font-size: 52px; }
+.versus .ko { top: 846px; }
+.versus .tally { left: 0; right: 0; margin: 0 auto; width: max-content; bottom: auto; top: 990px; text-align: center; font-size: 28px; text-shadow: 3px 3px 0 #000; }
