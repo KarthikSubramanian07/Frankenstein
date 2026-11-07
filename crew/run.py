@@ -259,9 +259,14 @@ class Run:
             snap_decide = None
             if hasattr(self, "_snap") and self.args.snap:
                 snap_decide = lambda fn, asm, hist: self._snap.decide_next(self.cfg, fn, asm, hist)  # noqa: E731
+            d0 = None
+            if self.args.warm_start:
+                d0 = self._best_prior_attempt
             d = Digger(f"digger-{i + 1}", self.llm, self.target, self.checker, self.library, self.log,
                        max_usd=self.args.max_usd_per_fn, types_slice=self.types_slice, budget_ok=self.budget_ok,
                        snap_decide=snap_decide)
+            d.warm_start = d0
+            d.max_attempts = self.args.max_attempts
             while self.budget_ok():
                 with qlock:
                     if not queue:
@@ -357,6 +362,29 @@ class Run:
                     self.director.steer()
         threading.Thread(target=steer_loop, daemon=True).start()
 
+    def _best_prior_attempt(self, fn: str):
+        """Best earlier attempt at this exact function across runs/*/ (full source from attempts/).
+        Only for non-evaluation runs: held-out comparisons must never carry state between arms."""
+        best = None
+        for ev_path in self.cfg.runs_dir.glob("*/events.jsonl"):
+            run_dir = ev_path.parent
+            if run_dir == self.dir:
+                continue
+            try:
+                for line in ev_path.read_text().splitlines():
+                    if fn not in line or '"verdict"' not in line:
+                        continue
+                    e = json.loads(line)
+                    if e.get("type") != "verdict" or e.get("fn") != fn:
+                        continue
+                    p = e["payload"]
+                    src_path = run_dir / "attempts" / f"{fn}.{int(p.get('attempt', 0)):02d}.c"
+                    if p.get("status") == "PARTIAL" and src_path.exists() and (best is None or p["match_pct"] > best["match_pct"]):
+                        best = {"src": src_path.read_text().strip(), "match_pct": p["match_pct"], "run": run_dir.name}
+            except (OSError, json.JSONDecodeError, ValueError):
+                continue
+        return best
+
     def _load_types(self):
         hdr = self.dir / "types.h"
         src = Path(self.args.cartographer) if self.args.cartographer not in ("on", "1", "true") else hdr
@@ -437,6 +465,9 @@ def parser() -> argparse.ArgumentParser:
     ap.add_argument("--gemini", action=argparse.BooleanOptionalAction, default=True,
                     help="Gemini second-opinion review on every MATCH (a different lab's model)")
     ap.add_argument("--no-rebuild", action="store_true")
+    ap.add_argument("--warm-start", action="store_true",
+                    help="resume each function from its best earlier attempt (never use in held-out evaluation)")
+    ap.add_argument("--max-attempts", type=int, default=0, help="override the per-function attempt budget")
     ap.add_argument("--director", action="store_true", help="Play to recover: SubQ Snap steers by live heartbeats")
     ap.add_argument("--director-port", type=int, default=7112)
     ap.add_argument("--director-every", type=float, default=4.0, help="seconds between Snap steering decisions")

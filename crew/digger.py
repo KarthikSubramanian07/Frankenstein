@@ -70,6 +70,8 @@ class Digger:
         self.allow_claim_first = True
         # Diggers may stake a claim before seeing the verdict (real lies, caught)
         self.cases = getattr(library, "cases", None)  # CaseMemory: solved training functions, by similarity
+        self.max_attempts = 0  # 0 = budget from difficulty (Snap triage or the manifest)
+        self.warm_start = None  # callable(fn_id) -> {"src", "match_pct", ...} or None (never in held-out evaluation)
 
     def _tool_result(self, call_id: str, content) -> dict:
         return {"role": "tool", "tool_call_id": call_id,
@@ -87,12 +89,20 @@ class Digger:
         cases = self.cases.similar(asm, k=2, exclude=fn_id) if self.cases is not None else []
         for c in cases:
             self.log.emit("idiom.used", self.name, fn=fn_id, idiom_id=f"case:{c['fn']}", similarity=c["similarity"])
+        warm = self.warm_start(fn_id) if self.warm_start else None
         messages = [{"role": "system", "content": DIGGER_SYSTEM},
                     {"role": "user", "content": digger_user(fn, asm, ctx, idioms, self.target.neighbors(fn_id), types, cases)}]
+        if warm:
+            messages[1]["content"] += ("\n\n## Your best earlier attempt at THIS function (from a previous run)\n"
+                                       f"It scored {warm['match_pct']}% positional"
+                                       + (f", {warm['structure_pct']}% structure" if warm.get("structure_pct") else "")
+                                       + ". Start from it and fix the remaining differences.\n```c\n" + warm["src"] + "\n```")
+            self.log.emit("narration", "archivist", fn=fn_id, text=f"{fn_id}: picking up where we left off at {warm['match_pct']}%.",
+                          mood="dry", speak=False, priority=0)
         out = Outcome(fn=fn_id, status="abandoned")
         out.idioms = [i["idiom_id"] for i in idioms]
         out.cases = [c["fn"] for c in cases]
-        budget = attempt_budget(fn["difficulty"])
+        budget = self.max_attempts or attempt_budget(fn["difficulty"])
         last_src, last_attempt, best_src, failures, turns = None, 0, None, 0, 0
         escalated = False  # set by SubQ Snap (or by the fixed fallback rule when Snap is off)
         esc_failed = False  # an escalation-model call errored during this function
@@ -148,6 +158,12 @@ class Digger:
                     src = (args.get("src") or "").strip()
                     out.attempts += 1
                     last_attempt, last_src = out.attempts, src
+                    try:  # every full attempt is kept (events carry only a 40-line preview)
+                        adir = self.log.run_dir / "attempts"
+                        adir.mkdir(exist_ok=True)
+                        (adir / f"{fn_id}.{out.attempts:02d}.c").write_text(src + "\n")
+                    except OSError:
+                        pass
                     self.log.emit("attempt.submitted", self.name, fn=fn_id, attempt=out.attempts,
                                   tokens_in=r["tin"], tokens_out=r["tout"], cost_usd=round(r["cost"], 6),
                                   src_preview="\n".join(src.splitlines()[:40]), model=r["model"], effort=effort)
