@@ -18,6 +18,7 @@ const SHOTS = [
   { name: 'log-sample', q: '?replay=fx01&speed=1&t=40', wait: 2600 },
   { name: 'card', q: '?scene=card&replay=' + RUN + '&speed=20&t=999', wait: 1500 },
   { name: 'card-sample', q: '?scene=card', wait: 1500 },
+  { name: 'road', q: '?scene=road&replay=doom_r12&speed=8&t=300', wait: 3200 },
   { name: 'legacy-split', q: '?legacy=1&scene=split&replay=' + RUN + '&speed=4&t=200', wait: 2600 },
 ];
 

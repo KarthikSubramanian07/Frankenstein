@@ -10,6 +10,7 @@ export const SCENES = [
   ['log-sample', '?replay=fx01&speed=1&t=40'],
   ['card', '?scene=card&replay=' + RUN + '&speed=20&t=999'],
   ['card-sample', '?scene=card'],
+  ['road', '?scene=road&replay=doom_r12&speed=8&t=300'],
 ];
 const only = process.argv.slice(2);
 const browser = await chromium.launch({ executablePath: CHROME });

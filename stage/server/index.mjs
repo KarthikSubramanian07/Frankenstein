@@ -10,6 +10,7 @@ import path from 'node:path';
 import http from 'node:http';
 import { fileURLToPath } from 'node:url';
 import { WebSocketServer } from 'ws';
+import { roadData } from './road.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(HERE, '..', '..');
@@ -110,6 +111,7 @@ export function startServer(opts = {}) {
     send(res, 200, fs.readFileSync(p, 'utf8'), p.endsWith('.jsonl') ? 'application/x-ndjson' : 'application/json');
   };
 
+  let roadCache = null;
   const httpServer = http.createServer((req, res) => {
     const url = new URL(req.url, `http://${host}`);
     res.allowOrigin = origins.includes(req.headers.origin) ? req.headers.origin : origins[0];
@@ -122,6 +124,12 @@ export function startServer(opts = {}) {
       const all = listRuns().filter((r) => r.has_metrics)
         .map((r) => ({ dir: r.id, source: r.source, bench: r.bench, ...readJson(runPath(r.id, 'metrics.json')) }));
       return send(res, 200, { runs: all });
+    }
+    // ROAD scene (additive): the union of every recovered function, and the road summary built from it
+    if (url.pathname === '/union') return sendFile(res, path.join(repoDir, 'crew', 'exports', 'union', 'UNION.json'));
+    if (url.pathname === '/road') {
+      if (!roadCache || Date.now() - roadCache.at > 5000) roadCache = { at: Date.now(), body: roadData({ repoDir, runsDir, exportsDir }) };
+      return send(res, 200, roadCache.body);
     }
     if (parts[0] === 'runs' && parts.length === 3) {
       const id = parts[1] === 'live' ? liveRunId() : safeRun(parts[1]);

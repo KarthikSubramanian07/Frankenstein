@@ -14,6 +14,7 @@ import { TimeTrialScene } from './scenes/timetrial.ts';
 import { EndingScene } from './scenes/ending.ts';
 import { LogScene } from './scenes/log.ts';
 import { CardScene } from './scenes/card.ts';
+import { RoadScene } from './road.ts';
 import { Director } from './director.ts';
 import type { Source } from './director.ts';
 
@@ -45,6 +46,8 @@ const ending = legacy ? new EndingScene(HTTP, reduced) : null;
 const list: Scene[] = legacy
   ? [new TitleScene(reduced), split!, new VersusScene(), new TimeTrialScene(HTTP), ending!]
   : [log, card];
+const road = new RoadScene(HTTP); // ROAD (key 6): the road to 100%, see road.ts
+list.push(road);
 for (const s of list) { scenes[s.id] = s; stageEl.appendChild(s.el); }
 // sponsors are one line on Rebuild (minimal redesign); the judgment rail's reducer still runs (judgment.ts)
 stageEl.append(fxCanvas, flashEl, markEl);
@@ -123,6 +126,7 @@ function onEffects(list: Effect[]) {
 }
 
 function handle(e: Ev) {
+  road.ingest(e, backlogLeft <= 0 && e.type !== 'stage.hello');
   const effects = apply(ctx.state, e);
   if (e.type === 'stage.hello') {
     backlogLeft = Number(e.backlog) || 0;
@@ -194,6 +198,7 @@ addEventListener('keydown', (k) => {
   unlockAudio();
   if (director?.key(k.key)) { k.preventDefault(); dirty = true; return; }
   if (scenes[current]?.key?.(ctx, k.key)) { dirty = true; return; }
+  if (k.key === '6') { const to = current === 'road' ? (legacy ? 'split' : 'log') : 'road'; if (legacy) go(to); else show(to); return; }
   if (!legacy) { if (k.key === ' ') { k.preventDefault(); show(current === 'card' ? 'log' : 'card'); } return; }
   if (KEYS[k.key]) go(KEYS[k.key]);
   else if (k.key === ' ' && current === 'title') go('split');
