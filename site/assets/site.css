@@ -75,6 +75,8 @@ code{font-family:var(--mono);font-size:.84em;background:rgba(29,32,38,.07);paddi
 .logo:hover .logo-bolt{transform:rotate(-14deg) scale(1.18)}
 .nav-links{display:flex;gap:2px;list-style:none;margin:0 auto;padding:0}
 .nav-links a{display:block;text-decoration:none;font:500 .93rem/1 var(--sans);color:var(--ink-2);padding:10px 14px;border-radius:999px;transition:background-color .2s}
+.nav-links a{white-space:nowrap}
+@media (min-width:921px) and (max-width:1120px){.nav-links a{padding:10px 9px;font-size:.88rem}}
 .nav-links a:hover{background:rgba(29,32,38,.06);color:var(--ink)}
 
 
