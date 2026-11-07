@@ -24,26 +24,29 @@ export function regionRect(r: Region) {
   return { x: FRAME.x + r.x * FRAME.scale, y: FRAME.y + r.y * FRAME.scale, w: r.w * FRAME.scale, h: r.h * FRAME.scale };
 }
 
-/** One line of what SubQ Snap (or Gemini, the second lab) just decided, in plain words. */
-export function snapLine(d: SnapDecision, s: State): { tag: string; text: string; cls: string } {
+/** A proof-chain line: who (tag), what they did in plain words (big), the evidence (small). */
+export type ChainLine = { tag: string; big: string; small: string; cls: string };
+
+/** What SubQ Snap (or Gemini, the second lab) just decided, in plain words. */
+export function snapLine(d: SnapDecision, s: State): ChainLine {
   const p = d.p ?? {};
-  const conf = typeof p.confidence === 'number' ? ` ${Math.round(p.confidence * 100)}%` : '';
+  const sure = typeof p.confidence === 'number' ? `${Math.round(p.confidence * 100)}% sure` : '';
   switch (d.op) {
     case 'review': {
-      const lab = String(p.reviewer ?? 'snap');
-      return { tag: lab === 'gemini' ? 'GEMINI' : 'SNAP', text: `${pc(p.fakematch_p)} CHANCE OF FAKE`, cls: lab === 'gemini' ? 'gem' : 'snap' };
+      const gem = String(p.reviewer ?? 'snap') === 'gemini';
+      return { tag: gem ? 'GEMINI' : 'SNAP', big: gem ? 'SECOND OPINION' : 'CHECKED IT', cls: gem ? 'gem' : 'snap',
+        small: `fake odds ${pc(p.fakematch_p)} · copied odds ${pc(p.recital_p)}` };
     }
     case 'decide_next': {
       const a = String(p.action ?? 'keep');
-      const text = a === 'escalate' ? `ESCALATE TO ${short(s.escalationModel ?? 'muse-wonder-1.0')}${conf}`
-        : a === 'abandon' ? `ABANDON IT${conf}` : `KEEP DIGGING${conf}`;
-      return { tag: 'SNAP', text, cls: 'snap hold' };
+      const big = a === 'escalate' ? `SENT IT TO ${short(s.escalationModel ?? 'muse-wonder-1.0')}` : a === 'abandon' ? 'GAVE UP ON IT' : 'KEEP DIGGING';
+      return { tag: 'SNAP', big, small: [sure, d.fn ? `${d.fn}, after try ${p.attempt ?? '?'}` : ''].filter(Boolean).join(' · '), cls: 'snap' };
     }
-    case 'triage': return { tag: 'SNAP', text: `READ ${p.functions ?? '?'} FUNCTIONS AT ONCE`, cls: 'snap hold' };
-    case 'director': return { tag: 'SNAP', text: `PLAY PICKED ${d.fn ?? (p.fns?.[0] ?? '?')}`, cls: 'snap hold' };
-    case 'eyes': return { tag: 'SNAP', text: 'CHECKED THE GAME FRAMES', cls: 'snap hold' };
-    case 'route': return { tag: 'SNAP', text: 'ROUTED A PLAIN-WORDS ASK', cls: 'snap hold' };
-    default: return { tag: 'SNAP', text: d.op.toUpperCase(), cls: 'snap' };
+    case 'triage': return { tag: 'SNAP', big: 'PICKED THE ORDER', small: `read ${p.functions ?? '?'} functions at once`, cls: 'snap' };
+    case 'director': return { tag: 'SNAP', big: 'PICKED FROM PLAY', small: `next up: ${d.fn ?? (p.fns?.[0] ?? '?')}${sure ? ` · ${sure}` : ''}`, cls: 'snap' };
+    case 'eyes': return { tag: 'SNAP', big: 'WATCHED THE GAME', small: 'compared two frames', cls: 'snap' };
+    case 'route': return { tag: 'SNAP', big: 'ROUTED A REQUEST', small: 'plain words to functions', cls: 'snap' };
+    default: return { tag: 'SNAP', big: d.op.toUpperCase(), small: '', cls: 'snap' };
   }
 }
 
@@ -84,11 +87,11 @@ export class SplitScene implements Scene {
           <div class="stamp"></div>
         </div>
         <div class="chain">
-          <div class="pl muse"><b>MUSE</b><span data-k="pMuse">WAITING FOR A DIGGER</span></div>
-          <div class="pl snap"><b data-k="pSnapTag">SNAP</b><span data-k="pSnap">WAITING FOR A DECISION</span></div>
-          <div class="pl proof"><b>PROOF</b><span data-k="pProof">WAITING FOR THE COMPILER</span></div>
+          <div class="pl muse" data-k="lMuse"><b>MUSE</b><span class="big"></span><span class="small"></span></div>
+          <div class="pl snap" data-k="lSnap"><b>SNAP</b><span class="big"></span><span class="small"></span></div>
+          <div class="pl proof" data-k="lProof"><b>PROOF</b><span class="big"></span><span class="small"></span></div>
         </div>
-        <div class="keyline"><em>? = our guess.</em> Everything else is proved.</div>
+        <div class="legend"><span class="sw ok"></span>PROVED<span class="sw q">?</span>OUR GUESS</div>
         <div class="pip"></div>
       </div>
       <div class="ticker">${tickerHtml()}</div>`;
@@ -104,7 +107,7 @@ export class SplitScene implements Scene {
   render(ctx: Ctx) {
     const s = ctx.state;
     renderHud(this.el, s);
-    renderRows(this.rowsEl, ctx, 6, this.memo, null, writer);
+    renderRows(this.rowsEl, ctx, 4, this.memo, null, writer);
     this.renderCode(ctx);
     this.renderProof(ctx);
     this.total = gameTotal(ctx);
@@ -180,7 +183,9 @@ export class SplitScene implements Scene {
   private renderProof(ctx: Ctx) {
     const s = ctx.state;
     const a = s.lastAttempt;
-    const muse = a ? `${short(a.model ?? s.model)} WROTE ${a.fn}` : 'WAITING FOR A DIGGER';
+    const muse: ChainLine = a
+      ? { tag: 'MUSE', big: `${short(a.model ?? s.model)} WROTE IT`, small: `${a.fn} · try ${a.attempt} · ${a.actor}`, cls: 'muse' }
+      : { tag: 'MUSE', big: 'WAITING', small: 'for a digger to write C', cls: 'muse' };
     // steering decisions stay up for a moment; the per-match fake gate replaces them after that
     const latest = s.snap[s.snap.length - 1] ?? null;
     const now = performance.now();
@@ -188,31 +193,27 @@ export class SplitScene implements Scene {
       const holding = this.snapShown && this.snapShown.op !== 'review' && now - this.snapAt < HOLD_MS;
       if (!holding || latest.op !== 'review') { this.snapShown = latest; this.snapAt = now; }
     }
-    const sn = this.snapShown ? snapLine(this.snapShown, s) : { tag: 'SNAP', text: s.snapOn ? 'WAITING FOR A DECISION' : 'OFF IN THIS RUN', cls: 'snap' };
+    const sn: ChainLine = this.snapShown ? snapLine(this.snapShown, s)
+      : { tag: 'SNAP', big: s.snapOn ? 'WAITING' : 'OFF', small: s.snapOn ? 'for a decision' : 'not used in this run', cls: 'snap' };
     const v = s.lastVerdict;
-    const proof = !v ? 'WAITING FOR THE COMPILER'
-      : v.claim_was_true === false ? `LIE CAUGHT · ${v.match_pct.toFixed(1)}%`
-      : v.status === 'MATCH' ? '100% BYTE-IDENTICAL'
-      : `${STATUS_TEXT[v.status] ?? v.status}${v.status === 'PARTIAL' ? ` ${v.match_pct.toFixed(1)}%` : ''} · OUT`;
-    const key = `${muse}|${sn.tag}|${sn.text}|${proof}`;
+    const proof: ChainLine = !v ? { tag: 'PROOF', big: 'WAITING', small: 'for the compiler', cls: 'proof' }
+      : v.claim_was_true === false ? { tag: 'PROOF', big: 'LIE CAUGHT', small: `claimed a match, only ${v.match_pct.toFixed(1)}% of bytes agree`, cls: 'proof bad' }
+      : v.status === 'MATCH' ? { tag: 'PROOF', big: 'BYTE-IDENTICAL', small: `the compiler rebuilt ${v.fn} exactly`, cls: 'proof' }
+      : v.status === 'PARTIAL' ? { tag: 'PROOF', big: 'NOT A MATCH', small: `${v.match_pct.toFixed(1)}% of bytes agree · rejected`, cls: 'proof bad' }
+      : { tag: 'PROOF', big: 'REJECTED', small: v.status === 'LINT_FAIL' ? 'broke the no-cheating rules' : `${STATUS_TEXT[v.status] ?? v.status}`, cls: 'proof bad' };
+    const lines: [string, ChainLine][] = [['lMuse', muse], ['lSnap', sn], ['lProof', proof]];
+    const key = lines.map(([, l]) => `${l.tag}/${l.big}/${l.small}`).join('|');
     if (key === this.proofKey) return;
     const old = this.proofKey.split('|');
     this.proofKey = key;
-    setText(this.el, 'pMuse', muse);
-    setText(this.el, 'pSnapTag', sn.tag);
-    setText(this.el, 'pSnap', sn.text);
-    setText(this.el, 'pProof', proof);
-    const line = (k: string) => this.el.querySelector(`[data-k="${k}"]`)!.parentElement as HTMLElement;
-    line('pSnap').className = `pl ${sn.cls}`;
-    line('pProof').className = `pl proof${v && (v.status !== 'MATCH' || v.claim_was_true === false) ? ' bad' : ''}`;
-    // a line that changed blinks once
-    const changed = [old[0] !== muse, old[2] !== sn.text, old[3] !== proof];
-    if (!ctx.reduced) (['pMuse', 'pSnap', 'pProof'] as const).forEach((k, i) => {
-      if (!changed[i]) return;
-      const el = line(k);
-      el.classList.remove('tick');
-      void el.offsetWidth;
-      el.classList.add('tick');
+    lines.forEach(([k, l], i) => {
+      const el = this.el.querySelector(`[data-k="${k}"]`) as HTMLElement;
+      el.className = `pl ${l.cls}`;
+      el.querySelector('b')!.textContent = l.tag;
+      el.querySelector('.big')!.textContent = l.big;
+      el.querySelector('.small')!.textContent = l.small;
+      // a line that changed blinks once
+      if (!ctx.reduced && old[i] !== `${l.tag}/${l.big}/${l.small}`) { el.classList.remove('tick'); void el.offsetWidth; el.classList.add('tick'); }
     });
   }
 
@@ -234,8 +235,10 @@ export class SplitScene implements Scene {
     const target = Math.min(t.text.length, Math.floor(((performance.now() - t.t0) / 1000) * t.cps));
     if (target !== t.shown || !this.pre.childNodes.length) {
       t.shown = Math.max(t.shown, target);
-      const lines = t.text.slice(0, t.shown).split('\n').slice(-7).join('\n');
-      this.pre.innerHTML = `<span>${esc(lines)}${t.shown < t.text.length ? '<i class="caret"></i>' : ''}</span>`;
+      // a short snippet: the newest four lines, each cut cleanly at the window edge
+      const lines = t.text.slice(0, t.shown).split('\n').filter((l) => l.trim()).slice(-4);
+      const caret = t.shown < t.text.length ? '<i class="caret"></i>' : '';
+      this.pre.innerHTML = lines.map((l, i) => `<div>${esc(l)}${i === lines.length - 1 ? caret : ''}</div>`).join('');
     }
   }
 

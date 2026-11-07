@@ -127,9 +127,9 @@ export class Mosaic {
       const n = sub.functions.filter((f) => s.matchedSet.has(f)).length;
       const label = `${band.label} ${n}/${sub.functions.length}`;
       const tw = g.measureText(label).width;
-      g.fillStyle = 'rgba(5,5,26,0.9)';
+      g.fillStyle = '#0B0B2E';
       g.fillRect(band.x * S, band.y * S, tw + 20, 44);
-      g.fillStyle = n ? '#7CF2C8' : '#c9c6e8';
+      g.fillStyle = n ? '#7CF2C8' : '#F4F1FF';
       g.fillText(label, band.x * S + 10, band.y * S + 9);
     }
   }

@@ -397,3 +397,28 @@ body.obs .split .game-frame .ph { display: none; }
 /* director cue: beat number for the presenter, shown briefly */
 #cue { position: absolute; left: 24px; bottom: 76px; z-index: 60; font: 28px/1 var(--hud); color: var(--midnight); background: var(--guess); padding: 10px 12px; display: none; }
 #cue.on { display: block; }
+
+/* ---------- SPLIT v2: one focal point (the map + the hero count), the proof chain as the loudest thing on the right ---------- */
+.split .hud { font-size: 32px; gap: 64px; }
+.split .hud .k { color: #b9b4e0; }
+.split .hud .lies .v { font-size: 40px; }
+.stage[data-scene='split'] #mark { top: 8px; }
+.split .rows { margin-top: 14px; height: 232px; }
+.split .codewin { margin-top: 18px; height: 204px; }
+.split .codewin pre { padding: 12px 18px; }
+.split .codewin pre div { white-space: pre; overflow: hidden; text-overflow: ellipsis; height: 32px; }
+.split .stamp { right: 18px; bottom: 14px; font-size: 36px; padding: 14px 16px; }
+.split .pip { top: 326px; height: 204px; }
+.split .pip .ev, .split .pip .bars { display: none; }
+.split .chain { top: 552px; gap: 12px; }
+.split .pl { grid-template-columns: 182px minmax(0,1fr); grid-template-rows: auto auto; height: auto; row-gap: 6px; overflow: visible; }
+.split .pl b { grid-row: 1 / span 2; align-self: stretch; display: flex; align-items: center; font-size: 28px; padding: 0 0 0 16px; border-left-width: 10px; }
+.split .pl .big { font: 34px/1.1 var(--hud); color: var(--ink); white-space: nowrap; overflow: hidden; letter-spacing: 0; }
+.split .pl .small { font: 36px/1 var(--code); color: #c9c6e8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 1px; }
+.split .pl.proof .big { color: var(--mint); font-size: 40px; }
+.split .pl.proof.bad .big { color: var(--alarm); }
+.split .pl.tick .big { animation: plpulse 0.5s steps(2); }
+.split .legend { position: absolute; left: 36px; right: 28px; top: 888px; display: flex; align-items: center; gap: 18px; font-size: 28px; color: var(--ink); white-space: nowrap; }
+.split .legend .sw { display: inline-grid; place-items: center; width: 40px; height: 40px; font-size: 28px; color: var(--midnight); }
+.split .legend .sw.ok { background: var(--mint); }
+.split .legend .sw.q { background: var(--guess); margin-left: 34px; }
