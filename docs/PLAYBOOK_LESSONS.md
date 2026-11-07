@@ -9,7 +9,7 @@ A 4-minute read. It distills the event-day gameplan (written 10:35 today) and th
 - Fetch.ai also requires registering through the AIE Summit ASI:One Submission Agent, in addition to the form. Their track ("Agents That Prove Their Work") needs an Agentverse agent with the Agent Chat Protocol, discoverable in ASI:One, multi-agent orchestration, and the main workflow done inside an ASI:One chat.
 - Round one, 17:00 to 18:45: about 3 minutes of live demo plus 1 to 2 minutes of Q&A, in a judging room on one laptop. Weights: Technical Demo 35%, Implementation Difficulty 30%, Impact Potential 20%, Creativity 15%. Technical Demo plus Implementation Difficulty is 65% of the score.
 - Round two, 19:00 to 20:00: the top six on stage, same format, criteria weighted equally. Winners at 20:15.
-- Prizes: Overall $3,000 / $2,000 / $1,000 plus credits. Best Use of Meta Model API $5,000. Best Use of Fetch.ai $2,500 for 1st and $2,500 for 2nd. MongoDB, Gemini and Subquadratic give credits only.
+- Prizes (official guide, docs/EVENT_GUIDE.md, 14:50): Overall $3,000 / $2,000 / $1,000 plus credits. Best Use of Meta Model API $5,000. Best Use of Fetch.ai $2,500 for 1st and $2,500 for 2nd. **Best Use of Subquadratic $5,000 + 5,000 credits for 1st, $1,000 + 1,000 for 2nd.** MongoDB and Gemini give credits only (inside the Overall prizes).
 - Last edition (same organizer, June 2026): all three placed projects built the theme literally and showed a measured improvement on screen. The winner showed a success curve climbing; our curve is attempts per match falling as lessons are adopted.
 
 ## 2. Rules that can disqualify us, and how we comply
