@@ -40,19 +40,29 @@ class Library:
         self.path = path or cfg.runs_dir / "_library" / "idioms.json"
         self._lock = threading.Lock()
         self.coll = None
+        self.collection_name = None
         if cfg.mongodb_uri:
             try:
                 from pymongo import MongoClient
 
-                self.coll = MongoClient(cfg.mongodb_uri, serverSelectionTimeoutMS=4000)[cfg.mongodb_db]["idioms"]
+                # one Atlas collection per library, named after its file, so a frozen copy stays frozen and
+                # experiments never share state ("_doom_lib_v2_frozen.json" -> "idioms__doom_lib_v2_frozen")
+                name = "idioms_" + re.sub(r"[^A-Za-z0-9_]", "_", self.path.stem)[:60]
+                self.collection_name = name
+                self.coll = MongoClient(cfg.mongodb_uri, serverSelectionTimeoutMS=4000)[cfg.mongodb_db][name]
                 self.coll.create_index([("title", "text"), ("applies_when", "text"), ("do", "text")])
+                self.coll.create_index("idiom_id", unique=True)
+                if self.coll.estimated_document_count() == 0 and self.path.exists():
+                    seed = json.loads(self.path.read_text())  # first use: seed Atlas from the library file
+                    if seed:
+                        self.coll.insert_many([dict(it) for it in seed], ordered=False)
             except Exception:
                 self.coll = None
         self.items = self._load()
 
     @property
     def backend(self) -> str:
-        return "mongodb" if self.coll is not None else "local-json"
+        return f"mongodb-atlas:{self.collection_name}" if self.coll is not None else "local-json"
 
     def _load(self) -> list[dict]:
         if self.coll is not None:
@@ -62,9 +72,9 @@ class Library:
         return []
 
     def _save(self) -> None:
-        if self.coll is None:
-            self.path.parent.mkdir(parents=True, exist_ok=True)
-            self.path.write_text(json.dumps(self.items, indent=2))
+        # the file is always written (offline mirror); Atlas is updated per item where items change
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self.path.write_text(json.dumps([{k: v for k, v in it.items() if k != "_id"} for it in self.items], indent=2))
 
     ADOPT_MIN, RETIRE_MIN, RETIRE_MARGIN = 3, 4, 0.15
 

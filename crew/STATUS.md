@@ -15,7 +15,7 @@ Updated 2026-11-07 12:45. Numbers come from run files and `DECISIONS.md`.
 - **Claims:** claim-first submissions, so the Checker can catch real overconfidence.
 - **ASI:One:** the jobs API with plain words, live jobs and an evidence block.
 - **Exports:** real runs are committed under `crew/exports/`.
-- **MongoDB:** the Atlas sink is ready and turns on when `MONGODB_URI` is set.
+- **MongoDB Atlas:** live. Per-library idiom collections, plus every event and run mirrored for queries.
 - **Tests:** 132 offline tests and green CI.
 
 ## In progress
@@ -26,7 +26,6 @@ Updated 2026-11-07 12:45. Numbers come from run files and `DECISIONS.md`.
 ## Blocked
 
 - Cartographer: SubQ `subq-preview` needs early access from the Subquadratic table.
-- MongoDB Atlas: needs a `MONGODB_URI`.
 
 ## Next
 
