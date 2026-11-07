@@ -1,4 +1,6 @@
-/* fn_08004D4C: salvaged MATCH; Checker now allows GBA MMIO (0x0400…) as hardware, not a missing data_ id. */
+/* fn_08004D4C: salvaged by the Frankenstein crew from run doom_align_off, attempt 5.
+   Observed: compiles to identical bytes (fresh referee MATCH, Checker accepted).
+   Inferred: nothing in this file is a claim about original names. */
 
 extern short *data_030064C4;
 extern int fn_0801D568(int);

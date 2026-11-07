@@ -1,11 +1,11 @@
 {
   "v": 1,
-  "functions": 173,
+  "functions": 175,
   "of": 568,
-  "pct_functions": 30.5,
-  "bytes": 6914,
+  "pct_functions": 30.8,
+  "bytes": 7102,
   "of_bytes": 141774,
-  "pct_bytes": 4.88,
+  "pct_bytes": 5.01,
   "reverified_by_referee": true,
   "rejected_on_reverify": [],
   "target_rom_sha1": "d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2",
@@ -238,8 +238,8 @@
       "fn": "fn_08004D4C",
       "size": 92,
       "split": "heldout",
-      "from": "crew/exports/salvage04",
-      "sha1": "3553b4f76bead6283a8a9f60e4beab418cb08d30"
+      "from": "runs/salvage05",
+      "sha1": "22204464d497e6185ef2416f4e9325cff8a05a6d"
     },
     {
       "fn": "fn_08004DA8",
@@ -252,15 +252,15 @@
       "fn": "fn_08004E14",
       "size": 28,
       "split": "train",
-      "from": "crew/exports/salvage04",
-      "sha1": "38afc3d12764b52eb075cb42b659e5f8b613dd3a"
+      "from": "runs/salvage05",
+      "sha1": "8cd04786f2e6756fcda7225ed1571d359081ef3d"
     },
     {
       "fn": "fn_08004E30",
       "size": 28,
       "split": "train",
-      "from": "crew/exports/salvage04",
-      "sha1": "da5909ccf61b86f9d1c5785ee129264c883bbaf7"
+      "from": "runs/salvage05",
+      "sha1": "459b2aa138601afabccd9c984641a1a0ba796b65"
     },
     {
       "fn": "fn_08004E4C",
@@ -513,6 +513,13 @@
       "split": "train",
       "from": "crew/exports/doom_sweep1",
       "sha1": "42b7635345c81a656f1dc2f87370e8701a061914"
+    },
+    {
+      "fn": "fn_08006F70",
+      "size": 80,
+      "split": "train",
+      "from": "runs/doom_sweep3",
+      "sha1": "6ca4a0bf4c5490512b503c0e413768f8f889603b"
     },
     {
       "fn": "fn_08006FC0",
@@ -928,6 +935,13 @@
       "sha1": "7fae9b690431909174a79a9d0490361d64c0b797"
     },
     {
+      "fn": "fn_080145A0",
+      "size": 108,
+      "split": "heldout",
+      "from": "runs/doom_sweep3",
+      "sha1": "b3e810a8401112c45ccb8bf37f9f7e5b429b512e"
+    },
+    {
       "fn": "fn_080153C0",
       "size": 36,
       "split": "train",
@@ -1071,7 +1085,7 @@
       "fn": "fn_08019B94",
       "size": 28,
       "split": "train",
-      "from": "crew/exports/salvage03",
+      "from": "runs/salvage05",
       "sha1": "6dd5e6de454260c7588aaf305a1a53bf41c0cf05"
     },
     {
@@ -1113,8 +1127,8 @@
       "fn": "fn_0801B1F8",
       "size": 80,
       "split": "train",
-      "from": "crew/exports/salvage04",
-      "sha1": "eab74a51caaacd3118692cfebf0eedfcaa4335c4"
+      "from": "runs/salvage05",
+      "sha1": "78817589ca4ff547f674f361431f8a93412cfb62"
     },
     {
       "fn": "fn_0801B724",
@@ -1176,7 +1190,7 @@
       "fn": "fn_0801C924",
       "size": 40,
       "split": "train",
-      "from": "crew/exports/salvage03",
+      "from": "runs/salvage05",
       "sha1": "cffac5a8bee99b8fcaba37c660fd06ce163a238b"
     },
     {
@@ -1218,7 +1232,7 @@
       "fn": "fn_0801D780",
       "size": 34,
       "split": "train",
-      "from": "crew/exports/salvage03",
+      "from": "runs/salvage05",
       "sha1": "78876fe08fd1e520fb1cefb9c5eb676578229237"
     }
   ]
