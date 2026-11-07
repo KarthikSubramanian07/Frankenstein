@@ -14,7 +14,7 @@ The number in [brackets] is the 16:00 frozen count. Read the number Lane B posts
 | 0:20 | "Agents lie. / Twenty-four times today they claimed a match that wasn't. / The referee caught every one." | 24 lies caught · 30 fakes rejected · 0 let through. Agents lie. Compilers don't. | A real false claim, rejected at one instruction |
 | 0:28 | "[175] of Doom's 568 functions are back. / Rebuilt into the game, it's identical to the original, byte for byte." | [175] of 568 functions, proven. SHA-1 identical. | The counter, two identical checksums |
 | 0:36 | "Stuck at ninety percent? The next run starts from its best try." | Run over run: a 90% near-miss became a MATCH. (No held-out gain yet; we don't claim one.) | fn_0801ABC0: 90% in run 1, MATCH in the warm-start run (DECISIONS 14:03) |
-| 0:40 | "That's what source buys you. / Change the game. Run it anywhere. Same answers." | One line of recovered C changed. 20,000 of 20,000 identical in a browser. | God mode at 200%; the equivalence page |
+| 0:40 | "That's what source buys you. / Change the game. Run the same code in a browser, and get the same answers." | One line of recovered C changed. 20,000 of 20,000 identical in a browser. | God mode at 200%; the equivalence page |
 | 0:46 | "Muse writes it. SubQ Snap judges it. The compiler proves it. / And anyone can ask for it in ASI:One." | Muse writes · Snap judges · the compiler proves · ASI:One asks | The four partners, each doing its job |
 | 0:53 | "Frankenstein. / Lost games, rebuilt and proven." | Built today / Not ours (at least 3 s) | Credits, tryfrankenstein.pages.dev |
 
