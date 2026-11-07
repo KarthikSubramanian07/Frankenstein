@@ -101,7 +101,7 @@ Every reply keeps what the compiler proved (Observed) apart from our guesses (In
 
 | Built today (Nov 7, 2026, after 10:45 PT) | Not ours |
 |---|---|
-| Everything in `contracts/`, `lab/`, `crew/`, `stage/`, `creature/`, `site/` | **Doom** by id Software; **prBoom** by its authors; **GBADoom** by doomhack (GPL-2.0-or-later), used only as the hidden answer key and never committed |
+| Everything in `contracts/`, `lab/`, `crew/`, `stage/`, `creature/`, `site/` | **Doom** by id Software; **prBoom** by its authors; **GBADoom** by doomhack (GPL-2.0-or-later), used as the hidden answer key; its source is never committed. `lab/out/*.gba` are GBADoom builds with 11 edits of ours, not our work (written offer of the edits in [`lab/out/GPL_NOTICE.md`](lab/out/GPL_NOTICE.md)) |
 | The build and split, referee and linter, agents, Stage scenes, emulator overlay, phone page and site | Muse Spark and Muse Wonder (Meta), SubQ Snap (Subquadratic), ASI:One and Agentverse (Fetch.ai), MongoDB Atlas, Gemini (Google), mGBA, devkitARM, Google Fonts |
 | | **Prior work:** the planning kit in `docs/` (including `docs/design_system.html`, a visual reference only) and the event clock `tools/hackclock.py` |
 
