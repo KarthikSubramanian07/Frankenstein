@@ -1,5 +1,7 @@
 // Pure run state, rebuilt from the event stream. No DOM here so tests can run it under node.
 // Every number the scenes show comes from this state, which comes only from events.
+import { emptyJudge, judge } from './judgment.ts';
+import type { Judge, Line } from './judgment.ts';
 
 export type Ev = {
   v?: number;
@@ -75,6 +77,7 @@ export type State = {
   pendingReviews: Review[]; // reviews since the last fn.matched
   lastChecked: Checked | null; // newest claim the Checker re-ran
   modelsUsed: Record<string, number>; // attempts per Muse model
+  judge: Judge; // the judgment rail: sponsor lines (judgment.ts)
 };
 
 export type Effect =
@@ -86,6 +89,7 @@ export type Effect =
   | { kind: 'swap'; pct: number }
   | { kind: 'build' }
   | { kind: 'snap'; d: SnapDecision }
+  | { kind: 'judgment'; line: Line }
   | { kind: 'reset' };
 
 export function emptyState(): State {
@@ -96,6 +100,7 @@ export function emptyState(): State {
     narration: [], idiomsLearned: 0, pctAgentCode: null, swaps: 0, build: null, patch: null, phone: null,
     tick: null, finished: null, ended: false, events: 0,
     snap: [], snapCount: 0, reviews: [], pendingReviews: [], lastChecked: null, modelsUsed: {},
+    judge: emptyJudge(),
   };
 }
 
@@ -242,6 +247,7 @@ export function apply(s: State, e: Ev): Effect[] {
     case 'phone.published': s.phone = p; break;
     case 'run.finished': s.finished = p; break;
   }
+  for (const line of judge(s, e)) fx.push({ kind: 'judgment', line });
   return fx;
 }
 
