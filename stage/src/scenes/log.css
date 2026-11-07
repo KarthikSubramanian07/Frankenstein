@@ -115,3 +115,9 @@ body.obs .lg-game .ttl { display: none; }
 .lg-raw::-webkit-scrollbar { width: 6px; }
 .lg-raw::-webkit-scrollbar-thumb { background: #2a2a2a; }
 .lg-raw.back { -webkit-mask-image: none; mask-image: none; }
+/* a bit brighter for the room; PROVED and REJECTED stay the brightest */
+.lg-raw li { color: #9a9a9a; }
+.lg-raw li .t { color: #7a7a7a; }
+.lg-raw li .w { color: #a8a8a8; }
+.lg-raw li .f { color: #8c8c8c; }
+.lg-raw li.proved, .lg-raw li.proved .w, .lg-raw li.proved .f, .lg-raw li.rejected .w, .lg-raw li.rejected .f { color: #f2f2f2; }
