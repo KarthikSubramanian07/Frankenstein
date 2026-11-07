@@ -11,7 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 DIST = ROOT / 'dist'
 ASSETS = (
-    'index.html', 'style.css', 'player.js', 'manifest.webmanifest',
+    'index.html', 'style.css', 'player.js', 'controls.js', 'manifest.webmanifest',
     'DISTRIBUTION.md', 'THIRD_PARTY.md',
     'licenses/MPL-2.0.txt', 'licenses/qrcode-MIT.txt', 'licenses/inih-BSD-3-Clause.txt',
     'icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-512.png',
@@ -28,7 +28,7 @@ HEADERS = '''/*
 # This judging-window variant keeps the installable shell while never caching the
 # ROM/status. Withdrawing a public ROM must not leave our SW serving it offline.
 SERVICE_WORKER = '''const CACHE = 'player2-judging-v1';
-const SHELL = ['./', 'index.html', 'style.css', 'player.js', 'manifest.webmanifest',
+const SHELL = ['./', 'index.html', 'style.css', 'player.js', 'controls.js', 'manifest.webmanifest',
   'icons/icon-192.png', 'icons/icon-512.png', 'core/mgba.js', 'core/mgba.wasm', 'core/qrcode.mjs'];
 self.addEventListener('install', event => event.waitUntil((async () => {
   const cache = await caches.open(CACHE);

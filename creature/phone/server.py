@@ -11,7 +11,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parent
-ASSETS = ('/index.html', '/style.css', '/player.js', '/sw.js', '/manifest.webmanifest', '/DISTRIBUTION.md',
+ASSETS = ('/index.html', '/style.css', '/player.js', '/controls.js', '/sw.js', '/manifest.webmanifest', '/DISTRIBUTION.md',
           '/icons/icon-192.png', '/icons/icon-512.png', '/icons/maskable-512.png', '/icons/apple-touch-icon.png',
           '/core/mgba.js', '/core/mgba.wasm', '/core/qrcode.mjs')
 TYPES = {'.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8',
