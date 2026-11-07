@@ -1,13 +1,21 @@
 // Scene 2: Versus. Every false claim: Digger vs Referee, the exact instruction that lied, K.O.
+// With no lie in the run, it shows the newest real claim the Checker re-ran and upheld, with the
+// referee's verdict and the fake gate (SubQ Snap, Gemini). Never a staged lie.
 import type { Ctx, Scene } from '../types.ts';
 import { h, esc, diffIns } from '../types.ts';
-import type { Effect, FalseClaim } from '../state.ts';
+import type { Checked, Effect, FalseClaim, Review, State } from '../state.ts';
+import { modelName } from '../state.ts';
 import { reject } from '../audio.ts';
+
+const pc = (x: number | null) => (x == null ? '--' : `${(x * 100).toFixed(1)}%`);
+const LAB: Record<string, string> = { snap: 'SUBQ SNAP', gemini: 'GEMINI' };
 
 export class VersusScene implements Scene {
   id = 'versus' as const;
   el = h('section', 'scene versus idle');
   private shown: FalseClaim | null = null;
+  private checked: Checked | null = null;
+  private checkedAt = 0;
   private koTimer = 0;
 
   constructor() {
@@ -34,6 +42,7 @@ export class VersusScene implements Scene {
     const last = ctx.state.falseClaims[ctx.state.falseClaims.length - 1];
     if (last && last !== this.shown) this.play(ctx, last);
     else if (this.shown) this.ko(ctx, false);
+    else if (ctx.state.lastChecked) this.upheld(ctx, ctx.state.lastChecked);
   }
 
   render(ctx: Ctx) {
@@ -42,20 +51,51 @@ export class VersusScene implements Scene {
     const t = `LIES CAUGHT SO FAR: ${s.falseClaims.length}`;
     if (w.textContent !== t) w.textContent = t;
     if (!this.shown && s.falseClaims.length && ctx.current() === 'versus') this.play(ctx, s.falseClaims[s.falseClaims.length - 1]);
+    // no lies: keep showing real upheld claims, refreshed at most every 4 s so it can be read
+    else if (!this.shown && s.lastChecked && ctx.current() === 'versus'
+      && (this.checked !== s.lastChecked || this.checked.reviews !== s.lastChecked.reviews)
+      && (performance.now() - this.checkedAt > 4000 || !this.checked)) this.upheld(ctx, s.lastChecked);
     const tl = this.el.querySelector('[data-k="tally"]')!;
-    const tt = this.shown ? `LIE ${this.shown.index} OF ${s.falseClaims.length} CAUGHT · ${s.claimsMade} CLAIMS CHECKED` : '';
+    const tt = this.shown ? `LIE ${this.shown.index} OF ${s.falseClaims.length} CAUGHT · ${s.claimsMade} CLAIMS CHECKED`
+      : this.checked ? `${s.claimsMade} CLAIMS RE-CHECKED · ${s.falseClaims.length} LIES` : '';
     if (tl.textContent !== tt) tl.textContent = tt;
   }
 
   effect(ctx: Ctx, e: Effect) {
     if (e.kind === 'falseClaim' && ctx.current() === 'versus') this.play(ctx, e.c);
-    if (e.kind === 'reset') { this.shown = null; this.el.classList.add('idle'); }
+    if (e.kind === 'reset') { this.shown = null; this.checked = null; this.el.classList.add('idle'); this.el.classList.remove('ok'); }
+  }
+
+  /** a true claim, checked three ways: Muse wrote it, the fake gate screened it, the compiler proved it */
+  upheld(ctx: Ctx, c: Checked) {
+    this.checked = c;
+    this.checkedAt = performance.now();
+    this.el.classList.remove('idle');
+    this.el.classList.add('ok');
+    const s = ctx.state;
+    const q = (k: string) => this.el.querySelector(`[data-k="${k}"]`) as HTMLElement;
+    q('hpL').style.width = `${c.match_pct}%`;
+    q('capL').textContent = `CLAIM ${c.match_pct.toFixed(0)}%`;
+    q('round').textContent = String(c.attempt);
+    q('digger').textContent = c.actor.toUpperCase();
+    q('speech').textContent = `"${c.text}"`;
+    q('refline').innerHTML = `RE-RAN THE COMPILER<br>${esc(c.status)} · ${c.match_pct.toFixed(0)}%`;
+    const lines = [`<div class="where">${esc(c.fn)} · WRITTEN BY ${esc(modelName(c.model ?? s.model))}</div>`,
+      `<div><span class="lbl">COMPILER</span><span class="exp">${c.status === 'MATCH' ? 'BYTE-IDENTICAL' : esc(c.status)}</span></div>`];
+    lines.push(...gateLines(s, c.reviews));
+    q('evidence').innerHTML = lines.join('');
+    const ko = q('ko');
+    ko.innerHTML = c.upheld ? '<b>TRUE</b><span>CLAIM UPHELD</span>' : '<b>NO</b><span>NOT ACCEPTED</span>';
+    ko.classList.remove('on');
+    void ko.offsetWidth;
+    ko.classList.add('on');
   }
 
   /** set up the card; after a 1 s hold the referee lands the K.O. */
   play(ctx: Ctx, c: FalseClaim) {
     this.shown = c;
-    this.el.classList.remove('idle');
+    this.el.classList.remove('idle', 'ok');
+    (this.el.querySelector('[data-k="ko"]') as HTMLElement).innerHTML = '<b>K.O.</b><span>CLAIM REJECTED</span>';
     const q = (k: string) => this.el.querySelector(`[data-k="${k}"]`) as HTMLElement;
     q('hpL').style.width = `${c.match_pct}%`;
     q('capL').textContent = `CLAIM ${c.match_pct.toFixed(1)}%`;
@@ -84,4 +124,14 @@ export class VersusScene implements Scene {
     ko.classList.add('on');
     if (loud && ctx.current() === 'versus') { ctx.fx.flash(); ctx.fx.shake(); reject(); }
   }
+}
+
+/** The fake gate on a match: per-lab scores when they belong to this match, else the run's screening so far. */
+function gateLines(s: State, reviews: Review[]): string[] {
+  if (reviews.length) {
+    return reviews.map((r) => `<div><span class="lbl">${esc(LAB[r.reviewer] ?? r.reviewer.toUpperCase())}</span>FAKE ${pc(r.fakematch_p)} · RECITED ${pc(r.recital_p)}</div>`);
+  }
+  if (!s.reviews.length) return [];
+  const worst = Math.max(...s.reviews.map((r) => r.fakematch_p ?? 0));
+  return [`<div><span class="lbl">SUBQ SNAP</span>SCREENED ${s.reviews.length} · WORST FAKE ${pc(worst)}</div>`];
 }

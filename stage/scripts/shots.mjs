@@ -8,18 +8,19 @@ import { fileURLToPath } from 'node:url';
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.resolve(HERE, '..', 'shots');
 const BASE = process.env.STAGE_URL || 'http://127.0.0.1:5173';
+const RUN = process.env.RUN || 'doom_r01';
 const CHROME = process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const only = process.argv.slice(2);
 
 const SHOTS = [
-  { name: 'title', q: '?scene=title&replay=fx01&speed=20&t=300', wait: 1500 },
-  { name: 'split', q: '?scene=split&replay=fx01&speed=4&t=200', wait: 2600 },
+  { name: 'title', q: '?scene=title&replay=' + RUN + '&speed=20&t=300', wait: 1500 },
+  { name: 'split', q: '?scene=split&replay=' + RUN + '&speed=4&t=200', wait: 2600 },
   { name: 'split-live', q: '?scene=split', wait: 1500 },
-  { name: 'hiscore', q: '?scene=hiscore&replay=fx01&speed=4&t=200', wait: 2600 },
+  { name: 'hiscore', q: '?scene=hiscore&replay=' + RUN + '&speed=4&t=200', wait: 2600 },
   { name: 'timetrial', q: '?scene=timetrial', wait: 1500 },
   { name: 'ending', q: '?scene=ending', wait: 1500 },
   { name: 'ending-credits', q: '?scene=ending&page=credits', wait: 1000 },
-  { name: 'versus', q: '?scene=versus&replay=fx01&speed=1&t=300', wait: 2200 },
+  { name: 'versus', q: '?scene=versus&replay=' + RUN + '&speed=1&t=300', wait: 2200 },
 ];
 
 fs.mkdirSync(OUT, { recursive: true });

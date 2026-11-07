@@ -86,6 +86,7 @@ function renderMark() {
   const own = scenes[current]?.sample?.(ctx);
   const streamScene = own == null;
   if (own ?? (s.fixture || ctx.side.fixture)) parts.push('SAMPLE DATA');
+  if (s.bench && current !== 'timetrial') parts.push('BENCH · NOT DOOM');
   if (streamScene && s.mode === 'replay') parts.push(`REPLAY · ${s.speed}X${s.ended ? ' · END' : ''}`);
   const html = parts.map((p) => `<span>${p}</span>`).join('<i> · </i>');
   if (markEl.innerHTML !== html) markEl.innerHTML = html;
@@ -157,7 +158,7 @@ setInterval(() => { void refreshNames(HTTP, ctx.side).then(() => { dirty = true;
 
 // ---------- render loop ----------
 function frame() {
-  if (dirty || split.busy()) {
+  if (dirty || split.busy() || scenes[current]?.animating?.(ctx)) {
     dirty = false;
     scenes[current]?.render(ctx);
     renderMark();

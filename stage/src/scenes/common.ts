@@ -2,7 +2,7 @@
 import type { Ctx } from '../types.ts';
 import { esc } from '../types.ts';
 import type { State } from '../state.ts';
-import { elapsedS, fmtClock } from '../state.ts';
+import { elapsedS, fmtClock, pctOf } from '../state.ts';
 import { displayName } from '../data.ts';
 
 export const ORD = (n: number) => `${n}${['TH', 'ST', 'ND', 'RD'][n % 100 > 10 && n % 100 < 14 ? 0 : n % 10 < 4 ? n % 10 : 0]}`;
@@ -12,9 +12,15 @@ export function setText(root: ParentNode, k: string, v: string) {
   if (el && el.textContent !== v) el.textContent = v;
 }
 
+// ---------- scope: this run vs the whole game (never present a run rate as the game rate) ----------
+export function gameName(s: State) { return s.bench ? 'BENCH' : (s.gameId ?? 'doom').toUpperCase(); }
+/** Functions in the whole game: the manifest's game scope; a bench run only has its own set. */
+export function gameTotal(ctx: Ctx) { return ctx.state.bench ? ctx.state.fnTotal : ctx.side.gameTotal || ctx.state.fnTotal; }
+export function gamePct(ctx: Ctx) { return pctOf(ctx.state.matched.length, gameTotal(ctx)); }
+
 // ---------- HUD (Split) ----------
 export function hudHtml() {
-  return `<div class="rec"><span class="k">RECOVERED</span><span class="v" data-k="rec">--</span></div>
+  return `<div class="rec"><span class="k">THIS RUN</span><span class="v" data-k="rec">--</span></div>
     <div class="lies"><span class="k">LIES</span><span class="v" data-k="lies">0</span></div>
     <div><span class="k">TIME</span><span class="v" data-k="time">--:--</span></div>`;
 }

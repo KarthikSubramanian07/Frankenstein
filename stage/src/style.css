@@ -107,6 +107,7 @@ body:not(.obs) .split .game-frame {
   color: var(--grey); font-size: 28px; line-height: 1.8;
 }
 body.obs .split .game-frame .ph { display: none; }
+.split .game-frame canvas.mosaic { position: absolute; left: 0; top: 0; width: 960px; height: 640px; }
 
 .split .badge {
   position: absolute; left: 20px; top: 760px; width: 960px; height: 250px;
@@ -133,7 +134,7 @@ body.obs .split .game-frame .ph { display: none; }
 .row .rk, .row .pc { color: var(--c); }
 .row .pc { text-align: right; }
 .row .nm { overflow: hidden; color: var(--ink); }
-.row .nm.guess { color: var(--guess); }
+.row .nm.guess { color: var(--guess); font: 46px/1 var(--code); letter-spacing: 1px; }
 .row.c0 { --c: var(--cyan); } .row.c1 { --c: var(--yellow); } .row.c2 { --c: var(--magenta); }
 .row.new { animation: slidein 360ms steps(6) both; }
 .row.empty { --c: var(--grey); } .row.empty .nm { color: var(--grey); }
@@ -207,13 +208,15 @@ body.obs .split .game-frame .ph { display: none; }
 .versus .evidence .lbl { display: inline-block; width: 420px; color: var(--dim); }
 .versus .evidence .exp { color: var(--mint); }
 .versus .evidence .where { font-size: 28px; color: var(--dim); margin-bottom: 10px; }
-.versus .ko { position: absolute; left: 0; right: 0; top: 880px; text-align: center; opacity: 0; }
+.versus .ko { position: absolute; left: 0; right: 0; top: 856px; text-align: center; opacity: 0; }
 .versus .ko.on { opacity: 1; animation: ko 260ms steps(4); }
 .versus .ko b { font: italic 120px/1 'Russo One', sans-serif; color: var(--ko); -webkit-text-stroke: 4px #000; text-shadow: 6px 6px 0 #000; margin-right: 36px; }
 .versus .ko span { font: italic 72px/1 'Russo One', sans-serif; color: #fff; text-shadow: 5px 5px 0 #000; }
 @keyframes ko { from { transform: scale(2.2); } to { transform: scale(1); } }
 .versus .tally { position: absolute; left: 60px; bottom: 34px; font-size: 28px; color: #fff; }
 .versus .waiting { position: absolute; inset: 0; display: none; place-content: center; text-align: center; gap: 40px; }
+.versus.ok .ko b { color: var(--mint); }
+.versus.ok .bg { background: linear-gradient(118deg, var(--p-blue) 0 49.7%, #000 49.7% 50.3%, #1d6b55 50.3% 100%); }
 .versus.idle .waiting { display: grid; }
 .versus.idle .fight { display: none; }
 .versus .waiting h1 { font: italic 120px/1 'Russo One', sans-serif; color: var(--ko); text-shadow: 6px 6px 0 #000; }
@@ -268,6 +271,7 @@ body.obs .split .game-frame .ph { display: none; }
 .hiscore .hero { position: absolute; left: 1320px; top: 360px; width: 500px; text-align: center; }
 .hiscore .hero .num { font: 220px/1 'Bungee', sans-serif; color: var(--mint); text-shadow: 8px 8px 0 var(--night-violet); }
 .hiscore .hero .cap { font-size: 32px; line-height: 1.6; margin-top: 26px; color: var(--ink); }
+.hiscore .hero .run { font-size: 28px; margin-top: 22px; color: var(--dim); }
 .hiscore .cart { position: absolute; left: 120px; top: 830px; width: 1680px; }
 .hiscore .cart .lbl { font-size: 28px; color: var(--dim); }
 .hiscore .cart .lbl span { color: var(--grey); }
@@ -293,7 +297,13 @@ body.obs .split .game-frame .ph { display: none; }
 .timetrial canvas.road { position: absolute; left: 0; top: 500px; width: 1920px; height: 580px; }
 .tt-title { position: absolute; left: 60px; top: 36px; font: 72px/1 'Audiowide', sans-serif; color: #fff; text-shadow: 5px 5px 0 var(--night-violet); }
 .timetrial .laps { position: absolute; left: 60px; top: 140px; width: 940px; background: rgba(11,11,46,0.88); border: 4px solid #fff; padding: 20px 26px; }
-.timetrial .laps .lh, .timetrial .lap { display: grid; grid-template-columns: minmax(0,1fr) 110px 150px; gap: 16px; white-space: nowrap; }
+.timetrial .laps .lh, .timetrial .lap { display: grid; grid-template-columns: minmax(0,1fr) 140px 110px 140px; gap: 16px; white-space: nowrap; }
+.timetrial .lap small { font-size: 28px; color: var(--dim); margin-left: 10px; }
+.timetrial .lap.bench small em { font-style: normal; color: var(--yellow); }
+.timetrial .laps .unit { font-size: 28px; color: var(--dim); margin-top: 12px; text-align: right; }
+.timetrial .plate.muse { border-left-color: var(--cyan); } .timetrial .plate.muse b { color: var(--cyan); }
+.timetrial .plate.snap { border-left-color: var(--magenta); } .timetrial .plate.snap b { color: var(--magenta); }
+.timetrial .plate.proof { border-left-color: var(--mint); } .timetrial .plate.proof b { color: var(--mint); }
 .timetrial .laps .lh { font-size: 28px; color: var(--dim); padding-bottom: 12px; }
 .timetrial .laps .lh span:not(:first-child), .timetrial .lap span:not(:first-child) { text-align: right; }
 .timetrial .lap { font: 30px/1.6 'Audiowide', sans-serif; color: #fff; }
@@ -330,6 +340,7 @@ body.obs .split .game-frame .ph { display: none; }
 .ending .verdict.ok { color: var(--mint); text-shadow: 6px 6px 0 #0d4a3a; }
 .ending .verdict.bad { color: var(--alarm); }
 .ending .patch { min-height: 40px; margin-top: 18px; text-align: center; font-size: 32px; color: var(--yellow); }
+.ending .verdict:empty + .patch { color: var(--dim); font-size: 28px; }
 .ending .key { margin-top: 40px; text-align: center; font-size: 28px; color: var(--dim); }
 .ending .key em { font-style: normal; color: var(--guess); }
 .ending .qr { position: absolute; left: 1300px; top: 60px; width: 560px; display: none; text-align: center; }

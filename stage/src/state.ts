@@ -15,12 +15,22 @@ export type Ev = {
 
 export type FirstDiff = { offset: number; expected: string; got: string; expected_ins: string; got_ins: string };
 
-export type Matched = { fn: string; ts: number; attempts: number; minutes: number; cost_usd: number; lines: number; actor: string };
+/** One lab's fake-gate screen of a byte match (SubQ Snap, or Gemini as the second opinion). */
+export type Review = { reviewer: string; fakematch_p: number | null; recital_p: number | null; plausible_p: number | null; ts: number };
+export type Matched = {
+  fn: string; ts: number; attempts: number; minutes: number; cost_usd: number; lines: number; actor: string;
+  models: Record<string, number>; // which Muse model wrote it (attempts per model)
+  reviews: Review[]; // attached only when unambiguous (one review per lab since the last match)
+};
+/** A Digger's "matched" claim and what the Checker found. */
+export type Checked = { fn: string; actor: string; attempt: number; text: string; status: string; match_pct: number; upheld: boolean; model: string | null; reviews: Review[]; ts: number };
+/** A SubQ Snap decision that changed what the crew did (contracts v1.1 snap.decision). */
+export type SnapDecision = { op: string; fn: string | null; p: any; ts: number };
 export type FalseClaim = {
   fn: string; actor: string; attempt: number; match_pct: number; status: string;
   first_diff: FirstDiff | null; claim_text: string | null; ts: number; index: number;
 };
-export type Attempt = { fn: string; actor: string; attempt: number; src: string; ts: number };
+export type Attempt = { fn: string; actor: string; attempt: number; src: string; ts: number; model: string | null };
 export type Verdict = { fn: string; attempt: number; status: string; match_pct: number; lint_ok: boolean; claim_was_true: boolean | null; first_diff: FirstDiff | null; ts: number };
 
 export type State = {
@@ -31,6 +41,9 @@ export type State = {
   label: string | null;
   model: string | null;
   gameId: string | null;
+  bench: boolean; // bench runs are not Doom; always labelled
+  snapOn: boolean;
+  escalationModel: string | null;
   fnTotal: number;
   t0: number | null;
   tNow: number | null;
@@ -56,6 +69,12 @@ export type State = {
   finished: any | null; // run.finished payload
   ended: boolean; // replay reached the end of the file
   events: number;
+  snap: SnapDecision[]; // every snap.decision, newest last (capped)
+  snapCount: number;
+  reviews: Review[]; // every fake-gate review in the run
+  pendingReviews: Review[]; // reviews since the last fn.matched
+  lastChecked: Checked | null; // newest claim the Checker re-ran
+  modelsUsed: Record<string, number>; // attempts per Muse model
 };
 
 export type Effect =
@@ -66,15 +85,17 @@ export type Effect =
   | { kind: 'narration'; text: string; mood: string; speak: boolean }
   | { kind: 'swap'; pct: number }
   | { kind: 'build' }
+  | { kind: 'snap'; d: SnapDecision }
   | { kind: 'reset' };
 
 export function emptyState(): State {
   return {
-    mode: 'none', speed: 1, fixture: false, runId: null, label: null, model: null, gameId: null, fnTotal: 0,
+    mode: 'none', speed: 1, fixture: false, runId: null, label: null, model: null, gameId: null, bench: false, snapOn: false, escalationModel: null, fnTotal: 0,
     t0: null, tNow: null, matched: [], matchedSet: new Set(), abandoned: 0, attempts: 0, verdicts: 0,
     lintFails: 0, falseClaims: [], claims: new Map(), claimsMade: 0, lastAttempt: null, lastVerdict: null,
     narration: [], idiomsLearned: 0, pctAgentCode: null, swaps: 0, build: null, patch: null, phone: null,
     tick: null, finished: null, ended: false, events: 0,
+    snap: [], snapCount: 0, reviews: [], pendingReviews: [], lastChecked: null, modelsUsed: {},
   };
 }
 
@@ -111,13 +132,17 @@ export function apply(s: State, e: Ev): Effect[] {
       s.label = p.label ?? null;
       s.model = p.model ?? null;
       s.gameId = p.game_id ?? null;
+      s.bench = p.game_id === 'bench' || /\bbench\b/i.test(String(p.label ?? ''));
+      s.snapOn = !!p.snap;
+      s.escalationModel = p.escalation_model ?? null;
       s.fnTotal = Number(p.fn_total) || 0;
       if (t != null) s.t0 = t;
       if (typeof p.label === 'string' && /\(sample\)|fixture/i.test(p.label)) s.fixture = true;
       break;
     case 'attempt.submitted': {
       s.attempts++;
-      const a: Attempt = { fn: e.fn ?? '?', actor: e.actor ?? '?', attempt: Number(p.attempt) || 0, src: String(p.src_preview ?? ''), ts: t ?? 0 };
+      const a: Attempt = { fn: e.fn ?? '?', actor: e.actor ?? '?', attempt: Number(p.attempt) || 0, src: String(p.src_preview ?? ''), ts: t ?? 0, model: p.model ?? null };
+      if (a.model) s.modelsUsed[a.model] = (s.modelsUsed[a.model] ?? 0) + 1;
       s.lastAttempt = a;
       fx.push({ kind: 'attempt', a });
       break;
@@ -136,6 +161,16 @@ export function apply(s: State, e: Ev): Effect[] {
       if (v.status === 'LINT_FAIL') s.lintFails++;
       s.lastVerdict = v;
       fx.push({ kind: 'verdict', v });
+      const claimText = [...s.claims].reverse().find(([k]) => { const [kf, , kat] = k.split('|'); return kf === v.fn && Number(kat) === v.attempt; });
+      // a Digger's own words beat the crew's "(auto-submitted …)" placeholder when picking what Versus shows
+      const auto = (x: string) => x.startsWith('(');
+      if (claimText && (!auto(claimText[1]) || !s.lastChecked || auto(s.lastChecked.text))) {
+        const [k, text] = claimText;
+        const actor = k.split('|')[1];
+        const model = s.lastAttempt && s.lastAttempt.fn === v.fn ? s.lastAttempt.model : null;
+        s.lastChecked = { fn: v.fn, actor, attempt: v.attempt, text, status: v.status, match_pct: v.match_pct,
+          upheld: v.claim_was_true !== false && v.status === 'MATCH', model, reviews: [], ts: v.ts };
+      }
       if (v.claim_was_true === false) {
         // who claimed it: the digger who submitted this fn+attempt
         let actor = '';
@@ -157,14 +192,35 @@ export function apply(s: State, e: Ev): Effect[] {
     case 'fn.matched': {
       const fn = e.fn ?? '';
       if (fn && !s.matchedSet.has(fn)) {
+        // a review belongs to this match only if each lab screened exactly once since the last match
+        const byLab = new Map<string, Review[]>();
+        for (const r of s.pendingReviews) byLab.set(r.reviewer, [...(byLab.get(r.reviewer) ?? []), r]);
+        const reviews = [...byLab.values()].every((rs) => rs.length === 1) ? s.pendingReviews.slice() : [];
         const m: Matched = {
           fn, ts: t ?? 0, attempts: Number(p.attempts) || 0, minutes: Number(p.minutes) || 0,
           cost_usd: Number(p.cost_usd) || 0, lines: Number(p.lines) || 0, actor: e.actor ?? '',
+          models: p.models && typeof p.models === 'object' ? p.models : {}, reviews,
         };
+        if (s.lastChecked && s.lastChecked.fn === fn) s.lastChecked.reviews = reviews;
         s.matchedSet.add(fn);
         s.matched.push(m);
         fx.push({ kind: 'matched', m });
       }
+      s.pendingReviews = [];
+      break;
+    }
+    case 'snap.decision': {
+      s.snapCount++;
+      const d: SnapDecision = { op: String(p.op ?? ''), fn: e.fn ?? null, p, ts: t ?? 0 };
+      s.snap.push(d);
+      if (s.snap.length > 60) s.snap.shift();
+      if (d.op === 'review') {
+        const num = (x: any) => (typeof x === 'number' && Number.isFinite(x) ? x : null);
+        const r: Review = { reviewer: String(p.reviewer ?? 'snap'), fakematch_p: num(p.fakematch_p), recital_p: num(p.recital_p), plausible_p: num(p.period_plausible_p), ts: t ?? 0 };
+        s.reviews.push(r);
+        s.pendingReviews.push(r);
+      }
+      fx.push({ kind: 'snap', d });
       break;
     }
     case 'fn.abandoned': s.abandoned++; break;
@@ -210,4 +266,17 @@ export function fmtClock(sec: number | null): string {
 export function fmtPct(p: number | null, digits = 0): string {
   if (p == null) return '--';
   return p.toFixed(digits);
+}
+
+/** Game functions in the whole target (manifest), falling back to this run's scope. */
+export function pctOf(n: number, total: number): string {
+  if (!total) return '--';
+  const p = (100 * n) / total;
+  return p > 0 && p < 10 ? p.toFixed(1) : String(Math.floor(p));
+}
+
+export const MODEL_SHORT: Record<string, string> = { 'muse-spark-1.3': 'MUSE SPARK', 'muse-wonder-1.0': 'MUSE WONDER' };
+export function modelName(m: string | null | undefined): string {
+  if (!m) return 'MUSE';
+  return MODEL_SHORT[m] ?? m.replace(/-[\d.]+$/, '').replace(/-/g, ' ').toUpperCase();
 }

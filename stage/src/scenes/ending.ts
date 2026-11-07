@@ -4,9 +4,9 @@
 import type { Ctx, Scene } from '../types.ts';
 import { h, esc } from '../types.ts';
 import type { Effect } from '../state.ts';
-import { pctRecovered } from '../state.ts';
+
 import { drawStars } from './title.ts';
-import { setText } from './common.ts';
+import { setText, gameName, gamePct } from './common.ts';
 
 export class EndingScene implements Scene {
   id = 'ending' as const;
@@ -71,14 +71,13 @@ export class EndingScene implements Scene {
 
   render(ctx: Ctx) {
     const s = ctx.state;
-    const p = pctRecovered(s);
-    setText(this.el, 'pct', p == null ? '--%' : `${Math.floor(p)}%`);
-    setText(this.el, 'game', (s.gameId ?? 'DOOM').toUpperCase());
-    setText(this.el, 'lies', `${s.falseClaims.length} LIES CAUGHT`);
+    setText(this.el, 'pct', `${gamePct(ctx)}%`);
+    setText(this.el, 'game', gameName(s));
+    setText(this.el, 'lies', `${s.matched.length} PROVED · ${s.falseClaims.length} LIES CAUGHT`);
     const orig = ctx.side.romSha1;
     const b = s.build;
     setText(this.el, 'orig', orig ?? 'NOT IN THE MANIFEST');
-    setText(this.el, 'rebuilt', b?.rom_sha1 ?? 'WAITING FOR THE REBUILD');
+    setText(this.el, 'rebuilt', b?.rom_sha1 ?? 'NOT REBUILT YET');
     const identical = !!b && b.identical === true && (!orig || orig === b.rom_sha1);
     const differ = !!b && (b.identical === false || (!!orig && orig !== b.rom_sha1));
     const v = this.el.querySelector('[data-k="verdict"]') as HTMLElement;
@@ -87,7 +86,8 @@ export class EndingScene implements Scene {
     setText(this.el, 'logo', identical ? "IT'S ALIVE" : 'FRANKENSTEIN');
     const pt = s.patch;
     const n = Array.isArray(pt?.changed_functions) ? pt.changed_functions.length : 0;
-    setText(this.el, 'patch', pt ? `PATCH 1.01: ${n} FUNCTION${n === 1 ? '' : 'S'} CHANGED` : '');
+    setText(this.el, 'patch', pt ? `PATCH 1.01: ${n} FUNCTION${n === 1 ? '' : 'S'} CHANGED`
+      : b ? '' : 'THE REBUILD RUNS WHEN THE CREW STOPS');
     this.renderQr(ctx);
   }
 

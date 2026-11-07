@@ -3,13 +3,14 @@
 import { chromium } from 'playwright-core';
 
 const BASE = process.env.STAGE_URL || 'http://127.0.0.1:5173';
+const RUN = process.env.RUN || 'doom_r01';
 const CHROME = process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 export const SCENES = [
-  ['title', '?scene=title&replay=fx01&speed=20&t=300'],
-  ['split', '?scene=split&replay=fx01&speed=4&t=200'],
+  ['title', '?scene=title&replay=' + RUN + '&speed=20&t=300'],
+  ['split', '?scene=split&replay=' + RUN + '&speed=4&t=200'],
   ['split-end', '?scene=split'],
-  ['hiscore', '?scene=hiscore&replay=fx01&speed=4&t=200'],
-  ['versus', '?scene=versus&replay=fx01&speed=1&t=300'],
+  ['hiscore', '?scene=hiscore&replay=' + RUN + '&speed=4&t=200'],
+  ['versus', '?scene=versus&replay=' + RUN + '&speed=1&t=300'],
   ['timetrial', '?scene=timetrial'],
   ['ending', '?scene=ending'],
   ['ending-credits', '?scene=ending&page=credits'],

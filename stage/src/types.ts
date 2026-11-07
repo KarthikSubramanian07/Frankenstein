@@ -24,6 +24,8 @@ export interface Scene {
   effect?(ctx: Ctx, e: Effect): void;
   enter?(ctx: Ctx): void;
   leave?(ctx: Ctx): void;
+  /** true while the scene animates on its own (the render loop keeps drawing) */
+  animating?(ctx: Ctx): boolean;
   /** a key the scene handles itself (true = handled) */
   key?(ctx: Ctx, key: string): boolean;
   /** true/false when this scene's numbers come from its own files (Time trial); null/undefined = the stream */

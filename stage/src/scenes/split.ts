@@ -5,7 +5,8 @@ import { h, esc, diffIns } from '../types.ts';
 import type { Effect, FalseClaim, State } from '../state.ts';
 import type { Region } from '../data.ts';
 import { coin, reject } from '../audio.ts';
-import { hudHtml, renderHud, tickerHtml, renderTicker, renderRows, drawMeter, setText } from './common.ts';
+import { hudHtml, renderHud, tickerHtml, renderTicker, renderRows, drawMeter, setText, gameName, gameTotal } from './common.ts';
+import { Mosaic } from './mosaic.ts';
 import type { RowsMemo } from './common.ts';
 
 const FRAME = { x: 20, y: 92, scale: 4 }; // 240x160 GBA at 4x = 960x640
@@ -30,11 +31,15 @@ export class SplitScene implements Scene {
   private codeKey = '';
   private pipTimer = 0;
   private badgeKey = '';
+  private mosaic = new Mosaic(20, 92);
+  private total = 0;
+  private game = 'DOOM';
+  private ph: HTMLElement;
 
   constructor() {
     this.el.innerHTML = `
       <div class="hud">${hudHtml()}</div>
-      <div class="game-frame"><div class="ph">GAME CAPTURE<br>mGBA, 4× SCALE</div></div>
+      <div class="game-frame"><div class="ph"></div></div>
       <div class="badge orig"><div class="l1">NOW RUNNING ON</div><div class="l2" data-k="badge">ORIGINAL CODE</div></div>
       <div class="divider"></div>
       <div class="panel">
@@ -56,6 +61,8 @@ export class SplitScene implements Scene {
     this.pipEl = this.el.querySelector('.pip')!;
     this.badgeEl = this.el.querySelector('.badge')!;
     this.meter = this.el.querySelector('canvas')!;
+    this.ph = this.el.querySelector('.ph')!;
+    this.el.querySelector('.game-frame')!.prepend(this.mosaic.cv);
   }
 
   render(ctx: Ctx) {
@@ -63,16 +70,28 @@ export class SplitScene implements Scene {
     renderHud(this.el, s);
     renderRows(this.rowsEl, ctx, 6, this.memo, null);
     this.renderCode(ctx);
+    this.total = gameTotal(ctx);
+    this.game = gameName(s);
     this.renderBadge(s);
     drawMeter(this.meter, ctx);
     renderTicker(this.el, s, ctx.reduced);
+    // the game window: live capture in OBS; otherwise the cartridge map (a bench run is not Doom)
+    const ph = s.bench ? 'BENCH RUN<br>NOT DOOM' : '';
+    if (this.ph.innerHTML !== ph) this.ph.innerHTML = ph;
+    this.mosaic.cv.style.display = s.bench || ctx.obs ? 'none' : 'block';
+    if (!s.bench && !ctx.obs) this.mosaic.draw(ctx, performance.now());
   }
+
+  /** the map animates its static, so Split keeps rendering */
+  animating(ctx: Ctx) { return !ctx.obs && !ctx.reduced; }
 
   effect(ctx: Ctx, e: Effect) {
     if (e.kind === 'matched') {
       const sub = ctx.side.fnToSub.get(e.m.fn);
-      const land = regionRect(sub ? sub.region : { x: 0, y: 0, w: 240, h: 160 });
-      ctx.fx.beam(ROW0, { x: land.x + land.w / 2, y: land.y + land.h / 2 }, land, '#7CF2C8', () => coin());
+      const cell = ctx.obs ? null : this.mosaic.rectOf(ctx, e.m.fn);
+      const land = cell ?? regionRect(sub ? sub.region : { x: 0, y: 0, w: 240, h: 160 });
+      const fn = e.m.fn;
+      ctx.fx.beam(ROW0, { x: land.x + land.w / 2, y: land.y + land.h / 2 }, land, '#7CF2C8', () => { coin(); this.mosaic.land(fn); });
     } else if (e.kind === 'verdict') {
       this.showStamp(e.v.status, e.v.claim_was_true === false, e.v.match_pct);
     } else if (e.kind === 'falseClaim') {
@@ -145,12 +164,20 @@ export class SplitScene implements Scene {
   }
 
   private renderBadge(s: State) {
-    const key = s.pctAgentCode == null ? 'orig' : s.pctAgentCode.toFixed(1);
+    // hero number: the hot-swap share once a rebuilt ROM is running; before that, functions proved in the whole game
+    const total = this.total;
+    const key = s.pctAgentCode == null ? `p${s.matched.length}/${total}/${s.bench}` : s.pctAgentCode.toFixed(1);
     if (key === this.badgeKey) return;
     this.badgeKey = key;
+    const l1 = this.el.querySelector('.badge .l1')!;
     const l2 = this.el.querySelector('[data-k="badge"]')!;
-    if (s.pctAgentCode == null) { this.badgeEl.classList.add('orig'); l2.textContent = 'ORIGINAL CODE'; return; }
     this.badgeEl.classList.remove('orig');
+    if (s.pctAgentCode == null) {
+      l1.textContent = 'PROVED BYTE FOR BYTE';
+      l2.innerHTML = `<b>${s.matched.length}</b><span>OF ${total || '--'} ${esc(this.game)} FUNCTIONS</span>`;
+      return;
+    }
+    l1.textContent = 'NOW RUNNING ON';
     l2.innerHTML = `<b>${key}%</b><span>AGENT-WRITTEN CODE</span>`;
   }
 }

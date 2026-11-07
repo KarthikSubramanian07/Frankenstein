@@ -1,7 +1,7 @@
 // Scene 0: Title. Logo, save-file menu fed from the run, PRESS START.
 import type { Ctx, Scene } from '../types.ts';
 import { h } from '../types.ts';
-import { pctRecovered } from '../state.ts';
+import { gameName, gamePct } from './common.ts';
 
 export function drawStars(cv: HTMLCanvasElement, moon = true) {
   const g = cv.getContext('2d')!;
@@ -48,13 +48,13 @@ export class TitleScene implements Scene {
 
   render(ctx: Ctx) {
     const s = ctx.state;
-    const pct = pctRecovered(s);
     const q = (k: string) => this.el.querySelector(`[data-k="${k}"]`)!;
-    const p = pct == null ? '--%' : `${Math.floor(pct)}%`;
+    // the save file shows the whole game, not this run's share
+    const p = `${gamePct(ctx)}%`;
     if (q('pct').textContent !== p) q('pct').textContent = p;
-    const g = (s.gameId ?? 'DOOM').toUpperCase();
+    const g = gameName(s);
     if (q('game').textContent !== g) q('game').textContent = g;
-    const l = `${s.falseClaims.length} LIES CAUGHT`;
+    const l = `${s.matched.length} PROVED · ${s.falseClaims.length} LIES CAUGHT`;
     if (q('lies').textContent !== l) q('lies').textContent = l;
   }
 }

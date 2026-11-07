@@ -2,10 +2,9 @@
 import type { Ctx, Scene } from '../types.ts';
 import { h, esc } from '../types.ts';
 import type { Effect, FalseClaim } from '../state.ts';
-import { pctRecovered } from '../state.ts';
 import { coin } from '../audio.ts';
 import { announce } from '../voice.ts';
-import { tickerHtml, renderTicker, renderRows, drawMeter, setText } from './common.ts';
+import { tickerHtml, renderTicker, renderRows, drawMeter, setText, gameName, gameTotal, gamePct } from './common.ts';
 import type { RowsMemo } from './common.ts';
 
 const MILESTONES: [number, string][] = [
@@ -39,7 +38,8 @@ export class HiscoreScene implements Scene {
       </div>
       <div class="hero">
         <div class="num" data-k="pct">--</div>
-        <div class="cap">OF THE GAME<br>RECOVERED</div>
+        <div class="cap" data-k="cap">OF THE GAME<br>RECOVERED</div>
+        <div class="run" data-k="run"></div>
       </div>
       <div class="cart"><div class="lbl">CARTRIDGE <span>· GREY = LIBRARY</span></div><canvas width="1680" height="56"></canvas></div>
       <div class="key"><em>? = OUR GUESS.</em> EVERYTHING ELSE IS PROVED.</div>
@@ -52,10 +52,15 @@ export class HiscoreScene implements Scene {
   render(ctx: Ctx) {
     const s = ctx.state;
     setText(this.el, 'up', String(s.matched.length));
-    setText(this.el, 'hi', s.fnTotal ? String(s.fnTotal) : '--');
+    // arcade metaphor: HI-SCORE is every function in the game; the hero % is of the whole game
+    const total = gameTotal(ctx);
+    setText(this.el, 'hi', total ? String(total) : '--');
     setText(this.el, 'lies', String(s.falseClaims.length));
-    const p = pctRecovered(s);
-    setText(this.el, 'pct', p == null ? '--' : `${Math.floor(p)}%`);
+    setText(this.el, 'pct', total ? `${gamePct(ctx)}%` : '--');
+    const capEl = this.el.querySelector('[data-k="cap"]') as HTMLElement;
+    const cap = `OF ${gameName(s)}<br>RECOVERED`;
+    if (capEl.innerHTML !== cap) capEl.innerHTML = cap;
+    setText(this.el, 'run', s.fnTotal && s.fnTotal !== total ? `${s.matched.length}/${s.fnTotal} THIS RUN` : '');
     renderRows(this.rowsEl, ctx, 6, this.memo, this.liar);
     this.fitNames();
     drawMeter(this.meter, ctx);
@@ -66,9 +71,10 @@ export class HiscoreScene implements Scene {
     if (e.kind === 'matched') {
       coin();
       const s = ctx.state;
-      if (!s.fnTotal) return;
-      const now = (100 * s.matched.length) / s.fnTotal;
-      const before = (100 * (s.matched.length - 1)) / s.fnTotal;
+      const total = gameTotal(ctx);
+      if (!total) return;
+      const now = (100 * s.matched.length) / total;
+      const before = (100 * (s.matched.length - 1)) / total;
       for (const [m, line] of MILESTONES) if (before < m && now >= m) this.banner(ctx, line);
     } else if (e.kind === 'reset') {
       this.memo = { key: '', top: '' };
