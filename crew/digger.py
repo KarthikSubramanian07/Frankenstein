@@ -53,7 +53,8 @@ def n_instructions(asm: str) -> int:
 
 class Digger:
     def __init__(self, name: str, llm: LLM, target: Target, checker: Checker, library: Library, log: EventLog,
-                 *, max_usd: float = 1.5, escalate_after: int = 3, types_slice=None, budget_ok=lambda: True):
+                 *, max_usd: float = 1.5, escalate_after: int = 3, types_slice=None, budget_ok=lambda: True,
+                 snap_decide=None):
         self.name = name
         self.llm = llm
         self.target = target
@@ -64,6 +65,7 @@ class Digger:
         self.escalate_after = escalate_after
         self.types_slice = types_slice  # callable(fn) -> str, or None (cartographer off)
         self.budget_ok = budget_ok
+        self.snap_decide = snap_decide  # callable(fn_id, asm, history) -> dict, or None (SubQ Snap off)
 
     def _tool_result(self, call_id: str, content) -> dict:
         return {"role": "tool", "tool_call_id": call_id,
@@ -83,12 +85,14 @@ class Digger:
         out = Outcome(fn=fn_id, status="abandoned")
         budget = attempt_budget(fn["difficulty"])
         last_src, last_attempt, best_src, failures, turns = None, 0, None, 0, 0
+        escalated = False  # set by SubQ Snap (or by the fixed fallback rule when Snap is off)
         self.log.emit("fn.claimed", "scheduler", fn=fn_id, digger=self.name, difficulty=fn["difficulty"])
 
         while out.attempts < budget and turns < budget * 3 and out.cost_usd < self.max_usd and self.budget_ok():
             turns += 1
-            model = self.llm.cfg.escalation_model if (failures >= self.escalate_after and self.llm.cfg.escalation_model) \
-                else self.llm.cfg.model
+            if self.snap_decide is None and failures >= self.escalate_after:
+                escalated = True
+            model = self.llm.cfg.escalation_model if (escalated and self.llm.cfg.escalation_model) else self.llm.cfg.model
             effort = effort_for(fn["difficulty"], failures, self.llm.cfg.reasoning_effort)
             try:
                 r = self.llm.chat(messages, model=model, tools=TOOLS, effort=effort)
@@ -135,6 +139,17 @@ class Digger:
                         out.best_pct, best_src = pct, src
                     if res["status"] != "MATCH":
                         failures += 1
+                        if self.snap_decide is not None and failures >= 2 and out.attempts < budget:
+                            d = self.snap_decide(fn_id, asm, [j for j in out.journey if isinstance(j[0], int)])
+                            act, conf = d.get("action", "keep"), float(d.get("confidence") or 0)
+                            self.log.emit("snap.decision", "scheduler", fn=fn_id, op="decide_next", action=act,
+                                          confidence=round(conf, 3), probs=d.get("probs") or {},
+                                          p_match_within_budget=d.get("p_match_within_budget"),
+                                          latency_ms=d.get("latency_ms"), error=d.get("error"), attempt=out.attempts)
+                            if act == "escalate" and not escalated and self.llm.cfg.escalation_model:
+                                escalated = True
+                            elif act == "abandon" and conf >= 0.6 and failures >= 3:
+                                budget = out.attempts  # Snap says more attempts won't converge: stop spending
                     reply = {k: res.get(k) for k in ("status", "match_pct", "first_diff", "lint")}
                     reply["diff"] = (res.get("diff") or [])[:16]
                     if res["status"] == "NO_COMPILE":

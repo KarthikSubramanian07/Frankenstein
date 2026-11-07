@@ -153,6 +153,8 @@ def build_run(manifest, sub_of, rng: random.Random):
 
     emit(0.0, "run.started", "scheduler", label="live · library learning (sample)", split="train",
          library="learning", diggers=N_DIGGERS, model=MODEL, budget_usd=40, game_id="doom", fn_total=len(game))
+    emit(1.5, "snap.decision", "scheduler", op="triage", functions=len(game), latency_ms=1062,
+         hardest=[f["id"] for f in sorted(game, key=lambda f: -f["difficulty"])[:5]])
     emit(2.0, "narration", "archivist", text="Twenty minutes. Six diggers. One referee.", mood="dry",
          speak=False, priority=1)
 
@@ -220,6 +222,12 @@ def build_run(manifest, sub_of, rng: random.Random):
                       "expected_ins": "adds r0, r1, #0", "got_ins": "adds r0, r2, #0"}
             emit(t, "verdict", "checker", fn=fid, attempt=a, status=status, match_pct=pct, first_diff=fd,
                  lint_ok=status != "LINT_FAIL", claim_was_true=claim)
+            if status != "MATCH" and a >= 2 and not last:
+                emit(t + 0.3, "snap.decision", "scheduler", fn=fid, op="decide_next",
+                     action="escalate" if a >= 3 else "keep", confidence=round(rng.uniform(0.55, 0.9), 3),
+                     probs={"keep": 0.6, "escalate": 0.35, "abandon": 0.05},
+                     p_match_within_budget=round(rng.uniform(0.2, 0.8), 2), latency_ms=rng.randint(450, 900),
+                     attempt=a)
             if claim is False:
                 stats["false"] += 1
                 emit(t + 0.5, "narration", "archivist", text=f"Claim rejected!", mood="alarmed", speak=True, priority=3)

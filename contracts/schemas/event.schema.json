@@ -38,6 +38,7 @@
         "rom.swapped",
         "run.finished",
         "run.started",
+        "snap.decision",
         "types.proposed",
         "verdict"
       ]
@@ -843,6 +844,47 @@
               "first_diff",
               "lint_ok",
               "claim_was_true"
+            ],
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "snap.decision"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "op": {
+                "enum": [
+                  "triage",
+                  "decide_next",
+                  "review",
+                  "director",
+                  "eyes",
+                  "route"
+                ]
+              },
+              "latency_ms": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "op"
             ],
             "additionalProperties": true
           }

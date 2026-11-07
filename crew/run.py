@@ -68,7 +68,12 @@ class Run:
         if args.snap and cfg.subq_key:
             try:
                 from . import snap
-                snap_review = lambda asm, src, ctx: snap.review(cfg, asm, src, ctx)  # noqa: E731
+                def snap_review(asm, src, ctx, _s=snap):
+                    r = _s.review(cfg, asm, src, ctx)
+                    self.log.emit("snap.decision", "checker", op="review", fakematch_p=r.get("fakematch_p"),
+                                  recital_p=r.get("recital_p"), period_plausible_p=r.get("period_plausible_p"),
+                                  latency_ms=r.get("latency_ms"))
+                    return r
                 self._snap = snap
             except Exception:
                 snap_review = None
@@ -165,7 +170,14 @@ class Run:
     def go(self) -> dict:
         if self.args.snap and self.cfg.subq_key and hasattr(self, "_snap") and not self.args.fns:
             try:
-                self.snap_scores = self._snap.triage(self.cfg, self.target)
+                t = time.time()
+                fns_pre = [f["id"] for f in self.target.game_functions(None if self.args.split == "all" else self.args.split)]
+                if self.args.max_size:
+                    fns_pre = [i for i in fns_pre if self.target.fns[i]["size"] <= self.args.max_size]
+                self.snap_scores = self._snap.triage(self.cfg, self.target, fns=fns_pre)
+                self.log.emit("snap.decision", "scheduler", op="triage", functions=len(self.snap_scores),
+                              latency_ms=round((time.time() - t) * 1000),
+                              hardest=sorted(self.snap_scores, key=lambda k: -self.snap_scores[k]["difficulty"])[:5])
                 self.log.emit("narration", "archivist", text=f"SubQ Snap read the whole program: {len(self.snap_scores)} functions triaged.",
                               mood="dry", speak=False, priority=1)
             except Exception:
@@ -200,8 +212,12 @@ class Run:
         qlock = threading.Lock()
 
         def worker(i: int):
+            snap_decide = None
+            if hasattr(self, "_snap") and self.args.snap:
+                snap_decide = lambda fn, asm, hist: self._snap.decide_next(self.cfg, fn, asm, hist)  # noqa: E731
             d = Digger(f"digger-{i + 1}", self.llm, self.target, self.checker, self.library, self.log,
-                       max_usd=self.args.max_usd_per_fn, types_slice=self.types_slice, budget_ok=self.budget_ok)
+                       max_usd=self.args.max_usd_per_fn, types_slice=self.types_slice, budget_ok=self.budget_ok,
+                       snap_decide=snap_decide)
             while self.budget_ok():
                 with qlock:
                     if not queue:
@@ -211,6 +227,9 @@ class Run:
                                 if all(c in self.target.recovered for c in f["callees"])), 0)
                     f = queue.pop(idx)
                     self.attempted += 1
+                if f["id"] in self.snap_scores:  # Snap's whole-program difficulty sets this function's budget
+                    f = {**f, "difficulty": round(self.snap_scores[f["id"]]["difficulty"], 3)}
+                    self.target.fns[f["id"]] = f
                 out = d.dig(f["id"])
                 with self._lock:
                     self.outcomes.append(out)
@@ -243,6 +262,13 @@ class Run:
         except Exception:
             return lambda fn: text[:4000]
 
+    def _snap_stats(self) -> dict | None:
+        if not hasattr(self, "_snap"):
+            return None
+        st = dict(self._snap.STATS)
+        return {"on": bool(self.args.snap), "model": "subq-snap-1.1", **{k: st.get(k) for k in
+                ("snap_calls", "errors", "latency_ms_mean", "input_tokens", "cost_usd", "by_op")}}
+
     def finish(self) -> dict:
         el = time.time() - self.t0
         matched = len(self.matched)
@@ -271,6 +297,7 @@ class Run:
             "referee": getattr(self.referee, "kind", "lab"), "fixture_target": self.target.fixture,
             "library_backend": self.library.backend, "library_size": len(self.library.items),
             "snap_reviews": self.checker.snap_reviews, "cartographer": bool(self.args.cartographer),
+            "snap": self._snap_stats(),
             "cost_estimated": any(m not in ("muse-spark-1.3",) for m in self.usage.by_model),
         }
         if getattr(self.referee, "kind", "") == "mock" or self.target.fixture:
