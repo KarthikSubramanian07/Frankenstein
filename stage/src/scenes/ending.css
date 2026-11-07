@@ -13,36 +13,47 @@
 }
 .ending[data-state='ok'] .en-verdict { color: var(--toxic); }
 .ending[data-state='bad'] .en-verdict { color: var(--blood); }
-.ending[data-state='none'] .en-verdict { font-size: 190px; }
+/* not a disabled state: honest, in bone, with the proved count as the coloured line below (E3) */
+.ending[data-state='none'] .en-verdict { font-size: 190px; color: var(--bone); }
 
-.ending .en-sums { margin-top: 56px; display: grid; gap: 14px; }
-.ending .en-sum { display: flex; align-items: baseline; gap: 28px; white-space: nowrap; }
-.ending .en-sum .l { width: 150px; text-align: right; font: 600 30px/1 var(--text); color: var(--ash); letter-spacing: 1px; }
-.ending .en-sum .v { font: 500 30px/1 var(--mono); color: var(--bone); letter-spacing: 0; }
+/* the rebuild proof from build.rom: N agent-written functions · ROM identical */
+.ending .en-proof { margin-top: 40px; font: 600 48px/1.1 var(--text); color: var(--bone); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ending .en-proof:empty, .ending .en-meta:empty { display: none; }
+.ending .en-proof b { font-weight: 700; color: var(--toxic); }
+.ending[data-state='bad'] .en-proof b { color: var(--bone); }
+.ending .en-meta { margin-top: 20px; font: 400 24px/1.2 var(--font-pixel, monospace); letter-spacing: 1px; color: var(--ash); text-transform: uppercase; }
+
+.ending .en-sums { margin-top: 44px; display: grid; grid-template-columns: auto auto; column-gap: 28px; row-gap: 18px; align-items: baseline; }
+.ending .en-sum { display: contents; white-space: nowrap; }
+.ending .en-sum .l { text-align: right; font: 400 24px/1 var(--font-pixel, monospace); color: var(--ash); letter-spacing: 1px; text-transform: uppercase; }
+.ending .en-sum .v { text-align: left; white-space: nowrap; font: 500 36px/1 var(--mono); color: var(--bone); letter-spacing: 0; }
 .ending[data-state='none'] .en-sum.rb { display: none; }
 .ending[data-state='bad'] .en-sum.rb .v { color: var(--blood); }
 
-.ending .en-foot { margin-top: 72px; font: 600 48px/1.1 var(--text); color: var(--ash); }
+.ending .en-foot { margin-top: 56px; font: 600 48px/1.1 var(--text); color: var(--ash); }
 .ending .en-foot b { color: var(--toxic); font-weight: 700; }
 .ending[data-state='ok'] .en-foot {
   font: 400 150px/1 var(--display); letter-spacing: 8px; color: var(--fire);
   text-shadow: 0 8px 0 var(--blood), 0 16px 0 #000;
 }
 
-/* QR: a white square, only when phone.published exists */
-.ending .en-qr { display: none; flex: none; width: 540px; text-align: center; }
+/* QR: a white plate only once the image has loaded. No image: the link in large type, or "ask us". */
+.ending .en-qr { display: none; flex: none; width: 600px; text-align: center; }
 .ending.has-qr .en-qr { display: block; }
 .ending .en-qr .p2 { font: 400 50px/1 var(--display); letter-spacing: 3px; white-space: nowrap; color: var(--fire); text-transform: uppercase; margin-bottom: 28px; }
 .ending .en-qr .img {
-  position: relative; width: 520px; height: 520px; margin: 0 auto; background: #fff;
+  display: none; position: relative; width: 520px; height: 520px; margin: 0 auto; background: #fff;
   box-shadow: 0 0 0 8px var(--metal), 0 0 0 10px var(--metal-hi), 0 12px 0 10px #000;
-  display: grid; place-items: center;
 }
-.ending .en-qr img { position: absolute; inset: 24px; width: 472px; height: 472px; image-rendering: pixelated; visibility: hidden; }
-.ending .en-qr.loaded img { visibility: visible; }
-.ending .en-qr .img span { font: 600 30px/1 var(--text); color: var(--blood); }
-.ending .en-qr.loaded .img span { display: none; }
-.ending .en-qr .url { margin-top: 36px; font: 600 30px/1.2 var(--text); color: var(--ash); overflow-wrap: anywhere; }
+.ending .en-qr.loaded .img { display: block; }
+.ending .en-qr img { position: absolute; inset: 24px; width: 472px; height: 472px; image-rendering: pixelated; }
+.ending .en-qr .url { display: none; margin-top: 36px; font: 600 30px/1.2 var(--text); color: var(--ash); overflow-wrap: anywhere; }
+.ending .en-qr.loaded .url { display: block; }
+.ending .en-qr .alt { display: none; padding: 44px 36px; border: 6px solid var(--metal); box-shadow: 0 10px 0 #000; }
+.ending .en-qr.qr-missing:not(.loaded) .alt { display: grid; gap: 20px; }
+.ending .en-qr .alt .lbl { font: 400 24px/1.2 var(--font-pixel, monospace); letter-spacing: 1px; color: var(--ash); text-transform: uppercase; }
+.ending .en-qr .alt .big { font: 700 52px/1.15 var(--text); color: var(--bone); overflow-wrap: anywhere; }
+.ending .en-qr .alt .big i { font-style: normal; white-space: nowrap; }
 .ending.has-qr .en-verdict { font-size: 220px; }
 .ending.has-qr[data-state='none'] .en-verdict { font-size: 150px; }
 .ending.has-qr[data-state='ok'] .en-foot { font-size: 130px; }
@@ -62,4 +73,4 @@
 .ending .en-credits li::before { content: ''; position: absolute; left: 0; top: 14px; width: 12px; height: 12px; background: var(--rust); }
 
 /* keep the corner mark clear of the content */
-.stage[data-scene='ending'] #mark, .stage[data-scene='title'] #mark { max-width: 560px; }
+.stage[data-scene='title'] #mark { max-width: 560px; }

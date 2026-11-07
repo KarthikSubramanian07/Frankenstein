@@ -96,6 +96,13 @@ export type Effect =
   | { kind: 'judgment'; line: Line }
   | { kind: 'reset' };
 
+/** one fake per fn+attempt, whether it came as fakematch.rejected or verdict.fake_rejected */
+function pushFake(s: State, fx: Effect[], f: FakeRejected) {
+  if (s.fakes.some((x) => x.fn === f.fn && x.attempt === f.attempt)) return;
+  s.fakes.push(f);
+  fx.push({ kind: 'fake', f });
+}
+
 export function emptyState(): State {
   return {
     mode: 'none', speed: 1, fixture: false, runId: null, label: null, model: null, gameId: null, bench: false, snapOn: false, escalationModel: null, fnTotal: 0,
@@ -180,6 +187,8 @@ export function apply(s: State, e: Ev): Effect[] {
         s.lastChecked = { fn: v.fn, actor, attempt: v.attempt, text, status: v.status, match_pct: v.match_pct,
           upheld: v.claim_was_true !== false && v.status === 'MATCH', model, reviews: [], ts: v.ts };
       }
+      // contract additive (Lane B): a byte MATCH the Checker refused as compiler-coaxing
+      if (p.fake_rejected === true) pushFake(s, fx, { fn: v.fn, actor: 'checker', attempt: v.attempt, reason: String(p.reason ?? ''), ts: v.ts });
       if (v.claim_was_true === false) {
         // who claimed it: the digger who submitted this fn+attempt
         let actor = '';
@@ -234,9 +243,7 @@ export function apply(s: State, e: Ev): Effect[] {
     }
     case 'fn.abandoned': s.abandoned++; break;
     case 'fakematch.rejected': {
-      const f: FakeRejected = { fn: e.fn ?? '?', actor: e.actor ?? 'checker', attempt: Number(p.attempt) || 0, reason: String(p.reason ?? ''), ts: t ?? 0 };
-      s.fakes.push(f);
-      fx.push({ kind: 'fake', f });
+      pushFake(s, fx, { fn: e.fn ?? '?', actor: e.actor ?? 'checker', attempt: Number(p.attempt) || 0, reason: String(p.reason ?? ''), ts: t ?? 0 });
       break;
     }
     case 'idiom.learned': s.idiomsLearned++; break;

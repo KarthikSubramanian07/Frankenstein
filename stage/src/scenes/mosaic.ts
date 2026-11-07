@@ -15,6 +15,11 @@ const BANDS: Band[] = [
 ];
 export const FACE_FN = 'fn_0801B298';
 const S = 4; // GBA pixel to stage pixel
+// Stage palette (style.css tokens): toxic green ONLY means proved, violet means a guess.
+const C = {
+  bg: '#070605', off: '#15110e', offGuess: '#1f1a33', on: '#8cff2e', onEdge: '#4f9a12',
+  guess: '#a99bff', guessEdge: '#6a5cc4', ink: '#0c0a09', bone: '#efe4d2',
+};
 
 export class Mosaic {
   cv: HTMLCanvasElement;
@@ -71,13 +76,18 @@ export class Mosaic {
     return c ? { x: this.ox + c.x, y: this.oy + c.y, w: c.w, h: c.h } : null;
   }
 
+  /** canvas can't read CSS vars in g.font, so resolve --font-pixel from the stage once mounted */
+  private pixelFont() {
+    return getComputedStyle(this.cv).getPropertyValue('--font-pixel').trim() || 'monospace';
+  }
+
   land(fn: string) { this.flash.set(fn, performance.now()); }
 
   draw(ctx: Ctx, t: number) {
     this.layout(ctx);
     const g = this.g;
     const s = ctx.state;
-    g.fillStyle = '#05051a';
+    g.fillStyle = C.bg;
     g.fillRect(0, 0, 960, 640);
     let seed = ctx.reduced ? 7 : Math.floor(t / 90) + 1;
     const rnd = () => ((seed = (seed * 16807 + 11) % 2147483647) / 2147483647);
@@ -87,18 +97,18 @@ export class Mosaic {
       // the face cell is a guess (violet ?) until the lab confirms the name in names.json
       const face = c.fn === FACE_FN && !ctx.side.confirmed.has(c.fn);
       if (on) {
-        g.fillStyle = face ? '#9A9AFF' : '#7CF2C8';
+        g.fillStyle = face ? C.guess : C.on;
         g.fillRect(x, y, w, h);
-        g.fillStyle = face ? '#5b5bd0' : '#3fb894';
+        g.fillStyle = face ? C.guessEdge : C.onEdge;
         g.fillRect(x, y + h - 4, w, 4);
       } else {
-        g.fillStyle = face ? '#1d1846' : '#14122e';
+        g.fillStyle = face ? C.offGuess : C.off;
         g.fillRect(x, y, w, h);
         // static: code that isn't back yet
         const dots = Math.max(2, Math.floor((w * h) / 70));
         for (let k = 0; k < dots; k++) {
-          const v = 60 + Math.floor(rnd() * 120);
-          g.fillStyle = `rgb(${v},${v},${v + 20})`;
+          const v = 40 + Math.floor(rnd() * 60);
+          g.fillStyle = `rgb(${v + 14},${v + 4},${v - 6})`;
           g.fillRect(x + Math.floor(rnd() * Math.max(1, w - 3)), y + Math.floor(rnd() * Math.max(1, h - 3)), 3, 3);
         }
       }
@@ -106,19 +116,19 @@ export class Mosaic {
       if (f != null) {
         const a = 1 - (t - f) / 600;
         if (a <= 0) this.flash.delete(c.fn);
-        else { g.globalAlpha = a; g.fillStyle = '#ffffff'; g.fillRect(x - 3, y - 3, w + 6, h + 6); g.globalAlpha = 1; }
+        else { g.globalAlpha = a; g.fillStyle = C.bone; g.fillRect(x - 3, y - 3, w + 6, h + 6); g.globalAlpha = 1; }
       }
       if (face) {
         // "this is the face" is inferred (Snap's router), so the cell carries the guess mark
-        g.font = `${Math.min(64, Math.floor(h * 0.55))}px "Press Start 2P"`;
+        g.font = `${Math.min(56, Math.floor(Math.min(w, h) * 0.45))}px ${this.pixelFont()}`;
         g.textAlign = 'center';
         g.textBaseline = 'middle';
-        g.fillStyle = on ? '#0B0B2E' : '#9A9AFF';
+        g.fillStyle = on ? C.ink : C.guess;
         g.fillText('?', x + w / 2, y + h / 2 + 2);
       }
     }
     // band labels: proved / total for each part of the screen
-    g.font = '28px "Press Start 2P"';
+    g.font = `28px ${this.pixelFont()}`;
     g.textAlign = 'left';
     g.textBaseline = 'top';
     for (const band of BANDS) {
@@ -127,9 +137,9 @@ export class Mosaic {
       const n = sub.functions.filter((f) => s.matchedSet.has(f)).length;
       const label = `${band.label} ${n}/${sub.functions.length}`;
       const tw = g.measureText(label).width;
-      g.fillStyle = '#0B0B2E';
+      g.fillStyle = C.ink;
       g.fillRect(band.x * S, band.y * S, tw + 20, 44);
-      g.fillStyle = n ? '#7CF2C8' : '#F4F1FF';
+      g.fillStyle = n ? C.on : C.bone;
       g.fillText(label, band.x * S + 10, band.y * S + 9);
     }
   }
