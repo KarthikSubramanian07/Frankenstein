@@ -30,3 +30,7 @@ Not yet: `rebuild` and `patch` (501 until the 14:30 gate), the variant, the memo
 ## ASI:One agent (Fetch.ai prize)
 
 `lab/agents/run_agent.sh` starts **Frankenstein Referee** (address `agent1q088qnxafee4aug0qz4xnd9zkk4veq2r9ez07mp047u8enqhckc5w2hstx0`): Agent Chat Protocol, Agentverse mailbox, manifest published. It needs the local referee container. In ASI:One, ask it: "Which functions can I try?", "Does this C match fn_…?" plus a ```c block, "Verify my fix for fn_…" plus code, "Recover fn_…" (calls the crew jobs API on :7111, then re-verifies with the referee), "How much of DOOM is back?", "Prove the rebuild is exact". Every reply separates Observed (proved by the compiler) from Inferred.
+
+## Second agent: Frankenstein Excavator (multi-agent collaboration)
+
+`lab/agents/run_excavator.sh` starts **frankenstein-excavator** (`agent1qf4w7kmtsgv4fdyuj72nwethhjwhmdh7m3u7kqe5tgz4wyq8nmmmq5gjacp`, port 8002, mailbox). In ASI:One: "@frankenstein-excavator Recover fn_…". It starts a crew job, then sends the crew's C to the Referee agent as an agent-to-agent chat message and reports only after the Referee's verdict comes back. Connect its mailbox with `python3 -m lab.agents.connect_mailbox --port 8002`.

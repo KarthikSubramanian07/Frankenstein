@@ -13,8 +13,9 @@ Updated 13:05. Owner: Eddy.
 | Lint hardening (red-teamed) | done | 13 bypass classes tried; all blocked; second pass on `gcc -E` output; 25 tests |
 | Crew-to-referee integration | done | `lab/INTEGRATION_CREW.md`: works end to end, 6 fixes requested from B |
 | Rebuild from the crew's 28 recoveries | done | `doom_r01`: identical SHA-1, 28 functions, 0.25% of code bytes |
+| Fetch.ai multi-agent | done | Excavator asks the Referee agent through Agentverse mailboxes; self-test MATCH logged by both agents |
 | Memory probe, both builds | blocked | needs Eddy's `META_API_KEY` |
 | Static-face demo ROMs for D | done | `python3 -m lab.demo.build_demo_roms`; one function changed (`fn_0801B298`) |
 | Globals labelled in asm and ctx | done | 761 literal-pool words annotated, 425 ctx headers list their globals |
 
-Next: memory probe once the Meta key lands; Fetch.ai multi-agent bonus (Excavator agent asks the Referee agent before reporting).
+Next: memory probe once the Meta key lands.
