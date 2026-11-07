@@ -67,8 +67,8 @@ export class LogScene implements Scene {
           const n = nameOf(ctx, e.fn);
           const name = `<span class="nm${n.guess ? ' guess' : ''}">${esc(n.text)}${n.guess ? '<em>?</em>' : ''}</span>`;
           return e.ok
-            ? `<li class="ok"><i>⏺</i>${name}<span class="st">proved</span></li>`
-            : `<li class="no"><i>⏺</i>${name}<span class="st">rejected</span><span class="why"><u>⎿</u>${esc(e.why)}</span></li>`;
+            ? `<li class="ok">${name}<span class="st">proved</span></li>`
+            : `<li class="no">${name}<span class="st">rejected</span><span class="why"><u>⎿</u>${esc(e.why)}</span></li>`;
         }).join('')
       : '<li class="wait">Waiting for the first piece…</li>';
   }

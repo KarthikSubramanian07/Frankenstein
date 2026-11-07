@@ -80,3 +80,6 @@ body.obs .lg-game .ttl { display: none; }
 .stage[data-scene='log'] #mark, .stage[data-scene='card'] #mark { border: 0; border-radius: 0; padding: 0; color: #7a7a7a; }
 .stage[data-scene='log'] #mark::before, .stage[data-scene='card'] #mark::before { content: '[ '; color: #4a4a4a; }
 .stage[data-scene='log'] #mark::after, .stage[data-scene='card'] #mark::after { content: ' ]'; color: #4a4a4a; }
+/* no bullets: name, then the verdict */
+.lg-log li { grid-template-columns: minmax(0, 1fr) auto; }
+.lg-log li.no .why { grid-column: 1 / 3; }
