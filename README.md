@@ -51,14 +51,17 @@ A compiler checks every byte.
 
 Doom is our first patient: famous, hidden from the agents, scrambled so they can't recite it, and checkable byte for byte.
 
+> **170 of Doom's 568 game functions recovered (29.9%), each proven byte-identical.** That's 6,774 of 141,774 code bytes (4.78%): the crew started with the small functions; the big ones (the face, the renderer) are next on the road.
+
 | What | Result | Source |
 |---|---|---|
-| First Doom run (`doom_r01`, the 30 smallest functions) | 28 of 30 matched, 1.29 attempts per match, 268 s, $0.73 of Muse + $0.06 of Snap, 0 false claims, 38 habits learned | `DECISIONS.md` |
+| Recovered and proven | **170 of 568 functions (29.9%)**, 6,774 of 141,774 code bytes (4.78%); every one re-verified by the referee, 0 rejected | `crew/exports/union/UNION.json` |
+| Rebuilt game | 169 agent-written functions spliced into the ROM, 399 original: **SHA-1 identical** (`d936259b…`), verified on two machines (the 170th runs from IWRAM, which the ROM rebuild doesn't splice) | `DECISIONS.md` 14:52 |
+| Trust but verify | **24 lies caught**, **30 fakes rejected**, **0 fakes accepted** across 33 finished runs | `python3 tools/counts.py` |
+| Didn't it just remember Doom? | From memory alone, 0 of 20 functions compiled. Given the real headers and compiler errors, 3 of 20 matched, none of them functions we'd changed | `lab/out/memory_probe.json`, `DECISIONS.md` 13:28 |
+| Held-out (functions the crew never trained on) | Library on vs off: 29 vs 29 of 40 easy, 6 vs 6 of 20 hard. **No measured gain, so we don't claim one.** Run over run, warm start, salvage and the permuter turned near-misses into matches | `crew/EXPERIMENTS.md` |
 | Snap router, "Doomguy's face" | The real face function ranked #1 (p 0.88), checked afterwards against the hidden map | `DECISIONS.md` |
-| Bench (not Doom: 20 small functions written today, `-O2`) | 14 of 14 matched, 12 first try, 80 s, $0.29, 0 false claims, 24 idioms learned | `runs/bench_r01`, `DECISIONS.md` |
-| Doom target | 795 functions, 170 held out | `lab/out/manifest.json` |
 | Referee | 0.1 to 0.2 s per check | `DECISIONS.md` |
-| Full-game Doom results | measured live today | `runs/*/metrics.json` |
 
 **Evidence rule.** Bright means proved by the compiler. Violet with a "?" means our guess.
 
