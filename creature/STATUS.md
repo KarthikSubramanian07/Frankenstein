@@ -1,5 +1,7 @@
 # Lane D integration status
 
+Latest pre-push follow-up: aggregate 225/568, 7.54% bytes; received A's separate 179-function/5.34% identical rebuild report and validated it against the local package. :7416 restarted with that verified report (UI rounds to 5.3%); :7417 stays unlabelled as an identical rebuild. B now reachable, direct readiness request 51ae0b5b pending. See DEMO_READINESS.md.
+
 ## Native continuation, 15:44 Pacific
 
 Native Murmur verified as indulgent-attic; readiness broadcast f791fd09 delivered. A and C replied READY; B's direct reply/live-run ownership is pending. Full current ledger: [DEMO_READINESS.md](DEMO_READINESS.md).

@@ -1,5 +1,13 @@
 # Integrated demo readiness
 
+## Follow-up after pre-push sync
+
+Received main through 73d5d40. Latest exported aggregate is now **225/568, 7.54% bytes**, with 24 lies / 31 fakes rejected / 0 accepted across 35 finished runs. This supersedes the 179 aggregate checkpoint below.
+
+A supplied `lab/demo/union_rebuild.json` (fef8714): **179 spliced, 389 original, 5.34% bytes**, identical engine, zero rejected. D verified that report against the actual target engine and original playable package, restarted :7416 with `--report lab/demo/union_rebuild.json --engine lab/out/target.gba`, and checked `/status.json`: build verified, displayed percentage rounded by the existing player to **5.3%**. This is the 179-function rebuild, not a claim that 225 have been rebuilt. The modified :7417 player retains no identical-rebuild label. The earlier HTTP evidence file remains an accurate pre-label snapshot.
+
+B is now reachable as coherent-vest; exact live readiness requested directly in **51ae0b5b**. B also requested Enzo join ASI:One submission team `aie-ff9bcbc6` from his personal account; relayed to the user, completion not claimed. A plans the final rebuild report after the 16:00 freeze.
+
 ## Native session checkpoint (2026-11-07, 15:44 Pacific)
 
 This checkpoint supersedes the pending delivery and local-service rows below. Native Murmur works as **indulgent-attic**. `who`, `status`, `inbox` and `send` succeeded; clone `murmur.usage=false`. Readiness request broadcast **f791fd09** was sent to `*`. Real replies arrived from A and C. Main received through **d8c7c46**.
