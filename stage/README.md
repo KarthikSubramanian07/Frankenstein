@@ -37,7 +37,7 @@ Keys: `0` Title · `1` Rebuild · `2` Caught · `3` Faster · `4` Alive · `spac
 
 ## Default: one log screen and an ending card
 
-`/` shows the game window (x 20, y 92, 960×640) and, on the right, "N / 568 pieces rebuilt" with a plain-English log, newest first: "✓ name? proved" in green, "✗ name? REJECTED, claimed right, why" in red (real verdicts and fake rejections only, at most 8 lines). `space` toggles the ending card (IDENTICAL, both checksums, IT'S ALIVE, the phone link; NOT REBUILT YET until `build.rom` proves it); `c` on the card shows Built today / Not ours. Silent: no sounds, voice or beams. Everything below is the earlier multi-scene Stage, still available with `?legacy=1`.
+`/` shows the game window (x 40, y 140, 1200×800, the GBA at 5×) and, on the right, "N / 568 pieces rebuilt" with a plain-English log, newest first: "✓ name? proved" in green, "✗ name? REJECTED, claimed right, why" in red (real verdicts and fake rejections only, at most 8 lines). `space` toggles the ending card (IDENTICAL, both checksums, IT'S ALIVE, the phone link; NOT REBUILT YET until `build.rom` proves it); `c` on the card shows Built today / Not ours. Silent: no sounds, voice or beams. Everything below is the earlier multi-scene Stage, still available with `?legacy=1`.
 
 ## Screens (minimal, Doom-inspired: one idea per screen)
 

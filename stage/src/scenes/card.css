@@ -2,7 +2,7 @@
 .cardscene { display: grid; place-items: center; }
 .cd-main {
   text-align: center; display: grid; justify-items: center; gap: 30px;
-  background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 64px 88px 56px; min-width: 1040px;
+  padding: 0;
 }
 .cd-big { font: 600 112px/1 var(--sans); letter-spacing: -1px; }
 .cd-big.ok { color: var(--ok); }
@@ -20,7 +20,7 @@
 .cd-credits { display: none; grid-template-columns: 1fr 1fr; gap: 64px; width: 1600px; }
 .cardscene.show-credits .cd-main { display: none; }
 .cardscene.show-credits .cd-credits { display: grid; }
-.cd-credits .col { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 44px 48px; }
+.cd-credits .col { padding: 0; }
 .cd-credits h2 { font: 600 40px/1 var(--sans); color: var(--ink); }
 .cd-credits p { font: 400 20px/1 var(--mono); color: var(--mute); margin-top: 14px; }
 .cd-credits ul { list-style: none; margin-top: 28px; display: grid; gap: 18px; }

@@ -27,3 +27,8 @@
 - **`space`** toggles the main screen and the ending card (IDENTICAL + both checksums + IT'S ALIVE only when `build.rom` proves it; "Play it on your phone: <url>" after `phone.published`). **`c`** on the card shows Built today / Not ours.
 - **Old scenes and director mode** are kept but only with `?legacy=1`.
 - Replay (`?replay=doom_r01&speed=8`), REPLAY / SAMPLE DATA labels and `npm run demo` are unchanged.
+
+## Update 14:13 (Lane C): **the game window moved and grew** (breaking for OBS)
+
+- Default Stage game window is now **x 40, y 140, 1200×800** (GBA 240×160 at an integer **5×**), was x 20, y 92, 960×640. Please move the mGBA capture in OBS to match. `?obs=1` still makes it transparent; `?game=http://127.0.0.1:7401/` still embeds your player there.
+- The log is a narrow column on the right (x 1290 to 1880). No other changes for you.

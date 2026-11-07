@@ -7,7 +7,7 @@ import type { Ctx, Scene } from '../types.ts';
 import { h, esc } from '../types.ts';
 import { gameTotal } from './common.ts';
 
-const LINES = 8;
+const LINES = 14;
 
 type Entry = { ts: number; ok: boolean; fn: string; why: string };
 
@@ -38,7 +38,6 @@ export class LogScene implements Scene {
           </div>
           <ol class="lg-log" data-k="log"></ol>
         </div>
-        <div class="lg-key">? = our guess · everything else is proved by the compiler</div>
       </div>`;
   }
 
