@@ -16,12 +16,17 @@ Updated 2026-11-07 12:45. Numbers come from run files and `DECISIONS.md`.
 - **ASI:One:** the jobs API with plain words, live jobs and an evidence block.
 - **Exports:** real runs are committed under `crew/exports/`.
 - **MongoDB Atlas:** live. Per-library idiom collections, plus every event and run mirrored for queries.
-- **Tests:** 132 offline tests and green CI.
+- **Tests:** 182 offline tests and green CI.
 
 ## In progress
 
-- The face function (`doom_face01`, $3 cap).
-- Held-out experiments: library on vs off, Snap on vs off (`crew/EXPERIMENTS.md`, $8 cap).
+- Held-out round 2 on harder functions (57 to 200 bytes) with clean code: library on vs off, Snap on vs off,
+  repeats for noise ($15 cap). Round 1 (16 to 56 bytes) showed no real difference; see `crew/EXPERIMENTS.md`.
+
+## Learned
+
+- The face function (`fn_0801B298`, 1,164 bytes at -O3) is out of reach today: 2 attempts in 24 minutes, best
+  0.7%, $0.52. Stopped at 12:49. The hero beat uses a smaller HUD function (Lane D).
 
 ## Blocked
 
