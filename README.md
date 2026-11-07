@@ -57,19 +57,36 @@ Read [`DECISIONS.md`](DECISIONS.md) first. Its corrections override the kit.
 
 ## Architecture
 
-```
- lab/secrets (answer key, gitignored; only the referee reads it)
-        │
-  ┌─────▼──────┐  manifest, asm, ctx   ┌──────────────┐  events.jsonl   ┌─────────────┐
-  │  A · LAB    │──────────────────────▶│  B · CREW     │────────────────▶│  C · STAGE   │──▶ judges
-  │  referee    │◀── POST /check ───────│ diggers       │   metrics.json  │ ws :7202     │
-  │  :7101      │                       │ checker       │                 └─────────────┘
-  │ ASI:One     │── POST /jobs ────────▶│ jobs API :7111│                        ▲ beams
-  │ agents      │                       └──────┬────────┘                        │
-  └─────┬──────┘                              │ fn.matched              ┌──────┴───────┐
-        │ build.rom / patched.gba             └────────────────────────▶│ D · CREATURE  │──▶ phones
-        └──────────────────────────────────────────────────────────────▶│ mGBA + overlay│
-                                                                        └──────────────┘
+```text
+  lab/secrets/   answer key · gitignored · only the referee reads it
+                │
+                ▼
+┌─ A · LAB  (referee) ─────────┐                          ┌─ B · CREW  (agents) ─────────┐
+│ check · rebuild · patch      │ ─ manifest · asm · ctx ▶ │ Diggers · Muse Spark         │
+│ serve :7101                  │                          │ Checker · SubQ Snap gate     │
+│ ASI:One agents · Fetch.ai    │ ◀──── POST /check ────── │ Snap triage · escalate       │
+│                              │  POST /jobs  (ASI:One) ▶ │ jobs API :7111               │
+└───────────────┬──────────────┘                          └───────────────┬──────────────┘
+                │                                                         │ appends
+                │                                                         │
+                │                                                         ▼
+                │ build.rom             ┌─────────────────────────────────┴────────────────┐
+                │ patched.gba           │  runs/live/events.jsonl · metrics.json           │
+                │                       └───────┬─────────────────────────┬────────────────┘
+                │                               │                         │
+                │                               │                         │ tail · ws :7202
+                │                               │                         │
+                │                               │                         │
+                ▼                               │                         ▼
+┌─ D · CREATURE  (game) ───────┐                │         ┌─ C · STAGE  (show) ──────────┐
+│ mGBA · heal overlay          │◀─ fn.matched ──┘         │ Title · Split · Versus       │
+│ hot-swap · bug fix           │                          │ Time trial · Ending          │
+│ heartbeat ▶ crew :7112       │                          │ replay 1-20x                 │
+│                              │                          │                              │
+└───────────────┬──────────────┘                          └───────────────┬──────────────┘
+                │                                                         │
+                ▼                                                         ▼
+         phones · video                                                judges · projector
 ```
 
 Lanes share only what is in [`contracts/CONTRACTS.md`](contracts/CONTRACTS.md): file shapes (JSON Schema in `contracts/schemas/`), the referee and crew HTTP APIs, and the append-only `runs/<run_id>/events.jsonl`. Every lane builds against `contracts/fixtures/` from minute one.
