@@ -55,20 +55,11 @@
     document.addEventListener("keydown", function (e) { if (e.key === "Escape" && nav.classList.contains("open")) { nav.classList.remove("open"); menu.setAttribute("aria-expanded", "false"); menu.focus(); } });
   }
 
-  // ── judges chip: dismissible, remembered per browser ─────────────
-  var chip = $(".judge-chip");
-  if (chip) {
-    var KEY = "frank-judge-chip";
-    try { if (localStorage.getItem(KEY) === "gone") chip.classList.add("gone"); } catch (e) {}
-    var x = $(".judge-x", chip);
-    if (x) {
-      x.hidden = false;
-      x.addEventListener("click", function () {
-        chip.classList.add("gone");
-        try { localStorage.setItem(KEY, "gone"); } catch (e) {}
-        var h = $("#hero-h"); if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
-      });
-    }
+  // ── nav: hide the hand note once the page scrolls ──────────────
+  var navWrap = $(".nav-wrap");
+  if (navWrap) {
+    var onScroll = function () { navWrap.classList.toggle("scrolled", window.scrollY > 40); };
+    onScroll(); window.addEventListener("scroll", onScroll, { passive: true });
   }
 
   // ── counters ──────────────────────────────────────────────────────

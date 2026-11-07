@@ -29,9 +29,9 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&family=Press+Start+2P&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Schibsted+Grotesk:wght@500;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&family=Press+Start+2P&display=swap">
 <link rel="preload" as="image" href="/assets/art/hero-1400.webp" imagesrcset="/assets/art/hero-800.webp 800w, /assets/art/hero-1400.webp 1400w, /assets/art/hero-full.webp 1584w" imagesizes="(max-width: 1240px) 100vw, 1200px">
-<link rel="stylesheet" href="/assets/site.css?v=21">
+<link rel="stylesheet" href="/assets/site.css?v=22">
 <noscript><style>[data-reveal]{opacity:1!important;transform:none!important}.msg{opacity:1!important;transform:none!important}.msg.typing{display:none}</style></noscript>
 
 <script type="application/ld+json">
@@ -65,16 +65,20 @@
 <header class="nav-wrap">
   <nav class="nav" aria-label="Main">
     <a class="logo" href="/" aria-label="Frankenstein home"><svg class="logo-bolt" aria-hidden="true"><use href="#bolt"/></svg><span>Frankenstein</span></a>
+    <p class="jnote-m hand" aria-hidden="true"><span>judges, start in here</span><svg class="jarrow" viewBox="0 0 64 48" aria-hidden="true"><path class="draw" d="M4 44c16-2 30-8 40-18 5-5 8-11 10-18"/><path class="draw head" d="M46 13c3-3 6-6 8-10 2 4 3 8 5 12"/></svg></p>
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links"><span class="sr">Menu</span><i aria-hidden="true"></i><i aria-hidden="true"></i></button>
     <ul class="nav-links" id="nav-links">
-      <li class="nl-judges"><a href="/judges"><i class="led" aria-hidden="true"></i>For judges <span aria-hidden="true">&#8594;</span></a></li>
+      <li class="nl-judges"><a href="/judges"><i class="led" aria-hidden="true"></i>For judges <span aria-hidden="true">&#8594;</span><em class="hand" aria-hidden="true">the 60-second version</em></a></li>
       <li><a href="#partners">Partners</a></li>
       <li><a href="#referee">The referee</a></li>
       <li><a href="#story">The story</a></li>
       <li><a href="#numbers">Numbers</a></li>
       <li><a href="#credits">Credits</a></li>
     </ul>
-    <a class="judges-pill" href="/judges"><i class="led" aria-hidden="true"></i><span>For judges</span><b aria-hidden="true">&#8594;</b></a>
+    <div class="jcta">
+      <a class="judges-pill" href="/judges"><i class="led" aria-hidden="true"></i><span>For judges</span><b aria-hidden="true">&#8594;</b></a>
+      <p class="jnote hand" aria-hidden="true"><span>the 60-second version</span><svg class="jarrow" viewBox="0 0 64 48" aria-hidden="true"><path class="draw" d="M4 44c14-1 28-6 38-15 6-6 10-13 12-21"/><path class="draw head" d="M46 13c3-3 6-6 8-10 2 4 3 8 5 12"/></svg></p>
+    </div>
     <a class="start-btn" href="#story" aria-label="Press start: begin the story"><span><span class="ps-press">PRESS </span>START</span><i aria-hidden="true"></i></a>
   </nav>
 </header>
@@ -84,7 +88,6 @@
 <!-- ═════════════ HERO ═════════════ -->
 <section class="hero" aria-labelledby="hero-h">
   <div class="wrap hero-top">
-    <aside class="judge-chip" aria-label="For judges"><a href="/judges"><i class="led" aria-hidden="true"></i><span><b>Judging?</b> Every track, criterion by criterion</span><span class="arr" aria-hidden="true">&#8594;</span></a><button class="judge-x" type="button" aria-label="Dismiss" hidden>&#215;</button></aside>
     <h1 id="hero-h" class="display" data-reveal style="--i:1">Lost games,<br><span class="two">rebuilt and proven.</span></h1>
     <div class="hero-sub" data-reveal style="--i:2">
       <p>87% of classic games are endangered, and most of their source code is gone. Frankenstein's agents rebuild it from the cartridge, one piece at a time. <b>A compiler checks every byte.</b></p>
@@ -123,7 +126,7 @@
   <div class="wrap">
     <header class="sec-head pt-head" data-reveal>
       <p class="tagpill">Built with</p>
-      <h2 id="pt-h" class="h2">Five partners. Five organs. <span class="two">Pull one and the creature dies.</span></h2>
+      <h2 id="pt-h" class="h2">Five partners. Five organs. <span class="two"><span class="hl">Pull one</span> and the creature dies.</span></h2>
       <p class="sub">Muse writes it. Snap judges it. The compiler proves it. MongoDB remembers it. ASI:One lets anyone ask for it. Gemini gets a second look.</p>
     </header>
 
@@ -209,7 +212,7 @@
   <div class="wrap ref-grid">
     <div class="ref-copy" data-reveal>
       <p class="tagpill tag-lcd">THE REFEREE</p>
-      <h2 id="ref-h" class="h2">Byte-identical, <span class="two">or it's out.</span></h2>
+      <h2 id="ref-h" class="h2"><span class="hl">Byte-identical,</span> <span class="two">or it's out.</span></h2>
       <p class="sub">Every piece of C the agents write is compiled with the game's own toolchain and compared, instruction by instruction, against the original. The referee has never told a joke.</p>
       <ul class="legend">
         <li><span class="ev ev-proved">MATCH 100%</span> Bright means proved by the compiler.</li>
@@ -218,6 +221,7 @@
     </div>
 
     <div class="handheld-wrap" data-reveal style="--i:1">
+      <p class="hand hand-note ref-note" aria-hidden="true">one wrong byte, and it's out<svg viewBox="0 0 60 70"><path d="M10 6c18 4 30 18 32 46" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M31 48c4 4 8 9 11 14 3-5 7-10 11-13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></p>
       <div class="handheld" id="machine" role="img" aria-label="Animation on a handheld screen: the target function's bytes and the bytes compiled from an agent's C are compared row by row. Two rows differ on the first attempt; on the retry every byte matches.">
         <div class="hh-top"><span class="hh-led"></span><span class="hh-brand">FRANKENSTEIN</span></div>
         <div class="hh-bezel">
@@ -487,6 +491,6 @@ asrs r0, r0, #1</pre>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-<script src="/assets/app.js?v=18" defer></script>
+<script src="/assets/app.js?v=19" defer></script>
 </body>
 </html>

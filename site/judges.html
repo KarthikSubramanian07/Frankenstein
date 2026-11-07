@@ -29,8 +29,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Schibsted+Grotesk:wght@500;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&family=Press+Start+2P&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=21">
-<link rel="stylesheet" href="/assets/judges.css?v=3">
+<link rel="stylesheet" href="/assets/site.css?v=22">
+<link rel="stylesheet" href="/assets/judges.css?v=4">
 
 <script type="application/ld+json">
 {
@@ -60,15 +60,17 @@
     <a class="logo" href="/" aria-label="Frankenstein home"><svg class="logo-bolt" aria-hidden="true"><use href="#bolt"/></svg><span>Frankenstein</span></a>
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links"><span class="sr">Menu</span><i aria-hidden="true"></i><i aria-hidden="true"></i></button>
     <ul class="nav-links" id="nav-links">
-      <li class="nl-judges"><a href="/judges" aria-current="page"><i class="led" aria-hidden="true"></i>For judges</a></li>
+      <li class="nl-judges"><a href="/judges" aria-current="page"><i class="led" aria-hidden="true"></i>For judges <span aria-hidden="true">&#8594;</span><em class="hand" aria-hidden="true">the 60-second version</em></a></li>
       <li><a href="/#partners">Partners</a></li>
       <li><a href="/#referee">The referee</a></li>
       <li><a href="/#story">The story</a></li>
       <li><a href="/#numbers">Numbers</a></li>
       <li><a href="/#credits">Credits</a></li>
     </ul>
-    <a class="judges-pill" href="/judges" aria-current="page"><i class="led" aria-hidden="true"></i><span>For judges</span><b aria-hidden="true">&#8594;</b></a>
-    <a class="start-btn" href="#tracks" aria-label="Jump to every track"><span><span class="ps-press">ALL </span>TRACKS</span><i aria-hidden="true"></i></a>
+    <div class="jcta">
+      <a class="judges-pill" href="/judges" aria-current="page"><i class="led" aria-hidden="true"></i><span>For judges</span><b aria-hidden="true">&#8594;</b></a>
+    </div>
+    <a class="start-btn" href="/#story" aria-label="Press start: begin the story"><span><span class="ps-press">PRESS </span>START</span><i aria-hidden="true"></i></a>
   </nav>
 </header>
 
@@ -221,6 +223,7 @@
         <div><dt>A scrambled patient</dt><dd>We made 11 small edits to our Doom build, and from memory alone Muse compiled 0 of 20 Doom functions. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/DECISIONS.md">DECISIONS 13:28</a></dd></div>
         <div><dt>Proved instruction by instruction</dt><dd>Each candidate compiles in a locked-down container and must match the original instruction for instruction. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/lab/README.md">lab/README.md</a></dd></div>
         <div><dt>The whole game, rebuilt</dt><dd>The agents' functions go back into the ROM, and its SHA-1 checksum stays identical. <a class="src" href="#rebuild-proof">see the rebuild</a></dd></div>
+        <div><dt>And it can change again</dt><dd>We edited one recovered function, <code>fn_0801C130</code>, so its graphics should draw 4 pixels higher; the referee confirms the other 567 are unchanged, and the emulator check is next. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/tree/main/lab/demo/hud_shift">lab/demo/hud_shift</a></dd></div>
         <div class="limits"><dt>Not done yet</dt><dd>The crew wins on small functions; Doomguy's 1,164-byte face got 2 attempts and a best of 0.7%. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/STATUS.md">crew/STATUS.md</a></dd></div>
       </dl>
       <div class="proof">
@@ -561,6 +564,6 @@
     </div>
   </div>
 </footer>
-<script src="/assets/judges.js?v=3" defer></script>
+<script src="/assets/judges.js?v=4" defer></script>
 </body>
 </html>
