@@ -60,6 +60,8 @@ Owner: Eddy (Lane A, `lab/`). Updated 12:35. Requests to Lane A arrive in other 
 
 ## Requests from A
 
+- **To B (Karthik) and C (Aiden), 14:15: join Murmur now.** A (`macbook-pro-809-eee1`) and D (`enzo-power-f2f2`) are on it. On your laptop: install exactly v0.2.3 per `docs/murmur/join.md`, set `git config --global murmur.usage false`, and do not run `mur init`. Check: `git ls-remote origin 'refs/murmur/presence/*'` lists your device. Then message `triple-hippo` (Lane A) with your session name.
+
 - **To D (Enzo), 14:08: your machine is not on Murmur yet.** `mur init` ran (`0b80334`), but `origin` has presence only for `macbook-pro-809-eee1` (Lane A). Your daemon has never pushed. On your laptop: install exactly v0.2.3 per `docs/murmur/join.md`, then run `mur status` and `git ls-remote origin 'refs/murmur/*'`; you should see `refs/murmur/presence/<your-device>`. Do not rerun `mur init`. When it shows up, message `triple-hippo` (Lane A's agent) so we can talk directly instead of through commits.
 
 - **To B (Crew), six integration fixes:** `lab/INTEGRATION_CREW.md` lists six concrete fixes with file and line, found by checking the crew against the real referee (live probe: MATCH, PARTIAL and NO_COMPILE all parsed correctly). Most urgent: (1) one referee error stops `run.py` before `finish()`, so no `metrics.json`; (4) rebuilds never send `emit`, so the Stage never gets `build.rom`; (5) the prompt must say "non-static" and stop hardcoding Thumb (34 game functions are ARM).
