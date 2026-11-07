@@ -124,6 +124,7 @@ class Digger:
         budget = self.max_attempts or attempt_budget(fn["difficulty"])
         last_src, last_attempt, best_src, failures, turns = None, 0, None, 0, 0
         perm_runs = 0
+        stall, deeper_used = 0, False
         match_turn = 10**9  # turn of the latest MATCH verdict (auto-claim if the model moves on without claiming)
         escalated = False  # set by SubQ Snap (or by the fixed fallback rule when Snap is off)
         esc_failed = False  # an escalation-model call errored during this function
@@ -214,6 +215,10 @@ class Digger:
                     fd = res.get("first_diff") or {}
                     out.journey.append((out.attempts, res["status"], pct, fd.get("expected_ins"), fd.get("got_ins"),
                                         (res.get("aligned") or {}).get("structure_pct")))
+                    if pct > out.best_pct:
+                        stall = 0
+                    elif res["status"] != "MATCH":
+                        stall += 1  # wide, not deep: published work shows odds collapse after ~3 non-improving tries
                     new_best = pct >= out.best_pct
                     if new_best:
                         out.best_pct, best_src = pct, src
@@ -262,6 +267,15 @@ class Digger:
                         if perm.get("rejected"):
                             reply["permuted"]["note"] = ("The permuter matched the bytes but the Checker rejected it: "
                                                          + perm["rejected"] + ". Fix that, keep the structure.")
+                    if stall >= 3 and res["status"] != "MATCH":
+                        if not deeper_used:
+                            deeper_used = True
+                            reply["think_deeper"] = ("Three attempts without improvement. Stop small edits: re-read the "
+                                                     "asm and the aligned diff, state in one sentence what structure "
+                                                     "GCC is producing, then write one new candidate from your best "
+                                                     "attempt.")
+                        else:
+                            budget = out.attempts  # move on: spend on fresh functions instead of a dead end
                     reply["attempts_left"] = budget - out.attempts
                     if res["status"] == "MATCH":
                         reply["next"] = "Call submit_claim now."
