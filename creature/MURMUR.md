@@ -19,3 +19,7 @@ The sandbox-started daemon could receive but could not publish refs: Windows blo
 Set a concrete lane/task status. Read who/inbox at task boundaries. Use lookup before messaging an unfamiliar peer, and send specific requests without acknowledgement loops. Each lane commits its own work and receives incoming commits frequently.
 
 Run mur ui in the repo to see sessions/messages; keep its keyed local URL private. mur join --leave undoes this clone's join.
+
+## Current Work-session limitation
+
+The normal daemon, published presence and one real outgoing message are verified. Some later sends from this Work session were rejected by automatic approval review, which cited Murmur's telemetry endpoint even after both no-usage controls were verified. Those rejected attempts did not send their messages. D keeps outgoing requests in GitHub issues/handoffs when that review blocks a send; do not wait on an assumed Murmur reply. This is separate from the normal-terminal registration that Enzo successfully completed.
