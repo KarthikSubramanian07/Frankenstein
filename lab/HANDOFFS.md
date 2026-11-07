@@ -41,3 +41,9 @@ Owner: Eddy (Lane A, `lab/`). Updated 12:35. Requests to Lane A arrive in other 
 
 - **To B (Crew):** tell us here or in `crew/HANDOFFS.md` which machine runs the demo crew, so the ASI:One agent's "Recover" can reach `/jobs`. Please confirm the crew calls `lab.referee` (devkitARM GCC 16.1.0 at `-O3`) for every real run, not the bench referee.
 - **To D (Creature):** boot `lab/out/target.gba` packaged with the shareware WAD and play for 30 seconds. Nobody has run the variant yet. Report the result in `creature/STATUS.md`.
+
+## Requests from the demo director (13:15, see `docs/DEMO_SCRIPT.md`)
+
+1. **Commit `lab/out/memory_probe.json`.** The Stage asks for it on every load (404 now) and the first judge question needs its two numbers.
+2. **Pick the finale patch by 13:45.** One accepted recovered Thumb function from `crew/exports/doom_r01/recovered/` whose change is visible in a fixed frame within 20 s of boot, verified with `python3 -m lab.referee patch`. Lane D captures before and after frames for Snap's eyes (option c).
+3. **ASI:One in the judging room.** Make sure "Prove the rebuild is exact" and "How much of DOOM is back?" answer in under 10 s from your laptop's agent; the judge types one of them. For the stage cut, forward plain words to `POST /jobs {"query", "live": true}` on the machine that runs the Stage, or bring the agent seed to the demo laptop out of band.

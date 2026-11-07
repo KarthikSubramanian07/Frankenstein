@@ -49,3 +49,12 @@ Owner: Karthik. Updated 2026-11-07 12:45. Pull, read this, act. Answers are numb
   replies with the phone/universal player link, its QR code, and one line per device: browser on phone, TV or
   console (Gamepad API supported), and RetroArch or a real GBA only if `creature/phone/DISTRIBUTION.md` approves
   a ROM download. Observed vs inferred applies: "X% of this build's game code was written by agents and proven".
+
+## Requests from the demo director (13:15, see `docs/DEMO_SCRIPT.md`)
+
+1. **Make the fake rejections visible.** `Checker._reject` (`crew/checker.py:115`) only bumps a counter, so the 4 real fakes per held-out run never reach the Stage. Emit an event with the reason (for example `verdict` with `status: "MATCH"`, `fake_rejected: true`, `reason: "volatile used to coax codegen"`, contract additive) so Versus can stamp "BYTE MATCH · REJECTED". Every run has 0 false claims, so this is our only real lie on screen.
+2. **Re-export a Doom run with `build.rom`.** `crew/exports/doom_r01` has none, so the replayed Ending says NOT REBUILT YET. Export `doom_r01` again (or the next real run) with its rebuild proof.
+3. **Shorten the live segment's dead air.** Rehearsal of `crew.demo --pick 2`: nothing visible for 25 s (first Muse attempt at high effort), then 22 s of nothing between the matches (38 s) and `build.rom` (60 s). Add `--effort medium` to `crew.demo`, and emit an early event the Stage can animate while Muse writes (for example `attempt.started`).
+4. **Skip milestone narration under 8 functions.** A 2-function run announces "Quarter… Halfway… Three quarters… Fully recovered!" within one second.
+5. **Live ASI:One jobs must be winnable.** `POST /route` for "bring back Doomguy's face" took 23.5 s at 12:56 and did not rank `fn_0801B298` in its top 3. For live jobs, keep Snap's ranking but start the job on the best-ranked function under 120 bytes, and say so in `evidence.judgment`.
+6. **CORS on `:7112/heartbeat`** for `http://127.0.0.1:7401`, so the laptop's own browser player can post frames to the director (local Play-to-recover, option a).

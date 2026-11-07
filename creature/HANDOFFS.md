@@ -42,3 +42,11 @@ Owner: Enzo. Latest coordination protocol in CLAUDE.md received: check main and 
 ## Current blocker / next action
 
 Connected Windows environment became unavailable during desktop ROM-open action. No current desktop boot or Lua success is claimed. Resume host connection, package static-face engine, verify flicker vs normal face, run real telemetry through the bridge/Director, then test a verified source rebuild/swap. Browser boot evidence was saved locally as creature/shots/browser-boot.jpg before disconnection. Runtime/vendor, generated packages and core binaries stay ignored.
+
+## Requests from the demo director (13:15, see `docs/DEMO_SCRIPT.md`)
+
+1. **Doom on the demo laptop (blocker).** Karthik's Mac runs the referee and the Stage but has no playable ROM, no mGBA, no OBS and no wine (GbaWadUtil is a Windows exe). Hand the two playable packages (static face, and restored) to the demo laptop out of band (USB, never git), or package them in Docker on the Mac, and write their SHA-1s in `creature/STATUS.md`. Then `FRANK_PHONE_ROM=<static-face playable .gba> make up`.
+2. **The phone URL.** HTTPS with COOP and COEP and no tunnel: a Cloudflare Pages deploy with a `_headers` file is the simplest. The ROM's licence decision is Karthik's (`lab/HANDOFFS.md`, response 6); prepare the deploy, publish only after he decides. Then append `phone.published {url, qr_png}`.
+3. **Run the phone checklist** in `docs/DEMO_SCRIPT.md` (iOS Safari, Android Chrome, 5 phones on venue Wi-Fi, under 10 s to title) and log each with time and device in `STATUS.md`. Emulated Chrome and WebKit on localhost passed (ready in 0.65 to 1.75 s, isolated, engine boots).
+4. **Snap's eyes frames.** Once Lane A picks the patch, capture before and after PNGs from the browser player at the same game moment and run `python -m crew.eyes before.png after.png --claim "…" --run runs/live --fn <fn>`.
+5. **Optional local Play-to-recover:** `?director=http://127.0.0.1:7112` makes the player post a 240×160 PNG to `/heartbeat` every 3 s during a live run (laptop only, nothing public).
