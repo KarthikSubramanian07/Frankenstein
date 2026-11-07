@@ -60,16 +60,17 @@ def build_queue(cfg: Config, target: Target, min_pct: float, max_pct: float = 10
                     previews[p.get("attempt")] = prev
             elif t == "verdict" and p.get("status") == "PARTIAL":
                 pct = float(p.get("match_pct") or 0)
-                if pct < min_pct or pct >= max_pct or pct <= best.get(fn, {}).get("match_pct", -1):
+                if pct <= best.get(fn, {}).get("match_pct", -1):
                     continue
                 n = p.get("attempt")
                 f = run_dir / "attempts" / f"{fn}.{int(n or 0):02d}.c"
                 src = f.read_text() if f.exists() else previews.get(n)
                 if src:
                     best[fn] = {"src": src.strip(), "match_pct": pct, "run": run_dir.name, "attempt": n}
-    for d in cfg.runs_dir.glob("salvage*/recovered"):
+    for d in list(cfg.runs_dir.glob("salvage*/recovered")) + list(cfg.runs_dir.glob("permute*/recovered")):
         accepted |= {p.stem for p in d.glob("fn_*.c")}
-    return {fn: v for fn, v in best.items() if fn not in accepted}
+    # the best attempt overall decides the band (a 93% function is not queued again from its 87% attempt)
+    return {fn: v for fn, v in best.items() if fn not in accepted and min_pct <= v["match_pct"] < max_pct}
 
 
 def main(argv=None) -> int:
