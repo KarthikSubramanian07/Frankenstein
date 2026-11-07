@@ -1,0 +1,4 @@
+# The bench build and referee are stdlib-only (plus the arm-none-eabi toolchain on PATH).
+# These are only needed for the tests: .venv/bin/python -m pytest crew/bench
+pytest>=8
+jsonschema>=4
