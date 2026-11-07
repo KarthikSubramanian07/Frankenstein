@@ -1,11 +1,11 @@
 {
   "v": 1,
-  "functions": 225,
+  "functions": 231,
   "of": 568,
-  "pct_functions": 39.6,
-  "bytes": 10684,
+  "pct_functions": 40.7,
+  "bytes": 11372,
   "of_bytes": 141774,
-  "pct_bytes": 7.54,
+  "pct_bytes": 8.02,
   "reverified_by_referee": true,
   "rejected_on_reverify": [],
   "target_rom_sha1": "d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2",
@@ -571,6 +571,13 @@
       "sha1": "e8684f11250a805bfb37dbd14a72f449cd7015f5"
     },
     {
+      "fn": "fn_08005E6C",
+      "size": 112,
+      "split": "train",
+      "from": "runs/doom_sweep3",
+      "sha1": "df006b21ea139bef3e1ce8b4f2b2de4f445e0fdf"
+    },
+    {
       "fn": "fn_08006214",
       "size": 112,
       "split": "train",
@@ -718,11 +725,25 @@
       "sha1": "7760163a2f41630b1c4c533c6908192608e25798"
     },
     {
+      "fn": "fn_08009768",
+      "size": 116,
+      "split": "train",
+      "from": "runs/doom_sweep3",
+      "sha1": "1a6adca3c48fdc1c14e056814ddab6c6a31d9af8"
+    },
+    {
       "fn": "fn_08009850",
       "size": 112,
       "split": "heldout",
       "from": "crew/exports/doom_r14",
       "sha1": "32672705d97e7aa852c1c2aab1fa0aac83ea1a85"
+    },
+    {
+      "fn": "fn_080098C0",
+      "size": 120,
+      "split": "train",
+      "from": "runs/doom_sweep3",
+      "sha1": "322268e8c2fdedddaaef8bcd9aebffcb5dc781a5"
     },
     {
       "fn": "fn_08009A28",
@@ -942,6 +963,13 @@
       "sha1": "99d5365139e18fad0057f6202f6c99cd76eaaf6a"
     },
     {
+      "fn": "fn_0800E58C",
+      "size": 108,
+      "split": "train",
+      "from": "runs/doom_sweep3",
+      "sha1": "c39201c27a7b51ef0f958a95041f976605d13f75"
+    },
+    {
       "fn": "fn_0800E728",
       "size": 132,
       "split": "heldout",
@@ -982,6 +1010,13 @@
       "split": "train",
       "from": "crew/exports/doom_sweep1",
       "sha1": "b3aad0d0a95b84999f95f81da40343ec91dd2493"
+    },
+    {
+      "fn": "fn_08010314",
+      "size": 112,
+      "split": "heldout",
+      "from": "runs/doom_sweep3",
+      "sha1": "4dad5c2cd3dbc85837d65ebbf7340649b7fcd183"
     },
     {
       "fn": "fn_08010D78",
@@ -1031,6 +1066,13 @@
       "split": "train",
       "from": "crew/exports/doom_r11",
       "sha1": "5a3a687388a4c5715315cd0e9de01367e3a474d7"
+    },
+    {
+      "fn": "fn_08011EDC",
+      "size": 120,
+      "split": "train",
+      "from": "runs/doom_sweep3",
+      "sha1": "7e68129be904c4dc7d16634d3f33336fe6f3c2d8"
     },
     {
       "fn": "fn_08012234",

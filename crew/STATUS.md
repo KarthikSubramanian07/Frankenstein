@@ -1,15 +1,19 @@
 # Lane B (Crew) status
 
-Updated 2026-11-07 12:45. Numbers come from run files and `DECISIONS.md`.
+Updated 2026-11-07 15:58. Numbers come from run files and `DECISIONS.md`.
 
 ## Verified now
 
+- **Union headline:** **231 of 568 game functions (40.7%)**, 11372 of 141774 code bytes (8.02%),
+  `reverified_by_referee: true`, `rejected_on_reverify: []` (`crew/exports/union/UNION.json`).
+- **doom_par1:** 2/20 MATCH (`fn_08012234`, `fn_08019244`), $4.881, 1 false claim caught.
+- **Live digs:** `doom_sweep3` (~53 recovered so far), `doom_keepA`, `doom_keepB` running with META_API_KEY.
 - **Real Doom:** `doom_r01` matched 28 of 30 small functions through Lane A's real referee, at 1.29 attempts per
   match, in 268 s, for $0.73 of Muse plus $0.06 of SubQ Snap, with 0 false claims.
-- **Rebuild:** splicing those 28 into the ROM gives the identical SHA-1 (`d936259b…`).
+- **Rebuild:** splicing recovered functions into the ROM gives the identical SHA-1 (`d936259b…`).
 - **Bench:** `bench_r01` matched 14 of 14 (bench only, not Doom).
-- **SubQ Snap:** triage, keep / escalate / abandon, the fakematch gate, the Play-to-recover director (2.4 s), eyes
-  (0.7 s) and the router (face function ranked #1).
+- **SubQ Snap:** triage, keep / escalate / abandon, the fakematch gate, the Play-to-recover director, eyes
+  and the router.
 - **Gemini:** a second opinion on every match, run in parallel with Snap.
 - **Habits:** adopted or retired on evidence while the library is learning; frozen in held-out runs.
 - **Claims:** claim-first submissions, so the Checker can catch real overconfidence.
@@ -20,13 +24,14 @@ Updated 2026-11-07 12:45. Numbers come from run files and `DECISIONS.md`.
 
 ## In progress
 
-- Held-out round 2 on harder functions (57 to 200 bytes) with clean code: library on vs off, Snap on vs off,
-  repeats for noise ($15 cap). Round 1 (16 to 56 bytes) showed no real difference; see `crew/EXPERIMENTS.md`.
+- Muse digs on remaining unrecovered thumb ≤160B (`doom_keepA`/`doom_keepB`) and `doom_sweep3` (≤300B).
+- Refresh `crew.union` as new MATCHes land; push every working step.
 
 ## Learned
 
 - The face function (`fn_0801B298`, 1,164 bytes at -O3) is out of reach today: 2 attempts in 24 minutes, best
   0.7%, $0.52. Stopped at 12:49. The hero beat uses a function next to the face in the ROM (Lane D).
+- Permuter on ≥90% near-misses closed 0 of 17; Muse digs on remaining unrecovered are the path up.
 
 ## Blocked
 
@@ -34,5 +39,5 @@ Updated 2026-11-07 12:45. Numbers come from run files and `DECISIONS.md`.
 
 ## Next
 
-- The live segment script (`crew.demo`) rehearsed against the real referee.
-- The finale function chosen with Lane A.
+- Keep digs alive through freeze; refresh and push union whenever LIVE > PUBLISHED.
+- Pokémon Red coverage work QUEUED AFTER DOOM (union digs / demo freeze).
