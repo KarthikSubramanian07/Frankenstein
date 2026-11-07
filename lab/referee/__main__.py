@@ -2,7 +2,8 @@
 
   check   --fn fn_0801B7D4 --src cand.c [--json]
   context --fn fn_0801B7D4
-  serve   [--port 7101]          real referee over HTTP
+  serve   [--port 7101] [--game voxelburg]   real referee over HTTP (default game: FRANK_GAME, else doom)
+          --game pokered serves lab/pokered/referee.py (RGBDS asm, rt_ ids) on :7103 unless --port is given
   mock    serve [--port 7101]    fixture-backed fake for other lanes
   rebuild --recovered runs/live/recovered [--emit]   ROM from the agents' code; SHA-1 must equal the original
   patch   --fn fn_X --src fixed.c                   fixed function in place; lists every changed function
@@ -107,17 +108,20 @@ def main() -> None:
     p.add_argument("sub", nargs="?")
     p.add_argument("--fn")
     p.add_argument("--src")
-    p.add_argument("--port", type=int, default=7101)
+    p.add_argument("--port", type=int, default=None)
     p.add_argument("--host", default="127.0.0.1")
     p.add_argument("--json", action="store_true")
+    p.add_argument("--game", default=None, help="lab/games/<game>.json (default: FRANK_GAME, else doom)")
     a = p.parse_args()
 
+    if a.port is None:
+        a.port = 7103 if _is_pokered(a.game) else 7101
     mock = a.command == "mock"
     if a.command in ("serve", "mock"):
-        referee = None if mock else _referee()
-        print(f"referee {'mock ' if mock else ''}serving on {a.host}:{a.port}", file=sys.stderr)
+        referee = None if mock else _referee(a.game)
+        print(f"referee {'mock ' if mock else ''}{'' if mock else (referee.game.get('id') or '') + ' '}serving on {a.host}:{a.port}", file=sys.stderr)
         ThreadingHTTPServer((a.host, a.port), make_handler(referee, mock)).serve_forever()
-    referee = _referee()
+    referee = _referee(a.game)
     if a.command == "context":
         print(referee.context(a.fn))
     elif a.command == "check":
@@ -133,9 +137,18 @@ def main() -> None:
         sys.exit(0 if ok else 1)
 
 
-def _referee():
+def _is_pokered(game: str | None) -> bool:
+    import os
+    return (game or os.environ.get("FRANK_GAME")) == "pokered"
+
+
+def _referee(game: str | None = None):
+    if _is_pokered(game):  # assembly referee, not lab/games/<game>.json
+        sys.path.insert(0, str(REPO / "lab" / "pokered"))
+        from referee import HttpReferee
+        return HttpReferee()
     from .core import Referee
-    return Referee()
+    return Referee(game)
 
 
 if __name__ == "__main__":

@@ -80,7 +80,8 @@
           "mode": {
             "enum": [
               "thumb",
-              "arm"
+              "arm",
+              "sm83"
             ]
           },
           "scope": {
