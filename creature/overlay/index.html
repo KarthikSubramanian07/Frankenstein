@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Frankenstein · Heal overlay</title>
+<style>
+  *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:transparent;color:#fff;font-family:monospace}
+  #screen{position:absolute;inset:0;margin:auto;width:min(100vw,150vh);height:min(100vh,66.666667vw)}
+  canvas{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated}
+  #status{position:absolute;top:3%;left:2%;max-width:96%;padding:4px 7px;background:#0b0b2ee8;border-left:3px solid #ff3b3b;font-size:clamp(10px,1.7vw,26px);letter-spacing:.04em;white-space:pre-wrap}
+  #status.sample{border-color:#ffd23f;color:#ffd23f}#status.good{border-color:#7cf2c8;color:#7cf2c8}
+  body.preview{background:#0b0b2e}body.preview #screen{outline:1px solid #3e2c7a;background:repeating-conic-gradient(#171738 0% 25%,#10102c 0% 50%) 0 / 32px 32px}
+  #controls{position:fixed;bottom:16px;left:16px;right:16px;background:#0b0b2ef5;padding:10px;display:none;gap:8px;align-items:center;font-size:13px;flex-wrap:wrap}
+  #controls button{font:inherit;background:#3e2c7a;border:1px solid #9a9aff;color:white;padding:8px;cursor:pointer}#controls strong{color:#ffd23f}
+  #help{position:absolute;inset:40% 10% auto;text-align:center;color:#9a9aff;display:none;font-size:clamp(12px,2vw,26px)}
+  .preview #help{display:block}.sample-mode #controls{display:flex}
+</style>
+<div id="screen"><div id="help">OVERLAY PREVIEW · NO GAME CAPTURE<br><small>Transparent regions reveal the game in OBS.</small></div><canvas id="noise" width="240" height="160" aria-label="Recovery presentation overlay"></canvas><div id="status" role="status">NO SIGNAL · CONNECTING TO BRIDGE</div></div>
+<div id="controls"><strong>SAMPLE DATA · VISUAL CHECK ONLY</strong><button data-step="0">0% recovered</button><button data-step="0.5">50% recovered</button><button data-step="1">100% recovered</button><button id="disconnect">Show no signal</button><button id="motion">Reduced motion</button></div>
+<script src="overlay.js"></script>
+</html>
