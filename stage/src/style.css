@@ -450,3 +450,9 @@ body.obs .split .game-frame .ph { display: none; }
 .versus .evidence .lbl { color: #ecebff; }
 .versus .evidence .where { color: #ecebff; }
 .versus .ko { top: 852px; }
+
+/* ---------- round 3 fixes ---------- */
+.split .pl .small { color: #e6e3ff; }
+.versus .evidence .g small { font: 40px/1 var(--code); color: #ffd6f4; margin-left: 14px; letter-spacing: 1px; }
+.versus .tally { font-size: 36px; top: 978px; }
+.stage[data-scene='versus'] #mark { top: 200px; bottom: auto; right: auto; left: 50%; transform: translateX(-50%); }

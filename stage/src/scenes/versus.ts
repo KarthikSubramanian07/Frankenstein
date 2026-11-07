@@ -131,9 +131,10 @@ export class VersusScene implements Scene {
 /** The fake gate on a match: per-lab scores when they belong to this match, else the run's screening so far. */
 function gateLines(s: State, reviews: Review[]): string[] {
   if (reviews.length) {
-    return reviews.map((r) => `<div class="g"><span class="lbl">${esc(LAB[r.reviewer] ?? r.reviewer.toUpperCase())}</span>${pc(r.fakematch_p)} FAKE · ${pc(r.recital_p)} COPIED</div>`);
+    // these scores attach only at fn.matched, i.e. after the fake gate let the match through
+    return reviews.map((r) => `<div class="g"><span class="lbl">${esc(LAB[r.reviewer] ?? r.reviewer.toUpperCase())}</span>PASSED <small>${pc(r.fakematch_p)} fake odds</small></div>`);
   }
   if (!s.reviews.length) return [];
   const worst = Math.max(...s.reviews.map((r) => r.fakematch_p ?? 0));
-  return [`<div class="g"><span class="lbl">SUBQ SNAP</span>CHECKED ${s.reviews.length} · WORST ${pc(worst)} FAKE</div>`];
+  return [`<div class="g"><span class="lbl">SUBQ SNAP</span>SCREENED ${s.reviews.length} <small>worst ${pc(worst)} fake odds</small></div>`];
 }
