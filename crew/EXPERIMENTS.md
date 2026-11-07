@@ -148,3 +148,15 @@ python contracts/validate.py runs/<id>/events.jsonl runs/<id>/metrics.json runs/
 r02 and r03 used `--budget-usd 8` and r04 used `--budget-usd 3`. All three files of every run passed `contracts/validate.py`. The 40 function ids are:
 
 `fn_080032B8, fn_0800A174, fn_0800A270, fn_08019220, fn_08003B44, fn_08019BB0, fn_08003D20, fn_08004680, fn_08005788, fn_0800A43C, fn_080039DC, fn_08004E4C, fn_08004E68, fn_08006B44, fn_08005404, fn_08005A90, fn_08006B00, fn_080184FC, fn_08019B44, fn_0801C130, fn_080184D8, fn_08005A04, fn_08006B20, fn_08001A94, fn_08004AC4, fn_08005B9C, fn_0801C8FC, fn_080050DC, fn_08005738, fn_08009F9C, fn_08013028, fn_08005D7C, fn_08005424, fn_08005AD0, fn_080069E8, fn_080048BC, fn_080035CC, fn_08004798, fn_0801A99C, fn_0801D19C`
+
+## Aligned side-by-side feedback (round 2 list, commit f6a92ed)
+
+Same 20 hard held-out functions, library off, Snap and Gemini on, up to 6 attempts, $4.50 cap each. Only difference: Diggers get the aligned side-by-side diff (`crew/align.py`) on PARTIAL verdicts, or not.
+
+| Run | Matched | Attempts/match | Cost/match | Cost |
+|---|---|---|---|---|
+| doom_align_on | 7/20 | 2.86 | $0.51 | $3.57 |
+| doom_align_off | 7/20 | 3.00 | $0.58 | $4.05 |
+
+Same match count; 6 functions matched in both, 1 only with aligned feedback, 1 only without. It was 12% cheaper per match with the aligned view, inside the noise of one run each. Where it visibly helped was on near-misses outside held-out evaluation: best attempts climbed (fn_0801AFF0 4.5% to 81.8%) and, with warm start, fn_0801ABC0 went from 90% to a match. Honest conclusion: no measured change in match rate on held-out functions.
+
