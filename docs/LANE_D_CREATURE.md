@@ -44,17 +44,17 @@ This is the demo's centerpiece (see the Split section of `docs/02_DESIGN.md`).
 - Hotkeys for every scene. A fullscreen projector output. A recording profile: 1920×1080, 60 fps, high-quality local recording.
 - A 300 ms pixel-dissolve transition between scenes, and a two-frame white flash used only for K.O. and "It's alive".
 
-## Part 4 — The bug fix (the finale) — by 15:15
+## Part 4 — The bug fix (the finale) — decided by 13:00, patched by 14:45
 
 The line we want to say: "This game shipped with a bug its creator never patched. We just did."
-- Find a real bug in the target game. GBADoom: start with the repo's open GitHub issues and its README's own "What's not?" list (it notes demo compatibility is broken). Pick something visible in 6 seconds of play. Reproduce it in the original build and record a clip of it happening.
+- Find a real bug in the target game. The famous vanilla "ouch face" bug is already fixed in GBADoom (`source/st_stuff.c` lines 149 and 205 keep the vanilla line commented out above the fix), and "demo compatibility is broken" is not a 6-second visible bug in one function. Look for a vanilla bug GBADoom kept, inside a function Lane B can recover. Pick something visible in 6 seconds of play. Reproduce it in the original build and record a clip of it happening.
 - Identify the responsible function's `fn_` id. Work with Lane B so that function is recovered and accepted (priority in the live or learning run).
 - Write the minimal fix as a change to the **recovered** source (`runs/live/recovered/<fn>.c`), not the hidden original. Save it as `creature/fix/<fn>.fixed.c` with a 3-line explanation.
 - Run `python -m lab.referee patch --fn <fn> --src creature/fix/<fn>.fixed.c --json`. It must report exactly one changed function. Emit a `patch.verified` event into the live run.
 - Record the after clip: same input, bug gone.
-- If no real bug can be confirmed by 14:30, do an honest, visible modification instead (for example, a new ship palette or a speed tweak) and change the pitch line to "it can change again." Tell the pitch lead in the team channel.
+- If no real bug can be confirmed by 13:00, do an honest, visible modification instead (for example, a new ship palette or a speed tweak) and change the pitch line to "it can change again." Tell the pitch lead in the team channel.
 
-## Part 5 — Phones in the room — by 15:30
+## Part 5 — Phones in the room — by 15:00
 
 - `creature/phone/`: a static page that boots the mGBA WASM core (build from source or use the core from https://github.com/thenick775/gbajs3; check its license, MPL-2.0 for the mGBA core) and loads `lab/out/patched.gba` with on-screen touch controls, nothing else. Wrap it in the Ending scene's look ("PLAYER 2", midnight, Jersey 10 logo, Press Start 2P), per `02_DESIGN.md`.
 - Serve with the headers the WASM build needs for threads (`Cross-Origin-Opener-Policy: same-origin`, `Cross-Origin-Embedder-Policy: require-corp`), or use a single-threaded build if headers are a problem.
@@ -77,7 +77,7 @@ You own recording; Lane C owns the Stage screens and director timing. Follow the
 - Captions burned in (big, high contrast, in the design's caption style). Assume it's watched muted.
 - Include Lane A's 40-second ASI:One capture, cut to ~10 seconds (verify → card with observed vs inferred).
 - Every sped-up segment labeled with its real speed. Every number on screen comes from real files.
-- Export 1080p H.264 under 100 MB plus a 15-second vertical cut for social. Copy both to a second laptop and a USB stick.
+- 60 seconds, the length the submission form asks for. End on the "Built today / Not ours" card (README panel). Export 1080p H.264 under 100 MB, no vertical cut. Copy it to a second laptop and a USB stick.
 
 ## Tests
 
@@ -92,8 +92,9 @@ You own recording; Lane C owns the Stage screens and director timing. Follow the
 - 12:00: tap + bridge streaming real sprites from the release ROM. Post a short screen recording.
 - 13:15: switch to Lane A's real ROM and viz_map.
 - 14:30: OBS scenes ready; golden path dry run #1.
-- 15:15: bug confirmed and fixed through `lab patch`, or the honest fallback announced.
-- 15:30: QR works on five phones.
+- 13:00: bug confirmed, or the honest fallback announced.
+- 14:45: fix verified through `lab patch` (exactly one function changed).
+- 15:00: QR works on five phones.
 - Freeze − 60: demo video exported.
 
 ## Rules

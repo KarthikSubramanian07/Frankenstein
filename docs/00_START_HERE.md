@@ -180,7 +180,7 @@ Never cut: the referee rejecting a false claim live, an honest curve, and the RO
 | 2:25 | The bug: show it happening in the original, then the fixed build. "Only one function changed." | Lane D |
 | 2:45 | "Player 2, press start" with the QR. "Pull out your phone." Room plays. Stop talking. | Pitch lead |
 
-## 12. Demo video (record at freeze; 90 seconds; captions burned in)
+## 12. Demo video (record at freeze; 60 seconds, the submission form's length; captions burned in; end on the "Built today / Not ours" card)
 
 Optimize for a judge watching muted on a laptop, and for the first three seconds of a social post.
 

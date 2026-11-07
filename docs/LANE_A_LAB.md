@@ -21,30 +21,30 @@ Your lane is the ground truth. If your referee is wrong, the whole demo is a lie
 6. Tests that prove the referee is right.
 7. **Required for the Fetch.ai prize ($2,500 1st, $2,500 2nd):** three uAgents on Agentverse, usable entirely inside an ASI:One conversation (Step 7). Start it no later than 12:30, right after the referee is real.
 
-## Step 0 — Toolchain (target: done by 10:30)
+## Step 0 — Toolchain (target: done by 11:15)
 
-- Fetch current docs first: pret's agbcc README, the m2c README (it lists ARM and a `gba` target), objdiff docs (`objdiff-cli --help`), and the GBA scaffold pattern in https://github.com/masterred92/gba-decomp-toolkit (one `.s` per function with raw `.2byte`/`.4byte`, rebuild to identical ROM). Use what you can; do not copy code you don't understand.
-- Build agbcc from source into `lab/tools/agbcc/`. Install an Arm GNU toolchain (binutils + `arm-none-eabi-objdump`) and pin its version in `lab/TOOLCHAIN.md`.
+- Fetch current docs first: devkitPro's install guide (devkitARM via `dkp-pacman`, or the `devkitpro/devkitarm` Docker image), the m2c README (it lists ARM and a `gba` target), and objdiff docs (`objdiff-cli --help`). Use what you can; do not copy code you don't understand.
+- Install devkitARM through devkitPro. Do not use agbcc or Homebrew `arm-none-eabi-gcc`: GBADoom needs `$DEVKITARM`, `gba_rules`, its `gbadoom.specs`, and a GCC new enough for `-std=gnu23`. If the native install fails by 11:15, use the `devkitpro/devkitarm` Docker image. Pin the devkitARM release and GCC version in `lab/TOOLCHAIN.md`.
 - Install `capstone` (Python) for Thumb disassembly and `objdiff-cli` if available.
 - Write `lab/doctor.sh` that prints versions and fails loudly on anything missing.
 
-## Step 1 — The target: GBADoom (confirmed by 11:15)
+## Step 1 — The target: GBADoom (builds twice with an identical SHA-1 by 11:30)
 
 **GBADoom** (https://github.com/doomhack/GBADoom): a port of prBoom to the GBA, primarily C, GPLv2+. Build it with the Doom **shareware** IWAD (freely distributable) via its GbaWadUtil step, exactly as its README says. Credit id Software, the prBoom authors, and doomhack on every screen and in the README.
 
 Never use a commercial ROM.
 
-**Fallbacks** (only if GBADoom won't build by 11:15): Attack on Voxelburg (https://github.com/MutantStargoat/voxelburg), then Celeste Classic GBA (https://github.com/JeffRuLz/Celeste-Classic-GBA).
+**Fallbacks** (only if GBADoom won't build by 11:45): Attack on Voxelburg (https://github.com/MutantStargoat/voxelburg), then Celeste Classic GBA (https://github.com/JeffRuLz/Celeste-Classic-GBA).
 
 **Mandatory contamination guard.** Doom's code is among the most copied code in the world; the model has seen it. Judges will ask. Before building the answer key, make a private variant public code cannot match:
-- Rename every function, global, struct, and field (agents only ever see `fn_`/`data_` ids).
-- Apply mechanical, codegen-changing edits across the game: reorder struct fields, change some constants and table sizes, split or merge helpers, change loop forms, reorder functions within files. Gameplay must look identical.
+- Do not rename symbols: agents only ever see `fn_`/`data_` ids, so renaming changes nothing they see. Do not reorder struct fields: several Doom structs are read straight from the WAD in a fixed byte layout, and the game breaks.
+- Edit function bodies only, in the target files: `source/st_stuff.c` first, then the weapon code (`source/p_pspr.c`). Codegen-changing edits: reorder independent statements, split or merge locals, change loop and condition forms. Play for 30 seconds after the edits to confirm nothing broke.
 - Build the target only from this variant; store the diff in `lab/secrets/variant.patch`.
-- **Memory probe (shown on stage):** give Muse Spark the original public names of 20 functions (for example `P_MobjThinker`, `R_DrawColumn`), ask it to write them from memory, compile those against our target through the referee. Write the result to `lab/out/memory_probe.json` (contract section 6b) and a line in `DECISIONS.md`. Expected near zero. That number is the answer to "didn't the model just remember Doom?" and it goes on the Time trial scene and the slides. Run the probe by 12:30 so the number exists early.
+- **Memory probe (shown on stage):** give Muse Spark the original public names of 20 functions (for example `P_MobjThinker`, `R_DrawColumn`), ask it to write them from memory, and compile the same sources against two builds through the referee: the unmodified GBADoom build and our variant. Write both numbers to `lab/out/memory_probe.json` (`unmodified` and `variant`, contract section 6b) and a line in `DECISIONS.md`. Report both: a variant-only number fails by construction and a judge will say so, while a high unmodified number is the reason the variant exists. These numbers answer "didn't the model just remember Doom?" on the Time trial scene and the slides. Run the probe by 12:45.
 
 **Scope for the demo.** Doom is big. Tag subsystems in `viz_map.json` by source file: `hud` (st_*.c, the status bar and Doomguy's face), `weapons` (p_pspr.c and related), `enemies` (p_enemy.c, monster thinkers), `world` (r_*.c renderer, everything else). Tell Lane B to prioritize `hud` then `weapons`; those are the on-stage moments ("Doomguy's face is 100% back").
 
-Compiler: GBADoom builds with devkitARM GCC; use the exact version and flags from its Makefile, pinned and written down (agbcc will not build it). Library code (crt0, newlib, libgcc, soft-float helpers) is `scope: "library"`. The IWAD data is data, not code, and does not count toward %.
+Compiler: GBADoom builds with devkitARM GCC; use its Makefile flags (`-O3 -mcpu=arm7tdmi -mthumb -mthumb-interwork -std=gnu23 …`) **minus `-flto=8`**, pinned and written down. With LTO, objects hold compiler IR, not machine code, and the linker inlines and merges functions across files, so per-function matching is impossible. If `-O3` inlining blocks matches, drop to `-O2` and log it in `DECISIONS.md`. Library code (crt0, newlib, libgcc, soft-float helpers) is `scope: "library"`. The IWAD data is data, not code, and does not count toward %.
 
 ## Step 2 — Build, split, manifest (target: 11:00–11:30)
 
@@ -70,7 +70,7 @@ If `objdiff-cli` gives you a reliable per-function JSON report, you may use it i
 
 Performance target: under 3 seconds per check. Cache compiled ctx headers. Allow 8 concurrent checks (process pool).
 
-`rebuild(recovered_dir)`: assemble a full ROM where every function with an accepted `.c` in `recovered_dir` is compiled from that C, and every other function comes from its original bytes (raw `.2byte` per-function `.s`, the scaffold pattern). Link in original order. Return SHA-1 and `identical`. With zero recovered functions it must equal the original SHA-1 (T7 baseline).
+`rebuild(recovered_dir)`: assemble a full ROM where every function with an accepted `.c` in `recovered_dir` is compiled from that C, and every other function comes from the original source: drop each accepted function's C into the source tree in place of the original and run the normal Makefile (`method: "source-tree"`, `from_original` in the contract). Do not rebuild from raw per-function `.s` files. On stage: "recovered functions are built from the agents' C, the rest from the original." Return SHA-1 and `identical`. With zero recovered functions it must equal the original SHA-1 (T7 baseline).
 
 `rebuild --fast`: incremental rebuild that recompiles only newly accepted functions and relinks, target under 10 seconds, because Lane D hot-swaps the rebuilt ROM into the live game on stage every few accepted functions. Emit `build.rom` to `runs/live/events.jsonl` after each rebuild, with `pct_agent_code`.
 
@@ -104,12 +104,12 @@ Write the rules in `lab/LINT.md`. The Checker (Lane B) adds a softer "period idi
 
 ## Step 6 — Hand-offs
 
-- 11:00: commit the real `manifest.json` + `asm/` + `ctx/`. Post the function count and split counts.
-- 11:30: referee `serve` running on 7101 on your machine; share the LAN address. Post: "referee is real."
+- 11:45: commit the real `manifest.json` + `asm/` + `ctx/`. Post the function count and split counts.
+- 12:00: referee `serve` running on 7101 on your machine; share the LAN address. Post: "referee is real."
 - 13:15: `viz_map.json` real. Post subsystem labels.
 - 13:30: ASI:One verify workflow works end to end on a phone (gate in the playbook).
-- 15:00: `rebuild` and `patch` proven with tests; tell Lane D the command they'll run on stage.
-- 15:30: Excavator + Curator working; 40-second ASI:One capture sent to Lane D; agent names and addresses in `DECISIONS.md` and the README.
+- 14:30: `rebuild` and `patch` proven with tests; tell Lane D the command they'll run on stage.
+- 15:00: Excavator + Curator working; 40-second ASI:One capture sent to Lane D; agent names and addresses in `DECISIONS.md` and the README.
 
 ## Step 7 — ASI:One agents (Fetch.ai prize; mandatory requirements)
 

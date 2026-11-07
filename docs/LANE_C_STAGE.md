@@ -7,7 +7,7 @@ Paste everything below the line into Claude Code as your first message, from the
 
 ---
 
-You are the interface designer-engineer on FRANKENSTEIN. Coding agents rebuild a GBA game's lost source code, piece by piece, and a compiler referee rejects anything that isn't byte-identical. Your job is to make that visible, legible from the back of a room, and unforgettable in a 90-second video. Run `git pull --rebase` first: the foundation (tag `v0-foundation`, made by `docs/LANE_0_BOOTSTRAP.md`) already has the folders, contracts, schemas, and fixtures. Read `docs/00_START_HERE.md`, `contracts/CONTRACTS.md`, and `docs/02_DESIGN.md` in full first. Open `docs/design_system.html` in a browser to see every scene. You own `stage/` only.
+You are the interface designer-engineer on FRANKENSTEIN. Coding agents rebuild a GBA game's lost source code, piece by piece, and a compiler referee rejects anything that isn't byte-identical. Your job is to make that visible, legible from the back of a room, and unforgettable in a 60-second video. Run `git pull --rebase` first: the foundation (tag `v0-foundation`, made by `docs/LANE_0_BOOTSTRAP.md`) already has the folders, contracts, schemas, and fixtures. Read `docs/00_START_HERE.md`, `contracts/CONTRACTS.md`, and `docs/02_DESIGN.md` in full first. Open `docs/design_system.html` in a browser to see every scene. It was written before the event, so it is a visual reference only: rebuild every screen in `stage/` today and never paste its HTML or CSS (the "New Work Only" rule disqualifies pre-written project code). Build for one laptop screen first: round one is 3 minutes in a judging room, and only the top six reach the stage. You own `stage/` only.
 
 You build entirely against `contracts/fixtures/events.sample.jsonl` until a real run exists. You never wait for anyone.
 
@@ -20,7 +20,7 @@ You build entirely against `contracts/fixtures/events.sample.jsonl` until a real
 
 ## Scenes (switch with number keys; the presenter never touches the mouse)
 
-The Stage is one retro game played in scenes. Match `02_DESIGN.md` and `design_system.html` exactly.
+The Stage is one retro game played in scenes. Match the look of `02_DESIGN.md` and `design_system.html`, rebuilt from scratch.
 
 ### 0 — Title
 Midnight sky with stars, the FRANKENSTEIN logo (Jersey 10, layered violet shadow), "Lost games, rebuilt and proven", a save-file menu (`FILE 1  DOOM  NN%`, `NN LIES CAUGHT`, `FILE 2  NEW GAME`) fed from the live run, and a blinking "PRESS START". Space bar = press start = go to Hi-score. This is also the first shot of the video.
@@ -100,7 +100,7 @@ Proved things (counts, match %, the differing instruction, checksums, "1 functio
 ## Hand-offs
 
 - 11:30: Title, Split right panel with beams, and Versus running on fixtures. Post screenshots.
-- 12:15: point at Lane B's first real run.
+- 12:30: point at Lane B's first real run.
 - 13:30: Time trial with real metrics as they arrive; Ending wired to `build.rom`, `patch.verified`, `phone.published`.
 - 15:00: director mode drives the full run of show.
 - Freeze − 60: export the demo video with Lane D (they own OBS; you own the Stage screens and director timing).

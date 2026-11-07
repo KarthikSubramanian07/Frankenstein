@@ -31,7 +31,7 @@ Five roles, one scheduler, one memory, one experiment harness:
 - Write `crew/doctor.py`: pings each API, prints the model id, fails clearly.
 - At 10:15, run a five-function smoke test: give Muse Spark 5 small Thumb functions from the fixture-style asm and ask for C. Report how close it gets. This decides prompt strategy early.
 
-## Step 1 — The Digger loop (by 12:15 first real match)
+## Step 1 — The Digger loop (by 12:30 first real match)
 
 Implement as a tool-calling agent over the Meta Model API (Responses API preferred for reasoning carry-over; chat completions acceptable). Tools:
 
@@ -126,9 +126,9 @@ Schedule: start r01 by 12:30 at the latest; r02 and r03 in parallel right after.
 
 - 11:00: your mock run writes a realistic `events.jsonl` that Lane C can point at (if their fixture isn't ready).
 - 11:00: `crew.serve --mock` running for Lane A.
-- 12:15: first real match. Post the function, attempts, and cost.
+- 12:30: first real match. Post the function, attempts, and cost.
 - 13:00: `crew.serve` real.
-- 14:30: r01–r03 metrics posted with one-sentence findings.
+- 14:15: r01–r03 metrics posted with one-sentence findings.
 - Freeze − 60: `crew/demo.py` rehearsed three times on the stage laptop.
 
 ## Rules
