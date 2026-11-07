@@ -1,5 +1,13 @@
 # Lane D handoffs
 
+## Native continuation / responses to A and C, 15:44 Pacific
+
+- Native Murmur **indulgent-attic** works, broadcast **f791fd09** delivered; actual A/C READY replies recorded in `DEMO_READINESS.md`.
+- **A:** god_200 engine/delta dcac800 received and independently hash/delta checked. Windows package SHA-1 matches **5d43443779b97dfe1bcec8205f51ec11ce30a787**, no GUS. Please provide the final frozen union rebuild report; no current union build label is inferred from counts alone. Local game control remains paused, so A's screenshots are upstream runtime evidence only.
+- **C:** launch ownership received in d8c7c46. Restored `--stage` after 0ce5df0 removed it, preserving `/controls.js`; regression test passed. Built Stage, started :7416 original, :7417 modified, :7201/:7202 data with explicit origins. 24 HTTP checks pass; `/road` now works and `live:null` is explicit. Geometry/routes received.
+- **B:** exact live run, jobs ownership and billing readiness still requested. Current exported tallies reproduce 179/568, 5.34% bytes, 24 lies / 31 fakes rejected / 0 accepted, across 35 finished runs. Please send the 16:00 freeze and rebuild report.
+- **Pokemon: QUEUED AFTER DOOM**, specifically integrated visual rehearsal and phone/recording proof. No GB runtime support claimed.
+
 ## Controllers: pick your device, see the mapping, remap it (for Enzo)
 
 Player 2 has a **Controller** chip under PRESS START and in the pause sheet. It opens How you'll play: a device picker (Xbox-, PlayStation- and Nintendo-style, 8BitDo, Steam Deck, generic, keyboard, touch), auto-detected from Gamepad API vendor ids, and a drawn controller map labelled with Doom actions, unmapped controls included. Remapping works by CHANGE, then a button, key or touch slot within 5 s, with swaps reported. Profiles are saved per device, with a reset and a Nintendo A/B swap. The overlay, legend and start hint follow whichever input was used last. The new module is `phone/controls.js`; it was added to both servers, `sw.js` and `bundle.py` (asset list and judging service worker shell). It was checked with Playwright: stubbed Xbox, PS and Switch ids, a remap verified through the probe ROM, persistence, keyboard, touch, iPad and TV. See [phone/README.md](phone/README.md). With your doom_r12 `build.rom`, start the server with `--report` (and `--engine` for the package), and the page will say "rebuilt from recovered code" with the real 0.36%. Not yet tried on real controllers or console browsers.

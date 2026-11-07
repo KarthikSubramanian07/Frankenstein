@@ -1,5 +1,32 @@
 # Integrated demo readiness
 
+## Native session checkpoint (2026-11-07, 15:44 Pacific)
+
+This checkpoint supersedes the pending delivery and local-service rows below. Native Murmur works as **indulgent-attic**. `who`, `status`, `inbox` and `send` succeeded; clone `murmur.usage=false`. Readiness request broadcast **f791fd09** was sent to `*`. Real replies arrived from A and C. Main received through **d8c7c46**.
+
+| Lane | Actual reply | Remaining input |
+|---|---|---|
+| A | READY at dcac800; god_200 engine and exact delta delivered. A owns ASI:One/referee services on Eddy's laptop and the 60-second film. | Final union rebuild report after B's 16:00 tally freeze; current 179 count is aggregate evidence, not a new local rebuild. |
+| B | No direct reply; native who currently shows B's device with no session. A asked to relay via bb0cac65. | Exact live run, jobs owner and billing readiness confirmation. Decisions report billing resumed, but D has not tested a model call. |
+| C | READY; Stage code d46eedf, handoff d8c7c46. Explicitly assigned Enzo-local services to D. | Local visual composition still pending. |
+| D | Host repaired, packages verified, current Stage built, local services started and HTTP checked. | Browser/game control remains stopped by prior user direction; physical phones, public judging URL and recording remain pending. |
+
+### Completed here
+
+- Found controller commit 0ce5df0 had removed 49abd44's `--stage` mount. Restored Stage routing, root assets/fonts and canonical containment, preserving `/controls.js`. Added `node --test creature/phone/serve.test.mjs`: passed. Stage typecheck and production build passed.
+- Verified A's 68-byte god_200 delta against baseline and the entire resulting engine. Packaged with pinned utility, same processed WAD and no GUS. Package SHA-1 **5d43443779b97dfe1bcec8205f51ec11ce30a787**, matching A exactly; 5,704,780 bytes. Evidence: `runtime/evidence/god-200-package.json`. A's browser evidence is in `lab/demo/PLAYABLE.md`; no local gameplay success is asserted.
+- Started original player/Stage on **7416**, modified player/Stage on **7417**, Stage data on **7201/7202**, with both player origins and both 5173 origins allowed. **24 HTTP checks passed**, including controller/core/Stage assets, actual served package hashes, `/road`, `/union`, and CORS. Evidence: `runtime/evidence/native-readiness-http.json`.
+- Local data reports **live: null**. Both player build labels remain null until a current rebuild report is supplied and validated. No synthetic `rom.swapped` or `phone.published` event.
+- Reproduced current exported tallies: **179/568 functions, 5.34% code bytes, 24 false claims caught, 31 fakes rejected, 0 accepted, 35 finished runs**. These are a time-stamped checkpoint; B plans final freeze at 16:00.
+
+### Local rehearsal links
+
+- Original, explicitly labelled six-function replay: <http://127.0.0.1:7416/stage/?game=http%3A%2F%2F127.0.0.1%3A7416%2F%3Fwindowed&replay=doom_r12&speed=8>
+- Modified player: <http://127.0.0.1:7417/>. A observed 200% after Up Up Down Down Left Left Right Right during E1M1; use a fresh session because saved god-mode state can affect the comparison.
+- Frozen geometry: 1920x1080 canvas; game x40/y140, 1200x800; log x1290/y140, 590x800. Space toggles ending; C on the card toggles credits. The replay is not the 179-function union proof.
+
+Public deployment remains limited to the recorded judging window. None was deployed in this session.
+
 Enzo requests a catch-up on main, then one Murmur broadcast asking all lanes whether Lane D can run the integrated demo. This is a readiness request, not a declaration that the demo is ready.
 
 ## Current checkpoint (2026-11-07, approximately 15:05 Pacific)
@@ -39,7 +66,7 @@ Run native `who` and `inbox`, update D's status, then use native `send` with `to
 
 **Body:** Enzo wants us to run the complete demo and display it now after a readiness check. Please reply READY or BLOCKED, your exact commit, launch command, dependencies, live-versus-replay status, and blocker/ETA. A: supply the latest 170-function rebuilt engine plus rebuild report, and the god_200 engine (first choice), instant_raise engine (fallback), or exact compiled patch deltas with offset/baseline hash; hud_shift is an earlier fallback, via an agreed no-WAD artifact path. B: confirm real live-run/jobs startup and Meta billing status; confirm d04afdf's full metrics (reproduced here: 24/30/0 across 35 runs) and the exact run to rehearse. C: confirm frozen Stage, current game geometry, required origins for same-origin host :7416, and the intended main/ending/credits route. D: packages and one-origin host source are present, but the service is stopped; latest union/patch artifacts, integrated browser validation, phones and recording are pending. Please name the launch owner so we do not start duplicate services. Keep any replay explicitly labelled. Record replies in your handoff and creature/DEMO_READINESS.md.
 
-**Actual Murmur delivery:** PENDING. The native session must record the returned send id and real replies here; do not fill these from assumptions.
+**Actual Murmur delivery:** Sent as **f791fd09**; see the superseding native checkpoint above for actual replies. The following table is the historical pre-broadcast state.
 
 | Lane | Reply | Exact launch input still needed |
 |---|---|---|

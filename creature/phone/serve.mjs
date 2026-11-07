@@ -1,16 +1,35 @@
 // Dependency-free alternative host for the browser player.
 import http from 'node:http';
-import { readFile, stat } from 'node:fs/promises';
+import { readFile, realpath, stat } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { gzipSync } from 'node:zlib';
-import { dirname, resolve, extname } from 'node:path';
+import { dirname, resolve, extname, relative, isAbsolute, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const defaultRoot = dirname(fileURLToPath(import.meta.url));
 const allowed = new Set(['/index.html', '/player.js', '/controls.js', '/style.css', '/sw.js', '/manifest.webmanifest', '/DISTRIBUTION.md',
   '/icons/icon-192.png', '/icons/icon-512.png', '/icons/maskable-512.png', '/icons/apple-touch-icon.png',
   '/core/mgba.js', '/core/mgba.wasm', '/core/qrcode.mjs']);
-const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.wasm': 'application/wasm', '.gba': 'application/octet-stream', '.mjs': 'text/javascript; charset=utf-8', '.webmanifest': 'application/manifest+json', '.png': 'image/png', '.md': 'text/markdown; charset=utf-8' };
+const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.wasm': 'application/wasm', '.gba': 'application/octet-stream', '.mjs': 'text/javascript; charset=utf-8', '.webmanifest': 'application/manifest+json', '.png': 'image/png', '.md': 'text/markdown; charset=utf-8', '.txt': 'text/plain; charset=utf-8', '.woff': 'font/woff', '.woff2': 'font/woff2', '.ttf': 'font/ttf', '.otf': 'font/otf' };
+
+// Only the built Stage entry, JS/CSS and fonts/notices are public. No fallback
+// to arbitrary dist files or the Stage source tree, even through a symlink.
+function stageAsset(path) {
+  return path === 'index.html'
+    || /^assets\/(?:[A-Za-z0-9_-][A-Za-z0-9_.-]*\/)*[A-Za-z0-9_-][A-Za-z0-9_.-]*\.(?:js|css)$/.test(path)
+    || /^fonts\/[A-Za-z0-9_-][A-Za-z0-9_.-]*\.(?:woff2?|ttf|otf)$/.test(path)
+    || /^fonts\/(?:LICENSE|OFL)(?:[A-Za-z0-9_.-]*)\.txt$/.test(path);
+}
+
+async function stageTarget(base, path) {
+  if (!base || !stageAsset(path)) return null;
+  try {
+    const file = await realpath(resolve(base, path));
+    const within = relative(base, file);
+    if (isAbsolute(within) || within === '..' || within.startsWith('..' + sep)) return null;
+    return stageAsset(within.split(sep).join('/')) ? file : null;
+  } catch { return null; }
+}
 
 const memo = new Map();
 // Bytes, gzip bytes and a content ETag, recomputed only when the file changes.
@@ -44,9 +63,11 @@ export async function verifyBuild(reportPath, enginePath, romPath) {
   return { pct_agent_code: Math.round(pct * 10) / 10, rom_sha1: claim, basis: 'engine sha1 + package check' };
 }
 
-export function createPlayerServer({ root = defaultRoot, rom = null, build = null } = {}) {
+export function createPlayerServer({ root = defaultRoot, rom = null, build = null, stage = null } = {}) {
   const base = resolve(root);
   const game = rom ? resolve(rom) : null;
+  // Resolve once so replacing the configured directory cannot redirect our root.
+  const stageRoot = stage ? realpath(resolve(stage)).catch(() => null) : null;
   return http.createServer(async (request, response) => {
     response.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
     response.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
@@ -54,7 +75,13 @@ export function createPlayerServer({ root = defaultRoot, rom = null, build = nul
     response.setHeader('X-Content-Type-Options', 'nosniff');
     if (!['GET', 'HEAD'].includes(request.method)) { response.writeHead(405); response.end(); return; }
     let path;
-    try { path = new URL(request.url, 'http://localhost').pathname; }
+    try {
+      const rawPath = request.url.split(/[?#]/, 1)[0];
+      const decoded = decodeURIComponent(rawPath);
+      if (!rawPath.startsWith('/') || rawPath.startsWith('//') || decoded.includes('\\') || decoded.includes('\0')
+          || decoded.split('/').some(part => part === '.' || part === '..')) throw Error('Invalid path');
+      path = new URL(request.url, 'http://localhost').pathname;
+    }
     catch { response.writeHead(400); response.end(); return; }
     if (path === '/status.json') {
       response.setHeader('Content-Type', 'application/json');
@@ -69,8 +96,16 @@ export function createPlayerServer({ root = defaultRoot, rom = null, build = nul
       response.end(request.method === 'HEAD' ? undefined : JSON.stringify({ ok: true, rom_configured: Boolean(game), gameplay_verified: false }));
       return;
     }
+    if (stage && path === '/stage') {
+      response.setHeader('Location', '/stage/' + new URL(request.url, 'http://localhost').search);
+      response.setHeader('Cache-Control', 'no-cache');
+      response.writeHead(308); response.end(); return;
+    }
     if (path === '/') path = '/index.html';
-    const target = path === '/game.gba' ? game : allowed.has(path) ? resolve(base, '.' + path) : null;
+    const stagePath = path === '/stage/' || path === '/stage/index.html' ? 'index.html'
+      : /^\/(assets|fonts)\//.test(path) ? path.slice(1) : null;
+    const target = stage && stagePath ? await stageTarget(await stageRoot, stagePath)
+      : path === '/game.gba' ? game : allowed.has(path) ? resolve(base, '.' + path) : null;
     if (!target) { response.writeHead(404); response.end('Unavailable'); return; }
     try {
       const { bytes, packed, etag } = await load(target);
@@ -95,14 +130,19 @@ if (globalThis.process?.argv[1] && resolve(process.argv[1]) === fileURLToPath(im
   const args = process.argv.slice(2);
   const options = {};
   for (let i = 0; i < args.length; i += 2) {
-    if (!['--port', '--rom', '--report', '--engine'].includes(args[i]) || !args[i + 1]) throw Error('Usage: node serve.mjs [--port 7401] [--rom playable.gba] [--report build.json [--engine engine.gba]]');
+    if (!['--port', '--rom', '--report', '--engine', '--stage'].includes(args[i]) || !args[i + 1]) throw Error('Usage: node serve.mjs [--port 7401] [--rom playable.gba] [--report build.json [--engine engine.gba]] [--stage stage/dist]');
     options[args[i].slice(2)] = args[i + 1];
   }
   const port = Number(options.port || 7401);
   if (!Number.isInteger(port) || port < 1024 || port > 65535) throw Error('Invalid port');
   if (options.report && !options.rom) throw Error('--report needs --rom');
+  const stage = options.stage ? await realpath(resolve(options.stage)) : null;
+  if (stage && !(await stat(resolve(stage, 'index.html'))).isFile()) throw Error('--stage needs a built directory containing index.html');
   const build = options.report ? await verifyBuild(options.report, options.engine, options.rom).catch(e => { throw Error(`build report refused: ${e.message}`); }) : null;
-  const server = createPlayerServer({ rom: options.rom, build });
+  const server = createPlayerServer({ rom: options.rom, build, stage });
   server.on('error', error => { console.error(error.message); process.exitCode = 1; });
-  server.listen(port, '127.0.0.1', () => console.log(`Player: http://127.0.0.1:${port}/ (local preview only)`));
+  server.listen(port, '127.0.0.1', () => {
+    console.log(`Player: http://127.0.0.1:${port}/ (local preview only)`);
+    if (stage) console.log(`Stage: http://127.0.0.1:${port}/stage/ (same origin as player)`);
+  });
 }

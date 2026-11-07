@@ -112,3 +112,15 @@ The generated judging service worker intentionally differs from the universal pl
 ### Static bundle checks (2026-11-07, Windows)
 
 The real 5,704,780-byte static-face package (`337fbb15462b57eb6cc5a35bcf11e36646e130e2`) passed preservation validation against `lab/out/static_face.gba`. The earlier variant package (`e1ddb8fb96764422d5fb6b1c84c83b85c98236bd`) also passed against its corresponding engine. The static package correctly failed against the different `target.gba`. Manifest sizes/hashes and the exact output allowlist were checked, as were waiting-page status and eight failure cases: output outside `dist`, output equal to `dist`, overwrite, engine-only ROM, report without ROM, fixture report, non-object report and wrong report hash. Python compilation and generated service-worker syntax passed. This verifies packaging and rejection behavior; it does not re-run Doom gameplay, prove physical-phone controls, or verify Cloudflare's deployed headers. Those remain launch checks after an authorized deployment.
+
+## One-origin Stage rehearsal
+
+From the repository root, build Stage, then run:
+
+```sh
+node creature/phone/serve.mjs --port 7416 --stage stage/dist --rom creature/runtime/generated/doom-variant-playable.gba
+```
+
+The player lives at `/`; Stage lives at `/stage/`, with built assets and fonts served from root paths. The controller module remains available. Stage data still runs separately on :7201/:7202; include the :7416 origin in `STAGE_ORIGINS`. Use an explicit `replay` query for recorded runs. Hosting and HTTP checks do not prove gameplay or a runtime swap.
+
+Regression check: `node --test creature/phone/serve.test.mjs`.

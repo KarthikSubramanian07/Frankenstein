@@ -1,0 +1,21 @@
+{
+  "header_offset": 1403744,
+  "engine_bytes": 1403776,
+  "package_bytes": 5704780,
+  "processed_wad_bytes": 4301004,
+  "processed_wad_sha1": "628f0749251adbc059e3f15bd9b18bd403285ad3",
+  "iwad_version": 15,
+  "engine_code_preserved": true,
+  "modified_engine_range": [
+    1403760,
+    1403776
+  ],
+  "kind": "local engine delta and package verification",
+  "source_commit": "dcac800",
+  "engine_sha1": "7acc0dc9122dbbabcab271afd735ebcde7dcfa34",
+  "playable_sha1": "5d43443779b97dfe1bcec8205f51ec11ce30a787",
+  "music_bank_requested": false,
+  "delta_verified_against_baseline": true,
+  "local_runtime_verified": false,
+  "upstream_runtime_evidence": "lab/demo/PLAYABLE.md"
+}

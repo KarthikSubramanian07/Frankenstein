@@ -1,0 +1,211 @@
+{
+  "checked_at": "2026-11-07T23:42:41.855967+00:00",
+  "kind": "local HTTP and asset checks, not gameplay",
+  "checks": [
+    {
+      "url": "http://127.0.0.1:7416/",
+      "status": 200,
+      "bytes": 7405,
+      "coop": "same-origin",
+      "coep": "require-corp",
+      "allow_origin": null
+    },
+    {
+      "url": "http://127.0.0.1:7416/controls.js",
+      "status": 200,
+      "bytes": 13301,
+      "coop": "same-origin",
+      "coep": "require-corp",
+      "allow_origin": null
+    },
+    {
+      "url": "http://127.0.0.1:7416/core/mgba.js",
+      "status": 200,
+      "bytes": 248854,
+      "coop": "same-origin",
+      "coep": "require-corp",
+      "allow_origin": null
+    },
+    {
+      "url": "http://127.0.0.1:7416/core/mgba.wasm",
+      "status": 200,
+      "bytes": 1852057,
+      "coop": "same-origin",
+      "coep": "require-corp",
+      "allow_origin": null
+    },
+    {
+      "url": "http://127.0.0.1:7416/status.json",
+      "status": 200,
+      "bytes": 61,
+      "coop": "same-origin",
+      "coep": "require-corp",
+      "allow_origin": null
+    },
+    {
+      "url": "http://127.0.0.1:7416/stage/",
+      "status": 200,
+      "bytes": 456,
+      "coop": "same-origin",
+      "coep": "require-corp",
+      "allow_origin": null
+    },
+    {
+      "url": "http://127.0.0.1:7416/assets/index--Y4C9bIb.js",
+      "status": 200,
+      "bytes": 60127,
+      "coop": "same-origin",
+      "coep": "require-corp",
+      "allow_origin": null
+    },
+    {
+      "url": "http://127.0.0.1:7416/assets/index-C8fza0LM.css",
+      "status": 200,
+      "bytes": 32068,
+      "coop": "same-origin",
+      "coep": "require-corp",
+      "allow_origin": null
+    },
+    {
+      "url": "http://127.0.0.1:7416/game.gba",
+      "status": 200,
+      "bytes": 5704780,
+      "coop": "same-origin",
+      "coep": "require-corp",
+      "allow_origin": null
+    },
+    {
+      "url": "http://127.0.0.1:7201/health",
+      "status": 200,
+      "bytes": 118,
+      "coop": null,
+      "coep": null,
+      "allow_origin": "http://127.0.0.1:7416"
+    },
+    {
+      "url": "http://127.0.0.1:7201/road",
+      "status": 200,
+      "bytes": 31284,
+      "coop": null,
+      "coep": null,
+      "allow_origin": "http://127.0.0.1:7416"
+    },
+    {
+      "url": "http://127.0.0.1:7201/union",
+      "status": 200,
+      "bytes": 33469,
+      "coop": null,
+      "coep": null,
+      "allow_origin": "http://127.0.0.1:7416"
+    },
+    {
+      "url": "http://127.0.0.1:7417/",
+      "status": 200,
+      "bytes": 7405,
+      "coop": "same-origin",
+      "coep": "require-corp",
+      "allow_origin": null
+    },
+    {
+      "url": "http://127.0.0.1:7417/controls.js",
+      "status": 200,
+      "bytes": 13301,
+      "coop": "same-origin",
+      "coep": "require-corp",
+      "allow_origin": null
+    },
+    {
+      "url": "http://127.0.0.1:7417/core/mgba.js",
+      "status": 200,
+      "bytes": 248854,
+      "coop": "same-origin",
+      "coep": "require-corp",
+      "allow_origin": null
+    },
+    {
+      "url": "http://127.0.0.1:7417/core/mgba.wasm",
+      "status": 200,
+      "bytes": 1852057,
+      "coop": "same-origin",
+      "coep": "require-corp",
+      "allow_origin": null
+    },
+    {
+      "url": "http://127.0.0.1:7417/status.json",
+      "status": 200,
+      "bytes": 61,
+      "coop": "same-origin",
+      "coep": "require-corp",
+      "allow_origin": null
+    },
+    {
+      "url": "http://127.0.0.1:7417/stage/",
+      "status": 200,
+      "bytes": 456,
+      "coop": "same-origin",
+      "coep": "require-corp",
+      "allow_origin": null
+    },
+    {
+      "url": "http://127.0.0.1:7417/assets/index--Y4C9bIb.js",
+      "status": 200,
+      "bytes": 60127,
+      "coop": "same-origin",
+      "coep": "require-corp",
+      "allow_origin": null
+    },
+    {
+      "url": "http://127.0.0.1:7417/assets/index-C8fza0LM.css",
+      "status": 200,
+      "bytes": 32068,
+      "coop": "same-origin",
+      "coep": "require-corp",
+      "allow_origin": null
+    },
+    {
+      "url": "http://127.0.0.1:7417/game.gba",
+      "status": 200,
+      "bytes": 5704780,
+      "coop": "same-origin",
+      "coep": "require-corp",
+      "allow_origin": null
+    },
+    {
+      "url": "http://127.0.0.1:7201/health",
+      "status": 200,
+      "bytes": 118,
+      "coop": null,
+      "coep": null,
+      "allow_origin": "http://127.0.0.1:7417"
+    },
+    {
+      "url": "http://127.0.0.1:7201/road",
+      "status": 200,
+      "bytes": 31284,
+      "coop": null,
+      "coep": null,
+      "allow_origin": "http://127.0.0.1:7417"
+    },
+    {
+      "url": "http://127.0.0.1:7201/union",
+      "status": 200,
+      "bytes": 33469,
+      "coop": null,
+      "coep": null,
+      "allow_origin": "http://127.0.0.1:7417"
+    }
+  ],
+  "gameplay_verified": false,
+  "live_run": null,
+  "replay_fallback": "doom_r12",
+  "union_source_commit": "d8c7c46",
+  "counts": {
+    "functions": 179,
+    "of": 568,
+    "pct_bytes": 5.34,
+    "false_claims_caught": 24,
+    "fakes_rejected": 31,
+    "fakes_accepted": 0,
+    "finished_runs": 35
+  }
+}

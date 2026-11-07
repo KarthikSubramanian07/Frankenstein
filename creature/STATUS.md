@@ -1,5 +1,13 @@
 # Lane D integration status
 
+## Native continuation, 15:44 Pacific
+
+Native Murmur verified as indulgent-attic; readiness broadcast f791fd09 delivered. A and C replied READY; B's direct reply/live-run ownership is pending. Full current ledger: [DEMO_READINESS.md](DEMO_READINESS.md).
+
+Restored the one-origin host accidentally dropped by the controller update, retaining controls.js. HTTP regression test, Stage typecheck and build passed. Original :7416, god_200 :7417 and Stage data :7201/:7202 are running locally; 24 HTTP checks passed, live=null. Exact god_200 delta/engine/package verified; playable SHA-1 5d43443779b97dfe1bcec8205f51ec11ce30a787 matches A, with unchanged no-GUS WAD. No new local gameplay, swap, physical-phone or public deployment claim. Browser control remains stopped under the prior instruction.
+
+Pokemon: **QUEUED AFTER DOOM** — remaining gate is integrated visual rehearsal of original versus verified god_200, then physical-phone/recording proof. No Game Boy runtime support claimed. Current export counts are 179/568 and 5.34% bytes (24 lies, 31 fakes rejected, 0 accepted); awaiting B's 16:00 final freeze and corresponding rebuild report.
+
 ## Latest host checkpoint
 
 The Node player now accepts `--stage stage/dist`, serving the Stage at `/stage/` and the player at `/` on one origin. Source 49abd44 / docs 7d8f796 are on main. 29 HTTP checks passed, including isolation headers, real ROM, exact built assets, redirects, gzip/ETag/HEAD and invalid/source/traversal paths. Root also verified live HTTP routes at port 7416. Browser validation remains pending: Enzo stopped Computer Use with Escape, and no further UI actions were taken. A live Windows junction escape test was blocked by EPERM; canonical path containment is implemented, with that limitation documented.
