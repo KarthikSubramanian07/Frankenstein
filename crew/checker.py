@@ -16,7 +16,7 @@ ABS_ADDR = re.compile(r"\)\s*0x0[2-9][0-9A-Fa-f]{6}\b")  # *(T*)0x03001234: raw 
 
 
 class Checker:
-    def __init__(self, referee, log: EventLog, snap_review=None, snap_threshold: float = 0.85):
+    def __init__(self, referee, log: EventLog, snap_review=None, snap_threshold: float = 0.85, second_review=None):
         self.referee = referee
         self.log = log
         self.snap_review = snap_review  # callable(asm, src, ctx) -> dict, or None
@@ -26,6 +26,8 @@ class Checker:
         self.false_claims = 0
         self.fakematches_rejected = 0
         self.snap_reviews = 0
+        self.second_review = second_review  # callable(asm, src) -> dict (Gemini), or None
+        self.second_reviews = 0
 
     @staticmethod
     def key(fn: str, src: str) -> tuple[str, str]:
@@ -72,17 +74,42 @@ class Checker:
             return self._reject("source padded far beyond the target's size", evidence)
         if max((len(CAST.findall(l)) for l in lines), default=0) >= 4:
             return self._reject("cast chains with no type reason", evidence)
-        if self.snap_review is not None:
-            try:
-                r = self.snap_review(asm, src, ctx)
-                self.snap_reviews += 1
-                evidence["snap"] = {k: r.get(k) for k in ("fakematch_p", "recital_p", "period_plausible_p")}
-                if (r.get("fakematch_p") or 0) >= self.snap_threshold:
-                    return self._reject(f"SubQ Snap: fakematch probability {r['fakematch_p']:.2f}", evidence)
-                if (r.get("recital_p") or 0) >= self.snap_threshold:
-                    return self._reject(f"SubQ Snap: recites public source, p={r['recital_p']:.2f}", evidence)
-            except Exception as e:  # the gate is advisory if SubQ is down; the referee is the floor
-                evidence["snap_error"] = str(e)[:200]
+        # Two labs, in parallel (no added latency): SubQ Snap and Gemini. The referee already proved the bytes;
+        # these judge what bytes can't. Reject when Snap is sure, when both labs flag it, or Gemini is near-certain.
+        from concurrent.futures import ThreadPoolExecutor
+
+        jobs = {}
+        with ThreadPoolExecutor(max_workers=2) as ex:
+            if self.snap_review is not None:
+                jobs["snap"] = ex.submit(self.snap_review, asm, src, ctx)
+            if self.second_review is not None:
+                jobs["gemini"] = ex.submit(self.second_review, asm, src)
+            res = {}
+            for k, f in jobs.items():
+                try:
+                    res[k] = f.result(timeout=25)
+                except Exception as e:  # advisory: the referee is the floor
+                    evidence[f"{k}_error"] = str(e)[:200]
+        if "snap" in res:
+            r = res["snap"]
+            self.snap_reviews += 1
+            evidence["snap"] = {k: r.get(k) for k in ("fakematch_p", "recital_p", "period_plausible_p")}
+        if "gemini" in res:
+            g = res["gemini"]
+            self.second_reviews += 1
+            evidence["gemini"] = {k: g.get(k) for k in ("fakematch_p", "recital_p", "plausible_p", "reason", "model")}
+        sf = (res.get("snap") or {}).get("fakematch_p") or 0
+        sr = (res.get("snap") or {}).get("recital_p") or 0
+        gf = float((res.get("gemini") or {}).get("fakematch_p") or 0)
+        gr = float((res.get("gemini") or {}).get("recital_p") or 0)
+        if sf >= self.snap_threshold:
+            return self._reject(f"SubQ Snap: fakematch probability {sf:.2f}", evidence)
+        if sr >= self.snap_threshold:
+            return self._reject(f"SubQ Snap: recites public source, p={sr:.2f}", evidence)
+        if gf >= 0.95 or (gf >= 0.7 and sf >= 0.5):
+            return self._reject(f"second lab (Gemini) flags a fakematch, p={gf:.2f}", evidence)
+        if gr >= 0.95 or (gr >= 0.7 and sr >= 0.5):
+            return self._reject(f"second lab (Gemini) flags recited public source, p={gr:.2f}", evidence)
         return True, "accepted", evidence
 
     def _reject(self, reason: str, evidence: dict):

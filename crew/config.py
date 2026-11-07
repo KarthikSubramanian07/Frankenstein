@@ -57,5 +57,9 @@ class Config:
     def using_fixture_manifest(self) -> bool:
         return self.manifest_path.name == "manifest.sample.json"
 
+    @staticmethod
+    def env_has(name: str) -> bool:
+        return bool(env(name))
+
     def price(self, model: str) -> tuple[float, float]:
         return PRICES.get(model, DEFAULT_PRICE)

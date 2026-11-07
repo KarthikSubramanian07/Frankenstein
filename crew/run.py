@@ -70,14 +70,24 @@ class Run:
                 from . import snap
                 def snap_review(asm, src, ctx, _s=snap):
                     r = _s.review(cfg, asm, src, ctx)
-                    self.log.emit("snap.decision", "checker", op="review", fakematch_p=r.get("fakematch_p"),
+                    self.log.emit("snap.decision", "checker", op="review", reviewer="snap", fakematch_p=r.get("fakematch_p"),
                                   recital_p=r.get("recital_p"), period_plausible_p=r.get("period_plausible_p"),
                                   latency_ms=r.get("latency_ms"))
                     return r
                 self._snap = snap
             except Exception:
                 snap_review = None
-        self.checker = Checker(self.referee, self.log, snap_review=snap_review)
+        second = None
+        if args.gemini and cfg.env_has("GEMINI_API_KEY"):
+            from . import gemini
+
+            def second(asm, src, _g=gemini):
+                r = _g.review(asm, src)
+                self.log.emit("snap.decision", "checker", op="review", reviewer="gemini", model=r.get("model"),
+                              fakematch_p=r.get("fakematch_p"), recital_p=r.get("recital_p"),
+                              period_plausible_p=r.get("plausible_p"), latency_ms=r.get("latency_ms"))
+                return r
+        self.checker = Checker(self.referee, self.log, snap_review=snap_review, second_review=second)
         self.archivist = Archivist(self.log)
         self.log.listeners.append(self.archivist.on_event)
         self.matched: list[tuple[float, str]] = []
@@ -350,7 +360,7 @@ class Run:
             "attempts_total": total_attempts, "elapsed_s": round(el, 1),
             "referee": getattr(self.referee, "kind", "lab"), "fixture_target": self.target.fixture,
             "library_backend": self.library.backend, "library_size": len(self.library.items),
-            "snap_reviews": self.checker.snap_reviews, "cartographer": bool(self.args.cartographer),
+            "snap_reviews": self.checker.snap_reviews, "second_opinion_reviews": self.checker.second_reviews, "cartographer": bool(self.args.cartographer),
             "snap": self._snap_stats(),
             "cost_estimated": any(m not in ("muse-spark-1.3",) for m in self.usage.by_model),
         }
@@ -379,6 +389,8 @@ def parser() -> argparse.ArgumentParser:
     ap.add_argument("--cartographer", default="", help="'on' to use runs/<id>/types.h, or a header path")
     ap.add_argument("--snap", action=argparse.BooleanOptionalAction, default=True, help="SubQ Snap triage + review")
     ap.add_argument("--names", action="store_true", help="name functions even when library is off")
+    ap.add_argument("--gemini", action=argparse.BooleanOptionalAction, default=True,
+                    help="Gemini second-opinion review on every MATCH (a different lab's model)")
     ap.add_argument("--no-rebuild", action="store_true")
     ap.add_argument("--director", action="store_true", help="Play to recover: SubQ Snap steers by live heartbeats")
     ap.add_argument("--director-port", type=int, default=7112)
