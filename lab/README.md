@@ -26,3 +26,7 @@ python3 -m pytest -q lab/tests                    # T2, T3, parity (needs lab/se
 Candidates define the function under its exact id (non-static), for example `int fn_0801B7D4(const void *e)`, and declare any callees and globals they use by their ids. The ctx header in `lab/out/ctx/<id>.h` is force-included. Matching compares every instruction; at relocation sites (calls, literal-pool addresses) both sides must point at the same `fn_`/`data_` id and offset. A check takes about 0.1 to 0.2 s.
 
 Not yet: `rebuild` and `patch` (501 until the 14:30 gate), the variant, the memory probe, the ASI:One agents.
+
+## ASI:One agent (Fetch.ai prize)
+
+`lab/agents/run_agent.sh` starts **Frankenstein Referee** (address `agent1q088qnxafee4aug0qz4xnd9zkk4veq2r9ez07mp047u8enqhckc5w2hstx0`): Agent Chat Protocol, Agentverse mailbox, manifest published. It needs the local referee container. In ASI:One, ask it: "Which functions can I try?", "Does this C match fn_…?" plus a ```c block, "Verify my fix for fn_…" plus code, "Recover fn_…" (calls the crew jobs API on :7111, then re-verifies with the referee), "How much of DOOM is back?", "Prove the rebuild is exact". Every reply separates Observed (proved by the compiler) from Inferred.
