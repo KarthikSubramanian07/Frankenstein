@@ -29,6 +29,19 @@ GBADoom's own buttons (upstream README): B fires, A uses (hold to run), L / R st
 
 Touch details: every pointer is tracked on its own, so you can hold FIRE while moving, and a third finger can strafe. The D-pad reads eight 45° sectors and keeps tracking while your thumb slides, including past its edge. Touching the seam between FIRE and USE presses both. Pressed controls go opaque and vibrate for 8 ms where supported (not on iPhone). Selection, callouts, double-tap zoom, pinch, pull-to-refresh and the context menu are all suppressed on the play surface.
 
+## Pick your device, see the mapping, remap it
+
+The **Controller** chip under PRESS START (and HOW YOU'LL PLAY · REMAP in the pause sheet) opens **How you'll play**:
+
+- **What it is and where it runs.** "Doom, rebuilt from recovered code" appears only when the server verified a real rebuild report. Otherwise it says "Doom (GBADoom)".
+- **Device picker.** The choices are Xbox-style, PlayStation-style, Nintendo-style, 8BitDo, Steam Deck, Generic gamepad, Keyboard and Touch. Auto-detection reads the Gamepad API id (Microsoft `045e`, Sony `054c`, Nintendo `057e`, 8BitDo `2dc8` and Valve `28de` vendor ids, or the name) and the pointer type. Picking a different pad type is saved as an override.
+- **Visual map.** Pads get an outline controller we draw ourselves, with each control labelled by its Doom action and unused controls dimmed. Steam Deck gets its own handheld outline. The keyboard gets key caps, and touch gets a phone diagram whose slots you can tap. Button glyphs are generic: text caps, plus small drawn ✕ ○ □ △ shapes for PlayStation-style pads. There are no vendor logos and no copied button art. A list of actions follows, with the actions that have no input and the controls that have no action.
+- **Remap.** Press CHANGE, then press any button, key or touch slot within 5 s ("Press a button on the controller for FIRE… 5s"). Esc cancels. If the input already belonged to another action, the two swap, and the prompt says what moved. PAUSE stays fixed (Esc, Home, or View + Menu), so a remap can never lock you out of the menu.
+- **Profiles.** Each device keeps its own profile in `localStorage` (wrapped in try/catch, so private mode just forgets on reload). RESET TO DEFAULT restores the defaults. The NINTENDO A/B SWAP toggle mirrors the face buttons, so the right-hand button fires.
+- **Adaptive UI.** The last input used drives everything. Touch shows the overlay, labelled from the touch profile. A controller hides the overlay and shows that pad's glyphs in the legend and in "Press [glyph] to start". The keyboard shows key caps. Switching mid-game updates instantly. Controller-only navigation covers the gate, the pause sheet and How you'll play: the D-pad or stick moves focus, the bottom button presses, and the right button goes back.
+
+Code: `controls.js` holds actions, detection, glyphs, profiles, binding with swaps, resolution to GBA buttons, and the SVG map. `player.js` turns touch slots, key codes and pad inputs into input ids and resolves them through the active profile.
+
 PRESS START does the gesture-gated work in one tap: it starts the game, resumes audio (iOS needs this), requests full screen, and then tries a landscape orientation lock. Full screen and the lock fail quietly where unsupported; iPhone Safari has neither. Add `?windowed` to the URL to skip full screen on a laptop.
 
 ## Fast first load, then offline
@@ -58,6 +71,15 @@ Verified with Playwright mobile emulation on this Mac, using a local Node and Py
 - **Touch input:** checked end to end through the real mGBA core with a 656-byte input-probe GBA ROM (scratchpad only, not committed). The ROM lights one box per GBA button, and screenshots are read back pixel by pixel. That covered 44 checks: diagonals, sliding, FIRE while moving, three fingers, the FIRE / USE seam, START, SELECT and R. Chromium used real CDP multi-touch; WebKit used dispatched pointer events.
 - **Geometry:** no control covers the status-bar rows on any of the four devices.
 - **TV and desktop:** at 1920x1080 and 1280x720, keyboard-only and controller-only play were checked, with a stubbed `navigator.getGamepads`.
+- **Device picker and remap (19 checks):**
+  - Detection of Xbox, DualSense and Switch Pro ids at 1920x1080, with the correct bottom-button glyph each time (A, a drawn cross, B).
+  - Binding FIRE to LB through the real core: LB lights GBA B on the probe ROM, and the swapped A button now strafes. This survives a reload.
+  - The 5 s timeout leaves the binding unchanged.
+  - Reset plus the Nintendo A/B swap makes the right face button fire.
+  - A keyboard remap of FIRE to F survives a reload, and the old Z key is unbound.
+  - A touch remap of FIRE onto the round USE slot swaps them and relabels the overlay.
+  - Default touch is unaffected.
+  - iPad Pro 11 landscape defaults to Touch and plays.
 - **PWA:** `Page.getInstallabilityErrors` is empty. After an offline reload the page is still controlled by the service worker and still cross-origin isolated, and it plays.
 
 Earlier, the real 5,704,780-byte package booted to gameplay ([BOOT.md](../runtime/BOOT.md)). There was no packaged playable ROM on this Mac (GbaWadUtil is Windows-only), so Doom gameplay itself was not re-run here.
@@ -90,19 +112,3 @@ The generated judging service worker intentionally differs from the universal pl
 ### Static bundle checks (2026-11-07, Windows)
 
 The real 5,704,780-byte static-face package (`337fbb15462b57eb6cc5a35bcf11e36646e130e2`) passed preservation validation against `lab/out/static_face.gba`. The earlier variant package (`e1ddb8fb96764422d5fb6b1c84c83b85c98236bd`) also passed against its corresponding engine. The static package correctly failed against the different `target.gba`. Manifest sizes/hashes and the exact output allowlist were checked, as were waiting-page status and eight failure cases: output outside `dist`, output equal to `dist`, overwrite, engine-only ROM, report without ROM, fixture report, non-object report and wrong report hash. Python compilation and generated service-worker syntax passed. This verifies packaging and rejection behavior; it does not re-run Doom gameplay, prove physical-phone controls, or verify Cloudflare's deployed headers. Those remain launch checks after an authorized deployment.
-
-
-## Stage and player on one local origin
-
-Build the Stage, then mount its compiled output in the Node player host. From the repository root:
-
-```sh
-npm --prefix stage run build
-node creature/phone/serve.mjs --port 7412 --stage stage/dist --rom creature/runtime/generated/doom-static-playable.gba
-```
-
-Open `http://127.0.0.1:7412/stage/?game=http%3A%2F%2F127.0.0.1%3A7412%2F%3Fwindowed`. The Stage document is at `/stage/` and its embedded player is at `/`, on the same scheme, host and port. Use this same hostname consistently; `localhost` and `127.0.0.1` are different origins. Port 7412 is an optional local test override. Existing `--report` and `--engine` arguments still work. The Stage data/websocket services on 7201/7202 must also be running; this option does not start or proxy them.
-
-`--stage` serves only the built `index.html`, `/assets/` JavaScript/CSS, and `/fonts/` font files plus `LICENSE*.txt`/`OFL*.txt`. It rejects source/config paths, traversal and real paths outside the configured build directory, including symlink escapes. There is no arbitrary-file or SPA fallback. Isolation headers, gzip, content ETags and HEAD responses apply to the Stage files too. Without `--stage`, the server retains its existing player-only routes. The programmatic equivalent is `createPlayerServer({ stage: '/absolute/path/to/stage/dist', rom: '/absolute/path/to/playable.gba' })`.
-
-HTTP checks verified exact Stage build bytes, MIME types, redirect/query preservation, gzip, ETag/304, HEAD, isolation headers, unchanged real ROM/status/player routes and refusal of invalid paths. A live symlink/junction check could not run because Windows denied junction creation (`EPERM`); canonical-path containment is implemented but that case is not runtime verified here. Browser iframe rendering and gameplay inside the mounted Stage remain separate checks; computer control was stopped at the user's request.
