@@ -1,0 +1,2 @@
+# Append-only logs: on concurrent appends keep both sides instead of conflicting.
+DECISIONS.md merge=union
