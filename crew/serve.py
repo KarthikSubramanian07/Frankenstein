@@ -31,7 +31,8 @@ from .config import ROOT, Config
 FIX = ROOT / "contracts" / "fixtures"
 MAX_BODY = 256 * 1024
 FN_ID = re.compile(r"fn_[0-9A-F]{8}")  # contracts: ^fn_[0-9A-F]{8}$
-MAX_QUERY = 200  # characters; the router quotes the query inside every Snap question
+MAX_QUERY = 200  # characters kept; the router quotes the query inside every Snap question
+MAX_QUERY_IN = 2000  # longer than this is not a request, it is a payload (400)
 JOB_BUDGET_FACTOR = 1.2  # a job's run budget is max_usd * 1.2 (see _real_job)
 ROUTE_RESERVE_USD = 0.25  # held while a route runs; settled to the measured Snap cost
 CONTROL = re.compile(r"[\x00-\x1f\x7f-\x9f\u2028\u2029\u202a-\u202e\u2066-\u2069]")
@@ -86,13 +87,13 @@ class SpendGuard:
 
 
 def clean_query(raw) -> str:
-    """User words from ASI:One: control and bidi characters become spaces, whitespace collapses, length is capped."""
+    """User words from ASI:One: control and bidi characters become spaces, whitespace collapses, and only the first
+    MAX_QUERY characters are kept (agents forward whole chat messages). Over MAX_QUERY_IN is refused."""
     if not isinstance(raw, str):
         raise ValueError("query must be a string")
-    q = " ".join(CONTROL.sub(" ", raw).split())
-    if len(q) > MAX_QUERY:
-        raise ValueError(f"query is longer than {MAX_QUERY} characters")
-    return q
+    if len(raw) > MAX_QUERY_IN:
+        raise ValueError(f"query is longer than {MAX_QUERY_IN} characters")
+    return " ".join(CONTROL.sub(" ", raw).split())[:MAX_QUERY].strip()
 
 
 class Jobs:

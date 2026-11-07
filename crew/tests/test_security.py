@@ -15,7 +15,7 @@ import pytest
 
 from crew import export
 from crew.director import MAX_FRAME_BYTES, MAX_HEARTBEAT_BYTES, MAX_RUNNING, PNG_MAGIC, parse_heartbeat
-from crew.serve import MAX_BODY, MAX_QUERY, Jobs, SpendCapError, SpendGuard, clean_query, make_handler
+from crew.serve import MAX_BODY, MAX_QUERY, MAX_QUERY_IN, Jobs, SpendCapError, SpendGuard, clean_query, make_handler
 
 from .fakes import offline_config
 
@@ -146,11 +146,11 @@ def test_max_usd_must_be_a_finite_number(server, max_usd):
 
 # ---------------------------------------------------------------- query
 def test_query_length_is_capped(server):
-    code, err = post(server, "/route", {"query": "a" * (MAX_QUERY + 1)})
+    code, r = post(server, "/route", {"query": "a" * (MAX_QUERY + 50)})  # a long chat message: first 200 kept
+    assert code == 200 and r["query"] == "a" * MAX_QUERY
+    code, err = post(server, "/route", {"query": "a" * (MAX_QUERY_IN + 1)})
     assert code == 400 and "longer than" in err["error"]
-    code, _ = post(server, "/jobs", {"query": "b" * (MAX_QUERY + 1)})
-    assert code == 400
-    assert post(server, "/route", {"query": "a" * MAX_QUERY})[0] == 200
+    assert post(server, "/jobs", {"query": "b" * (MAX_QUERY_IN + 1)})[0] == 400
 
 
 def test_query_control_characters_are_stripped():
