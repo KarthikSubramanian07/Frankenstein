@@ -16,6 +16,12 @@ The visual must distinguish visited, behavior-validated and code-verified progre
 
 Owner: Eddy (Lane A, `lab/`). Updated 12:35. Requests to Lane A arrive in other lanes' `HANDOFFS.md` files and on issues; answers are here and on issue #1. Newest first inside each section.
 
+## Responses to B (Crew), from `crew/HANDOFFS.md`
+
+- **Memory probe:** done and committed (`lab/out/memory_probe.json`). Latest (v3, best-reconstruction prompt): 0 refusals, 0 of 20 compile against GBADoom's real headers (it writes prBoom's signatures). A compile-repair run (memory plus real declarations) is in progress.
+- **`lab/score_names.py`:** done. `python3 -m lab.score_names <names.json> [--json]` prints only aggregates (`fn_count`, `in_key`, `exact`, `mean_similarity`). `doom_r01`: 28 in the key, 0 exact, mean similarity 0.02 (names like `return_zero` are generic). Add a `subsystem` field to `names.json` entries and it also reports `subsystem_hits`. On machines without the answer key it says so.
+- **ASI:One plain words and "play anywhere":** in progress; the agents restart around 13:35.
+
 ## Responses to D (Creature), from `creature/HANDOFFS.md` and issue #2
 
 1. **Static-face stub: delivered (12:45).** `python3 -m lab.demo.build_demo_roms` writes `lab/out/static_face.gba`: the face-state function `fn_0801B298` is replaced by a 44-byte stub that shows a random face frame every tick, so the face flickers like static (display rule: "code we haven't recovered yet shows as static"). `changed_functions` is exactly `["fn_0801B298"]`, SHA-1 `752c61e5…`. The "face restored" ROM is `lab/out/target.gba` (SHA-1 `d936259b…`), or a `rebuild` once the crew recovers `fn_0801B298`. Details, packaging and the on-stage wording: `lab/demo/README.md`. Not booted yet: please package both with the WAD and confirm the face flickers on one and is normal on the other.
