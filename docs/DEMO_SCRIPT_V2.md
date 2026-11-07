@@ -28,7 +28,7 @@ compiler proved every piece."**
 | 170 of Doom's 568 functions, about 30% | `crew/exports/union/UNION.json` (14:53) |
 | 4.78% of the code by size | same |
 | 170 rebuilt into the game, checksum identical | `POST /rebuild` on the union, re-verified by Lane A at 15:04 after Lane B restored `fn_080035CC.c` (170 agent-written, 398 original, 4.78%) |
-| 24 lies caught, 30 fakes rejected, 0 fakes let through | `DECISIONS.md` 14:52 (`tools/counts.py` on Lane B's machine, 33 runs). On Lane A's laptop the same script prints 9 / 6 / 0 from 13 local runs. **Say Lane B's figure only from the machine that prints it.** |
+| 24 lies caught, 30 fakes rejected, 0 fakes let through | `python3 tools/counts.py` (reads crew/exports in the repo, 35 finished runs); identical on Lane A's and Lane B's machines at 15:06 |
 | From memory alone: 0 of 20 compiled | `DECISIONS.md` 13:28 |
 | A check takes 0.1 to 0.2 s | `DECISIONS.md` 11:24 |
 | Held out: no measured gain yet | `DECISIONS.md` 13:58 and 14:06 |
@@ -61,7 +61,7 @@ Stop at 3:00, even mid-sentence.
 - The game is on screen at 0:00 and the judge acts by 0:20 (playbook: identity in 10 s, judge triggers by 0:45).
 - One proof moment early (MATCH at about 0:40), then one escalation that proves it isn't canned: the judge's own
   button presses (the cheat), then the same cheat in the changed build.
-- One number per scene, said aloud: 0.2 s, the lie count (from Lane B's repo-only tally), 170, 170 of 568.
+- One number per scene, said aloud: 0.2 s, 24, 170, 170 of 568.
 - Each prize sponsor acts on screen in its own scene: Muse writes (0:20), Snap judges (0:40, 2:00), Fetch.ai in
   the close and in Q&A. MongoDB and Gemini get one line each in Q&A only: neither has a prize track (`EVENT_GUIDE.md`).
 - The System That Gets Better is a Q&A answer, not a scene: our held-out result shows no measured gain, and
