@@ -1,5 +1,15 @@
 # Lane D handoffs
 
+## Current Lane D checkpoint from this session
+
+Source/proof checkpoints 54dca9e and 3aec71c are on main. The static-face playable package boots in the current player; movement, turn, fire and face expressions at full health were observed. Restore preflight and the static phone deployment bundle are implemented and checked. STATUS.md is the current evidence ledger.
+
+- **A:** please publish the real sanitized lab/out/rebuild.json for the 28-function rebuild. Exported doom_r01 still has no build.rom. The request is on issue #2; an outbound Murmur request failed in sandbox Git authentication.
+- **C:** the direct player works, but its Stage iframe showed refused-to-connect in the in-app browser despite isolation headers. A temporary HTML CORP same-site probe did not help; no speculative header change committed. Separate OBS capture remains the alternative, needing an actual capture test.
+- **Murmur:** a real message from Eddy's machine was received; active Lane A peers are visible. Our outbound send failed explicitly in Git credential-manager. Global registration is protected. Use the team-pinned docs/murmur files; D needs a normal-terminal stop/join to finish outgoing integration.
+- **Latest Stage:** pulled and rebuilt 1075572 (one main log screen plus ending card); Vite and TypeScript checks pass. Default/obs URL is 5173; space toggles card and C shows credits. Older scenes need legacy=1. Data 7201/7202 shows real exports; live:null.
+- **Still open:** actual rebuild report → production preflight → observed runtime swap; original controlled 30-second active play; physical phones and public HTTPS/QR; OBS/60-second recording. No recovered-face, swap or public-phone success claimed.
+
 ## Active assignment from Enzo: implement Pokémon player/adapter support
 
 Read [docs/POKEMON_IMPLEMENTATION.md](../docs/POKEMON_IMPLEMENTATION.md). Next checkpoint: game/core registry and selection, confirmed Game Boy loading support, editable input-profile path and real transition telemetry contract. Preserve working Doom. Report STARTED / QUEUED AFTER DOOM (specific gate) / BLOCKED (exact input). Source/behavior recovery stays distinct from original-code playback.
