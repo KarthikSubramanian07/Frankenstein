@@ -112,6 +112,16 @@ class Director:
         }
         images = [_img(self.frame_png)] if self.frame_png else None
         t = time.time()
+        if len(hot) < 2:  # Snap's choice needs two or more options; with one there is nothing to judge
+            out = {"action": "boost", "fns": [hot[0][0]], "confidence": None, "latency_ms": 0,
+                   "fallback": "only one candidate running"}
+            with self.lock:
+                self.boosted = out["fns"]
+                self.last = out
+            if self.log is not None:
+                self.log.emit("snap.decision", "scheduler", fn=out["fns"][0], op="director",
+                              **{k: v for k, v in out.items() if k != "action"})
+            return out
         try:
             r = snap.decide(self.cfg, state, q, op="director", timeout=timeout, images=images)
             ans = r["answers"]
