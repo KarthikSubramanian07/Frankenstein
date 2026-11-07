@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/KarthikSubramanian07/Frankenstein/contracts/schemas/crew_job.schema.json",
+  "title": "Crew jobs API: GET /jobs/{job_id}",
+  "type": "object",
+  "properties": {
+    "v": {
+      "const": 1
+    },
+    "fixture": {
+      "type": "boolean"
+    },
+    "job_id": {
+      "type": "string"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "fn": {
+      "type": "string",
+      "pattern": "^fn_[0-9A-F]{8}$"
+    },
+    "status": {
+      "enum": [
+        "running",
+        "matched",
+        "abandoned",
+        "failed"
+      ]
+    },
+    "attempts": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "best_pct": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "cost_usd": {
+      "type": "number",
+      "minimum": 0
+    },
+    "src_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "false_claims": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "status",
+    "attempts",
+    "best_pct",
+    "cost_usd",
+    "src_path",
+    "false_claims"
+  ],
+  "additionalProperties": true
+}

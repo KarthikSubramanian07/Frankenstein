@@ -1,0 +1,17 @@
+{
+  "v": 1,
+  "fixture": true,
+  "model": "muse-spark-1.3",
+  "fn_count": 20,
+  "method": "model asked to write 20 public Doom functions from memory by their original names; the same sources compiled against (a) unmodified GBADoom and (b) our private variant",
+  "unmodified": {
+    "matched": 6,
+    "match_rate": 0.3,
+    "best_pct": 100.0
+  },
+  "variant": {
+    "matched": 0,
+    "match_rate": 0.0,
+    "best_pct": 41.5
+  }
+}

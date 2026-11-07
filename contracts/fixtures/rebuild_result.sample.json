@@ -1,0 +1,10 @@
+{
+  "v": 1,
+  "fixture": true,
+  "rom_sha1": "fd711b80596141b0f454d7fe87aae0bc7a60c189",
+  "original_sha1": "fd711b80596141b0f454d7fe87aae0bc7a60c189",
+  "identical": true,
+  "recovered": 60,
+  "from_original": 24,
+  "method": "source-tree"
+}

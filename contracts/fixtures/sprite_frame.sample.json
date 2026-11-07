@@ -1,0 +1,33 @@
+{
+  "v": 1,
+  "fixture": true,
+  "frame": 18231,
+  "sprites": [
+    {
+      "i": 0,
+      "x": 104,
+      "y": 72,
+      "w": 16,
+      "h": 16,
+      "tile": 32,
+      "pal": 1,
+      "subsystem": "weapons"
+    },
+    {
+      "i": 1,
+      "x": 40,
+      "y": 30,
+      "w": 32,
+      "h": 32,
+      "tile": 96,
+      "pal": 3,
+      "subsystem": "enemies"
+    }
+  ],
+  "heal": {
+    "hud": 0.83,
+    "weapons": 0.41,
+    "enemies": 0.2,
+    "world": 0.05
+  }
+}

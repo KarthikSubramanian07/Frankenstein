@@ -1,0 +1,10 @@
+{
+  "v": 1,
+  "fixture": true,
+  "rom_path": "lab/out/patched.gba",
+  "rom_sha1": "d4ce2944f79316194682b68838fb5ff4859e5e69",
+  "changed_functions": [
+    "fn_0800036C"
+  ],
+  "unchanged": 95
+}

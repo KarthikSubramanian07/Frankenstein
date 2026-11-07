@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/KarthikSubramanian07/Frankenstein/contracts/schemas/viz_map.schema.json",
+  "title": "Visual-only subsystem map (lab/out/viz_map.json). Crew must never read it.",
+  "type": "object",
+  "properties": {
+    "v": {
+      "const": 1
+    },
+    "fixture": {
+      "type": "boolean"
+    },
+    "subsystems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "functions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^fn_[0-9A-F]{8}$"
+            }
+          },
+          "region": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "y": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "w": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "h": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "w",
+              "h"
+            ],
+            "additionalProperties": true
+          }
+        },
+        "required": [
+          "id",
+          "label",
+          "functions"
+        ],
+        "additionalProperties": true
+      }
+    }
+  },
+  "required": [
+    "v",
+    "subsystems"
+  ],
+  "additionalProperties": true
+}

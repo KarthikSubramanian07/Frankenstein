@@ -1,0 +1,33 @@
+{
+  "v": 1,
+  "fixture": true,
+  "fn": "fn_0800036C",
+  "lint": {
+    "ok": true,
+    "violations": []
+  },
+  "compile": {
+    "ok": true,
+    "log": ""
+  },
+  "elapsed_ms": 388,
+  "referee": "lab@fixture",
+  "status": "PARTIAL",
+  "match_pct": 92.9,
+  "first_diff": {
+    "offset": 14,
+    "expected": "1c08",
+    "got": "1c10",
+    "expected_ins": "adds r0, r1, #0",
+    "got_ins": "adds r0, r2, #0"
+  },
+  "diff": [
+    {
+      "offset": 14,
+      "expected": "1c08",
+      "got": "1c10",
+      "expected_ins": "adds r0, r1, #0",
+      "got_ins": "adds r0, r2, #0"
+    }
+  ]
+}

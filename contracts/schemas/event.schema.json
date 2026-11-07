@@ -1,0 +1,853 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/KarthikSubramanian07/Frankenstein/contracts/schemas/event.schema.json",
+  "title": "One line of runs/<run_id>/events.jsonl",
+  "type": "object",
+  "properties": {
+    "v": {
+      "const": 1
+    },
+    "fixture": {
+      "type": "boolean"
+    },
+    "ts": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d(\\.\\d+)?Z$"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "seq": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "type": {
+      "enum": [
+        "attempt.submitted",
+        "build.rom",
+        "claim.made",
+        "fn.abandoned",
+        "fn.claimed",
+        "fn.matched",
+        "idiom.learned",
+        "idiom.used",
+        "metric.tick",
+        "narration",
+        "patch.verified",
+        "phone.published",
+        "rom.swapped",
+        "run.finished",
+        "run.started",
+        "types.proposed",
+        "verdict"
+      ]
+    },
+    "actor": {
+      "type": "string",
+      "pattern": "^(scheduler|digger-[0-9]+|checker|archivist|distiller|cartographer|lab|creature|human)$"
+    },
+    "fn": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^fn_[0-9A-F]{8}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "v",
+    "ts",
+    "run_id",
+    "seq",
+    "type",
+    "actor",
+    "payload"
+  ],
+  "additionalProperties": true,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "attempt.submitted"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "attempt": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "tokens_in": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "tokens_out": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "cost_usd": {
+                "type": "number",
+                "minimum": 0
+              },
+              "src_preview": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "attempt",
+              "tokens_in",
+              "tokens_out",
+              "cost_usd",
+              "src_preview"
+            ],
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "build.rom"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "rom_sha1": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{40}$"
+              },
+              "identical": {
+                "type": "boolean"
+              },
+              "recovered": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "from_original": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "pct_agent_code": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "rom_path": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "rom_sha1",
+              "identical",
+              "recovered",
+              "from_original",
+              "pct_agent_code",
+              "rom_path"
+            ],
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "claim.made"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "attempt": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "text": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "attempt",
+              "text"
+            ],
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "fn.abandoned"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "attempts": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "best_pct": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              }
+            },
+            "required": [
+              "attempts",
+              "best_pct"
+            ],
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "fn.claimed"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "digger": {
+                "type": "string"
+              },
+              "difficulty": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "required": [
+              "digger",
+              "difficulty"
+            ],
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "fn.matched"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "attempts": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "minutes": {
+                "type": "number",
+                "minimum": 0
+              },
+              "cost_usd": {
+                "type": "number",
+                "minimum": 0
+              },
+              "src_path": {
+                "type": "string"
+              },
+              "lines": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "attempts",
+              "minutes",
+              "cost_usd",
+              "src_path",
+              "lines"
+            ],
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "idiom.learned"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "idiom_id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "applies_when": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "idiom_id",
+              "title",
+              "applies_when"
+            ],
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "idiom.used"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "idiom_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "idiom_id"
+            ],
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "metric.tick"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "pct_recovered": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "matched": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "attempted": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "false_claims": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "cost_usd": {
+                "type": "number",
+                "minimum": 0
+              },
+              "elapsed_s": {
+                "type": "number",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "pct_recovered",
+              "matched",
+              "attempted",
+              "false_claims",
+              "cost_usd",
+              "elapsed_s"
+            ],
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "narration"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string",
+                "maxLength": 90
+              },
+              "mood": {
+                "enum": [
+                  "dry",
+                  "alarmed",
+                  "proud",
+                  "hushed"
+                ]
+              },
+              "speak": {
+                "type": "boolean"
+              },
+              "priority": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 3
+              }
+            },
+            "required": [
+              "text",
+              "mood",
+              "speak",
+              "priority"
+            ],
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "patch.verified"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "fn": {
+                "type": "string",
+                "pattern": "^fn_[0-9A-F]{8}$"
+              },
+              "changed_functions": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^fn_[0-9A-F]{8}$"
+                }
+              },
+              "rom_sha1": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{40}$"
+              }
+            },
+            "required": [
+              "fn",
+              "changed_functions",
+              "rom_sha1"
+            ],
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "phone.published"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string"
+              },
+              "qr_png": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "url",
+              "qr_png"
+            ],
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "rom.swapped"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "rom_sha1": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{40}$"
+              },
+              "pct_agent_code": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              }
+            },
+            "required": [
+              "rom_sha1",
+              "pct_agent_code"
+            ],
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "run.finished"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "matched": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "abandoned": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "pct_recovered": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "cost_usd": {
+                "type": "number",
+                "minimum": 0
+              },
+              "elapsed_s": {
+                "type": "number",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "matched",
+              "abandoned",
+              "pct_recovered",
+              "cost_usd",
+              "elapsed_s"
+            ],
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "run.started"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "split": {
+                "enum": [
+                  "train",
+                  "heldout"
+                ]
+              },
+              "library": {
+                "enum": [
+                  "on",
+                  "off",
+                  "learning"
+                ]
+              },
+              "diggers": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "model": {
+                "type": "string"
+              },
+              "budget_usd": {
+                "type": "number",
+                "minimum": 0
+              },
+              "game_id": {
+                "type": "string"
+              },
+              "fn_total": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "label",
+              "split",
+              "library",
+              "diggers",
+              "model",
+              "budget_usd",
+              "game_id",
+              "fn_total"
+            ],
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "types.proposed"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string"
+              },
+              "structs": {
+                "type": [
+                  "array",
+                  "integer"
+                ]
+              },
+              "signatures": {
+                "type": [
+                  "array",
+                  "integer"
+                ]
+              }
+            },
+            "required": [
+              "source",
+              "structs",
+              "signatures"
+            ],
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "verdict"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "attempt": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "status": {
+                "enum": [
+                  "MATCH",
+                  "PARTIAL",
+                  "NO_COMPILE",
+                  "LINT_FAIL"
+                ]
+              },
+              "match_pct": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "first_diff": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "offset": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "expected": {
+                        "type": "string"
+                      },
+                      "got": {
+                        "type": "string"
+                      },
+                      "expected_ins": {
+                        "type": "string"
+                      },
+                      "got_ins": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "offset",
+                      "expected",
+                      "got",
+                      "expected_ins",
+                      "got_ins"
+                    ],
+                    "additionalProperties": true
+                  }
+                ]
+              },
+              "lint_ok": {
+                "type": "boolean"
+              },
+              "claim_was_true": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "attempt",
+              "status",
+              "match_pct",
+              "first_diff",
+              "lint_ok",
+              "claim_was_true"
+            ],
+            "additionalProperties": true
+          }
+        }
+      }
+    }
+  ]
+}

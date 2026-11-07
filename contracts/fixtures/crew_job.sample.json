@@ -1,0 +1,12 @@
+{
+  "fixture": true,
+  "job_id": "j_17",
+  "run_id": "r_asi_01",
+  "fn": "fn_0800036C",
+  "status": "matched",
+  "attempts": 3,
+  "best_pct": 100.0,
+  "cost_usd": 0.31,
+  "src_path": "runs/r_asi_01/recovered/fn_0800036C.c",
+  "false_claims": 1
+}

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/KarthikSubramanian07/Frankenstein/contracts/schemas/crew_status.schema.json",
+  "title": "Crew jobs API: GET /status",
+  "type": "object",
+  "properties": {
+    "v": {
+      "const": 1
+    },
+    "fixture": {
+      "type": "boolean"
+    },
+    "live_run_id": {
+      "type": "string"
+    },
+    "pct_recovered": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "matched": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "fn_total": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "false_claims": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "last_build": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "rom_sha1": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "identical": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "rom_sha1",
+            "identical"
+          ],
+          "additionalProperties": true
+        }
+      ]
+    }
+  },
+  "required": [
+    "live_run_id",
+    "pct_recovered",
+    "matched",
+    "fn_total",
+    "false_claims",
+    "last_build"
+  ],
+  "additionalProperties": true
+}

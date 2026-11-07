@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/KarthikSubramanian07/Frankenstein/contracts/schemas/rebuild_result.schema.json",
+  "title": "Referee rebuild result (source-tree method)",
+  "type": "object",
+  "properties": {
+    "v": {
+      "const": 1
+    },
+    "fixture": {
+      "type": "boolean"
+    },
+    "rom_sha1": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "original_sha1": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "identical": {
+      "type": "boolean"
+    },
+    "recovered": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "from_original": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "method": {
+      "enum": [
+        "source-tree"
+      ]
+    }
+  },
+  "required": [
+    "v",
+    "rom_sha1",
+    "identical",
+    "recovered",
+    "from_original"
+  ],
+  "additionalProperties": true
+}

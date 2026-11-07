@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/KarthikSubramanian07/Frankenstein/contracts/schemas/memory_probe.schema.json",
+  "title": "Memory probe: same from-memory code, two targets",
+  "type": "object",
+  "properties": {
+    "v": {
+      "const": 1
+    },
+    "fixture": {
+      "type": "boolean"
+    },
+    "model": {
+      "type": "string"
+    },
+    "fn_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "method": {
+      "type": "string"
+    },
+    "unmodified": {
+      "type": "object",
+      "properties": {
+        "matched": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "match_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "best_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "required": [
+        "matched",
+        "match_rate",
+        "best_pct"
+      ],
+      "additionalProperties": true
+    },
+    "variant": {
+      "type": "object",
+      "properties": {
+        "matched": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "match_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "best_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "required": [
+        "matched",
+        "match_rate",
+        "best_pct"
+      ],
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "v",
+    "model",
+    "fn_count",
+    "method",
+    "unmodified",
+    "variant"
+  ],
+  "additionalProperties": true
+}

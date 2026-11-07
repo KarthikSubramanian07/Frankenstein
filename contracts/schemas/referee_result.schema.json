@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/KarthikSubramanian07/Frankenstein/contracts/schemas/referee_result.schema.json",
+  "title": "Referee check result",
+  "type": "object",
+  "properties": {
+    "v": {
+      "const": 1
+    },
+    "fixture": {
+      "type": "boolean"
+    },
+    "fn": {
+      "type": "string",
+      "pattern": "^fn_[0-9A-F]{8}$"
+    },
+    "status": {
+      "enum": [
+        "MATCH",
+        "PARTIAL",
+        "NO_COMPILE",
+        "LINT_FAIL"
+      ]
+    },
+    "match_pct": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "first_diff": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "offset": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "expected": {
+              "type": "string"
+            },
+            "got": {
+              "type": "string"
+            },
+            "expected_ins": {
+              "type": "string"
+            },
+            "got_ins": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "offset",
+            "expected",
+            "got",
+            "expected_ins",
+            "got_ins"
+          ],
+          "additionalProperties": true
+        }
+      ]
+    },
+    "diff": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "expected": {
+            "type": "string"
+          },
+          "got": {
+            "type": "string"
+          },
+          "expected_ins": {
+            "type": "string"
+          },
+          "got_ins": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "offset",
+          "expected",
+          "got",
+          "expected_ins",
+          "got_ins"
+        ],
+        "additionalProperties": true
+      }
+    },
+    "lint": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean"
+        },
+        "violations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "rule": {
+                "type": "string",
+                "pattern": "^L[0-9]{3}$"
+              },
+              "reason": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "rule",
+              "reason"
+            ],
+            "additionalProperties": true
+          }
+        }
+      },
+      "required": [
+        "ok",
+        "violations"
+      ],
+      "additionalProperties": true
+    },
+    "compile": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean"
+        },
+        "log": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "ok",
+        "log"
+      ],
+      "additionalProperties": true
+    },
+    "elapsed_ms": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "referee": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "v",
+    "fn",
+    "status",
+    "match_pct",
+    "first_diff",
+    "diff",
+    "lint",
+    "compile",
+    "elapsed_ms",
+    "referee"
+  ],
+  "additionalProperties": true
+}

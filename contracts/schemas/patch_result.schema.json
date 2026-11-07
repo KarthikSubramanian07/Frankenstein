@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/KarthikSubramanian07/Frankenstein/contracts/schemas/patch_result.schema.json",
+  "title": "Referee patch result",
+  "type": "object",
+  "properties": {
+    "v": {
+      "const": 1
+    },
+    "fixture": {
+      "type": "boolean"
+    },
+    "rom_path": {
+      "type": "string"
+    },
+    "rom_sha1": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "changed_functions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^fn_[0-9A-F]{8}$"
+      }
+    },
+    "unchanged": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "v",
+    "rom_path",
+    "rom_sha1",
+    "changed_functions",
+    "unchanged"
+  ],
+  "additionalProperties": true
+}

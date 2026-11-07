@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/KarthikSubramanian07/Frankenstein/contracts/schemas/manifest.schema.json",
+  "title": "Target manifest (lab/out/manifest.json)",
+  "type": "object",
+  "properties": {
+    "v": {
+      "const": 1
+    },
+    "fixture": {
+      "type": "boolean"
+    },
+    "game": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "license": {
+          "type": "string"
+        },
+        "rom_path": {
+          "type": "string"
+        },
+        "rom_sha1": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "compiler": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            },
+            "flags": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "version",
+            "flags"
+          ],
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "license",
+        "rom_path",
+        "rom_sha1",
+        "compiler"
+      ],
+      "additionalProperties": true
+    },
+    "functions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^fn_[0-9A-F]{8}$"
+          },
+          "addr": {
+            "type": "string",
+            "pattern": "^0x[0-9A-F]{8}$"
+          },
+          "size": {
+            "type": "integer",
+            "minimum": 2
+          },
+          "mode": {
+            "enum": [
+              "thumb",
+              "arm"
+            ]
+          },
+          "scope": {
+            "enum": [
+              "game",
+              "library"
+            ]
+          },
+          "split": {
+            "enum": [
+              "train",
+              "heldout"
+            ]
+          },
+          "asm_path": {
+            "type": "string"
+          },
+          "callees": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^fn_[0-9A-F]{8}$"
+            }
+          },
+          "callers": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^fn_[0-9A-F]{8}$"
+            }
+          },
+          "difficulty": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "required": [
+          "id",
+          "addr",
+          "size",
+          "mode",
+          "scope",
+          "split",
+          "asm_path",
+          "callees",
+          "callers",
+          "difficulty"
+        ],
+        "additionalProperties": true
+      }
+    }
+  },
+  "required": [
+    "v",
+    "game",
+    "functions"
+  ],
+  "additionalProperties": true
+}

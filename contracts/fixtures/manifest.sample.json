@@ -1,0 +1,1584 @@
+{
+  "v": 1,
+  "fixture": true,
+  "game": {
+    "id": "doom",
+    "title": "GBADoom (prBoom, Doom shareware)",
+    "license": "GPL-2.0-or-later; see DECISIONS.md",
+    "rom_path": "lab/out/target.gba",
+    "rom_sha1": "fd711b80596141b0f454d7fe87aae0bc7a60c189",
+    "compiler": {
+      "name": "devkitARM GCC",
+      "version": "devkitARM rNN (gcc X.Y.Z) [sample: Lane A pins the real one]",
+      "flags": "-O3 -mthumb -mthumb-interwork -mcpu=arm7tdmi -mtune=arm7tdmi -std=gnu23 (upstream flags minus -flto=8)"
+    }
+  },
+  "functions": [
+    {
+      "id": "fn_08000200",
+      "addr": "0x08000200",
+      "size": 32,
+      "mode": "thumb",
+      "scope": "library",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000200.s",
+      "callees": [],
+      "callers": [
+        "fn_08000224",
+        "fn_0800024C",
+        "fn_0800027C",
+        "fn_08000298",
+        "fn_08000490",
+        "fn_08000730",
+        "fn_08000BDC",
+        "fn_080011A4"
+      ],
+      "difficulty": 0.07
+    },
+    {
+      "id": "fn_08000224",
+      "addr": "0x08000224",
+      "size": 40,
+      "mode": "thumb",
+      "scope": "library",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000224.s",
+      "callees": [
+        "fn_08000200"
+      ],
+      "callers": [
+        "fn_0800027C",
+        "fn_08000298",
+        "fn_0800036C",
+        "fn_08000554",
+        "fn_080005C0",
+        "fn_08000A98",
+        "fn_08000E08",
+        "fn_080011A4",
+        "fn_080025E8"
+      ],
+      "difficulty": 0.13
+    },
+    {
+      "id": "fn_0800024C",
+      "addr": "0x0800024C",
+      "size": 48,
+      "mode": "thumb",
+      "scope": "library",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_0800024C.s",
+      "callees": [
+        "fn_08000200"
+      ],
+      "callers": [
+        "fn_0800027C",
+        "fn_08000490",
+        "fn_08000928",
+        "fn_08000B00",
+        "fn_0800216C"
+      ],
+      "difficulty": 0.15
+    },
+    {
+      "id": "fn_0800027C",
+      "addr": "0x0800027C",
+      "size": 24,
+      "mode": "thumb",
+      "scope": "library",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_0800027C.s",
+      "callees": [
+        "fn_08000200",
+        "fn_08000224",
+        "fn_0800024C"
+      ],
+      "callers": [
+        "fn_08000298",
+        "fn_08000314",
+        "fn_08000564",
+        "fn_08000618"
+      ],
+      "difficulty": 0.15
+    },
+    {
+      "id": "fn_08000298",
+      "addr": "0x08000298",
+      "size": 120,
+      "mode": "thumb",
+      "scope": "library",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000298.s",
+      "callees": [
+        "fn_08000200",
+        "fn_08000224",
+        "fn_0800027C"
+      ],
+      "callers": [
+        "fn_08000454",
+        "fn_08000564",
+        "fn_08000A60"
+      ],
+      "difficulty": 0.41
+    },
+    {
+      "id": "fn_08000314",
+      "addr": "0x08000314",
+      "size": 84,
+      "mode": "thumb",
+      "scope": "library",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000314.s",
+      "callees": [
+        "fn_0800027C"
+      ],
+      "callers": [
+        "fn_08000490",
+        "fn_08000BE8"
+      ],
+      "difficulty": 0.24
+    },
+    {
+      "id": "fn_0800036C",
+      "addr": "0x0800036C",
+      "size": 212,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_0800036C.s",
+      "callees": [
+        "fn_08000224"
+      ],
+      "callers": [
+        "fn_08000454",
+        "fn_0800047C",
+        "fn_08000C90",
+        "fn_08001504"
+      ],
+      "difficulty": 0.66
+    },
+    {
+      "id": "fn_08000444",
+      "addr": "0x08000444",
+      "size": 16,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000444.s",
+      "callees": [],
+      "callers": [
+        "fn_0800047C",
+        "fn_080005F4",
+        "fn_08000888"
+      ],
+      "difficulty": 0.04
+    },
+    {
+      "id": "fn_08000454",
+      "addr": "0x08000454",
+      "size": 40,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000454.s",
+      "callees": [
+        "fn_08000298",
+        "fn_0800036C"
+      ],
+      "callers": [
+        "fn_080005DC",
+        "fn_08000A80",
+        "fn_08000AA8",
+        "fn_080021A0"
+      ],
+      "difficulty": 0.16
+    },
+    {
+      "id": "fn_0800047C",
+      "addr": "0x0800047C",
+      "size": 20,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_0800047C.s",
+      "callees": [
+        "fn_0800036C",
+        "fn_08000444"
+      ],
+      "callers": [
+        "fn_08000868",
+        "fn_08000C90"
+      ],
+      "difficulty": 0.11
+    },
+    {
+      "id": "fn_08000490",
+      "addr": "0x08000490",
+      "size": 12,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000490.s",
+      "callees": [
+        "fn_08000200",
+        "fn_0800024C",
+        "fn_08000314"
+      ],
+      "callers": [
+        "fn_08000A60"
+      ],
+      "difficulty": 0.11
+    },
+    {
+      "id": "fn_0800049C",
+      "addr": "0x0800049C",
+      "size": 84,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_0800049C.s",
+      "callees": [],
+      "callers": [],
+      "difficulty": 0.25
+    },
+    {
+      "id": "fn_080004F4",
+      "addr": "0x080004F4",
+      "size": 96,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_080004F4.s",
+      "callees": [],
+      "callers": [
+        "fn_08000928",
+        "fn_0800098C",
+        "fn_080021A0",
+        "fn_08002538"
+      ],
+      "difficulty": 0.25
+    },
+    {
+      "id": "fn_08000554",
+      "addr": "0x08000554",
+      "size": 16,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000554.s",
+      "callees": [
+        "fn_08000224"
+      ],
+      "callers": [
+        "fn_08000584",
+        "fn_080005C0",
+        "fn_080005F4",
+        "fn_0800209C",
+        "fn_080020F0"
+      ],
+      "difficulty": 0.06
+    },
+    {
+      "id": "fn_08000564",
+      "addr": "0x08000564",
+      "size": 28,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000564.s",
+      "callees": [
+        "fn_0800027C",
+        "fn_08000298"
+      ],
+      "callers": [
+        "fn_080005C0",
+        "fn_08000770",
+        "fn_08000928",
+        "fn_0800216C"
+      ],
+      "difficulty": 0.14
+    },
+    {
+      "id": "fn_08000584",
+      "addr": "0x08000584",
+      "size": 24,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000584.s",
+      "callees": [
+        "fn_08000554"
+      ],
+      "callers": [
+        "fn_080005A0",
+        "fn_080016B0",
+        "fn_0800221C"
+      ],
+      "difficulty": 0.09
+    },
+    {
+      "id": "fn_080005A0",
+      "addr": "0x080005A0",
+      "size": 28,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_080005A0.s",
+      "callees": [
+        "fn_08000584"
+      ],
+      "callers": [],
+      "difficulty": 0.1
+    },
+    {
+      "id": "fn_080005C0",
+      "addr": "0x080005C0",
+      "size": 28,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_080005C0.s",
+      "callees": [
+        "fn_08000224",
+        "fn_08000554",
+        "fn_08000564"
+      ],
+      "callers": [
+        "fn_08000B00"
+      ],
+      "difficulty": 0.16
+    },
+    {
+      "id": "fn_080005DC",
+      "addr": "0x080005DC",
+      "size": 24,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_080005DC.s",
+      "callees": [
+        "fn_08000454"
+      ],
+      "callers": [
+        "fn_08000770",
+        "fn_08000C40",
+        "fn_08001174",
+        "fn_080019D0",
+        "fn_08002088"
+      ],
+      "difficulty": 0.1
+    },
+    {
+      "id": "fn_080005F4",
+      "addr": "0x080005F4",
+      "size": 32,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_080005F4.s",
+      "callees": [
+        "fn_08000444",
+        "fn_08000554"
+      ],
+      "callers": [
+        "fn_08000F80"
+      ],
+      "difficulty": 0.13
+    },
+    {
+      "id": "fn_08000618",
+      "addr": "0x08000618",
+      "size": 280,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_08000618.s",
+      "callees": [
+        "fn_0800027C"
+      ],
+      "callers": [
+        "fn_08000770",
+        "fn_08000A60",
+        "fn_08000A80",
+        "fn_08001EBC"
+      ],
+      "difficulty": 0.79
+    },
+    {
+      "id": "fn_08000730",
+      "addr": "0x08000730",
+      "size": 64,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000730.s",
+      "callees": [
+        "fn_08000200"
+      ],
+      "callers": [
+        "fn_080019B4"
+      ],
+      "difficulty": 0.2
+    },
+    {
+      "id": "fn_08000770",
+      "addr": "0x08000770",
+      "size": 56,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_08000770.s",
+      "callees": [
+        "fn_08000564",
+        "fn_080005DC",
+        "fn_08000618"
+      ],
+      "callers": [
+        "fn_08001BC4",
+        "fn_08002074",
+        "fn_0800230C"
+      ],
+      "difficulty": 0.24
+    },
+    {
+      "id": "fn_080007A8",
+      "addr": "0x080007A8",
+      "size": 160,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_080007A8.s",
+      "callees": [],
+      "callers": [
+        "fn_08000AA8"
+      ],
+      "difficulty": 0.48
+    },
+    {
+      "id": "fn_0800084C",
+      "addr": "0x0800084C",
+      "size": 24,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_0800084C.s",
+      "callees": [],
+      "callers": [
+        "fn_08000888",
+        "fn_08000B00",
+        "fn_08000B38",
+        "fn_08000BDC"
+      ],
+      "difficulty": 0.06
+    },
+    {
+      "id": "fn_08000868",
+      "addr": "0x08000868",
+      "size": 28,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_08000868.s",
+      "callees": [
+        "fn_0800047C"
+      ],
+      "callers": [
+        "fn_08000FC4"
+      ],
+      "difficulty": 0.11
+    },
+    {
+      "id": "fn_08000888",
+      "addr": "0x08000888",
+      "size": 160,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000888.s",
+      "callees": [
+        "fn_08000444",
+        "fn_0800084C"
+      ],
+      "callers": [
+        "fn_08000A80"
+      ],
+      "difficulty": 0.49
+    },
+    {
+      "id": "fn_08000928",
+      "addr": "0x08000928",
+      "size": 96,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000928.s",
+      "callees": [
+        "fn_0800024C",
+        "fn_080004F4",
+        "fn_08000564"
+      ],
+      "callers": [
+        "fn_08000B20"
+      ],
+      "difficulty": 0.37
+    },
+    {
+      "id": "fn_0800098C",
+      "addr": "0x0800098C",
+      "size": 212,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_0800098C.s",
+      "callees": [
+        "fn_080004F4"
+      ],
+      "callers": [
+        "fn_08001174"
+      ],
+      "difficulty": 0.55
+    },
+    {
+      "id": "fn_08000A60",
+      "addr": "0x08000A60",
+      "size": 28,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000A60.s",
+      "callees": [
+        "fn_08000298",
+        "fn_08000490",
+        "fn_08000618"
+      ],
+      "callers": [
+        "fn_08000E08",
+        "fn_08001234"
+      ],
+      "difficulty": 0.17
+    },
+    {
+      "id": "fn_08000A80",
+      "addr": "0x08000A80",
+      "size": 24,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000A80.s",
+      "callees": [
+        "fn_08000454",
+        "fn_08000618",
+        "fn_08000888"
+      ],
+      "callers": [
+        "fn_08000FC4",
+        "fn_080011A4"
+      ],
+      "difficulty": 0.15
+    },
+    {
+      "id": "fn_08000A98",
+      "addr": "0x08000A98",
+      "size": 12,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_08000A98.s",
+      "callees": [
+        "fn_08000224"
+      ],
+      "callers": [
+        "fn_080011DC",
+        "fn_08001EBC"
+      ],
+      "difficulty": 0.05
+    },
+    {
+      "id": "fn_08000AA8",
+      "addr": "0x08000AA8",
+      "size": 84,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000AA8.s",
+      "callees": [
+        "fn_08000454",
+        "fn_080007A8"
+      ],
+      "callers": [
+        "fn_08000BDC",
+        "fn_08001504",
+        "fn_080016B0",
+        "fn_08001BE4"
+      ],
+      "difficulty": 0.27
+    },
+    {
+      "id": "fn_08000B00",
+      "addr": "0x08000B00",
+      "size": 28,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000B00.s",
+      "callees": [
+        "fn_0800024C",
+        "fn_080005C0",
+        "fn_0800084C"
+      ],
+      "callers": [
+        "fn_08000C40",
+        "fn_08001234",
+        "fn_080017B0",
+        "fn_08001C98"
+      ],
+      "difficulty": 0.17
+    },
+    {
+      "id": "fn_08000B20",
+      "addr": "0x08000B20",
+      "size": 20,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_08000B20.s",
+      "callees": [
+        "fn_08000928"
+      ],
+      "callers": [
+        "fn_08001BF8",
+        "fn_08002074"
+      ],
+      "difficulty": 0.08
+    },
+    {
+      "id": "fn_08000B38",
+      "addr": "0x08000B38",
+      "size": 160,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000B38.s",
+      "callees": [
+        "fn_0800084C"
+      ],
+      "callers": [],
+      "difficulty": 0.51
+    },
+    {
+      "id": "fn_08000BDC",
+      "addr": "0x08000BDC",
+      "size": 12,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000BDC.s",
+      "callees": [
+        "fn_08000200",
+        "fn_0800084C",
+        "fn_08000AA8"
+      ],
+      "callers": [
+        "fn_080019D0",
+        "fn_08001A70",
+        "fn_080020F0"
+      ],
+      "difficulty": 0.11
+    },
+    {
+      "id": "fn_08000BE8",
+      "addr": "0x08000BE8",
+      "size": 84,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000BE8.s",
+      "callees": [
+        "fn_08000314"
+      ],
+      "callers": [
+        "fn_08001BC4",
+        "fn_08001F5C"
+      ],
+      "difficulty": 0.28
+    },
+    {
+      "id": "fn_08000C40",
+      "addr": "0x08000C40",
+      "size": 24,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000C40.s",
+      "callees": [
+        "fn_080005DC",
+        "fn_08000B00"
+      ],
+      "callers": [
+        "fn_08002538"
+      ],
+      "difficulty": 0.13
+    },
+    {
+      "id": "fn_08000C58",
+      "addr": "0x08000C58",
+      "size": 56,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000C58.s",
+      "callees": [],
+      "callers": [
+        "fn_08000FA8"
+      ],
+      "difficulty": 0.15
+    },
+    {
+      "id": "fn_08000C90",
+      "addr": "0x08000C90",
+      "size": 160,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_08000C90.s",
+      "callees": [
+        "fn_0800036C",
+        "fn_0800047C"
+      ],
+      "callers": [
+        "fn_08001244",
+        "fn_080019F4",
+        "fn_0800209C",
+        "fn_080025E8"
+      ],
+      "difficulty": 0.49
+    },
+    {
+      "id": "fn_08000D30",
+      "addr": "0x08000D30",
+      "size": 212,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000D30.s",
+      "callees": [],
+      "callers": [
+        "fn_08000E08"
+      ],
+      "difficulty": 0.52
+    },
+    {
+      "id": "fn_08000E08",
+      "addr": "0x08000E08",
+      "size": 212,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000E08.s",
+      "callees": [
+        "fn_08000224",
+        "fn_08000A60",
+        "fn_08000D30"
+      ],
+      "callers": [
+        "fn_08001174"
+      ],
+      "difficulty": 0.72
+    },
+    {
+      "id": "fn_08000EDC",
+      "addr": "0x08000EDC",
+      "size": 160,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08000EDC.s",
+      "callees": [],
+      "callers": [
+        "fn_080015D8",
+        "fn_0800221C"
+      ],
+      "difficulty": 0.4
+    },
+    {
+      "id": "fn_08000F80",
+      "addr": "0x08000F80",
+      "size": 40,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_08000F80.s",
+      "callees": [
+        "fn_080005F4"
+      ],
+      "callers": [
+        "fn_08001754",
+        "fn_08001C98"
+      ],
+      "difficulty": 0.13
+    },
+    {
+      "id": "fn_08000FA8",
+      "addr": "0x08000FA8",
+      "size": 24,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_08000FA8.s",
+      "callees": [
+        "fn_08000C58"
+      ],
+      "callers": [
+        "fn_080016B0"
+      ],
+      "difficulty": 0.09
+    },
+    {
+      "id": "fn_08000FC4",
+      "addr": "0x08000FC4",
+      "size": 212,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_08000FC4.s",
+      "callees": [
+        "fn_08000868",
+        "fn_08000A80"
+      ],
+      "callers": [
+        "fn_08001884"
+      ],
+      "difficulty": 0.58
+    },
+    {
+      "id": "fn_0800109C",
+      "addr": "0x0800109C",
+      "size": 212,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_0800109C.s",
+      "callees": [],
+      "callers": [],
+      "difficulty": 0.57
+    },
+    {
+      "id": "fn_08001174",
+      "addr": "0x08001174",
+      "size": 48,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08001174.s",
+      "callees": [
+        "fn_080005DC",
+        "fn_0800098C",
+        "fn_08000E08"
+      ],
+      "callers": [],
+      "difficulty": 0.23
+    },
+    {
+      "id": "fn_080011A4",
+      "addr": "0x080011A4",
+      "size": 56,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_080011A4.s",
+      "callees": [
+        "fn_08000200",
+        "fn_08000224",
+        "fn_08000A80"
+      ],
+      "callers": [
+        "fn_08001998"
+      ],
+      "difficulty": 0.22
+    },
+    {
+      "id": "fn_080011DC",
+      "addr": "0x080011DC",
+      "size": 84,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_080011DC.s",
+      "callees": [
+        "fn_08000A98"
+      ],
+      "callers": [
+        "fn_08001754"
+      ],
+      "difficulty": 0.26
+    },
+    {
+      "id": "fn_08001234",
+      "addr": "0x08001234",
+      "size": 12,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08001234.s",
+      "callees": [
+        "fn_08000A60",
+        "fn_08000B00"
+      ],
+      "callers": [
+        "fn_08001504",
+        "fn_08001BC4",
+        "fn_08001C98"
+      ],
+      "difficulty": 0.08
+    },
+    {
+      "id": "fn_08001244",
+      "addr": "0x08001244",
+      "size": 160,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08001244.s",
+      "callees": [
+        "fn_08000C90"
+      ],
+      "callers": [],
+      "difficulty": 0.43
+    },
+    {
+      "id": "fn_080012E8",
+      "addr": "0x080012E8",
+      "size": 280,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_080012E8.s",
+      "callees": [],
+      "callers": [],
+      "difficulty": 0.76
+    },
+    {
+      "id": "fn_08001400",
+      "addr": "0x08001400",
+      "size": 12,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_08001400.s",
+      "callees": [],
+      "callers": [],
+      "difficulty": 0.03
+    },
+    {
+      "id": "fn_08001410",
+      "addr": "0x08001410",
+      "size": 84,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08001410.s",
+      "callees": [],
+      "callers": [
+        "fn_08001780"
+      ],
+      "difficulty": 0.23
+    },
+    {
+      "id": "fn_08001464",
+      "addr": "0x08001464",
+      "size": 160,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_08001464.s",
+      "callees": [],
+      "callers": [
+        "fn_08001850"
+      ],
+      "difficulty": 0.43
+    },
+    {
+      "id": "fn_08001504",
+      "addr": "0x08001504",
+      "size": 212,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08001504.s",
+      "callees": [
+        "fn_0800036C",
+        "fn_08000AA8",
+        "fn_08001234"
+      ],
+      "callers": [
+        "fn_08001F5C",
+        "fn_080020F0"
+      ],
+      "difficulty": 0.72
+    },
+    {
+      "id": "fn_080015D8",
+      "addr": "0x080015D8",
+      "size": 212,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_080015D8.s",
+      "callees": [
+        "fn_08000EDC"
+      ],
+      "callers": [],
+      "difficulty": 0.55
+    },
+    {
+      "id": "fn_080016B0",
+      "addr": "0x080016B0",
+      "size": 160,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_080016B0.s",
+      "callees": [
+        "fn_08000584",
+        "fn_08000AA8",
+        "fn_08000FA8"
+      ],
+      "callers": [
+        "fn_08001850"
+      ],
+      "difficulty": 0.49
+    },
+    {
+      "id": "fn_08001754",
+      "addr": "0x08001754",
+      "size": 40,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08001754.s",
+      "callees": [
+        "fn_08000F80",
+        "fn_080011DC"
+      ],
+      "callers": [],
+      "difficulty": 0.16
+    },
+    {
+      "id": "fn_08001780",
+      "addr": "0x08001780",
+      "size": 48,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08001780.s",
+      "callees": [
+        "fn_08001410"
+      ],
+      "callers": [
+        "fn_080017B0",
+        "fn_08001B88",
+        "fn_08002538"
+      ],
+      "difficulty": 0.15
+    },
+    {
+      "id": "fn_080017B0",
+      "addr": "0x080017B0",
+      "size": 160,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_080017B0.s",
+      "callees": [
+        "fn_08000B00",
+        "fn_08001780"
+      ],
+      "callers": [
+        "fn_0800216C"
+      ],
+      "difficulty": 0.49
+    },
+    {
+      "id": "fn_08001850",
+      "addr": "0x08001850",
+      "size": 48,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_08001850.s",
+      "callees": [
+        "fn_08001464",
+        "fn_080016B0"
+      ],
+      "callers": [],
+      "difficulty": 0.2
+    },
+    {
+      "id": "fn_08001884",
+      "addr": "0x08001884",
+      "size": 212,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08001884.s",
+      "callees": [
+        "fn_08000FC4"
+      ],
+      "callers": [],
+      "difficulty": 0.66
+    },
+    {
+      "id": "fn_08001958",
+      "addr": "0x08001958",
+      "size": 64,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_08001958.s",
+      "callees": [],
+      "callers": [],
+      "difficulty": 0.17
+    },
+    {
+      "id": "fn_08001998",
+      "addr": "0x08001998",
+      "size": 28,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_08001998.s",
+      "callees": [
+        "fn_080011A4"
+      ],
+      "callers": [],
+      "difficulty": 0.11
+    },
+    {
+      "id": "fn_080019B4",
+      "addr": "0x080019B4",
+      "size": 28,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_080019B4.s",
+      "callees": [
+        "fn_08000730"
+      ],
+      "callers": [
+        "fn_080023E0"
+      ],
+      "difficulty": 0.1
+    },
+    {
+      "id": "fn_080019D0",
+      "addr": "0x080019D0",
+      "size": 32,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_080019D0.s",
+      "callees": [
+        "fn_080005DC",
+        "fn_08000BDC"
+      ],
+      "callers": [],
+      "difficulty": 0.13
+    },
+    {
+      "id": "fn_080019F4",
+      "addr": "0x080019F4",
+      "size": 120,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_080019F4.s",
+      "callees": [
+        "fn_08000C90"
+      ],
+      "callers": [
+        "fn_08002074"
+      ],
+      "difficulty": 0.39
+    },
+    {
+      "id": "fn_08001A70",
+      "addr": "0x08001A70",
+      "size": 280,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08001A70.s",
+      "callees": [
+        "fn_08000BDC"
+      ],
+      "callers": [
+        "fn_0800221C"
+      ],
+      "difficulty": 0.73
+    },
+    {
+      "id": "fn_08001B88",
+      "addr": "0x08001B88",
+      "size": 56,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_08001B88.s",
+      "callees": [
+        "fn_08001780"
+      ],
+      "callers": [],
+      "difficulty": 0.19
+    },
+    {
+      "id": "fn_08001BC4",
+      "addr": "0x08001BC4",
+      "size": 32,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08001BC4.s",
+      "callees": [
+        "fn_08000770",
+        "fn_08000BE8",
+        "fn_08001234"
+      ],
+      "callers": [],
+      "difficulty": 0.17
+    },
+    {
+      "id": "fn_08001BE4",
+      "addr": "0x08001BE4",
+      "size": 16,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08001BE4.s",
+      "callees": [
+        "fn_08000AA8"
+      ],
+      "callers": [],
+      "difficulty": 0.07
+    },
+    {
+      "id": "fn_08001BF8",
+      "addr": "0x08001BF8",
+      "size": 160,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_08001BF8.s",
+      "callees": [
+        "fn_08000B20"
+      ],
+      "callers": [],
+      "difficulty": 0.46
+    },
+    {
+      "id": "fn_08001C98",
+      "addr": "0x08001C98",
+      "size": 212,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08001C98.s",
+      "callees": [
+        "fn_08000B00",
+        "fn_08000F80",
+        "fn_08001234"
+      ],
+      "callers": [
+        "fn_08001F5C"
+      ],
+      "difficulty": 0.61
+    },
+    {
+      "id": "fn_08001D6C",
+      "addr": "0x08001D6C",
+      "size": 280,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_08001D6C.s",
+      "callees": [],
+      "callers": [],
+      "difficulty": 0.7
+    },
+    {
+      "id": "fn_08001E84",
+      "addr": "0x08001E84",
+      "size": 56,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08001E84.s",
+      "callees": [],
+      "callers": [],
+      "difficulty": 0.13
+    },
+    {
+      "id": "fn_08001EBC",
+      "addr": "0x08001EBC",
+      "size": 160,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08001EBC.s",
+      "callees": [
+        "fn_08000618",
+        "fn_08000A98"
+      ],
+      "callers": [
+        "fn_080025E8"
+      ],
+      "difficulty": 0.49
+    },
+    {
+      "id": "fn_08001F5C",
+      "addr": "0x08001F5C",
+      "size": 280,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08001F5C.s",
+      "callees": [
+        "fn_08000BE8",
+        "fn_08001504",
+        "fn_08001C98"
+      ],
+      "callers": [],
+      "difficulty": 0.93
+    },
+    {
+      "id": "fn_08002074",
+      "addr": "0x08002074",
+      "size": 16,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_08002074.s",
+      "callees": [
+        "fn_08000770",
+        "fn_08000B20",
+        "fn_080019F4"
+      ],
+      "callers": [],
+      "difficulty": 0.12
+    },
+    {
+      "id": "fn_08002088",
+      "addr": "0x08002088",
+      "size": 16,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08002088.s",
+      "callees": [
+        "fn_080005DC"
+      ],
+      "callers": [],
+      "difficulty": 0.07
+    },
+    {
+      "id": "fn_0800209C",
+      "addr": "0x0800209C",
+      "size": 84,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_0800209C.s",
+      "callees": [
+        "fn_08000554",
+        "fn_08000C90"
+      ],
+      "callers": [],
+      "difficulty": 0.27
+    },
+    {
+      "id": "fn_080020F0",
+      "addr": "0x080020F0",
+      "size": 120,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_080020F0.s",
+      "callees": [
+        "fn_08000554",
+        "fn_08000BDC",
+        "fn_08001504"
+      ],
+      "callers": [],
+      "difficulty": 0.45
+    },
+    {
+      "id": "fn_0800216C",
+      "addr": "0x0800216C",
+      "size": 48,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_0800216C.s",
+      "callees": [
+        "fn_0800024C",
+        "fn_08000564",
+        "fn_080017B0"
+      ],
+      "callers": [],
+      "difficulty": 0.22
+    },
+    {
+      "id": "fn_080021A0",
+      "addr": "0x080021A0",
+      "size": 120,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_080021A0.s",
+      "callees": [
+        "fn_08000454",
+        "fn_080004F4"
+      ],
+      "callers": [],
+      "difficulty": 0.36
+    },
+    {
+      "id": "fn_0800221C",
+      "addr": "0x0800221C",
+      "size": 120,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_0800221C.s",
+      "callees": [
+        "fn_08000584",
+        "fn_08000EDC",
+        "fn_08001A70"
+      ],
+      "callers": [
+        "fn_08002294"
+      ],
+      "difficulty": 0.41
+    },
+    {
+      "id": "fn_08002294",
+      "addr": "0x08002294",
+      "size": 120,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "heldout",
+      "asm_path": "lab/out/asm/fn_08002294.s",
+      "callees": [
+        "fn_0800221C"
+      ],
+      "callers": [],
+      "difficulty": 0.33
+    },
+    {
+      "id": "fn_0800230C",
+      "addr": "0x0800230C",
+      "size": 160,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_0800230C.s",
+      "callees": [
+        "fn_08000770"
+      ],
+      "callers": [],
+      "difficulty": 0.43
+    },
+    {
+      "id": "fn_080023AC",
+      "addr": "0x080023AC",
+      "size": 48,
+      "mode": "thumb",
+      "scope": "game",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_080023AC.s",
+      "callees": [],
+      "callers": [],
+      "difficulty": 0.12
+    },
+    {
+      "id": "fn_080023E0",
+      "addr": "0x080023E0",
+      "size": 32,
+      "mode": "thumb",
+      "scope": "library",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_080023E0.s",
+      "callees": [
+        "fn_080019B4"
+      ],
+      "callers": [],
+      "difficulty": 0.1
+    },
+    {
+      "id": "fn_08002400",
+      "addr": "0x08002400",
+      "size": 96,
+      "mode": "thumb",
+      "scope": "library",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08002400.s",
+      "callees": [],
+      "callers": [],
+      "difficulty": 0.28
+    },
+    {
+      "id": "fn_08002460",
+      "addr": "0x08002460",
+      "size": 212,
+      "mode": "thumb",
+      "scope": "library",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08002460.s",
+      "callees": [],
+      "callers": [],
+      "difficulty": 0.52
+    },
+    {
+      "id": "fn_08002538",
+      "addr": "0x08002538",
+      "size": 12,
+      "mode": "thumb",
+      "scope": "library",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08002538.s",
+      "callees": [
+        "fn_080004F4",
+        "fn_08000C40",
+        "fn_08001780"
+      ],
+      "callers": [],
+      "difficulty": 0.11
+    },
+    {
+      "id": "fn_08002544",
+      "addr": "0x08002544",
+      "size": 160,
+      "mode": "thumb",
+      "scope": "library",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_08002544.s",
+      "callees": [],
+      "callers": [],
+      "difficulty": 0.43
+    },
+    {
+      "id": "fn_080025E8",
+      "addr": "0x080025E8",
+      "size": 120,
+      "mode": "thumb",
+      "scope": "library",
+      "split": "train",
+      "asm_path": "lab/out/asm/fn_080025E8.s",
+      "callees": [
+        "fn_08000224",
+        "fn_08000C90",
+        "fn_08001EBC"
+      ],
+      "callers": [],
+      "difficulty": 0.41
+    }
+  ]
+}

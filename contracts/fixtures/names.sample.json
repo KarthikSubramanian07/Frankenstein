@@ -1,0 +1,247 @@
+{
+  "v": 1,
+  "fixture": true,
+  "run_id": "r_fx01",
+  "names": [
+    {
+      "fn": "fn_080023AC",
+      "name": "status_face_update",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_0800084C",
+      "name": "status_face_pain_offset",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08001958",
+      "name": "ammo_counter_draw",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08001400",
+      "name": "health_digits_draw",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08000C58",
+      "name": "armor_digits_draw",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08000444",
+      "name": "keycard_icons_draw",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08001E84",
+      "name": "status_bar_refresh",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08001410",
+      "name": "weapon_raise",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_0800049C",
+      "name": "weapon_lower",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_080004F4",
+      "name": "shotgun_fire",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08001464",
+      "name": "pistol_fire",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08000EDC",
+      "name": "weapon_bob",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_080007A8",
+      "name": "muzzle_flash_set",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08000A98",
+      "name": "ammo_check",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_0800109C",
+      "name": "imp_chase",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08000D30",
+      "name": "imp_fireball",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08001BE4",
+      "name": "monster_look",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08002088",
+      "name": "monster_face_target",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08001D6C",
+      "name": "monster_pain",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08000B20",
+      "name": "monster_die",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08000584",
+      "name": "random_byte",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_080012E8",
+      "name": "fixed_mul",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_080005A0",
+      "name": "fixed_div",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08000554",
+      "name": "angle_to_point",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08000FA8",
+      "name": "column_draw",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08000F80",
+      "name": "span_draw",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08001780",
+      "name": "sector_light_level",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08001998",
+      "name": "texture_lookup",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_080005DC",
+      "name": "clip_wall_segment",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08001B88",
+      "name": "sprite_sort",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08000868",
+      "name": "seg_render",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_080019B4",
+      "name": "plane_draw",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08000730",
+      "name": "visplane_find",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08000BE8",
+      "name": "bsp_node_walk",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08002294",
+      "name": "subsector_render",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_080019F4",
+      "name": "blockmap_iter",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_080011DC",
+      "name": "line_side_test",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_08001244",
+      "name": "thing_spawn",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_0800230C",
+      "name": "thing_remove",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    },
+    {
+      "fn": "fn_0800098C",
+      "name": "sound_start",
+      "inferred": true,
+      "basis": "recovered code (sample)"
+    }
+  ]
+}

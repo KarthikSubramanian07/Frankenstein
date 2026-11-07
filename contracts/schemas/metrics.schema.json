@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/KarthikSubramanian07/Frankenstein/contracts/schemas/metrics.schema.json",
+  "title": "Run metrics (runs/<run_id>/metrics.json)",
+  "type": "object",
+  "properties": {
+    "v": {
+      "const": 1
+    },
+    "fixture": {
+      "type": "boolean"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string"
+    },
+    "split": {
+      "enum": [
+        "train",
+        "heldout"
+      ]
+    },
+    "library": {
+      "enum": [
+        "on",
+        "off",
+        "learning"
+      ]
+    },
+    "model": {
+      "type": "string"
+    },
+    "reasoning_effort": {
+      "type": "string"
+    },
+    "fn_total": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "matched": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "match_rate": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "attempts_per_match": {
+      "type": "number",
+      "minimum": 0
+    },
+    "minutes_per_match": {
+      "type": "number",
+      "minimum": 0
+    },
+    "cost_per_match_usd": {
+      "type": "number",
+      "minimum": 0
+    },
+    "false_claims_caught": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "fakematches_rejected": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "cost_usd": {
+      "type": "number",
+      "minimum": 0
+    },
+    "curve": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "t_min": {
+            "type": "number",
+            "minimum": 0
+          },
+          "matched": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "t_min",
+          "matched"
+        ],
+        "additionalProperties": true
+      }
+    },
+    "muse": {
+      "type": "object",
+      "properties": {
+        "calls": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tool_calls": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "image_calls": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tokens_in": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tokens_out": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reasoning_effort": {
+          "type": "string"
+        },
+        "cost_usd": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "calls",
+        "tool_calls",
+        "image_calls",
+        "tokens_in",
+        "tokens_out",
+        "reasoning_effort",
+        "cost_usd"
+      ],
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "v",
+    "run_id",
+    "label",
+    "split",
+    "library",
+    "model",
+    "reasoning_effort",
+    "fn_total",
+    "matched",
+    "match_rate",
+    "attempts_per_match",
+    "minutes_per_match",
+    "cost_per_match_usd",
+    "false_claims_caught",
+    "fakematches_rejected",
+    "cost_usd",
+    "curve",
+    "muse"
+  ],
+  "additionalProperties": true
+}

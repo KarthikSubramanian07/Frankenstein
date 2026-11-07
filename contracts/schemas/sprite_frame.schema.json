@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/KarthikSubramanian07/Frankenstein/contracts/schemas/sprite_frame.schema.json",
+  "title": "Creature bridge sprite frame (ws 7301)",
+  "type": "object",
+  "properties": {
+    "v": {
+      "const": 1
+    },
+    "fixture": {
+      "type": "boolean"
+    },
+    "frame": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "sprites": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "i": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "x": {
+            "type": "integer"
+          },
+          "y": {
+            "type": "integer"
+          },
+          "w": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "h": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "tile": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "pal": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "subsystem": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "i",
+          "x",
+          "y",
+          "w",
+          "h",
+          "tile",
+          "pal",
+          "subsystem"
+        ],
+        "additionalProperties": true
+      }
+    },
+    "heal": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+      }
+    }
+  },
+  "required": [
+    "v",
+    "frame",
+    "sprites",
+    "heal"
+  ],
+  "additionalProperties": true
+}

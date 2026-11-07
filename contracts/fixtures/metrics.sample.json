@@ -1,0 +1,268 @@
+{
+  "fixture": true,
+  "runs": [
+    {
+      "v": 1,
+      "run_id": "r_fx01",
+      "label": "live \u00b7 library learning (sample)",
+      "split": "train",
+      "library": "learning",
+      "model": "muse-spark-1.3",
+      "reasoning_effort": "high",
+      "fn_total": 84,
+      "matched": 60,
+      "match_rate": 0.714,
+      "attempts_per_match": 2.93,
+      "minutes_per_match": 2.0,
+      "cost_per_match_usd": 0.0242,
+      "false_claims_caught": 9,
+      "fakematches_rejected": 2,
+      "cost_usd": 1.4523,
+      "curve": [
+        {
+          "t_min": 0,
+          "matched": 0
+        },
+        {
+          "t_min": 1,
+          "matched": 4
+        },
+        {
+          "t_min": 2,
+          "matched": 10
+        },
+        {
+          "t_min": 3,
+          "matched": 18
+        },
+        {
+          "t_min": 4,
+          "matched": 28
+        },
+        {
+          "t_min": 5,
+          "matched": 37
+        },
+        {
+          "t_min": 6,
+          "matched": 42
+        },
+        {
+          "t_min": 7,
+          "matched": 46
+        },
+        {
+          "t_min": 8,
+          "matched": 55
+        },
+        {
+          "t_min": 9,
+          "matched": 60
+        },
+        {
+          "t_min": 10,
+          "matched": 60
+        },
+        {
+          "t_min": 11,
+          "matched": 60
+        }
+      ],
+      "muse": {
+        "calls": 527,
+        "tool_calls": 1581,
+        "image_calls": 0,
+        "tokens_in": 742084,
+        "tokens_out": 123449,
+        "reasoning_effort": "high",
+        "cost_usd": 1.4523
+      }
+    },
+    {
+      "v": 1,
+      "run_id": "r_fx02",
+      "label": "heldout \u00b7 library on (sample)",
+      "split": "heldout",
+      "library": "on",
+      "model": "muse-spark-1.3",
+      "reasoning_effort": "high",
+      "fn_total": 26,
+      "matched": 17,
+      "match_rate": 0.654,
+      "attempts_per_match": 3.54,
+      "minutes_per_match": 1.6,
+      "cost_per_match_usd": 0.7153,
+      "false_claims_caught": 3,
+      "fakematches_rejected": 1,
+      "cost_usd": 12.16,
+      "curve": [
+        {
+          "t_min": 0,
+          "matched": 0
+        },
+        {
+          "t_min": 1,
+          "matched": 0
+        },
+        {
+          "t_min": 2,
+          "matched": 2
+        },
+        {
+          "t_min": 3,
+          "matched": 2
+        },
+        {
+          "t_min": 4,
+          "matched": 2
+        },
+        {
+          "t_min": 5,
+          "matched": 4
+        },
+        {
+          "t_min": 6,
+          "matched": 5
+        },
+        {
+          "t_min": 7,
+          "matched": 7
+        },
+        {
+          "t_min": 8,
+          "matched": 7
+        },
+        {
+          "t_min": 9,
+          "matched": 7
+        },
+        {
+          "t_min": 10,
+          "matched": 7
+        },
+        {
+          "t_min": 11,
+          "matched": 8
+        },
+        {
+          "t_min": 12,
+          "matched": 9
+        },
+        {
+          "t_min": 13,
+          "matched": 10
+        },
+        {
+          "t_min": 14,
+          "matched": 11
+        },
+        {
+          "t_min": 15,
+          "matched": 17
+        }
+      ],
+      "muse": {
+        "calls": 153,
+        "tool_calls": 459,
+        "image_calls": 0,
+        "tokens_in": 697000,
+        "tokens_out": 105400,
+        "reasoning_effort": "high",
+        "cost_usd": 12.16
+      }
+    },
+    {
+      "v": 1,
+      "run_id": "r_fx03",
+      "label": "heldout \u00b7 library off (sample)",
+      "split": "heldout",
+      "library": "off",
+      "model": "muse-spark-1.3",
+      "reasoning_effort": "high",
+      "fn_total": 26,
+      "matched": 11,
+      "match_rate": 0.423,
+      "attempts_per_match": 2.59,
+      "minutes_per_match": 1.94,
+      "cost_per_match_usd": 1.3045,
+      "false_claims_caught": 8,
+      "fakematches_rejected": 1,
+      "cost_usd": 14.35,
+      "curve": [
+        {
+          "t_min": 0,
+          "matched": 0
+        },
+        {
+          "t_min": 1,
+          "matched": 0
+        },
+        {
+          "t_min": 2,
+          "matched": 2
+        },
+        {
+          "t_min": 3,
+          "matched": 3
+        },
+        {
+          "t_min": 4,
+          "matched": 3
+        },
+        {
+          "t_min": 5,
+          "matched": 5
+        },
+        {
+          "t_min": 6,
+          "matched": 6
+        },
+        {
+          "t_min": 7,
+          "matched": 7
+        },
+        {
+          "t_min": 8,
+          "matched": 8
+        },
+        {
+          "t_min": 9,
+          "matched": 8
+        },
+        {
+          "t_min": 10,
+          "matched": 9
+        },
+        {
+          "t_min": 11,
+          "matched": 10
+        },
+        {
+          "t_min": 12,
+          "matched": 11
+        },
+        {
+          "t_min": 13,
+          "matched": 11
+        },
+        {
+          "t_min": 14,
+          "matched": 11
+        },
+        {
+          "t_min": 15,
+          "matched": 11
+        }
+      ],
+      "muse": {
+        "calls": 99,
+        "tool_calls": 297,
+        "image_calls": 0,
+        "tokens_in": 451000,
+        "tokens_out": 68200,
+        "reasoning_effort": "high",
+        "cost_usd": 14.35
+      }
+    }
+  ]
+}

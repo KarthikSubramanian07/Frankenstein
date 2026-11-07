@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/KarthikSubramanian07/Frankenstein/contracts/schemas/names.schema.json",
+  "title": "Inferred function names (runs/<run_id>/names.json). Display only.",
+  "type": "object",
+  "properties": {
+    "v": {
+      "const": 1
+    },
+    "fixture": {
+      "type": "boolean"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "names": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "fn": {
+            "type": "string",
+            "pattern": "^fn_[0-9A-F]{8}$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "inferred": {
+            "const": true
+          },
+          "basis": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "fn",
+          "name",
+          "inferred",
+          "basis"
+        ],
+        "additionalProperties": true
+      }
+    }
+  },
+  "required": [
+    "v",
+    "run_id",
+    "names"
+  ],
+  "additionalProperties": true
+}

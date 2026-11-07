@@ -1,0 +1,24 @@
+{
+  "v": 1,
+  "fixture": true,
+  "fn": "fn_0800036C",
+  "lint": {
+    "ok": false,
+    "violations": [
+      {
+        "rule": "L001",
+        "reason": "inline assembly is not allowed"
+      }
+    ]
+  },
+  "compile": {
+    "ok": false,
+    "log": "not compiled: lint failed"
+  },
+  "elapsed_ms": 3,
+  "referee": "lab@fixture",
+  "status": "LINT_FAIL",
+  "match_pct": 0.0,
+  "first_diff": null,
+  "diff": []
+}
