@@ -84,7 +84,8 @@ export class Mosaic {
     for (const c of this.cells) {
       const x = Math.round(c.x), y = Math.round(c.y), w = Math.max(1, Math.round(c.w) - 2), h = Math.max(1, Math.round(c.h) - 2);
       const on = s.matchedSet.has(c.fn);
-      const face = c.fn === FACE_FN;
+      // the face cell is a guess (violet ?) until the lab confirms the name in names.json
+      const face = c.fn === FACE_FN && !ctx.side.confirmed.has(c.fn);
       if (on) {
         g.fillStyle = face ? '#9A9AFF' : '#7CF2C8';
         g.fillRect(x, y, w, h);

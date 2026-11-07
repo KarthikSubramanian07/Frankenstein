@@ -180,6 +180,18 @@ body.obs .split .game-frame .ph { display: none; }
 .pip .ko { position: absolute; left: 0; right: 0; bottom: 16px; text-align: center; font: italic 48px/1 'Russo One', sans-serif; color: var(--ko); -webkit-text-stroke: 2px #000; }
 .diff { color: var(--alarm); }
 
+/* the face: hero moment over the game window */
+.face-hero {
+  position: absolute; left: 20px; top: 300px; width: 960px; z-index: 8; display: none; text-align: center;
+  padding: 34px 24px 30px; background: rgba(11,11,46,0.94); border-top: 8px solid var(--guess); border-bottom: 8px solid var(--guess);
+}
+.face-hero.on { display: block; animation: facein 420ms steps(5); }
+@keyframes facein { from { transform: scaleY(0.05); } to { transform: scaleY(1); } }
+.face-hero .fh1 { font: 54px/1 var(--hud); color: var(--ink); text-shadow: 5px 5px 0 var(--night-violet); }
+.face-hero .fh1 em { font-style: normal; color: var(--guess); }
+.face-hero .fh2 { font-size: 30px; white-space: nowrap; color: var(--mint); margin-top: 26px; }
+.face-hero .fh3 { font: 40px/1.2 var(--code); color: var(--guess); margin-top: 22px; }
+
 /* proof chain: Muse writes it, Snap judges it, the compiler proves it */
 .split .codewin { height: 296px; }
 .split .pip { height: 296px; }

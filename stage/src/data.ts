@@ -3,7 +3,7 @@
 
 export type Region = { x: number; y: number; w: number; h: number }; // GBA pixels, 240x160
 export type Subsystem = { id: string; label: string; region: Region; functions: string[] };
-export type Cell = { id: string; game: boolean };
+export type Cell = { id: string; game: boolean; size: number };
 
 export type Side = {
   dir: string | null;
@@ -14,6 +14,7 @@ export type Side = {
   fixture: boolean; // any side file marked fixture
   romSha1: string | null; // manifest game.rom_sha1: the original ROM
   gameTotal: number; // game functions in the whole target (manifest scope == game)
+  confirmed: Set<string>; // names the lab confirmed (names.json inferred: false); everything else is a guess
 };
 
 // Layout only (where on the GBA screen each part lives), used when viz_map has no region.
@@ -26,7 +27,7 @@ const DEFAULT_REGIONS: Record<string, Region> = {
 const FALLBACK_REGION: Region = { x: 0, y: 0, w: 240, h: 160 };
 
 export function emptySide(): Side {
-  return { dir: null, subsystems: [], fnToSub: new Map(), cells: [], names: new Map(), fixture: false, romSha1: null, gameTotal: 0 };
+  return { dir: null, subsystems: [], fnToSub: new Map(), cells: [], names: new Map(), fixture: false, romSha1: null, gameTotal: 0, confirmed: new Set() };
 }
 
 async function getJson(url: string): Promise<any | null> {
@@ -58,7 +59,7 @@ export async function loadSide(base: string, dir: string | null): Promise<Side> 
   side.romSha1 = typeof man?.game?.rom_sha1 === 'string' ? man.game.rom_sha1 : null;
   const fns = Array.isArray(man?.functions) ? [...man.functions] : [];
   fns.sort((a: any, b: any) => parseInt(a.addr, 16) - parseInt(b.addr, 16));
-  side.cells = fns.map((f: any) => ({ id: String(f.id), game: f.scope === 'game' }));
+  side.cells = fns.map((f: any) => ({ id: String(f.id), game: f.scope === 'game', size: Number(f.size) || 0 }));
   side.gameTotal = side.cells.filter((c) => c.game).length;
   if (dir) await refreshNames(base, side);
   return side;
@@ -70,7 +71,12 @@ export async function refreshNames(base: string, side: Side): Promise<void> {
   if (!n) return;
   if (n.fixture) side.fixture = true;
   const m = new Map<string, string>();
-  for (const e of n.names ?? []) if (e?.fn && e?.name) m.set(String(e.fn), String(e.name));
+  const conf = new Set<string>();
+  for (const e of n.names ?? []) {
+    if (e?.fn && e?.name) m.set(String(e.fn), String(e.name));
+    if (e?.fn && e?.inferred === false) conf.add(String(e.fn));
+  }
+  side.confirmed = conf;
   side.names = m;
 }
 

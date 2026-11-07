@@ -111,7 +111,7 @@ export function drawMeter(cv: HTMLCanvasElement, ctx: Ctx) {
   const s = ctx.state;
   // a manifest from a different target than this run: fall back to fn_total cells in order
   const overlap = cells.some((c) => s.matchedSet.has(c.id));
-  if (!cells.length || (s.matched.length && !overlap)) cells = Array.from({ length: s.fnTotal }, (_, i) => ({ id: `#${i}`, game: true }));
+  if (!cells.length || (s.matched.length && !overlap)) cells = Array.from({ length: s.fnTotal }, (_, i) => ({ id: `#${i}`, game: true, size: 0 }));
   const n = cells.length;
   if (!n) return;
   let rows = 1;

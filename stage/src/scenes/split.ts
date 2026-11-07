@@ -7,8 +7,9 @@ import type { Effect, FalseClaim, SnapDecision, State } from '../state.ts';
 import { modelName } from '../state.ts';
 import type { Region } from '../data.ts';
 import { coin, reject } from '../audio.ts';
+import { announce } from '../voice.ts';
 import { hudHtml, renderHud, tickerHtml, renderTicker, renderRows, setText, gameName, gameTotal, writer } from './common.ts';
-import { Mosaic } from './mosaic.ts';
+import { Mosaic, FACE_FN } from './mosaic.ts';
 import type { RowsMemo } from './common.ts';
 
 const FRAME = { x: 20, y: 92, scale: 4 }; // 240x160 GBA at 4x = 960x640
@@ -71,6 +72,7 @@ export class SplitScene implements Scene {
     this.el.innerHTML = `
       <div class="hud">${hudHtml()}</div>
       <div class="game-frame"><div class="ph"></div></div>
+      <div class="face-hero" data-k="faceHero"></div>
       <div class="badge orig"><div class="l1">NOW RUNNING ON</div><div class="l2" data-k="badge">ORIGINAL CODE</div></div>
       <div class="divider"></div>
       <div class="panel">
@@ -125,7 +127,12 @@ export class SplitScene implements Scene {
       const cell = ctx.obs ? null : this.mosaic.rectOf(ctx, e.m.fn);
       const land = cell ?? regionRect(sub ? sub.region : { x: 0, y: 0, w: 240, h: 160 });
       const fn = e.m.fn;
-      ctx.fx.beam(ROW0, { x: land.x + land.w / 2, y: land.y + land.h / 2 }, land, '#7CF2C8', () => { coin(); this.mosaic.land(fn); });
+      const face = fn === FACE_FN;
+      ctx.fx.beam(ROW0, { x: land.x + land.w / 2, y: land.y + land.h / 2 }, land, face ? '#9A9AFF' : '#7CF2C8', () => {
+        coin();
+        this.mosaic.land(fn);
+        if (face) this.faceHero(ctx);
+      });
     } else if (e.kind === 'verdict') {
       this.showStamp(e.v.status, e.v.claim_was_true === false, e.v.match_pct);
     } else if (e.kind === 'falseClaim') {
@@ -151,6 +158,23 @@ export class SplitScene implements Scene {
 
   /** the code window is still typing (main loop keeps rendering while true) */
   busy() { return !!this.typing && this.typing.shown < this.typing.text.length; }
+
+  /** The hero moment: the face function is proved. Its bytes are proved; "it's the face" stays a guess
+   *  (violet ?) until the lab confirms the name in names.json. */
+  private faceHero(ctx: Ctx) {
+    const el = this.el.querySelector('[data-k="faceHero"]') as HTMLElement;
+    const confirmed = ctx.side.confirmed.has(FACE_FN);
+    const size = ctx.side.cells.find((c) => c.id === FACE_FN)?.size ?? 0;
+    el.innerHTML = `<div class="fh1">DOOMGUY'S FACE${confirmed ? '' : '<em>?</em>'}</div>
+      <div class="fh2">${size ? `${size.toLocaleString('en-US')} BYTES · ` : ''}BYTE-IDENTICAL</div>
+      <div class="fh3">${confirmed ? 'The lab confirmed it is the face.' : 'The bytes are proved. That it is the face is our guess.'}</div>`;
+    el.classList.remove('on');
+    void el.offsetWidth;
+    el.classList.add('on');
+    ctx.fx.flash();
+    announce('The face is back.');
+    window.setTimeout(() => el.classList.remove('on'), 7000);
+  }
 
   /** Muse writes it. Snap judges it. The compiler proves it. Each line from the newest real event. */
   private renderProof(ctx: Ctx) {
