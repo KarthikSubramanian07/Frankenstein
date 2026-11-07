@@ -12,6 +12,7 @@ export type Side = {
   cells: Cell[];
   names: Map<string, string>;
   fixture: boolean; // any side file marked fixture
+  romSha1: string | null; // manifest game.rom_sha1: the original ROM
 };
 
 // Layout only (where on the GBA screen each part lives), used when viz_map has no region.
@@ -24,7 +25,7 @@ const DEFAULT_REGIONS: Record<string, Region> = {
 const FALLBACK_REGION: Region = { x: 0, y: 0, w: 240, h: 160 };
 
 export function emptySide(): Side {
-  return { dir: null, subsystems: [], fnToSub: new Map(), cells: [], names: new Map(), fixture: false };
+  return { dir: null, subsystems: [], fnToSub: new Map(), cells: [], names: new Map(), fixture: false, romSha1: null };
 }
 
 async function getJson(url: string): Promise<any | null> {
@@ -53,6 +54,7 @@ export async function loadSide(base: string, dir: string | null): Promise<Side> 
     side.subsystems.push(sub);
     for (const f of sub.functions) side.fnToSub.set(f, sub);
   }
+  side.romSha1 = typeof man?.game?.rom_sha1 === 'string' ? man.game.rom_sha1 : null;
   const fns = Array.isArray(man?.functions) ? [...man.functions] : [];
   fns.sort((a: any, b: any) => parseInt(a.addr, 16) - parseInt(b.addr, 16));
   side.cells = fns.map((f: any) => ({ id: String(f.id), game: f.scope === 'game' }));

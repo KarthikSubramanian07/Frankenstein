@@ -17,6 +17,8 @@ const SHOTS = [
   { name: 'split-live', q: '?scene=split', wait: 1500 },
   { name: 'hiscore', q: '?scene=hiscore&replay=fx01&speed=4&t=200', wait: 2600 },
   { name: 'timetrial', q: '?scene=timetrial', wait: 1500 },
+  { name: 'ending', q: '?scene=ending', wait: 1500 },
+  { name: 'ending-credits', q: '?scene=ending&page=credits', wait: 1000 },
   { name: 'versus', q: '?scene=versus&replay=fx01&speed=1&t=300', wait: 2200 },
 ];
 

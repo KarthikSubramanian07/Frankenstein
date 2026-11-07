@@ -102,6 +102,14 @@ export function startServer(opts = {}) {
       if (!id || !['metrics.json', 'names.json', 'events.jsonl'].includes(file)) return send(res, 404, { error: 'not found' });
       return sendFile(res, runPath(id, file));
     }
+    if (url.pathname === '/file') {
+      // Lane D's QR image (phone.published.qr_png): only PNGs under creature/
+      const rel = url.searchParams.get('path') || '';
+      const abs = path.resolve(repoDir, rel);
+      if (!abs.startsWith(path.join(repoDir, 'creature') + path.sep) || !abs.endsWith('.png') || !fs.existsSync(abs)) return send(res, 404, { error: 'not found' });
+      res.writeHead(200, { 'content-type': 'image/png', 'access-control-allow-origin': '*', 'cache-control': 'no-store' });
+      return res.end(fs.readFileSync(abs));
+    }
     if (parts[0] === 'lab' && parts.length === 2) {
       const name = parts[1].replace(/\.json$/, '');
       if (!['viz_map', 'manifest', 'memory_probe'].includes(name)) return send(res, 404, { error: 'not found' });

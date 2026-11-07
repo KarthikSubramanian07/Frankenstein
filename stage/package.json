@@ -10,7 +10,8 @@
     "test": "node --test test/*.test.mjs",
     "typecheck": "tsc --noEmit",
     "build": "tsc --noEmit && vite build",
-    "shots": "node scripts/shots.mjs"
+    "shots": "node scripts/shots.mjs",
+    "qa": "node scripts/qa.mjs"
   },
   "dependencies": {
     "ws": "^8.18.0"

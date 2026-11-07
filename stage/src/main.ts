@@ -12,6 +12,7 @@ import { VersusScene } from './scenes/versus.ts';
 import { TitleScene } from './scenes/title.ts';
 import { HiscoreScene } from './scenes/hiscore.ts';
 import { TimeTrialScene } from './scenes/timetrial.ts';
+import { EndingScene } from './scenes/ending.ts';
 
 const params = new URLSearchParams(location.search);
 const host = params.get('server') || '127.0.0.1';
@@ -37,7 +38,8 @@ const versus = new VersusScene();
 const title = new TitleScene(reduced);
 const hiscore = new HiscoreScene();
 const timetrial = new TimeTrialScene(HTTP);
-for (const s of [title, split, hiscore, versus, timetrial] as Scene[]) { scenes[s.id] = s; stageEl.appendChild(s.el); }
+const ending = new EndingScene(HTTP, reduced);
+for (const s of [title, split, hiscore, versus, timetrial, ending] as Scene[]) { scenes[s.id] = s; stageEl.appendChild(s.el); }
 stageEl.append(fxCanvas, flashEl, markEl);
 
 let current: SceneId = 'split';

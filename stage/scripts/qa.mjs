@@ -12,6 +12,7 @@ export const SCENES = [
   ['versus', '?scene=versus&replay=fx01&speed=1&t=300'],
   ['timetrial', '?scene=timetrial'],
   ['ending', '?scene=ending'],
+  ['ending-credits', '?scene=ending&page=credits'],
 ];
 const only = process.argv.slice(2);
 const browser = await chromium.launch({ executablePath: CHROME });

@@ -3,7 +3,7 @@ import type { Ctx, Scene } from '../types.ts';
 import { h } from '../types.ts';
 import { pctRecovered } from '../state.ts';
 
-function drawStars(cv: HTMLCanvasElement) {
+export function drawStars(cv: HTMLCanvasElement, moon = true) {
   const g = cv.getContext('2d')!;
   cv.width = 1920;
   cv.height = 1080;
@@ -16,8 +16,9 @@ function drawStars(cv: HTMLCanvasElement) {
     g.globalAlpha = 0.35 + rnd() * 0.65;
     g.fillRect(x, y, big ? 8 : 4, big ? 8 : 4);
   }
-  // a pixel moon
   g.globalAlpha = 1;
+  if (!moon) return;
+  // a pixel moon
   g.fillStyle = '#F4F1FF';
   const mx = 1580, my = 120, r = 13;
   for (let yy = -r; yy <= r; yy++) for (let xx = -r; xx <= r; xx++) {
