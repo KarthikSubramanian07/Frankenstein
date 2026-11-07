@@ -26,7 +26,7 @@ Updated 2026-11-07 12:45. Numbers come from run files and `DECISIONS.md`.
 ## Learned
 
 - The face function (`fn_0801B298`, 1,164 bytes at -O3) is out of reach today: 2 attempts in 24 minutes, best
-  0.7%, $0.52. Stopped at 12:49. The hero beat uses a smaller HUD function (Lane D).
+  0.7%, $0.52. Stopped at 12:49. The hero beat uses a function next to the face in the ROM (Lane D).
 
 ## Blocked
 
