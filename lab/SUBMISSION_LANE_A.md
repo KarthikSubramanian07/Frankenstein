@@ -32,7 +32,7 @@ A call to a static function in the same file has no relocation and its bytes dep
 
 The target is a private variant of GBADoom with 11 body-only edits, so a model can't pass by reciting the original from memory.
 
-Rebuild works by object splice. The referee re-checks every recovered function, writes the agents' own compiled bytes into the ROM, and keeps linked addresses only where it proved the relocations identical. The crew's 28 recoveries from run `doom_r01` give a ROM with an identical SHA-1. They are small functions, 0.25% of code bytes.
+Rebuild works by object splice. The referee re-checks every recovered function, writes the agents' own compiled bytes into the ROM, and keeps linked addresses only where it proved the relocations identical. The crew's union of every recovered function (`crew/exports/union`, 175 of 568 at 15:20, final count frozen at 16:00) gives a ROM with an identical SHA-1, verified on two machines. They are the small functions: 5.01% of code bytes (`python3 tools/counts.py`).
 
 Patch compiles a fix, links it with `ld` at the function's real address and writes it in place. Relinking unchanged C changes 0 bytes, and changing one constant changes 1 byte in one function.
 
