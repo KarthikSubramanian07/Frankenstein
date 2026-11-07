@@ -23,6 +23,8 @@ class State:
         self.frame = 0
         self.sprites = []
         self.running = []
+        self.screenshot_path = None
+        self.last_screenshot = None
         self.last_tap = None
 
     def reset(self):
@@ -63,6 +65,9 @@ class State:
             pc = data['pc'] & ~1
             self.running = list(dict.fromkeys(self.running + [fn for addr, size, fn in self.ranges if addr <= pc < addr + size]))
         self.last_tap = time.monotonic()
+        if isinstance(data.get('screenshot_path'), str):
+            self.screenshot_path = data['screenshot_path']
+            self.last_screenshot = time.monotonic()
 
     def snapshot(self, source_status):
         age = None if self.last_tap is None else round(time.monotonic() - self.last_tap, 3)
@@ -71,6 +76,8 @@ class State:
                 'heal': {k: len(v & self.matched) / len(v) if v else 0 for k, v in self.groups.items()},
                 'fixture': self.fixture, 'run_id': self.run_id, 'source_status': source_status,
                 'tap_connected': connected, 'sample_age_s': age, 'running': self.running if connected else [],
+                'screenshot_path': self.screenshot_path if connected else None,
+                'screenshot_age_s': None if self.last_screenshot is None else round(time.monotonic() - self.last_screenshot, 3),
                 'matched': len(self.matched), 'game_functions': len(self.game)}
 
 
