@@ -22,6 +22,9 @@ export const DATA = {
   snap: ['SNAP · ESCALATE · 0.88', 'SNAP · KEEP · 0.85', 'GEMINI · REVIEW · FAKE P 0.00'],
   // lab.agents.frankenstein_agent.answer_prove() at 15:22 (live union, so its count follows the freeze)
   asiOne: "Is the rebuilt game exact?\nOriginal ROM SHA-1: d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2\nROM built from the agents' code: d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2\nIdentical: yes\nFunctions taken from the agents' compiled code: 175 (5.01% of the game's code bytes)\nInferred: none. Every line above is a checksum or a count.",
+  memoryProbe: {compiled: 0, of: 20}, // DECISIONS 13:28, lab/out/memory_probe.json (memory alone)
+  // crew/exports/doom_hud02 attempts 2-4 at 90.0%; crew/exports/doom_hud03 verdict seq 186: MATCH on attempt 10
+  warmStart: {fn: 'fn_0801ABC0', before: 90, beforeRun: 'doom_hud02', after: 'MATCH', afterRun: 'doom_hud03', attempt: 10},
   url: 'tryfrankenstein.pages.dev',
   notOurs: ['Doom (id Software)', 'GBADoom (doomhack)', 'the shareware WAD', 'mGBA', 'devkitARM', 'Meta, Subquadratic, Fetch.ai, MongoDB, Google platforms'],
   builtToday: ['the agent crew', 'the referee', 'the Checker', 'the Stage', 'the patches', 'this film'],

@@ -1,0 +1,31 @@
+{
+  "name": "frankenstein-film",
+  "version": "1.0.0",
+  "private": true,
+  "description": "One-minute Frankenstein submission film, built with Remotion",
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "node scripts/render.mjs Frankenstein out/frankenstein_film.mp4",
+    "render:vertical": "node scripts/render.mjs PlatypusVertical out/platypus_ad_vertical.mp4",
+    "stills": "node scripts/stills.mjs",
+    "audio": "node scripts/generate-audio.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.534",
+    "@remotion/cli": "4.0.534",
+    "@remotion/google-fonts": "4.0.534",
+    "@remotion/media": "4.0.534",
+    "@remotion/motion-blur": "4.0.534",
+    "@remotion/paths": "4.0.534",
+    "@remotion/renderer": "4.0.534",
+    "@remotion/transitions": "4.0.534",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "remotion": "4.0.534"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.8",
+    "typescript": "5.8.3"
+  }
+}
