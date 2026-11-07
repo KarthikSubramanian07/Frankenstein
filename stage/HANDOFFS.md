@@ -1,5 +1,9 @@
 # Lane C (Stage) handoffs
 
+## Active assignment from Enzo: implement the genuine coverage map
+
+Read [docs/POKEMON_IMPLEMENTATION.md](../docs/POKEMON_IMPLEMENTATION.md). Publish STARTED / QUEUED AFTER DOOM (exact gate) / BLOCKED (exact input). Next checkpoint: an actual spatial-map/progression scene next to gameplay, with current-position/route, proof-vs-visited legend, scope boundary and node evidence. Use clearly labelled fixture topology until A supplies the real graph. Preserve the working Doom scenes.
+
 Owner: Aidenn. Created by the demo director at 13:15 because the coordination protocol asks every lane for this file; Lane C, take it over.
 
 ## Requests from the demo director (13:15, see `docs/DEMO_SCRIPT.md`)
