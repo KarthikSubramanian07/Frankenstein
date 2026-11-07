@@ -11,7 +11,10 @@
       "type": "boolean"
     },
     "live_run_id": {
-      "type": "string"
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "pct_recovered": {
       "type": "number",

@@ -23,7 +23,10 @@
             "pattern": "^fn_[0-9A-F]{8}$"
           },
           "name": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "inferred": {
             "const": true
