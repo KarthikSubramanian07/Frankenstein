@@ -98,3 +98,9 @@ Bench (Lane B, 11:39): `crew/bench/` is a real-compiler benchmark (20 original f
 ## 2026-11-07 11:52 · Site
 
 - 2026-11-07 11:52 (site): site/ is the public landing page (owned by whoever is free; Lane C owns the Stage). Live at https://tryfrankenstein.pages.dev (the name `frankenstein` gave a suffixed subdomain, so the Pages project is `tryfrankenstein`). `.github/workflows/pages.yml` deploys it on pushes to main that touch `site/**`, once the `CLOUDFLARE_API_TOKEN` repo secret exists.
+
+## 2026-11-07 11:58 · Framing: Doom is the first patient, not the product
+
+Frankenstein recovers lost source code from compiled binaries and proves every byte with a compiler. The problem is huge (87% of classic US games are critically endangered, and for most the source is gone; the same is true of legacy software everywhere). Doom is our proof case because it is famous and we can check every answer against hidden source. Every pitch, screen, README line and submission says this: lead with the problem and the method, then show Doom as the proof. Say "any program you're allowed to rebuild", never "any software". Repo About: "Software dies when its source code does. Frankenstein's agents bring it back from the binary, and a compiler proves every byte. Doom is just the first patient."
+- 2026-11-07 11:57 (B): SubQ Snap router (natural language to functions, from asm only), measured against the hidden map in an evaluation script outside the crew: hud precision@10 = 1/10 (random 0.2), weapons 4/10 (random 0.55). Muse-written asm cues plus Snap re-ranking did not help (weapons 4/10, hud 1/10) and added 16 s, so it is not used. Ranking contiguous address windows did worse (0/10). Status: useful hint, labelled inferred, never presented as precise.
+
