@@ -75,6 +75,10 @@ class Digger:
         self.warm_start = None  # callable(fn_id) -> {"src", "match_pct", ...} or None (never in held-out evaluation)
         self.draft = None  # callable(fn_id) -> m2c draft C or None (crew.draft.get_draft), for big functions
         self.draft_min_bytes = 150
+        self.permute = None  # callable(fn_id, src) -> crew.permuter.permute() result, or None (off)
+        self.permute_min_structure = 90.0  # run it on near-misses: aligned structure_pct >= 90 or match_pct >= 75
+        self.permute_min_pct = 75.0
+        self.permute_max_runs = 2  # per function, each on a new best attempt
 
     def _tool_result(self, call_id: str, content) -> dict:
         return {"role": "tool", "tool_call_id": call_id,
@@ -119,6 +123,8 @@ class Digger:
         out.cases = [c["fn"] for c in cases]
         budget = self.max_attempts or attempt_budget(fn["difficulty"])
         last_src, last_attempt, best_src, failures, turns = None, 0, None, 0, 0
+        perm_runs = 0
+        match_turn = 10**9  # turn of the latest MATCH verdict (auto-claim if the model moves on without claiming)
         escalated = False  # set by SubQ Snap (or by the fixed fallback rule when Snap is off)
         esc_failed = False  # an escalation-model call errored during this function
         self.log.emit("fn.claimed", "scheduler", fn=fn_id, digger=self.name, difficulty=fn["difficulty"])
@@ -208,8 +214,26 @@ class Digger:
                     fd = res.get("first_diff") or {}
                     out.journey.append((out.attempts, res["status"], pct, fd.get("expected_ins"), fd.get("got_ins"),
                                         (res.get("aligned") or {}).get("structure_pct")))
-                    if pct >= out.best_pct:
+                    new_best = pct >= out.best_pct
+                    if new_best:
                         out.best_pct, best_src = pct, src
+                    perm = None
+                    al = res.get("aligned") or {}
+                    if (self.permute is not None and res["status"] == "PARTIAL" and new_best
+                            and perm_runs < self.permute_max_runs
+                            and (float(al.get("structure_pct") or 0) >= self.permute_min_structure
+                                 or pct >= self.permute_min_pct)):
+                        perm_runs += 1
+                        perm = self._permute(fn_id, out.attempts, src, res, asm, ctx, n_ins, out)
+                        if perm and perm.get("claimed"):
+                            out.seconds = time.time() - t0
+                            return out
+                        if perm and perm.get("improved") and not perm.get("matched"):
+                            to = float((perm.get("to") or {}).get("match_pct") or 0)
+                            if to >= out.best_pct:
+                                out.best_pct, best_src = to, perm["best_src"]
+                    if res["status"] == "MATCH":
+                        match_turn = turns  # the model gets this turn's follow-up to claim in its own words
                     if res["status"] != "MATCH":
                         failures += 1
                         if self.snap_decide is not None and failures >= 2 and out.attempts < budget:
@@ -229,6 +253,15 @@ class Digger:
                     reply["diff"] = (res.get("diff") or [])[:16]
                     if res["status"] == "NO_COMPILE":
                         reply["compile_log"] = (res.get("compile") or {}).get("log", "")[-1500:]
+                    if perm and perm.get("improved"):
+                        reply["permuted"] = {
+                            "note": "Your best so far, after automated permutation (semantics-preserving rewrites "
+                                    "scored by the referee). Start from this source.",
+                            **{k: (perm.get("to") or {}).get(k) for k in ("match_pct", "exact_pct", "structure_pct")},
+                            "src": perm["best_src"]}
+                        if perm.get("rejected"):
+                            reply["permuted"]["note"] = ("The permuter matched the bytes but the Checker rejected it: "
+                                                         + perm["rejected"] + ". Fix that, keep the structure.")
                     reply["attempts_left"] = budget - out.attempts
                     if res["status"] == "MATCH":
                         reply["next"] = "Call submit_claim now."
@@ -253,9 +286,11 @@ class Digger:
                     messages.append(self._tool_result(c["id"], self.target.neighbors(fn_id)))
                 else:
                     messages.append(self._tool_result(c["id"], f"Unknown tool {name}."))
-            # a MATCH the model forgot to claim still goes through the Checker (never auto-accepted)
-            if out.journey and out.journey[-1][1] == "MATCH" and out.attempts >= budget:
-                if self._claim(fn_id, last_attempt, last_src, "(auto-submitted at budget end)", asm, ctx, n_ins, out):
+            # a MATCH is claimed at once, even if the model kept talking; the Checker still re-verifies it
+            # with a fresh referee call and reviews it (salvage found 7 matches lost to models that wandered off)
+            if out.journey and out.journey[-1][1] == "MATCH" and (out.attempts >= budget or turns > match_turn):
+                text = "(auto-submitted at budget end)" if out.attempts >= budget else "(auto-claimed on a referee MATCH)"
+                if self._claim(fn_id, last_attempt, last_src, text, asm, ctx, n_ins, out):
                     out.seconds = time.time() - t0
                     return out
         if out.status != "failed":
@@ -264,6 +299,47 @@ class Digger:
         out.seconds = time.time() - t0
         self.log.emit("fn.abandoned", self.name, fn=fn_id, attempts=out.attempts, best_pct=out.best_pct)
         return out
+
+    def _permute(self, fn_id, attempt, src, res, asm, ctx, n_ins, out: Outcome) -> dict | None:
+        """Run the permuter on a near-miss. A permuted MATCH is a new attempt that goes through the normal path:
+        the Checker's judge, then the claim with its fresh verify, then the fakematch review."""
+        t = time.time()
+        try:
+            p = self.permute(fn_id, src)
+        except Exception as e:  # the permuter is an accelerator, never a reason to lose the function
+            out.journey.append(("permute_error", str(e)[:200]))
+            return None
+        frm, to = p.get("from") or {}, p.get("to") or {}
+        self.log.emit("permute.result", self.name, fn=fn_id, attempt=attempt, checks=int(p.get("checks", 0)),
+                      from_pct=float(res.get("match_pct", 0.0)), to_pct=100.0 if p.get("matched") else float(
+                          to.get("match_pct") or res.get("match_pct", 0.0)), matched=bool(p.get("matched")),
+                      seconds=round(time.time() - t, 1), improved=bool(p.get("improved")),
+                      from_exact=frm.get("exact_pct"), to_exact=to.get("exact_pct"),
+                      passes=dict(p.get("passes") or {}))
+        if not p.get("matched"):
+            return p
+        psrc = p["best_src"]
+        out.attempts += 1
+        n = out.attempts
+        try:
+            adir = self.log.run_dir / "attempts"
+            adir.mkdir(exist_ok=True)
+            (adir / f"{fn_id}.{n:02d}.c").write_text(psrc + "\n")
+        except OSError:
+            pass
+        self.log.emit("attempt.submitted", self.name, fn=fn_id, attempt=n, tokens_in=0, tokens_out=0, cost_usd=0.0,
+                      src_preview="\n".join(psrc.splitlines()[:40]), model="permuter", effort=None,
+                      permuted_from=attempt)
+        r2 = self.checker.judge(fn_id, n, psrc)
+        out.journey.append((n, r2["status"], float(r2.get("match_pct", 0.0)), None, None, None))
+        if r2["status"] == "MATCH":
+            if self._claim(fn_id, n, psrc, f"Matched by permuting attempt {attempt} ({p.get('checks')} referee checks).",
+                           asm, ctx, n_ins, out):
+                out.journey.append((n, "MATCH", 100.0, None, None))
+                p["claimed"] = True
+            else:
+                p["rejected"] = str(out.journey[-1][-1])
+        return p
 
     def _claim(self, fn_id, attempt, src, text, asm, ctx, n_ins, out: Outcome) -> bool:
         self.log.emit("claim.made", self.name, fn=fn_id, attempt=attempt, text=text[:200])
