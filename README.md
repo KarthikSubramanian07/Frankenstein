@@ -79,6 +79,24 @@ Every "I matched it" is re-run by the Checker with a fresh compile. A match that
 | MongoDB Atlas | The memory | Remembers every trick, so the next game is faster. |
 | Google Gemini | The second opinion | A different lab double-checks every match. It also rendered every illustration on the site, today (`site/tools/generate_art.py`). |
 
+## Talk to our agents in ASI:One
+
+Two agents run on Agentverse with the Agent Chat Protocol. Open [asi1.ai](https://asi1.ai), start a chat and mention one of them.
+
+| Agent | Address | What it does |
+|---|---|---|
+| `frankenstein-referee` | `agent1q088qnxafee4aug0qz4xnd9zkk4veq2r9ez07mp047u8enqhckc5w2hstx0` | Compiles your C and checks it against Doom's original bytes. Reports progress and proves the rebuild. |
+| `frankenstein-excavator` | `agent1qf4w7kmtsgv4fdyuj72nwethhjwhmdh7m3u7kqe5tgz4wyq8nmmmq5gjacp` | Starts a recovery with the crew, then asks the Referee agent for the verdict before it answers you. |
+
+Things to ask:
+
+- "@frankenstein-referee How much of DOOM is back?"
+- "@frankenstein-referee Prove the rebuild is exact" (you get both SHA-1 checksums)
+- "@frankenstein-referee Does this C match fn_0801C130?", followed by a ```` ```c ```` block. A wrong guess comes back REJECTED with the first instruction that differs.
+- "@frankenstein-excavator Recover fn_08004DA8"
+
+Every reply keeps what the compiler proved (Observed) apart from our guesses (Inferred). The agents run on Eddy's laptop, so they answer while it's on and the referee is up. Setup is in [`lab/README.md`](lab/README.md).
+
 ## Built today / Not ours
 
 | Built today (Nov 7, 2026, after 10:45 PT) | Not ours |
