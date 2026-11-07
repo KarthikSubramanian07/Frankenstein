@@ -29,8 +29,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&family=Press+Start+2P&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=15">
-<link rel="stylesheet" href="/assets/judges.css?v=1">
+<link rel="stylesheet" href="/assets/site.css?v=19">
+<link rel="stylesheet" href="/assets/judges.css?v=2">
 
 <script type="application/ld+json">
 {
@@ -56,14 +56,16 @@
 <header class="nav-wrap">
   <nav class="nav" aria-label="Main">
     <a class="logo" href="/" aria-label="Frankenstein home"><svg class="logo-bolt" aria-hidden="true"><use href="#bolt"/></svg><span>Frankenstein</span></a>
-    <ul class="nav-links">
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links"><span class="sr">Menu</span><i aria-hidden="true"></i><i aria-hidden="true"></i></button>
+    <ul class="nav-links" id="nav-links">
       <li><a href="/#partners">Partners</a></li>
       <li><a href="/#referee">The referee</a></li>
       <li><a href="/#story">The story</a></li>
       <li><a href="/#numbers">Numbers</a></li>
+      <li><a href="/#credits">Credits</a></li>
       <li><a href="/judges" aria-current="page">For judges</a></li>
     </ul>
-    <a class="start-btn" href="#tracks"><span>ALL TRACKS</span><i aria-hidden="true"></i></a>
+    <a class="start-btn" href="#tracks" aria-label="Jump to every track"><span><span class="ps-press">ALL </span>TRACKS</span><i aria-hidden="true"></i></a>
   </nav>
 </header>
 
@@ -220,7 +222,7 @@
         <div><dt>Matching bytes aren't enough</dt><dd>A MATCH coaxed with <code>volatile</code>, absolute-address casts, goto chains, padding or cast chains is thrown out. Every held-out run rejected <b>4 fakes, and let 0 through</b>. <span class="src">doom_r02 to r04</span></dd></div>
         <div><dt>Two labs screen what bytes can't</dt><dd>SubQ Snap and Gemini score every match for fakes and recited source, in parallel. Snap rejects at 0.85; Gemini alone at 0.95, or at 0.7 when Snap agrees.</dd></div>
         <div><dt>Hard to talk into anything</dt><dd>Pasted C is linted before and after macro expansion, then compiled with no network and an empty <code>.env</code>. We found and fixed an include trick that could have leaked keys to a chat user. <span class="src">SECURITY.md</span></dd></div>
-        <div class="limits"><dt>Honest limits</dt><dd>No false claim has been caught yet: until claim-first landed, a Digger could only claim after a MATCH. On the easy held-out set Snap's gate rejected nothing (highest score 0.68); the deterministic rules caught all 4 fakes per run.</dd></div>
+        <div class="limits"><dt>Honest limits</dt><dd>On the easy round-one set, no claim was false: a Digger could only claim after a MATCH. With claim-first in round two, the Checker caught <b>5 real false claims</b>, refused every one, and accepted no fake. Snap's gate has rejected nothing so far; the deterministic rules did the catching. <span class="src">DECISIONS 13:58</span></dd></div>
       </dl>
       <div class="proof">
         <p class="proof-k">PROOF</p>
@@ -248,21 +250,26 @@
         <div><dt>Habits, never answers</dt><dd>After each match, the Distiller keeps a generic lesson, like <q>0x80000000 built with movs plus lsl</q>, never the code. A habit that shares 3 lines with the answer is rejected.</dd></div>
         <div><dt>Kept on evidence</dt><dd>A habit is adopted after 3 uses at or above the library's quick-match rate, and retired after 4 or more at 15 points below it. Retired habits are never offered again.</dd></div>
         <div><dt>Tested on code it has never seen</dt><dd>170 of Doom's 568 game functions are held out. The library is frozen before a held-out run, and its SHA-1 is the same afterwards, so the test never teaches it.</dd></div>
-        <div><dt>The first run learned 38</dt><dd>doom_r01 learned <b>38 habits</b> while matching 28 of 30. <span class="src">doom_r01/metrics.json</span></dd></div>
-        <div class="limits"><dt>Honest result</dt><dd>On 40 held-out functions: library on 30, off 28, at the same 1.50 attempts per match. That's within noise, so <b>we don't claim it helped</b>. A harder round with repeats is running. <span class="src">crew/EXPERIMENTS.md</span></dd></div>
+        <div><dt>Adopted and retired, for real</dt><dd>doom_r01 learned <b>38 habits</b> while matching 28 of 30. On harder code, training run doom_r11 adopted 3 habits and retired 4. <span class="src">DECISIONS 13:58</span></dd></div>
+        <div class="limits"><dt>Honest result</dt><dd>Held out, the library hasn't beaten noise yet: 30 vs 28 of 40 on easy functions, and <b>6 vs 6 of 20</b> on harder ones. So <b>we don't claim it helped</b>. A rerun on current code is going now. <span class="src">crew/EXPERIMENTS.md</span></dd></div>
       </dl>
       <div class="proof">
         <p class="proof-k">PROOF</p>
         <div class="tbl-wrap">
           <table class="tbl">
-            <caption>HELD-OUT · 40 DOOM FUNCTIONS NEVER SEEN</caption>
-            <thead><tr><th scope="col">Run</th><th scope="col">Setup</th><th scope="col">Matched</th><th scope="col">Attempts per match</th><th scope="col">Cost per match</th></tr></thead>
+            <caption>HELD-OUT · DOOM FUNCTIONS THE CREW NEVER SAW</caption>
+            <thead><tr><th scope="col">Run</th><th scope="col">Setup</th><th scope="col">Matched</th><th scope="col" class="att">Attempts per match</th><th scope="col">Cost per match</th></tr></thead>
             <tbody>
-              <tr><th scope="row">doom_r02</th><td>library on · Snap on</td><td class="v">30 / 40</td><td class="v">1.50</td><td class="v">$0.081</td></tr>
-              <tr><th scope="row">doom_r03</th><td>library off · Snap on</td><td class="v">28 / 40</td><td class="v">1.50</td><td class="v">$0.081</td></tr>
-              <tr><th scope="row">doom_r04</th><td>library on · Snap off</td><td class="v">29 / 40</td><td class="v">1.45</td><td class="v">$0.076</td></tr>
+              <tr class="rd"><th scope="rowgroup" colspan="5">Round 2 · 20 harder functions, 57 to 200 bytes, one pinned commit</th></tr>
+              <tr><th scope="row">doom_r12</th><td>library on · Snap on</td><td class="v">6 / 20</td><td class="v att">2.00</td><td class="v">$0.536</td></tr>
+              <tr><th scope="row">doom_r13</th><td>library off · Snap on</td><td class="v">6 / 20</td><td class="v att">2.17</td><td class="v">$0.547</td></tr>
+              <tr><th scope="row">doom_r14</th><td>library on · Snap off</td><td class="v">4 / 20</td><td class="v att">2.25</td><td class="v">$0.822</td></tr>
+              <tr class="rd"><th scope="rowgroup" colspan="5">Round 1 · 40 easy functions, 16 to 56 bytes, two since-fixed bugs</th></tr>
+              <tr><th scope="row">doom_r02</th><td>library on · Snap on</td><td class="v">30 / 40</td><td class="v att">1.50</td><td class="v">$0.081</td></tr>
+              <tr><th scope="row">doom_r03</th><td>library off · Snap on</td><td class="v">28 / 40</td><td class="v att">1.50</td><td class="v">$0.081</td></tr>
+              <tr><th scope="row">doom_r04</th><td>library on · Snap off</td><td class="v">29 / 40</td><td class="v att">1.45</td><td class="v">$0.076</td></tr>
             </tbody>
-            <tfoot><tr><td colspan="5">Same model, same budgets, same 40 functions. Copied from each run's metrics.json in crew/EXPERIMENTS.md. Bad results ship too.</td></tr></tfoot>
+            <tfoot><tr><td colspan="5">Same model and budget within each round. Copied from each run's metrics.json in crew/EXPERIMENTS.md. Bad results ship too.</td></tr></tfoot>
           </table>
         </div>
       </div>
@@ -333,7 +340,7 @@
         <div><dt>The fake gate</dt><dd>Every MATCH also needs low fakematch and recital odds from Snap before the Checker accepts it. It rejects at 0.85.</dd></div>
         <div><dt>Eyes on the screen</dt><dd>Play it, and we rebuild it: the director watches live frames and picks what to rebuild next, in 2.4 s. Eyes compares two frames and confirms a patch changed what we said, and nothing else (0.68 s, p 0.999).</dd></div>
         <div class="without"><dt>Without it</dt><dd>Muse digs blind, and nobody reads the whole game at once.</dd></div>
-        <div class="limits"><dt>Honest limits</dt><dd>The router is a hint, 5 to 7x better than random, not precise: it ranked the face #1 at 12:20 and missed the top three at 12:56. Held out, Snap on vs off was 30 vs 29 of 40, within noise, with a since-fixed bug skewing it against Snap.</dd></div>
+        <div class="limits"><dt>Honest limits</dt><dd>The router is a hint, 5 to 7x better than random, not precise: it ranked the face #1 at 12:20 and missed the top three at 12:56. Held out on harder code, Snap on vs off was 6 vs 4 of 20 at $0.54 vs $0.82 per match: <b>a weak hint, not a result</b>. <span class="src">DECISIONS 13:58</span></dd></div>
       </dl>
       <div class="proof two">
         <p class="proof-k">PROOF</p>
@@ -351,8 +358,8 @@
           </div>
           <figcaption><b>Snap's calls, as logged.</b> An escalation after a miss, and a fake-gate review that passed. Values rounded; the full lines are in the export.</figcaption>
         </figure>
-        <figure class="shot diagram">
-          <img src="/assets/judges/play-to-recover-light.svg" width="1200" height="480" loading="lazy" decoding="async" alt="A loop: you play, Snap picks what's on screen, the crew recovers it with Muse, the referee rebuilds with the same SHA-1, and the game heals on screen. Play it, and we rebuild it.">
+        <figure class="shot diagram narrow">
+          <img src="/assets/judges/play-to-recover-light.svg" width="560" height="440" loading="lazy" decoding="async" alt="A loop: you play, Snap picks what's on screen, the crew recovers it with Muse, the referee rebuilds with the same SHA-1, and the game heals on screen. Play it, and we rebuild it.">
           <figcaption><b>Play to recover.</b> Snap watches the game and sends the crew to what you're looking at.</figcaption>
         </figure>
       </div>
@@ -384,28 +391,31 @@
         </dd></div>
         <div><dt>Implements the Agent Chat Protocol</dt><dd>The Referee publishes its chat protocol manifest. Verdicts and rebuild proofs come back as interactive cards.</dd></div>
         <div><dt>Discoverable and usable through ASI:One</dt><dd>Both are reachable from ASI:One through their Agentverse mailboxes. Mention the agent and ask.</dd></div>
-        <div><dt>Meaningful tools or multi-agent orchestration</dt><dd>The Referee runs the real compiler check, patch and rebuild. The Excavator runs a crew job, then <b>asks the Referee, agent to agent</b>, and quotes its verdict word for word.</dd></div>
+        <div><dt>Meaningful tools or multi-agent orchestration</dt><dd>The Referee runs the real compiler check, patch and rebuild. The Excavator runs a crew job, then <b>asks the Referee, agent to agent</b>, and quotes its verdict word for word. It ran end to end at 13:44.</dd></div>
         <div><dt>The whole workflow inside one chat</dt><dd>"Does this C match fn_…?", "Recover fn_…", "Prove the rebuild is exact": asked and answered in ASI:One, split into Observed and Inferred. No custom front end.</dd></div>
         <div><dt>Public repo with run and test steps</dt><dd><code>lab/README.md</code>: <code>run_agent.sh</code>, <code>run_excavator.sh</code> and the mailbox connector, plus <code>lab/tests/test_agents.py</code>.</dd></div>
         <div class="todo"><dt>Registered with the ASI:One Submission Agent</dt><dd>On our submission checklist, done with the form at submission time.</dd></div>
         <div class="without"><dt>Without it</dt><dd>Only our team can ask, and nobody can check our claims for themselves.</dd></div>
-        <div class="limits"><dt>Honest limits</dt><dd>The agents run on one teammate's laptop: when it sleeps, they're offline. The agent-to-agent MATCH on record is a self-test; in our end-to-end test the crew didn't crack the function, so nothing went to the Referee. Plain-words routing is a guess. <span class="src">lab/E2E_RECOVER.md</span></dd></div>
+        <div class="limits"><dt>Honest limits</dt><dd>The agents run on one teammate's laptop: when it sleeps, they're offline. End to end works on small functions; one with a string in its literal pool still trips the crew. Plain-words routing is a guess. <span class="src">lab/E2E_RECOVER.md</span></dd></div>
       </dl>
       <div class="proof two">
         <p class="proof-k">PROOF</p>
         <figure class="shot">
           <div class="term">
-            <p class="top"><span>agent log · Excavator self-test</span><span>DECISIONS 12:46</span></p>
-<pre><span class="c">INFO: [frankenstein-excavator]:</span> asking Referee agent about fn_0801B724
-<span class="c">INFO: [frankenstein-excavator]:</span> reply from Referee agent:
-      ### Verdict for `fn_0801B724`: <span class="ok">**MATCH**</span>
-<span class="c">INFO: [frankenstein-referee]:</span> answered agent1qf4w7kmtsg…:
-      ### Verdict for `fn_0801B724`: <span class="ok">**MATCH**</span></pre>
+            <p class="top"><span>agent logs · ASI:One recovery, 13:44</span><span>lab/E2E_RECOVER.md</span></p>
+<pre><span class="c">[frankenstein-excavator]</span> asking Referee agent about fn_08004DA8
+<span class="c">[frankenstein-excavator]</span> reply from Referee agent:
+    ### Verdict for `fn_08004DA8`: <span class="ok">**MATCH**</span>
+<span class="c">[frankenstein-referee]</span>   answered agent1qf4w7kmtsg…:
+    ### Verdict for `fn_08004DA8`: <span class="ok">**MATCH**</span>
+<span class="c">[excavator → you]</span>
+    The crew reported a match …
+    <span class="n">I did not take its word for it.</span></pre>
           </div>
-          <figcaption><b>Two agents, one verdict.</b> The Excavator never reports until the Referee answers. Copied from lab/E2E_RECOVER.md.</figcaption>
+          <figcaption><b>"Recover fn_08004DA8", end to end.</b> A registered agent asked; the crew matched it; the Excavator waited for the Referee agent's own MATCH before answering. Log lines lightly trimmed.</figcaption>
         </figure>
         <figure class="shot diagram">
-          <img src="/assets/judges/system-light.svg" width="1200" height="432" loading="lazy" decoding="async" alt="System map: ASI:One, where you ask, connects to the Lab referee on port 7101, which checks for the Crew on port 7111. Both write one event stream that the Creature and the Stage read.">
+          <img src="/assets/judges/system-light.svg" width="800" height="372" loading="lazy" decoding="async" alt="System map: ASI:One, where you ask, connects to the Lab referee on port 7101, which checks for the Crew on port 7111. Both write one event stream that the Creature and the Stage read.">
           <figcaption><b>Where a chat request goes.</b> ASI:One to the Lab, the Lab to the Crew and back.</figcaption>
         </figure>
       </div>
@@ -428,14 +438,14 @@
         <div><dt>One collection per habit library</dt><dd>Each library is its own Atlas collection, like <code>idioms__doom_lib</code>, seeded from its file on first use. A frozen held-out library stays frozen.</dd></div>
         <div><dt>The run record</dt><dd>Every run event is mirrored to <code>events</code> and every run's metrics to <code>runs</code>, so runs can be compared with a query.</dd></div>
         <div><dt>Verdicts travel with the habit</dt><dd>Adopted or retired, a habit's status lives with it, so the next run inherits the evidence, not just the text.</dd></div>
-        <div><dt>Honest about the backend</dt><dd>Every <code>metrics.json</code> names its <code>library_backend</code>, and the Stage only says MONGODB when the run really used Atlas.</dd></div>
+        <div><dt>Held-out runs read from Atlas</dt><dd>Round two's held-out arms ran their frozen library straight from Atlas, and every <code>metrics.json</code> names its <code>library_backend</code>. The Stage says MONGODB only when a run really used it.</dd></div>
         <div class="without"><dt>Without it</dt><dd>Every run starts from zero, and nothing remembers why.</dd></div>
-        <div class="limits"><dt>Honest limits</dt><dd>Atlas went live at 13:05, after the morning runs: doom_r01 learned its 38 habits into a local JSON file, which stays on as the offline mirror. <span class="src">DECISIONS 13:05</span></dd></div>
+        <div class="limits"><dt>Honest limits</dt><dd>Atlas went live at 13:05, after the morning runs: doom_r01 learned its 38 habits into a local JSON file, which stays on as the offline mirror. And a better memory hasn't yet shown up as more held-out matches. <span class="src">DECISIONS 13:05</span></dd></div>
       </dl>
       <div class="proof">
         <p class="proof-k">PROOF</p>
         <figure class="shot diagram">
-          <img src="/assets/judges/how-it-works-light.svg" width="1200" height="336" loading="lazy" decoding="async" alt="How a function comes back: the compiled game goes to a Muse Digger, then the compiler referee, then the Checker, which re-runs claims. Rejected work loops back to the Digger; accepted work goes into the rebuilt ROM with the same SHA-1. SubQ Snap steers from above, and habits flow back to the Digger through MongoDB.">
+          <img src="/assets/judges/how-it-works-light.svg" width="1152" height="290" loading="lazy" decoding="async" alt="How a function comes back: the compiled game goes to a Muse Digger, then the compiler referee, then the Checker, which re-runs claims. Rejected work loops back to the Digger; accepted work goes into the rebuilt ROM with the same SHA-1. SubQ Snap steers from above, and habits flow back to the Digger through MongoDB.">
           <figcaption><b>The loop MongoDB closes.</b> Habits flow from the Checker back to every Digger, through Atlas.</figcaption>
         </figure>
       </div>
@@ -460,7 +470,7 @@
         <div><dt>In the live dig</dt><dd>In our live rehearsal run, both matches got a Gemini review next to Snap's. <span class="src">runs/r01, second_opinion_reviews</span></dd></div>
         <div><dt>It drew the lab</dt><dd>Every illustration on our site was generated today with Gemini, from <code>site/tools/generate_art.py</code>.</dd></div>
         <div class="without"><dt>Without it</dt><dd>One lab's opinion on fakes, and a site with no pictures.</dd></div>
-        <div class="limits"><dt>Honest limits</dt><dd>Gemini is advisory and off the critical path. It joined the Checker at 12:11, after the held-out runs began, so we have no measured effect yet.</dd></div>
+        <div class="limits"><dt>Honest limits</dt><dd>Gemini is advisory and off the critical path. It reviewed every match in round two, but we haven't run Gemini on against off, so its effect isn't measured yet.</dd></div>
       </dl>
       <div class="proof">
         <p class="proof-k">PROOF</p>
@@ -497,6 +507,6 @@
     </div>
   </div>
 </footer>
-<script src="/assets/judges.js?v=1" defer></script>
+<script src="/assets/judges.js?v=2" defer></script>
 </body>
 </html>
