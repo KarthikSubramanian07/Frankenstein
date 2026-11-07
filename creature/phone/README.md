@@ -29,6 +29,14 @@ The threaded core needs same-origin JS/WASM plus COOP `same-origin` and COEP `re
 
 The source can be checked with `node --check player.js`, `node --check prepare.mjs` and `python -m py_compile server.py`. Local HTTP checks should confirm isolation headers, working page assets, `/game.gba` 404 without an explicit ROM, and denial of directory/source access. No new test suite is introduced (DECISIONS scope rule).
 
-Validation here: both JavaScript files passed `node --check`; Python passed compilation; server started on localhost:7401. HTTP probing from this shell was blocked by WinError 10013, so browser rendering and request behavior remain unverified. npm registry lookup was blocked by ENOTFOUND. WASM installation, assembled-ROM boot, iOS Safari / Android Chrome, five simultaneous phones and loading time remain real-device gates. This page reports missing core/ROM errors explicitly. API keys never enter the page. Public hosting and a published QR come after those gates; generating a QR for localhost would not make it playable on a phone.
+Updated verification: the native Node runtime downloaded the pinned core from npm and verified its SHA-512 integrity. The Node server's isolation headers, page/core/game assets and source-path rejection were checked. The actual 5,704,780-byte private-variant package booted in the in-app browser: title, menu, new game, episode selection and player movement were visually observed. See `../runtime/BOOT.md` for exact hashes and reproduction. These are browser checks, not physical-phone tests. iOS Safari / Android Chrome, five simultaneous phones and loading time remain real-device gates. No QR or public distribution success is claimed.
+
+The Python host remains available. A dependency-free Node alternative is now also included:
+
+```sh
+node creature/phone/serve.mjs --port 7411 --rom creature/runtime/generated/doom-variant-playable.gba
+```
+
+Run that command from the repo root; it serves on localhost with COOP/COEP and an asset allowlist. Shell Git/npm networking was unavailable here, but the connected Node runtime supported downloads and local serving. This is a local preview, not a URL another phone can reach. API keys never enter the page.
 
 Credits on the page distinguish today's shell from Doom (id Software), prBoom, GBADoom (doomhack), and the prior mGBA emulator.
