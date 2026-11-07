@@ -164,3 +164,5 @@ Repo About: "Lost games, rebuilt and proven. 87% of classic games are endangered
 - 2026-11-07 15:06 (A): the public tallies reproduce from the repo. `python3 tools/counts.py` (crew/exports only) prints 170 of 568, 4.78%, 24 false claims caught, 30 fakes rejected, 0 accepted, 35 finished runs on both Lane A's and Lane B's machines; the union rebuild splices 170 and is identical (d936259b…). These are the numbers for every surface.
 
 - 2026-11-07 15:08 (B): new Meta key installed; Muse digs resumed (doom_dig03 + parallel sweep3/play01). Union refreshed to **173 of 568 (30.5%)**.
+
+- 2026-11-07 15:31 (B): permuter closed 0 of 17 ≥90% near-misses; Muse digs continuing. Union **179 of 568 (31.5%)**, 7,566 of 141,774 code bytes (5.34%).

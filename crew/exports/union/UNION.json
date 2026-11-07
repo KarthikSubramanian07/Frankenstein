@@ -1,11 +1,11 @@
 {
   "v": 1,
-  "functions": 175,
+  "functions": 179,
   "of": 568,
-  "pct_functions": 30.8,
-  "bytes": 7102,
+  "pct_functions": 31.5,
+  "bytes": 7566,
   "of_bytes": 141774,
-  "pct_bytes": 5.01,
+  "pct_bytes": 5.34,
   "reverified_by_referee": true,
   "rejected_on_reverify": [],
   "target_rom_sha1": "d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2",
@@ -21,14 +21,14 @@
       "fn": "fn_03000DBC",
       "size": 36,
       "split": "train",
-      "from": "runs/doom_play01",
+      "from": "crew/exports/doom_play01",
       "sha1": "6a117ef239f125b374cdd307e6df9926beb39906"
     },
     {
       "fn": "fn_0300170C",
       "size": 52,
       "split": "train",
-      "from": "runs/doom_play01",
+      "from": "crew/exports/doom_play01",
       "sha1": "c447e662eec1f20803c2ba1db7a95d35442c87b4"
     },
     {
@@ -37,6 +37,13 @@
       "split": "train",
       "from": "runs/doom_r01",
       "sha1": "09a5803fff18fb93c6a82ce00c647cac03c2f3ee"
+    },
+    {
+      "fn": "fn_0800060C",
+      "size": 132,
+      "split": "train",
+      "from": "runs/doom_par0",
+      "sha1": "e6c00e0a5e01e35552b84437ba9d30e1e5eb9cdc"
     },
     {
       "fn": "fn_08000EC8",
@@ -238,7 +245,7 @@
       "fn": "fn_08004D4C",
       "size": 92,
       "split": "heldout",
-      "from": "runs/salvage05",
+      "from": "runs/salvage08",
       "sha1": "22204464d497e6185ef2416f4e9325cff8a05a6d"
     },
     {
@@ -252,14 +259,14 @@
       "fn": "fn_08004E14",
       "size": 28,
       "split": "train",
-      "from": "runs/salvage05",
+      "from": "runs/salvage09",
       "sha1": "8cd04786f2e6756fcda7225ed1571d359081ef3d"
     },
     {
       "fn": "fn_08004E30",
       "size": 28,
       "split": "train",
-      "from": "runs/salvage05",
+      "from": "runs/salvage09",
       "sha1": "459b2aa138601afabccd9c984641a1a0ba796b65"
     },
     {
@@ -711,6 +718,13 @@
       "sha1": "0b6a8052b641a3406fe277aa8afee3a22a631316"
     },
     {
+      "fn": "fn_0800CEE8",
+      "size": 228,
+      "split": "heldout",
+      "from": "runs/doom_sweep3",
+      "sha1": "ff20007352946d82c6d033c30031a11abbe99861"
+    },
+    {
       "fn": "fn_0800DD94",
       "size": 46,
       "split": "train",
@@ -814,6 +828,13 @@
       "split": "train",
       "from": "crew/exports/doom_r11",
       "sha1": "5a3a687388a4c5715315cd0e9de01367e3a474d7"
+    },
+    {
+      "fn": "fn_08012234",
+      "size": 28,
+      "split": "train",
+      "from": "runs/doom_par1",
+      "sha1": "072d1038020c541a999b269613a205134f023973"
     },
     {
       "fn": "fn_080126B8",
@@ -940,6 +961,13 @@
       "split": "heldout",
       "from": "runs/doom_sweep3",
       "sha1": "b3e810a8401112c45ccb8bf37f9f7e5b429b512e"
+    },
+    {
+      "fn": "fn_080150D4",
+      "size": 76,
+      "split": "train",
+      "from": "runs/doom_par2",
+      "sha1": "317cb5d78a58ec5a1f3a629045ad23c3a4ad743b"
     },
     {
       "fn": "fn_080153C0",
@@ -1085,7 +1113,7 @@
       "fn": "fn_08019B94",
       "size": 28,
       "split": "train",
-      "from": "runs/salvage05",
+      "from": "runs/salvage09",
       "sha1": "6dd5e6de454260c7588aaf305a1a53bf41c0cf05"
     },
     {
@@ -1127,7 +1155,7 @@
       "fn": "fn_0801B1F8",
       "size": 80,
       "split": "train",
-      "from": "runs/salvage05",
+      "from": "runs/salvage09",
       "sha1": "78817589ca4ff547f674f361431f8a93412cfb62"
     },
     {
@@ -1190,7 +1218,7 @@
       "fn": "fn_0801C924",
       "size": 40,
       "split": "train",
-      "from": "runs/salvage05",
+      "from": "runs/salvage09",
       "sha1": "cffac5a8bee99b8fcaba37c660fd06ce163a238b"
     },
     {
@@ -1232,7 +1260,7 @@
       "fn": "fn_0801D780",
       "size": 34,
       "split": "train",
-      "from": "runs/salvage05",
+      "from": "runs/salvage09",
       "sha1": "78876fe08fd1e520fb1cefb9c5eb676578229237"
     }
   ]
