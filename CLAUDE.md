@@ -8,8 +8,8 @@ The next checkpoint should contain runnable code or target evidence, not another
 
 Lost games, rebuilt and proven. AI agents rebuild a classic game's lost source code from the compiled game, one
 function at a time, and a compiler accepts only byte-identical pieces. Doom (GBADoom) is our first patient.
-Hackathon: AI Engineer Code Summit, Shack15 SF, Sat Nov 7 2026. Hacking 10:45 to 17:00. Freeze 14:55, record
-16:10, submit 16:30 (`make clock`; a hook prints the current phase on every prompt).
+Hackathon: AI Engineer Code Summit, Shack15 SF, Sat Nov 7 2026. Hacking 10:45 to 17:00. Freeze 14:55, record 16:30 (moved from
+16:10), submit by 17:00 (`make clock`; a hook prints the current phase on every prompt).
 
 ## Read before you write anything public
 

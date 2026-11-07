@@ -58,6 +58,8 @@ def banner(cfg, now):
     start, deadline = (datetime.fromisoformat(cfg[k]) for k in ("start", "deadline"))
     now = now.astimezone(start.tzinfo)
     g = gates(start, deadline, cfg.get("judged", "live"))
+    if cfg.get("record"):  # a team-set recording time overrides the computed one
+        g = [(datetime.fromisoformat(cfg["record"]), ph, r) if ph == "RECORD" else (t, ph, r) for t, ph, r in g]
     past = [x for x in g if x[0] <= now]
     phase, rule = (past[-1][1], past[-1][2]) if past else (
         "BEFORE START", "Lock the idea and target prize, test every sponsor API, write the click-by-click demo script.")
