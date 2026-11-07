@@ -1,5 +1,9 @@
 # Lane D handoffs
 
+## Controllers: pick your device, see the mapping, remap it (for Enzo)
+
+Player 2 has a **Controller** chip under PRESS START and in the pause sheet. It opens How you'll play: a device picker (Xbox-, PlayStation- and Nintendo-style, 8BitDo, Steam Deck, generic, keyboard, touch), auto-detected from Gamepad API vendor ids, and a drawn controller map labelled with Doom actions, unmapped controls included. Remapping works by CHANGE, then a button, key or touch slot within 5 s, with swaps reported. Profiles are saved per device, with a reset and a Nintendo A/B swap. The overlay, legend and start hint follow whichever input was used last. The new module is `phone/controls.js`; it was added to both servers, `sw.js` and `bundle.py` (asset list and judging service worker shell). It was checked with Playwright: stubbed Xbox, PS and Switch ids, a remap verified through the probe ROM, persistence, keyboard, touch, iPad and TV. See [phone/README.md](phone/README.md). With your doom_r12 `build.rom`, start the server with `--report` (and `--engine` for the package), and the page will say "rebuilt from recovered code" with the real 0.36%. Not yet tried on real controllers or console browsers.
+
 ## Current Lane D checkpoint from this session
 
 Source/proof checkpoints 54dca9e and 3aec71c are on main. The static-face playable package boots in the current player; movement, turn, fire and face expressions at full health were observed. Restore preflight and the static phone deployment bundle are implemented and checked. STATUS.md is the current evidence ledger.
