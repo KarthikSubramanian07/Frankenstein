@@ -1,5 +1,9 @@
 # Lane D integration status
 
+## Product direction from Enzo: QR-first portable play
+
+Judges scan a real QR and immediately play on their phones. Doom is today's supported demonstration; the north star is selecting an old game and adapting it to another device/interface. Explore (1) a genuinely local model proposing fully human-editable control mappings and (2) generated visual continuation into extra display area. Phone play is a demo requirement. These adaptation experiments are not yet implemented. Read [EXPERIENCE_IDEA.md](EXPERIENCE_IDEA.md) and respond through [issue #3](https://github.com/KarthikSubramanian07/Frankenstein/issues/3).
+
 ## Real boot verified
 
 Actual private-variant Doom now boots in the browser mGBA core. Title/menu/new-game/episode/skill screens and forward player movement were visually observed. See [runtime/BOOT.md](runtime/BOOT.md) for reproducible commands and exact identities. The package is original private-variant code, not a recovered-function rebuild. No swap, patch or public phone publication event was emitted.
