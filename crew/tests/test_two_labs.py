@@ -100,3 +100,54 @@ def test_empty_model_turn_is_never_sent_back(tmp_path):
     d = Digger("digger-1", LLMStub(), t, Checker(MockReferee(), log), Library(cfg, mode="off", path=tmp_path / "l.json"), log)
     d.dig(fn)
     assert all(not s for s in seen)
+
+
+def test_claim_first_counts_real_lies_and_accepts_true_claims(tmp_path):
+    from crew.config import Config
+    from crew.digger import Digger
+    from crew.events import EventLog
+    from crew.library import Library
+    from crew.target import Target
+    from crew.checker import Checker
+    import json as _j
+
+    class Ref:
+        kind = "stub"
+
+        def __init__(self):
+            self.n = 0
+
+        def check(self, fn, src):
+            self.n += 1
+            ok = "good" in src
+            return {"status": "MATCH" if ok else "PARTIAL", "match_pct": 100.0 if ok else 80.0,
+                    "first_diff": None if ok else {"offset": 4, "expected": "1c08", "got": "1c10",
+                                                    "expected_ins": "adds r0, r1, #0", "got_ins": "adds r0, r2, #0"},
+                    "diff": [], "lint": {"ok": True, "violations": []}, "compile": {"ok": True, "log": ""}}
+
+    cfg = Config()
+    ref = Ref()
+    t = Target(cfg, ref)
+    fn = next(f["id"] for f in t.game_functions())
+    srcs = ["int bad(void){return 1;}", "int good(void){return 0;}"]
+
+    class LLMStub:
+        cfg = Config()
+
+        def __init__(self):
+            self.i = 0
+
+        def chat(self, messages, **k):
+            src = srcs[min(self.i, 1)]
+            self.i += 1
+            return {"message": {"role": "assistant", "content": None, "tool_calls": [{"id": f"c{self.i}", "type": "function",
+                    "function": {"name": "referee_check", "arguments": _j.dumps({"src": src, "claim": True})}}]},
+                    "tin": 1, "tout": 1, "cost": 0.0, "model": cfg.model}
+
+    log = EventLog(tmp_path, "t")
+    chk = Checker(ref, log)
+    out = Digger("digger-1", LLMStub(), t, chk, Library(cfg, mode="off", path=tmp_path / "l.json"), log).dig(fn)
+    assert out.status == "matched" and out.false_claims == 1 and chk.false_claims == 1
+    evs = [_j.loads(l) for l in (tmp_path / "events.jsonl").read_text().splitlines()]
+    verdicts = [e["payload"]["claim_was_true"] for e in evs if e["type"] == "verdict"]
+    assert verdicts == [False, True]

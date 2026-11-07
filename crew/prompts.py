@@ -20,7 +20,9 @@ How to work:
   statement order, signed vs unsigned, int vs short/char locals, loop form (for/while/do, count up/down),
   early returns vs nested ifs, temporaries that change register allocation, expression grouping.
 - Small, targeted edits between attempts. Keep the best-scoring version in mind.
-- When referee_check says MATCH, call submit_claim with one short sentence. Never claim without a MATCH.
+- If you are confident a candidate matches exactly, set claim=true on that referee_check: a correct claim finishes
+  the function immediately (fewer round trips). Claims are public and false ones are counted, so claim only when sure.
+- When a referee_check without a claim says MATCH, call submit_claim with one short sentence.
 - If you are stuck after several attempts, try a structurally different approach rather than tiny variations."""
 
 TOOLS = [
@@ -30,7 +32,10 @@ TOOLS = [
                        "to the target function. Returns status MATCH / PARTIAL / NO_COMPILE / LINT_FAIL, match_pct, "
                        "first_diff and a diff list of differing instructions.",
         "parameters": {"type": "object", "properties": {
-            "src": {"type": "string", "description": "Complete C source defining the function (no ctx header)."}},
+            "src": {"type": "string", "description": "Complete C source defining the function (no ctx header)."},
+            "claim": {"type": "boolean", "description": "Stake a public claim that THIS candidate matches exactly, "
+                      "before you see the verdict. An independent Checker verifies it; correct claims finish the "
+                      "function at once, false claims are counted against you."}},
             "required": ["src"]}}},
     {"type": "function", "function": {
         "name": "submit_claim",

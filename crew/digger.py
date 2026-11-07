@@ -67,6 +67,7 @@ class Digger:
         self.types_slice = types_slice  # callable(fn) -> str, or None (cartographer off)
         self.budget_ok = budget_ok
         self.snap_decide = snap_decide  # callable(fn_id, asm, history) -> dict, or None (SubQ Snap off)
+        self.allow_claim_first = True  # Diggers may stake a claim before seeing the verdict (real lies, caught)
 
     def _tool_result(self, call_id: str, content) -> dict:
         return {"role": "tool", "tool_call_id": call_id,
@@ -140,6 +141,27 @@ class Digger:
                     self.log.emit("attempt.submitted", self.name, fn=fn_id, attempt=out.attempts,
                                   tokens_in=r["tin"], tokens_out=r["tout"], cost_usd=round(r["cost"], 6),
                                   src_preview="\n".join(src.splitlines()[:40]), model=r["model"], effort=effort)
+                    if args.get("claim") is True and self.allow_claim_first:
+                        # claim-first: the Digger staked a claim before seeing a verdict; the Checker decides
+                        if self._claim(fn_id, out.attempts, src, args.get("claim_text") or "Matched it. Pretty sure.",
+                                       asm, ctx, n_ins, out):
+                            out.journey.append((out.attempts, "MATCH", 100.0, None, None))
+                            out.seconds = time.time() - t0
+                            return out
+                        failures += 1
+                        last = out.journey[-1]
+                        lr = getattr(out, "last_res", None) or {}
+                        pct = float(lr.get("match_pct", 0.0))
+                        if pct >= out.best_pct and last[1] == "FALSE_CLAIM":
+                            out.best_pct, best_src = pct, src
+                        messages.append(self._tool_result(c["id"], {
+                            "verdict": "CLAIM REJECTED" if last[1] == "FALSE_CLAIM" else "REJECTED: " + str(last[-1]),
+                            "status": lr.get("status"), "match_pct": pct, "first_diff": lr.get("first_diff"),
+                            "diff": (lr.get("diff") or [])[:16], "lint": lr.get("lint"),
+                            "compile_log": (lr.get("compile") or {}).get("log", "")[-1500:] if lr.get("status") == "NO_COMPILE" else None,
+                            "attempts_left": budget - out.attempts,
+                            "note": "Your false claim was counted. Check before claiming."}))
+                        continue
                     res = self.checker.judge(fn_id, out.attempts, src)
                     pct = float(res.get("match_pct", 0.0))
                     fd = res.get("first_diff") or {}
@@ -202,6 +224,7 @@ class Digger:
     def _claim(self, fn_id, attempt, src, text, asm, ctx, n_ins, out: Outcome) -> bool:
         self.log.emit("claim.made", self.name, fn=fn_id, attempt=attempt, text=text[:200])
         res = self.checker.verify_claim(fn_id, attempt, src)
+        out.last_res = res
         if res["status"] != "MATCH":
             out.false_claims += 1
             out.journey.append((attempt, "FALSE_CLAIM", res.get("match_pct", 0), "claim rejected by referee"))
