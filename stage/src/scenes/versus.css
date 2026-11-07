@@ -1,41 +1,88 @@
-/* Caught (Versus): one claim, one verdict, one reason. Lots of empty space. */
+/* Caught (Versus): a duel line, one verdict, one reason. Lots of empty space.
+   Pixel face only for small HUD labels; Anton for the verdict, Barlow for sentences. */
 .versus .vs-col {
-  position: absolute; inset: 0; padding: 0 160px;
+  position: absolute; inset: 0 0 120px; padding: 0 160px;
   display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
 }
 
-.versus .vs-claim {
-  font: 600 52px/1.2 var(--text); letter-spacing: 6px; text-transform: uppercase; color: var(--ash);
-  max-width: 1600px;
+/* duel line: P1 (the Digger) vs P2 (the Checker), like a fighting-game name bar */
+.versus .vs-who {
+  font: 400 28px/1 var(--font-pixel, monospace); text-transform: uppercase; color: var(--ash);
+  display: flex; align-items: baseline; gap: 16px; white-space: nowrap;
+}
+.versus .vs-who .p1, .versus .vs-who .p2 { color: var(--bone); }
+.versus .vs-who i { font-style: normal; color: var(--fire); margin: 0 28px; }
+
+.versus .vs-quote {
+  margin-top: 22px; max-width: 1500px; font: italic 400 40px/1.25 var(--text); color: var(--ash);
+  text-wrap: balance;
 }
 
+.versus .vs-stage { margin: 36px 0 40px; }
 .versus .vs-word {
-  margin: 28px 0 56px; font: 400 360px/0.9 var(--display); letter-spacing: 8px; color: var(--ash);
+  font: 400 300px/0.9 var(--display); letter-spacing: 8px; color: var(--ash);
   text-shadow: 0 10px 0 #000; white-space: nowrap;
 }
-.versus[data-v='lie'] .vs-word, .versus[data-v='fake'] .vs-word { color: var(--blood); }
 .versus[data-v='ok'] .vs-word { color: var(--toxic); }
-.versus[data-v='none'] .vs-word { color: var(--metal-hi); font-size: 180px; margin: 0; text-shadow: none; }
-.versus[data-v='none'] .vs-claim, .versus[data-v='none'] .vs-detail { display: none; }
 
-/* stamped in once: drops from large onto the floor, hard stop, no glow */
-.versus .vs-word.stamp { animation: vs-stamp 260ms cubic-bezier(.2, .9, .3, 1.2) both; }
-@keyframes vs-stamp {
-  0% { opacity: 0; transform: scale(1.6) rotate(-3deg); }
-  70% { opacity: 1; transform: scale(.97) rotate(0); }
-  100% { opacity: 1; transform: scale(1); }
+/* REJECTED is a rubber stamp: blood ink inside a ruled frame, set a few degrees off. 
+   Hard edges, no glow, no gradient. */
+.versus[data-v='lie'] .vs-word, .versus[data-v='fake'] .vs-word {
+  color: var(--blood); text-shadow: none; font-size: 220px; padding: 20px 48px 4px; margin: 24px 0 36px;
+  border: 12px solid var(--blood); outline: 3px solid var(--blood); outline-offset: 9px;
+  transform: rotate(-3deg);
+  box-shadow: 0 10px 0 #000;
 }
 
-.versus .vs-detail { min-height: 120px; max-width: 1600px; }
+.versus[data-v='none'] .vs-word { color: var(--ash); font-size: 180px; text-shadow: none; }
+.versus[data-v='none'] .vs-stage { margin: 0 0 32px; }
+.versus[data-v='none'] .vs-text { color: var(--ash); font-size: 40px; }
 
-.versus .vs-text { font: 400 48px/1.25 var(--text); color: var(--bone); }
-.versus .vs-text b { font-weight: 600; color: var(--bone); }
+/* stamped in once: drops from large onto the floor, hard stop, no glow.
+   The overshoot is deliberate (a rubber stamp landing); the audit marks it a detector false positive. */
+.versus .vs-word.stamp { animation: vs-stamp 260ms cubic-bezier(.2, .9, .3, 1.2) both; }
+.versus[data-v='lie'] .vs-word.stamp, .versus[data-v='fake'] .vs-word.stamp { animation-name: vs-stamp-tilt; }
+@keyframes vs-stamp {
+  0% { opacity: 0; transform: scale(1.6); }
+  70% { opacity: 1; transform: scale(.97); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes vs-stamp-tilt {
+  0% { opacity: 0; transform: scale(1.6) rotate(-10deg); }
+  70% { opacity: 1; transform: scale(.97) rotate(-3deg); }
+  100% { opacity: 1; transform: scale(1) rotate(-3deg); }
+}
+
+.versus .vs-detail { min-height: 120px; max-width: 1600px; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+
+.versus .vs-text { font: 400 48px/1.25 var(--text); color: var(--bone); text-wrap: balance; }
+.versus .vs-same {
+  font: 400 32px/1 var(--font-pixel, monospace); text-transform: uppercase;
+  color: var(--bg); background: var(--bone); padding: 12px 18px 10px;
+}
 
 .versus .vs-ins {
   display: grid; grid-template-columns: auto auto; column-gap: 36px; row-gap: 14px; align-items: baseline;
   justify-content: center; text-align: left;
 }
-.versus .vs-ins .lbl { font: 600 34px/1 var(--text); letter-spacing: 4px; text-transform: uppercase; color: var(--ash); text-align: right; }
+.versus .vs-ins .lbl {
+  font: 400 30px/1 var(--font-pixel, monospace); text-transform: uppercase; color: var(--ash); text-align: right;
+}
 .versus .vs-ins code { font: 500 54px/1.1 var(--mono); color: var(--bone); white-space: pre; }
 .versus .vs-ins code .diff { color: var(--bone); border-bottom: 4px solid var(--ash); }
-.versus .vs-ins code:last-of-type .diff { color: var(--blood); border-bottom-color: var(--blood); font-weight: 700; }
+.versus .vs-ins code.got .diff { color: var(--blood); border-bottom-color: var(--blood); font-weight: 700; }
+
+.versus .vs-meta {
+  margin-top: 32px; font: 400 28px/1 var(--font-pixel, monospace); text-transform: uppercase;
+  color: var(--ash); font-variant-numeric: tabular-nums;
+}
+.versus .vs-meta i, .versus .vs-tally i { font-style: normal; margin: 0 20px; color: var(--metal-hi); }
+
+/* real counts from the stream, pinned to the floor like a round counter */
+.versus .vs-tally {
+  position: absolute; left: 0; right: 0; bottom: 64px; text-align: center;
+  font: 400 28px/1 var(--font-pixel, monospace); text-transform: uppercase; color: var(--ash);
+  font-variant-numeric: tabular-nums;
+}
+.versus .vs-tally b { font-weight: 400; color: var(--bone); }
+.versus[data-v='none'] .vs-meta, .versus[data-v='none'] .vs-who { display: none; }
