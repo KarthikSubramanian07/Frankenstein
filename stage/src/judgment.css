@@ -9,8 +9,9 @@
 }
 .jhead, .jstack { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
 
-/* Split: top right of the game window, like a kill feed (OBS puts the game under it) */
-.stage[data-scene='split'] .jrail { display: flex; right: 956px; top: 108px; max-width: 928px; }
+/* Split: top right of the game window, like a kill feed (OBS puts the game under it). Three rows fit in the
+   world band between its label (y 92-140) and the MONSTERS label (y 348), so no map label is covered. */
+.stage[data-scene='split'] .jrail { display: flex; right: 956px; top: 144px; max-width: 928px; }
 /* Hi-score: the band y 776-944, x 900-1800: under the table and the hero line, right of the CARTRIDGE label,
    above the key. Three rows: the Muse head and two toasts. */
 .stage[data-scene='hiscore'] .jrail { display: flex; flex-direction: column-reverse; right: 120px; bottom: 136px; max-width: 900px; gap: 6px; }

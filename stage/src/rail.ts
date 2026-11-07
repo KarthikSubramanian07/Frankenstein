@@ -9,7 +9,7 @@ import type { Effect } from './state.ts';
 import type { Line, Op, Sponsor } from './judgment.ts';
 import { LABEL, museCounts } from './judgment.ts';
 
-const MAX: Record<string, number> = { split: 3, hiscore: 2 }; // toasts on screen at once (Hi-score has room for two)
+const ROWS = 3; // plates on screen at once, pinned head included (both scenes have room for three rows)
 const HOLD = 3000; // ms a toast stays
 const MIN_SHOW = 1200; // ms before a newer line may push a toast out
 const STALE = 4000; // ms a queued line may wait before it is old news
@@ -72,7 +72,10 @@ export class Rail {
       if (n && !this.reduced) { n.classList.remove('bump'); void (n as HTMLElement).offsetWidth; n.classList.add('bump'); }
       return;
     }
-    if (e.kind === 'judgment' && !(ctx.current() === 'split' && ON_SPLIT_CHAIN.has(e.line.op))) this.push(e.line, MAX[ctx.current()] ?? 3);
+    if (e.kind === 'judgment' && !(ctx.current() === 'split' && ON_SPLIT_CHAIN.has(e.line.op))) {
+      const pinned = [this.muse, this.asi].filter((p) => p.classList.contains('on')).length;
+      this.push(e.line, Math.max(1, ROWS - pinned));
+    }
   }
 
   private push(line: Line, max: number) {
