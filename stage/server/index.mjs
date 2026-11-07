@@ -20,11 +20,18 @@ export function startServer(opts = {}) {
   const host = opts.host ?? '127.0.0.1';
   const runsDir = path.resolve(opts.runsDir ?? process.env.STAGE_RUNS_DIR ?? path.join(REPO, 'runs'));
   const repoDir = path.resolve(opts.repoDir ?? REPO);
+  // Finished real runs published by the crew (contracts 7d) are listed next to runs/. runs/ wins on a name clash.
+  const exportsDir = path.resolve(opts.exportsDir ?? process.env.STAGE_EXPORTS_DIR ?? path.join(REPO, 'crew', 'exports'));
+  const roots = [runsDir, exportsDir];
   const pollMs = Number(opts.pollMs ?? 150);
   const log = opts.quiet ? () => {} : (...a) => console.log('[stage]', ...a);
 
   const safeRun = (id) => (typeof id === 'string' && /^[\w.-]+$/.test(id) ? id : null);
-  const runPath = (id, file) => path.join(runsDir, id, file);
+  const runDir = (id) => {
+    for (const r of roots) { const d = path.join(r, id); try { if (fs.statSync(d).isDirectory()) return d; } catch { /* next root */ } }
+    return path.join(runsDir, id);
+  };
+  const runPath = (id, file) => path.join(runDir(id), file);
   const readJson = (p) => {
     try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return null; }
   };
@@ -50,25 +57,38 @@ export function startServer(opts = {}) {
     const sample = path.join(repoDir, 'contracts', 'fixtures', `${name}.sample.json`);
     const wantSample = runId && isFixtureRun(runId);
     if (!wantSample && fs.existsSync(real)) return real;
+    if (runId && !wantSample) return null; // a real run never gets sample data
     if (fs.existsSync(sample)) return sample;
     return fs.existsSync(real) ? real : null;
   };
 
+  const isBench = (id) => {
+    const m = readJson(runPath(id, 'metrics.json'));
+    return /^bench/i.test(id) || /\bbench\b/i.test(m?.label ?? '') || m?.game_id === 'bench';
+  };
   const listRuns = () => {
-    let names = [];
-    try { names = fs.readdirSync(runsDir); } catch { return []; }
-    return names
-      .filter((n) => n !== 'live' && !n.startsWith('.'))
-      .filter((n) => { try { return fs.statSync(path.join(runsDir, n)).isDirectory(); } catch { return false; } })
-      .sort()
-      .map((id) => ({
-        id,
-        has_events: fs.existsSync(runPath(id, 'events.jsonl')),
-        has_metrics: fs.existsSync(runPath(id, 'metrics.json')),
-        has_names: fs.existsSync(runPath(id, 'names.json')),
-        fixture: isFixtureRun(id),
-        live: liveRunId() === id,
-      }));
+    const seen = new Set();
+    const out = [];
+    for (const root of roots) {
+      let names = [];
+      try { names = fs.readdirSync(root); } catch { continue; }
+      for (const id of names.sort()) {
+        if (id === 'live' || id.startsWith('.') || seen.has(id)) continue;
+        try { if (!fs.statSync(path.join(root, id)).isDirectory()) continue; } catch { continue; }
+        seen.add(id);
+        out.push({
+          id,
+          source: root === runsDir ? 'runs' : 'exports',
+          has_events: fs.existsSync(runPath(id, 'events.jsonl')),
+          has_metrics: fs.existsSync(runPath(id, 'metrics.json')),
+          has_names: fs.existsSync(runPath(id, 'names.json')),
+          fixture: isFixtureRun(id),
+          bench: isBench(id),
+          live: liveRunId() === id,
+        });
+      }
+    }
+    return out;
   };
 
   // ---------- HTTP ----------
@@ -93,7 +113,8 @@ export function startServer(opts = {}) {
     if (url.pathname === '/runs') return send(res, 200, { live: liveRunId(), runs: listRuns() });
     if (url.pathname === '/metrics') {
       // every runs/*/metrics.json, for the Time trial
-      const all = listRuns().filter((r) => r.has_metrics).map((r) => ({ dir: r.id, ...readJson(runPath(r.id, 'metrics.json')) }));
+      const all = listRuns().filter((r) => r.has_metrics)
+        .map((r) => ({ dir: r.id, source: r.source, bench: r.bench, ...readJson(runPath(r.id, 'metrics.json')) }));
       return send(res, 200, { runs: all });
     }
     if (parts[0] === 'runs' && parts.length === 3) {
@@ -207,7 +228,7 @@ export function startServer(opts = {}) {
     timers.push(poll);
   });
 
-  log(`http http://${host}:${httpPort}  ws ws://${host}:${wsPort}  runs ${runsDir}`);
+  log(`http http://${host}:${httpPort}  ws ws://${host}:${wsPort}  runs ${runsDir} + ${exportsDir}`);
   return {
     httpPort, wsPort,
     close: () => new Promise((r) => { wss.clients.forEach((c) => c.terminate()); wss.close(() => httpServer.close(() => r())); }),
