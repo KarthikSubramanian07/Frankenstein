@@ -21,6 +21,7 @@ REFEREE_TIMEOUT_S = 120  # mailbox round trip: Agentverse relays both legs
 REFEREE_TRIES = 2  # ask once, re-send once if the first ask gets no reply in half the budget
 SELFTEST_C = "int fn_0801B724(const void *e){ (void)e; return 0; }"
 SEED_KEY = "FRANKENSTEIN_EXCAVATOR_SEED"
+JOB_MAX_USD = 0.5  # per crew job; the crew reserves 1.2x this against its hourly cap
 
 # Replies from the Referee agent, oldest first. ponytail: one question in flight at a time is assumed per reply;
 # with concurrent recoveries we match by fn id in the reply's first line.
@@ -45,7 +46,9 @@ def _norm(fn: str) -> str:
 
 def run_crew_job(fn: str | None, query: str) -> tuple[str | None, str, dict]:
     """Blocking. Returns (src or None, fn, last job status). src is None when the crew didn't match."""
-    job = _http("POST", f"{CREW_URL}/jobs", {"fn": fn, "max_usd": 1.5} if fn else {"query": query})
+    # $0.5 is plenty: the Digger stops at attempt_budget() (4 tries for small fns, ~$0.04), not at max_usd. A smaller
+    # cap only shrinks the $ reservation (max_usd * 1.2) against CREW_HOURLY_USD, so more jobs fit per hour.
+    job = _http("POST", f"{CREW_URL}/jobs", {"fn": fn, "max_usd": JOB_MAX_USD} if fn else {"query": query, "max_usd": JOB_MAX_USD})
     if job is None:
         return None, fn or "?", {"status": "crew_down"}
     if "job_id" not in job:

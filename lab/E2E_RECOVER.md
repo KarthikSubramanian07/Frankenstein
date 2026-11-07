@@ -74,3 +74,58 @@ INFO:     [frankenstein-referee]: answered agent1qf4w7kmtsg…: ### Verdict for 
    or `first_diff` context for literal-pool words, it might find `return "<string>"` sooner. Not blocking.
 
 Total model spend: $0.147 (`/health` `spent_last_hour_usd`).
+
+## Why j_2, j_3 and j_4 were abandoned (investigated 13:23 to 13:46)
+
+It was not the cap, the budget or a duplicate recovery:
+
+- **Not the $2 cap.** All three jobs started (a capped request gets HTTP 429 and never runs). Each settled at about
+  $0.04, so the $1.80 reservation was released before the next one.
+- **Not `max_usd`.** The excavator sent `max_usd` 1.5 (run budget $1.80) and the direct job sent 0.5 ($0.60). The
+  abandoned runs spent $0.03 to $0.04, about 2% of their budget. Neither request set `live`. Neither used `query`.
+- **Not "already recovered".** `--fns` makes the crew attempt the function anyway, and every run claimed it.
+- **The cause is the attempt cap.** `crew/digger.py` `attempt_budget(0.011)` = `max(4, round(4 + d*8))` = 4 tries.
+  fn_08005008 returns the address of a string literal (`return "test";`), which is a relocation to `.rodata` at
+  offset 4. j_1 guessed the string on try 2. In j_2 to j_4 the Digger tried the raw constant, then `&data_08149b78`
+  and `&fn_08149b78` (66.7%, same relocation diff each time). Snap escalated to Wonder, which repeated the extern
+  form, and then the four tries were used up. So the function itself is the problem: it matches about 1 time in 4.
+
+## Fix on Lane A's side
+
+- Use functions without literal-pool strings for the excavator demo. **fn_08004DA8** (thumb, 12 bytes, train,
+  difficulty 0.014, a wrapper that tail-returns `fn_08019B44()`) matched in 2 tries.
+- `lab/agents/excavator_agent.py`: `JOB_MAX_USD = 0.5` for `fn` and `query` jobs (it was 1.5). This changes no
+  attempt counts. It cuts the reservation from $1.80 to $0.60, so three excavator jobs fit under a $2 cap.
+  Excavator restarted at 13:40 (PID 50689).
+- Registered sender: `lab/experiments/excavator_ping.py` (uAgent on :8003, Almanac API registration, seed in
+  `/tmp/excavator_ping.seed`). The ack and both replies came back in seconds. There was no ledger freeze.
+
+## Proof: "Recover fn_08004DA8" from registered agent1qt4zfrq236y7…, 13:44 PST, crew job j_1 (run r_asi_01)
+
+Crew API `GET /jobs/j_1`: `fn_08004DA8`, `matched`, 2 attempts, $0.0413, `claim_was_true: true`. That was the only
+spend this hour (`/health` `spent_last_hour_usd` 0.0413).
+
+```
+INFO:     [frankenstein-excavator]: asking Referee agent about fn_08004DA8                      (/tmp/excavator.log)
+INFO:     [frankenstein-excavator]: reply from Referee agent: ### Verdict for `fn_08004DA8`: ✅ **MATCH**
+INFO:     [frankenstein-excavator]: Referee agent verdict for fn_08004DA8: ### Verdict for `fn_08004DA8`: ✅ **MATCH**
+INFO:     [frankenstein-referee]: answered agent1qf4w7kmtsg…: ### Verdict for `fn_08004DA8`: ✅ **MATCH**   (/tmp/cv/agent.log)
+INFO:     [frankenstein-excavator-ping]: REPLY from agent1qf4w7kmtsgv4fd: ### Excavation of `fn_08004DA8`   (/tmp/excavator_ping.log)
+- The crew reported a match after 2 attempts (cost $0.04); I did not take its word for it.
+```
+
+Recovered C (`runs/r_asi_01/recovered/fn_08004DA8.c`): `int fn_08019B44(void); int fn_08004DA8(void) { return fn_08019B44(); }`
+
+The excavator has no log line for the crew job start. The start is shown by `GET /jobs/j_1` and by the "asking
+Referee agent" line, which only runs after the crew reports `matched`.
+
+## Requests to Lane B (crew/)
+
+1. **Make job and run ids unique across restarts in `crew/serve.py`.** After the 13:2x restart, the counter reset to
+   j_1, and the new job wrote into the old `runs/r_asi_01`. `events.jsonl` now holds both runs (55 lines), and
+   `recovered/` holds both fn_08005008.c and fn_08004DA8.c. Seed the counter from the existing `runs/r_asi_*`
+   directories, or put a timestamp in the id.
+2. **Let the Digger see the relocation target on PARTIAL.** For literal-pool words, `first_diff` shows
+   `00000000` vs `00000000`, so the model can't tell a `.rodata` string from an extern. Put the reloc symbol and
+   section in the reply (`fn_08005008`: expected a `.rodata` string, got `data_08149b78`).
+   Alternatively, give functions that hit a reloc diff at least 6 tries in `attempt_budget`.
