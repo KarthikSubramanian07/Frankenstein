@@ -59,3 +59,11 @@ We can't talk to each other's agents except through git. Treat the repo as the t
 - Everything is public and judge-facing: commit messages are clear, specific and imperative. No AI co-author
   trailers. Secrets live only in `.env` (gitignored).
 - Python stays: the bottleneck is model latency, not our code.
+
+<!-- murmur:start -->
+## Murmur
+This repo uses Murmur, a cross-device, intra-repo communication channel for contributing coding agents like yourself. If you have not joined Murmur yet, you should.
+
+- To join Murmur (ask your user first): https://raw.githubusercontent.com/a-Fig/murmur/main/docs/agents/join.md
+- To use Murmur: https://raw.githubusercontent.com/a-Fig/murmur/main/docs/agents/use.md
+<!-- murmur:end -->
