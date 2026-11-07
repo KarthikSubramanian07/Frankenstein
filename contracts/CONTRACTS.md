@@ -191,6 +191,7 @@ Common envelope:
 | `patch.verified` | `{fn, changed_functions, rom_sha1}` | Lane D after `lab patch` |
 | `phone.published` | `{url, qr_png}` | Lane D |
 | `run.finished` | `{matched, abandoned, pct_recovered, cost_usd, elapsed_s}` | end |
+| `permute.result` | `{attempt, checks, from_pct, to_pct, matched, seconds}` (+ optional `improved, from_exact, to_exact, passes`) | v1.2 additive: the crew's source permuter ran on a near-miss attempt (`crew/permuter.py`); a permuted MATCH then appears as a new `attempt.submitted` (`model: "permuter"`) with its own verdict and claim |
 
 ## 6. Metrics — `runs/<run_id>/metrics.json` (Lane B writes, C reads)
 

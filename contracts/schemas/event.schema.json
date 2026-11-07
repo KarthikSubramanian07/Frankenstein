@@ -36,6 +36,7 @@
         "metric.tick",
         "narration",
         "patch.verified",
+        "permute.result",
         "phone.published",
         "rom.swapped",
         "run.finished",
@@ -969,6 +970,56 @@
             "required": [
               "attempt",
               "reason"
+            ],
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "permute.result"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "attempt": {
+                "type": "integer"
+              },
+              "checks": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "from_pct": {
+                "type": "number"
+              },
+              "to_pct": {
+                "type": "number"
+              },
+              "matched": {
+                "type": "boolean"
+              },
+              "seconds": {
+                "type": "number",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "attempt",
+              "checks",
+              "from_pct",
+              "to_pct",
+              "matched",
+              "seconds"
             ],
             "additionalProperties": true
           }

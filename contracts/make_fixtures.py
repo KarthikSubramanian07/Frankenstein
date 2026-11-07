@@ -266,6 +266,9 @@ def build_run(manifest, sub_of, rng: random.Random):
 
     # periodic and one-off events
     emit(600.0, "types.proposed", "cartographer", source="subq", structs=7, signatures=31)
+    emit(605.0, "permute.result", "digger-2", fn=game[4]["id"], attempt=3, checks=212, from_pct=81.8, to_pct=93.9,
+         matched=False, seconds=45.1, improved=True, from_exact=84.8, to_exact=93.9,
+         passes={"reorder_stmts": 2, "commute": 1})
     emit(611.0, "fakematch.rejected", "checker", fn=game[3]["id"], attempt=2,
          reason="volatile used to coax codegen", evidence={"snap": {"fakematch_p": 0.91}},
          src_preview="int fn(int *p){ volatile int t = p[4]; return t; }")
