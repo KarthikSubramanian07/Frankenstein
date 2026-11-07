@@ -1,0 +1,223 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="664" viewBox="0 0 1200 664" role="img" aria-labelledby="t d"><title id="t">How Frankenstein works</title><desc id="d">A compiled game whose source is lost goes into a loop: Diggers write C, the referee compiles it and compares bytes, the Checker re-runs every claim, and two labs (SubQ Snap and Gemini) screen each match for fakes. SubQ Snap's judgment steers the loop. Rejected work goes back to the Diggers; accepted matches teach the habit library in MongoDB. The output is a rebuilt ROM with an identical SHA-1 that plays on a phone.</desc><style>.s{font-family:'Inter Tight', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif}.m{font-family:'JetBrains Mono', SFMono-Regular, ui-monospace, Menlo, Consolas, 'Liberation Mono', monospace}.f{font-family:Fraunces, Georgia, 'Times New Roman', serif}</style><defs><pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#ECEAF6" stroke-opacity="0.04" stroke-width="1"/></pattern><radialGradient id="f" cx="50%" cy="38%" r="62%"><stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><mask id="m"><rect width="1200" height="664" fill="url(#f)"/></mask></defs>
+<rect x="0" y="0" width="1200" height="664" rx="24" fill="#12101E"/>
+<rect width="1200" height="664" rx="24" fill="url(#g)" mask="url(#m)"/>
+<text x="48" y="60" class="m" font-size="12" font-weight="600" letter-spacing="1.4" fill="#C9C5DE">HOW IT WORKS</text>
+<text x="48" y="98" class="f" font-size="30" font-weight="600" letter-spacing="-0.4" fill="#ECEAF6">Agents write it. A compiler proves it.</text>
+<rect x="942" y="46" width="12" height="12" rx="3" fill="#7CF2C8"/>
+<text x="964" y="57" class="m" font-size="12" fill="#C9C5DE">proved by the compiler</text>
+<circle cx="948" cy="75" r="8" fill="#E6E5FF" stroke="#9A9AFF" stroke-width="1.5"/>
+<text x="948" y="79.3" class="m" font-size="12" font-weight="700" text-anchor="middle" fill="#4F47CF">?</text>
+<text x="964" y="79" class="m" font-size="12" fill="#C9C5DE">judgment, not proof</text>
+<path d="M941.0,97.0 L955.0,97.0" fill="none" stroke="#FF5147" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="964" y="101" class="m" font-size="12" fill="#C9C5DE">rejected, sent back</text>
+<text x="48" y="166" class="m" font-size="12" font-weight="600" letter-spacing="1.4" fill="#C9C5DE">THE PATIENT</text>
+<path d="M62,284 H144 L174,314 V428 Q174,440 162,440 H62 Q50,440 50,428 V296 Q50,284 62,284 Z" fill="#2B2735" stroke="#4A4566" stroke-width="1.5"/>
+<rect x="64" y="300" width="96" height="82" rx="6" fill="#ECEAF6"/>
+<rect x="70" y="306" width="4" height="4" fill="#8C87A3"/>
+<rect x="76" y="306" width="4" height="4" fill="#8C87A3"/>
+<rect x="88" y="306" width="4" height="4" fill="#8C87A3"/>
+<rect x="100" y="306" width="4" height="4" fill="#8C87A3"/>
+<rect x="106" y="306" width="4" height="4" fill="#8C87A3"/>
+<rect x="118" y="306" width="4" height="4" fill="#8C87A3"/>
+<rect x="130" y="306" width="4" height="4" fill="#8C87A3"/>
+<rect x="136" y="306" width="4" height="4" fill="#8C87A3"/>
+<rect x="70" y="312" width="4" height="4" fill="#8C87A3"/>
+<rect x="76" y="312" width="4" height="4" fill="#8C87A3"/>
+<rect x="100" y="312" width="4" height="4" fill="#8C87A3"/>
+<rect x="112" y="312" width="4" height="4" fill="#8C87A3"/>
+<rect x="124" y="312" width="4" height="4" fill="#8C87A3"/>
+<rect x="130" y="312" width="4" height="4" fill="#8C87A3"/>
+<rect x="136" y="312" width="4" height="4" fill="#8C87A3"/>
+<rect x="142" y="312" width="4" height="4" fill="#8C87A3"/>
+<rect x="70" y="318" width="4" height="4" fill="#8C87A3"/>
+<rect x="88" y="318" width="4" height="4" fill="#8C87A3"/>
+<rect x="100" y="318" width="4" height="4" fill="#8C87A3"/>
+<rect x="106" y="318" width="4" height="4" fill="#8C87A3"/>
+<rect x="112" y="318" width="4" height="4" fill="#8C87A3"/>
+<rect x="130" y="318" width="4" height="4" fill="#8C87A3"/>
+<rect x="148" y="318" width="4" height="4" fill="#8C87A3"/>
+<rect x="82" y="324" width="4" height="4" fill="#8C87A3"/>
+<rect x="112" y="324" width="4" height="4" fill="#8C87A3"/>
+<rect x="124" y="324" width="4" height="4" fill="#8C87A3"/>
+<rect x="130" y="324" width="4" height="4" fill="#8C87A3"/>
+<rect x="142" y="324" width="4" height="4" fill="#8C87A3"/>
+<rect x="70" y="330" width="4" height="4" fill="#8C87A3"/>
+<rect x="100" y="330" width="4" height="4" fill="#8C87A3"/>
+<rect x="70" y="336" width="4" height="4" fill="#8C87A3"/>
+<rect x="100" y="336" width="4" height="4" fill="#8C87A3"/>
+<rect x="106" y="336" width="4" height="4" fill="#8C87A3"/>
+<rect x="118" y="336" width="4" height="4" fill="#8C87A3"/>
+<rect x="130" y="336" width="4" height="4" fill="#8C87A3"/>
+<rect x="136" y="336" width="4" height="4" fill="#8C87A3"/>
+<rect x="142" y="336" width="4" height="4" fill="#8C87A3"/>
+<rect x="70" y="342" width="4" height="4" fill="#8C87A3"/>
+<rect x="76" y="342" width="4" height="4" fill="#8C87A3"/>
+<rect x="82" y="342" width="4" height="4" fill="#8C87A3"/>
+<rect x="94" y="342" width="4" height="4" fill="#8C87A3"/>
+<rect x="130" y="342" width="4" height="4" fill="#8C87A3"/>
+<rect x="136" y="342" width="4" height="4" fill="#8C87A3"/>
+<rect x="142" y="342" width="4" height="4" fill="#8C87A3"/>
+<rect x="76" y="348" width="4" height="4" fill="#8C87A3"/>
+<rect x="82" y="348" width="4" height="4" fill="#8C87A3"/>
+<rect x="88" y="348" width="4" height="4" fill="#8C87A3"/>
+<rect x="94" y="348" width="4" height="4" fill="#8C87A3"/>
+<rect x="112" y="348" width="4" height="4" fill="#8C87A3"/>
+<rect x="118" y="348" width="4" height="4" fill="#8C87A3"/>
+<rect x="124" y="348" width="4" height="4" fill="#8C87A3"/>
+<rect x="130" y="348" width="4" height="4" fill="#8C87A3"/>
+<rect x="88" y="354" width="4" height="4" fill="#8C87A3"/>
+<rect x="118" y="354" width="4" height="4" fill="#8C87A3"/>
+<rect x="124" y="354" width="4" height="4" fill="#8C87A3"/>
+<rect x="130" y="354" width="4" height="4" fill="#8C87A3"/>
+<rect x="142" y="354" width="4" height="4" fill="#8C87A3"/>
+<rect x="148" y="354" width="4" height="4" fill="#8C87A3"/>
+<rect x="70" y="360" width="4" height="4" fill="#8C87A3"/>
+<rect x="76" y="360" width="4" height="4" fill="#8C87A3"/>
+<rect x="82" y="360" width="4" height="4" fill="#8C87A3"/>
+<rect x="88" y="360" width="4" height="4" fill="#8C87A3"/>
+<rect x="94" y="360" width="4" height="4" fill="#8C87A3"/>
+<rect x="100" y="360" width="4" height="4" fill="#8C87A3"/>
+<rect x="106" y="360" width="4" height="4" fill="#8C87A3"/>
+<rect x="112" y="360" width="4" height="4" fill="#8C87A3"/>
+<rect x="118" y="360" width="4" height="4" fill="#8C87A3"/>
+<rect x="136" y="360" width="4" height="4" fill="#8C87A3"/>
+<rect x="142" y="360" width="4" height="4" fill="#8C87A3"/>
+<rect x="148" y="360" width="4" height="4" fill="#8C87A3"/>
+<rect x="70" y="366" width="4" height="4" fill="#8C87A3"/>
+<rect x="76" y="366" width="4" height="4" fill="#8C87A3"/>
+<rect x="106" y="366" width="4" height="4" fill="#8C87A3"/>
+<rect x="112" y="366" width="4" height="4" fill="#8C87A3"/>
+<rect x="118" y="366" width="4" height="4" fill="#8C87A3"/>
+<rect x="124" y="366" width="4" height="4" fill="#8C87A3"/>
+<rect x="136" y="366" width="4" height="4" fill="#8C87A3"/>
+<rect x="142" y="366" width="4" height="4" fill="#8C87A3"/>
+<rect x="76" y="372" width="4" height="4" fill="#8C87A3"/>
+<rect x="88" y="372" width="4" height="4" fill="#8C87A3"/>
+<rect x="118" y="372" width="4" height="4" fill="#8C87A3"/>
+<rect x="124" y="372" width="4" height="4" fill="#8C87A3"/>
+<rect x="130" y="372" width="4" height="4" fill="#8C87A3"/>
+<rect x="68" y="414" width="6" height="14" rx="1.5" fill="#4A4566"/>
+<rect x="78" y="414" width="6" height="14" rx="1.5" fill="#4A4566"/>
+<rect x="88" y="414" width="6" height="14" rx="1.5" fill="#4A4566"/>
+<rect x="98" y="414" width="6" height="14" rx="1.5" fill="#4A4566"/>
+<rect x="108" y="414" width="6" height="14" rx="1.5" fill="#4A4566"/>
+<rect x="118" y="414" width="6" height="14" rx="1.5" fill="#4A4566"/>
+<rect x="128" y="414" width="6" height="14" rx="1.5" fill="#4A4566"/>
+<rect x="138" y="414" width="6" height="14" rx="1.5" fill="#4A4566"/>
+<rect x="148" y="414" width="6" height="14" rx="1.5" fill="#4A4566"/>
+<g transform="rotate(-8 112 341)">
+<rect x="60" y="329" width="104" height="26" rx="6" fill="#ECEAF6" stroke="#FF5147" stroke-width="2"/>
+<text x="112" y="346.5" class="m" font-size="12" font-weight="700" text-anchor="middle" letter-spacing="0.6" fill="#C42A22">SOURCE: LOST</text>
+</g>
+<text x="112" y="474" class="s" font-size="15" font-weight="600" text-anchor="middle" fill="#ECEAF6">Compiled game</text>
+<text x="112" y="494" class="m" font-size="12" text-anchor="middle" fill="#9894B0">795 functions</text>
+<text x="112" y="512" class="m" font-size="12" text-anchor="middle" fill="#9894B0">agents see only asm</text>
+<rect x="200" y="136" width="730" height="488" rx="20" fill="#1B1830" stroke="#2E2A48" stroke-width="1"/>
+<text x="224" y="166" class="m" font-size="12" font-weight="600" letter-spacing="1.4" fill="#A29EBB">THE LOOP · EVERY FUNCTION, EVERY ATTEMPT</text>
+<rect x="224" y="186" width="682" height="70" rx="14" fill="#9A9AFF" fill-opacity="0.09"/>
+<rect x="224" y="186" width="682" height="70" rx="14" fill="none" stroke="#9A9AFF" stroke-width="1" stroke-opacity="0.35"/>
+<circle cx="254" cy="207" r="8" fill="#E6E5FF" stroke="#9A9AFF" stroke-width="1.5"/>
+<text x="254" y="211.3" class="m" font-size="12" font-weight="700" text-anchor="middle" fill="#4F47CF">?</text>
+<text x="270" y="211" class="m" font-size="12" font-weight="600" letter-spacing="1.4" fill="#B9B9FF">SUBQ SNAP · THE JUDGMENT</text>
+<text x="886" y="211" class="m" font-size="12" text-anchor="end" fill="#A29EBB">steers, never proves</text>
+<rect x="236" y="222" width="128" height="24" rx="12" fill="#9A9AFF" fill-opacity="0.18"/>
+<text x="300" y="238.5" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#D4D4FF">triage · budget</text>
+<rect x="392" y="222" width="200" height="24" rx="12" fill="#9A9AFF" fill-opacity="0.18"/>
+<text x="492" y="238.5" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#D4D4FF">keep · escalate · abandon</text>
+<rect x="785.6" y="222" width="84.8" height="24" rx="12" fill="#9A9AFF" fill-opacity="0.18"/>
+<text x="828" y="238.5" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#D4D4FF">fake gate</text>
+<path d="M300.0,246.0 L300.0,288.0" fill="none" stroke="#9A9AFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4"/>
+<circle cx="300.0" cy="292.0" r="3.5" fill="#9A9AFF"/>
+<path d="M492.0,246.0 L492.0,288.0" fill="none" stroke="#9A9AFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4"/>
+<circle cx="492.0" cy="292.0" r="3.5" fill="#9A9AFF"/>
+<path d="M828.0,246.0 L828.0,288.0" fill="none" stroke="#9A9AFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4"/>
+<circle cx="828.0" cy="292.0" r="3.5" fill="#9A9AFF"/>
+<rect x="224" y="292" width="152" height="140" rx="14" fill="#252140" stroke="#3A3560" stroke-width="1"/>
+<text x="240" y="320" class="m" font-size="12" font-weight="600" fill="#A29EBB">01</text>
+<text x="240" y="346" class="s" font-size="17" font-weight="600" fill="#ECEAF6">Diggers</text>
+<text x="240" y="368" class="s" font-size="13" fill="#A29EBB">write C from</text>
+<text x="240" y="386" class="s" font-size="13" fill="#A29EBB">the assembly</text>
+<rect x="240" y="396" width="88" height="22" rx="11" fill="#DCEFFC"/>
+<text x="284" y="411.32" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#0B4F7C">Muse Spark</text>
+<rect x="400" y="292" width="152" height="140" rx="14" fill="#252140" stroke="#3A3560" stroke-width="1"/>
+<text x="416" y="320" class="m" font-size="12" font-weight="600" fill="#7CF2C8">02</text>
+<text x="416" y="346" class="s" font-size="17" font-weight="600" fill="#ECEAF6">Referee</text>
+<text x="416" y="368" class="s" font-size="13" fill="#A29EBB">compiles it and</text>
+<text x="416" y="386" class="s" font-size="13" fill="#A29EBB">compares bytes</text>
+<rect x="416" y="396" width="80.8" height="22" rx="11" fill="#2E2A48"/>
+<text x="456.4" y="411.32" class="m" font-size="12" font-weight="500" text-anchor="middle" fill="#ECEAF6">0.1–0.2 s</text>
+<rect x="576" y="292" width="152" height="140" rx="14" fill="#252140" stroke="#3A3560" stroke-width="1"/>
+<text x="592" y="320" class="m" font-size="12" font-weight="600" fill="#A29EBB">03</text>
+<text x="592" y="346" class="s" font-size="17" font-weight="600" fill="#ECEAF6">Checker</text>
+<text x="592" y="368" class="s" font-size="13" fill="#A29EBB">re-runs every</text>
+<text x="592" y="386" class="s" font-size="13" fill="#A29EBB">claim itself</text>
+<rect x="592" y="396" width="109.6" height="22" rx="11" fill="#2E2A48"/>
+<text x="646.8" y="411.32" class="m" font-size="12" font-weight="500" text-anchor="middle" fill="#ECEAF6">fresh compile</text>
+<rect x="752" y="292" width="152" height="140" rx="14" fill="#252140" stroke="#3A3560" stroke-width="1"/>
+<text x="768" y="320" class="m" font-size="12" font-weight="600" fill="#A29EBB">04</text>
+<text x="768" y="346" class="s" font-size="17" font-weight="600" fill="#ECEAF6">Two labs</text>
+<text x="768" y="368" class="s" font-size="13" fill="#A29EBB">screen each</text>
+<text x="768" y="386" class="s" font-size="13" fill="#A29EBB">match for fakes</text>
+<path d="M779,396.0 H814.8 V418.0 H779 A11,11 0 0 1 779,396.0 Z" fill="#E6E5FF"/>
+<path d="M814.8,396.0 H865.0 A11,11 0 0 1 865.0,418.0 H814.8 Z" fill="#FFE4D3"/>
+<text x="792.4" y="411.3" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#4F47CF">Snap</text>
+<text x="844.4" y="411.3" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#9A3B12">Gemini</text>
+<path d="M180.0,362.0 L214.5,362.0" fill="none" stroke="#7CF2C8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M222.0,362.0 L213.0,367.0 L213.0,357.0 Z" fill="#7CF2C8" stroke="#7CF2C8" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M379.0,362.0 L390.5,362.0" fill="none" stroke="#7CF2C8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M397.0,362.0 L389.0,366.5 L389.0,357.5 Z" fill="#7CF2C8" stroke="#7CF2C8" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M555.0,362.0 L566.5,362.0" fill="none" stroke="#7CF2C8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M573.0,362.0 L565.0,366.5 L565.0,357.5 Z" fill="#7CF2C8" stroke="#7CF2C8" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M731.0,362.0 L742.5,362.0" fill="none" stroke="#7CF2C8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M749.0,362.0 L741.0,366.5 L741.0,357.5 Z" fill="#7CF2C8" stroke="#7CF2C8" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M828.0,432.0 L828.0,462.0 Q828.0,472.0 818.0,472.0 L330.0,472.0" fill="none" stroke="#FF5147" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M652.0,432.0 L652.0,472.0" fill="none" stroke="#FF5147" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M330.0,472.0 L330.0,441.5" fill="none" stroke="#FF5147" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M330.0,434.0 L335.0,443.0 L325.0,443.0 Z" fill="#FF5147" stroke="#FF5147" stroke-width="1.5" stroke-linejoin="round"/>
+<circle cx="652.0" cy="472.0" r="3.5" fill="#FF5147"/>
+<rect x="699.2" y="460" width="81.6" height="24" rx="12" fill="#3A1A22" stroke="#FF5147" stroke-width="1.25"/>
+<text x="740" y="476.32" class="m" font-size="12" font-weight="700" text-anchor="middle" fill="#FF8A82">REJECTED</text>
+<text x="491" y="498" class="m" font-size="12" text-anchor="middle" fill="#A29EBB">first wrong byte goes back</text>
+<text x="740" y="524" class="f" font-size="18" font-weight="500" font-style="italic" text-anchor="middle" fill="#ECEAF6">Agents lie. The referee doesn't.</text>
+<path d="M907.0,362.0 L982.5,362.0" fill="none" stroke="#7CF2C8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M990.0,362.0 L981.0,367.0 L981.0,357.0 Z" fill="#7CF2C8" stroke="#7CF2C8" stroke-width="1.5" stroke-linejoin="round"/>
+<rect x="909.2" y="350" width="75.6" height="24" rx="12" fill="#7CF2C8"/>
+<text x="947" y="366.32" class="m" font-size="12" font-weight="700" text-anchor="middle" fill="#063D2B">ACCEPTED</text>
+<path d="M947.0,374.0 L947.0,564.0 Q947.0,576.0 935.0,576.0 L709.5,576.0" fill="none" stroke="#A29EBB" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M702.0,576.0 L711.0,571.0 L711.0,581.0 Z" fill="#A29EBB" stroke="#A29EBB" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M440.0,576.0 L282.0,576.0 Q270.0,576.0 270.0,564.0 L270.0,441.5" fill="none" stroke="#A29EBB" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M270.0,434.0 L275.0,443.0 L265.0,443.0 Z" fill="#A29EBB" stroke="#A29EBB" stroke-width="1.5" stroke-linejoin="round"/>
+<rect x="440" y="548" width="260" height="56" rx="14" fill="#252140" stroke="#3A3560" stroke-width="1"/>
+<text x="456" y="572" class="s" font-size="15" font-weight="600" fill="#ECEAF6">Habit library</text>
+<rect x="619.6" y="557" width="66.4" height="22" rx="11" fill="#DBF5E8"/>
+<text x="652.8" y="572.32" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#0A7552">MongoDB</text>
+<text x="456" y="592" class="m" font-size="12" fill="#A29EBB">every match teaches the next</text>
+<text x="990" y="166" class="m" font-size="12" font-weight="600" letter-spacing="1.4" fill="#C9C5DE">IT'S ALIVE</text>
+<text x="990" y="214" class="f" font-size="28" font-weight="600" font-style="italic" letter-spacing="-0.3" fill="#ECEAF6">It's alive.</text>
+<text x="990" y="240" class="s" font-size="14" fill="#C9C5DE">Same SHA-1, or it</text>
+<text x="990" y="259" class="s" font-size="14" fill="#C9C5DE">doesn't ship.</text>
+<rect x="990" y="310" width="170" height="104" rx="14" fill="#1B1830" stroke="#3A3560" stroke-width="1"/>
+<text x="1006" y="338" class="s" font-size="15" font-weight="600" fill="#ECEAF6">Rebuilt ROM</text>
+<text x="1006" y="358" class="m" font-size="12" fill="#9894B0">from the agents' C</text>
+<rect x="1004" y="372" width="142" height="28" rx="14" fill="#7CF2C8"/>
+<circle cx="1019" cy="386" r="7" fill="#063D2B"/>
+<path d="M1015,386 l2.8,2.9 l5.2,-5.8" fill="none" stroke="#7CF2C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="1033" y="390.3" class="m" font-size="12" font-weight="700" fill="#063D2B">SHA-1 identical</text>
+<path d="M1075.0,414.0 L1075.0,444.5" fill="none" stroke="#9894B0" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1075.0,452.0 L1070.0,443.0 L1080.0,443.0 Z" fill="#9894B0" stroke="#9894B0" stroke-width="1.5" stroke-linejoin="round"/>
+<rect x="1000" y="454" width="150" height="84" rx="16" fill="#2B2735" stroke="#4A4566" stroke-width="1.5"/>
+<rect x="1016" y="463" width="118" height="66" rx="5" fill="#0B0A12"/>
+<path d="M1016,463 L1050,479 V499 L1016,513 Z" fill="#4A3B35"/>
+<path d="M1134,463 L1100,479 V499 L1134,513 Z" fill="#4A3B35"/>
+<rect x="1050" y="479" width="50" height="20" fill="#2A2240"/>
+<path d="M1016,513 L1050,499 H1100 L1134,513 Z" fill="#6B5446"/>
+<rect x="1069" y="485" width="12" height="16" rx="2" fill="#FF5147"/>
+<rect x="1016" y="513" width="118" height="16" fill="#3A3550"/>
+<rect x="1022" y="518" width="22" height="6" rx="1.5" fill="#FFD23F"/>
+<rect x="1106" y="518" width="22" height="6" rx="1.5" fill="#FF5147"/>
+<rect x="1068" y="514" width="14" height="14" rx="2" fill="#E8B48A" stroke="#7CF2C8" stroke-width="1.5"/>
+<rect x="1071" y="518" width="2.5" height="2.5" fill="#17141F"/>
+<rect x="1076.5" y="518" width="2.5" height="2.5" fill="#17141F"/>
+<rect x="1072" y="523" width="6" height="1.6" fill="#17141F"/>
+<circle cx="1008" cy="496.0" r="2.5" fill="#4A4566"/>
+<text x="1075" y="564" class="s" font-size="13" text-anchor="middle" fill="#C9C5DE">plays on every phone</text></svg>

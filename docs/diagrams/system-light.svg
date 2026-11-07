@@ -1,0 +1,182 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="836" viewBox="0 0 1200 836" role="img" aria-labelledby="t d"><title id="t">Frankenstein system architecture</title><desc id="d">Four lanes share one append-only event stream, runs/live/events.jsonl. Lane A, the Lab, runs the referee on port 7101, builds the target (manifest, asm, ctx) and hosts the ASI:One agent. Lane B, the Crew, runs the Diggers on Muse Spark, the Checker, SubQ Snap judgment, a Gemini review, the MongoDB habit library, the jobs API on 7111 and the director on 7112. The Crew calls POST /check and POST /rebuild on the Lab; the ASI:One agent calls POST /jobs with the user's query. Lane D, the Creature, runs mGBA with a tap, the heal overlay, hot-swap and the phone page on 7401, reads fn.matched and build.rom, writes rom.swapped and sends heartbeats to the director. Lane C, the Stage, tails the stream to its scenes over ws 7202. The room watches the projector and plays on phones via a QR code.</desc><style>.s{font-family:'Inter Tight', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif}.m{font-family:'JetBrains Mono', SFMono-Regular, ui-monospace, Menlo, Consolas, 'Liberation Mono', monospace}.f{font-family:Fraunces, Georgia, 'Times New Roman', serif}</style><defs><pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#17141F" stroke-opacity="0.05" stroke-width="1"/></pattern><radialGradient id="f" cx="50%" cy="38%" r="62%"><stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><mask id="m"><rect width="1200" height="836" fill="url(#f)"/></mask></defs>
+<rect x="0" y="0" width="1200" height="836" rx="24" fill="#F4F0E6"/>
+<rect width="1200" height="836" rx="24" fill="url(#g)" mask="url(#m)"/>
+<text x="48" y="60" class="m" font-size="12" font-weight="600" letter-spacing="1.4" fill="#4A4556">SYSTEM</text>
+<text x="48" y="98" class="f" font-size="30" font-weight="600" letter-spacing="-0.4" fill="#17141F">Four lanes, one creature.</text>
+<path d="M928.0,56.0 L953.5,56.0" fill="none" stroke="#4A4556" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M960.0,56.0 L952.0,60.5 L952.0,51.5 Z" fill="#4A4556" stroke="#4A4556" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="972" y="60" class="m" font-size="12" fill="#4A4556">HTTP request</text>
+<path d="M928.0,82.0 L953.5,82.0" fill="none" stroke="#4A4556" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
+<path d="M960.0,82.0 L952.0,86.5 L952.0,77.5 Z" fill="#4A4556" stroke="#4A4556" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="972" y="86" class="m" font-size="12" fill="#4A4556">file or event</text>
+<rect x="236" y="136" width="340" height="272" rx="18" fill="#FBF9F3" stroke="#CFC6B2" stroke-width="1"/>
+<rect x="256" y="155" width="9" height="9" rx="3" fill="#17141F"/>
+<text x="274" y="164" class="m" font-size="12" font-weight="700" letter-spacing="1.4" fill="#17141F">A · LAB</text>
+<text x="556" y="164" class="m" font-size="12" text-anchor="end" fill="#6E6878">lab/</text>
+<rect x="256" y="184" width="300" height="46" rx="10" fill="#F4F0E6" stroke="#DDD5C3" stroke-width="1"/>
+<text x="270" y="204" class="s" font-size="14" font-weight="600" fill="#17141F">Referee</text>
+<text x="270" y="221" class="m" font-size="12" fill="#6E6878">check · rebuild · patch</text>
+<text x="542" y="204" class="m" font-size="12" font-weight="600" text-anchor="end" fill="#4A4556">:7101</text>
+<rect x="256" y="238" width="300" height="46" rx="10" fill="#F4F0E6" stroke="#DDD5C3" stroke-width="1"/>
+<text x="270" y="258" class="s" font-size="14" font-weight="600" fill="#17141F">Target</text>
+<text x="270" y="275" class="m" font-size="12" fill="#6E6878">lab/out: manifest · asm · ctx</text>
+<rect x="256" y="292" width="300" height="46" rx="10" fill="#F4F0E6" stroke="#DDD5C3" stroke-width="1"/>
+<text x="270" y="312" class="s" font-size="14" font-weight="600" fill="#17141F">ASI:One agent</text>
+<text x="270" y="329" class="m" font-size="12" fill="#6E6878">Agentverse · chat protocol</text>
+<rect x="476.4" y="299" width="71.6" height="20" rx="10" fill="#FFF0BC"/>
+<text x="512.2" y="313.32" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#6B4C00">Fetch.ai</text>
+<rect x="256" y="346" width="300" height="46" rx="10" fill="#F4F0E6" stroke="#CFC6B2" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="270" y="366" class="s" font-size="14" font-weight="600" fill="#6E6878">Answer key</text>
+<text x="270" y="383" class="m" font-size="12" fill="#6E6878">lab/secrets · referee only</text>
+<rect x="526" y="368" width="16" height="12" rx="3" fill="#6E6878"/>
+<path d="M529.5,368 v-3 a4.5,4.5 0 0 1 9,0 v3" fill="none" stroke="#6E6878" stroke-width="2"/>
+<rect x="726" y="136" width="426" height="272" rx="18" fill="#FBF9F3" stroke="#CFC6B2" stroke-width="1"/>
+<rect x="746" y="155" width="9" height="9" rx="3" fill="#17141F"/>
+<text x="764" y="164" class="m" font-size="12" font-weight="700" letter-spacing="1.4" fill="#17141F">B · CREW</text>
+<text x="1132" y="164" class="m" font-size="12" text-anchor="end" fill="#6E6878">crew/</text>
+<rect x="746" y="184" width="187" height="46" rx="10" fill="#F4F0E6" stroke="#DDD5C3" stroke-width="1"/>
+<text x="760" y="204" class="s" font-size="14" font-weight="600" fill="#17141F">Diggers</text>
+<text x="760" y="221" class="m" font-size="12" fill="#6E6878">write the C</text>
+<rect x="839" y="191" width="86" height="20" rx="10" fill="#DCEFFC"/>
+<text x="882" y="205.32" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#0B4F7C">Muse Spark</text>
+<rect x="746" y="238" width="187" height="46" rx="10" fill="#F4F0E6" stroke="#DDD5C3" stroke-width="1"/>
+<text x="760" y="258" class="s" font-size="14" font-weight="600" fill="#17141F">Checker</text>
+<text x="760" y="275" class="m" font-size="12" fill="#6E6878">re-runs every claim</text>
+<rect x="746" y="292" width="187" height="46" rx="10" fill="#F4F0E6" stroke="#DDD5C3" stroke-width="1"/>
+<text x="760" y="312" class="s" font-size="14" font-weight="600" fill="#17141F">Jobs API</text>
+<text x="760" y="329" class="m" font-size="12" fill="#6E6878">:7111 · one fn a job</text>
+<rect x="746" y="346" width="187" height="46" rx="10" fill="#F4F0E6" stroke="#DDD5C3" stroke-width="1"/>
+<text x="760" y="366" class="s" font-size="14" font-weight="600" fill="#17141F">Director</text>
+<text x="760" y="383" class="m" font-size="12" fill="#6E6878">:7112 · heartbeats</text>
+<rect x="945" y="184" width="187" height="46" rx="10" fill="#F4F0E6" stroke="#DDD5C3" stroke-width="1"/>
+<text x="959" y="204" class="s" font-size="14" font-weight="600" fill="#17141F">Judgment</text>
+<text x="959" y="221" class="m" font-size="12" fill="#6E6878">routes every try</text>
+<rect x="1045.2" y="191" width="78.8" height="20" rx="10" fill="#E6E5FF"/>
+<text x="1084.6" y="205.32" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#4F47CF">SubQ Snap</text>
+<rect x="945" y="238" width="187" height="46" rx="10" fill="#F4F0E6" stroke="#DDD5C3" stroke-width="1"/>
+<text x="959" y="258" class="s" font-size="14" font-weight="600" fill="#17141F">Review</text>
+<text x="959" y="275" class="m" font-size="12" fill="#6E6878">a second lab</text>
+<rect x="1066.8" y="245" width="57.2" height="20" rx="10" fill="#FFE4D3"/>
+<text x="1095.4" y="259.32" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#9A3B12">Gemini</text>
+<rect x="945" y="292" width="187" height="46" rx="10" fill="#F4F0E6" stroke="#DDD5C3" stroke-width="1"/>
+<text x="959" y="312" class="s" font-size="14" font-weight="600" fill="#17141F">Memory</text>
+<text x="959" y="329" class="m" font-size="12" fill="#6E6878">habit library</text>
+<rect x="1059.6" y="299" width="64.4" height="20" rx="10" fill="#DBF5E8"/>
+<text x="1091.8" y="313.32" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#0A7552">MongoDB</text>
+<rect x="945" y="346" width="187" height="46" rx="10" fill="#F4F0E6" stroke="#DDD5C3" stroke-width="1"/>
+<text x="959" y="366" class="s" font-size="14" font-weight="600" fill="#17141F">Recovered C</text>
+<text x="959" y="383" class="m" font-size="12" fill="#6E6878">recovered/fn_*.c</text>
+<path d="M726.0,207.0 L584.5,207.0" fill="none" stroke="#4A4556" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M578.0,207.0 L586.0,202.5 L586.0,211.5 Z" fill="#4A4556" stroke="#4A4556" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="651" y="199" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#17141F">POST /check</text>
+<text x="651" y="225" class="m" font-size="12" text-anchor="middle" fill="#6E6878">POST /rebuild</text>
+<path d="M576.0,267.0 L717.5,267.0" fill="none" stroke="#4A4556" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
+<path d="M724.0,267.0 L716.0,271.5 L716.0,262.5 Z" fill="#4A4556" stroke="#4A4556" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="651" y="259" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#17141F">manifest</text>
+<text x="651" y="285" class="m" font-size="12" text-anchor="middle" fill="#6E6878">asm · ctx</text>
+<path d="M576.0,325.0 L717.5,325.0" fill="none" stroke="#4A4556" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M724.0,325.0 L716.0,329.5 L716.0,320.5 Z" fill="#4A4556" stroke="#4A4556" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="651" y="317" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#17141F">POST /jobs</text>
+<text x="651" y="343" class="m" font-size="12" text-anchor="middle" fill="#6E6878">{query}</text>
+<rect x="40" y="232" width="162" height="176" rx="18" fill="#FBF9F3" stroke="#CFC6B2" stroke-width="1"/>
+<text x="56" y="258" class="m" font-size="12" font-weight="600" letter-spacing="1.4" fill="#4A4556">YOU, IN ASI:ONE</text>
+<path d="M68,272 H174 Q186,272 186,284 V304 Q186,316 174,316 H60 Q56,316 56,312 V284 Q56,272 68,272 Z" fill="#FFF0BC"/>
+<text x="68" y="291" class="s" font-size="13" font-weight="500" fill="#3A2A00">Bring back</text>
+<text x="68" y="308" class="s" font-size="13" font-weight="500" fill="#3A2A00">Doomguy's face.</text>
+<rect x="80" y="326" width="106" height="66" rx="12" fill="#F4F0E6" stroke="#DDD5C3" stroke-width="1"/>
+<rect x="92" y="335" width="73.6" height="22" rx="11" fill="#7CF2C8"/>
+<text x="128.8" y="350.32" class="m" font-size="12" font-weight="700" text-anchor="middle" fill="#063D2B">✓ proved</text>
+<rect x="92" y="363" width="66.4" height="22" rx="11" fill="#E6E5FF" stroke="#9A9AFF" stroke-width="1.25"/>
+<text x="125.2" y="378.32" class="m" font-size="12" font-weight="700" text-anchor="middle" fill="#4F47CF">? guess</text>
+<path d="M202.0,306.0 L247.5,306.0" fill="none" stroke="#4A4556" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M254.0,306.0 L246.0,310.5 L246.0,301.5 Z" fill="#4A4556" stroke="#4A4556" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M256.0,324.0 L210.5,324.0" fill="none" stroke="#4A4556" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M204.0,324.0 L212.0,319.5 L212.0,328.5 Z" fill="#4A4556" stroke="#4A4556" stroke-width="1.5" stroke-linejoin="round"/>
+<rect x="236" y="440" width="916" height="44" rx="22" fill="#17141F" stroke="#17141F" stroke-width="1"/>
+<circle cx="260" cy="462.0" r="5" fill="#7CF2C8"/>
+<text x="276" y="467" class="m" font-size="13" font-weight="700" fill="#7CF2C8">runs/live/events.jsonl</text>
+<text x="686" y="467" class="m" font-size="12" fill="#A29EBB">append-only · the only thing the lanes share</text>
+<text x="1130" y="467" class="m" font-size="12" text-anchor="end" fill="#A29EBB">+ metrics.json</text>
+<path d="M470.0,408.0 L470.0,431.5" fill="none" stroke="#4A4556" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
+<path d="M470.0,438.0 L465.5,430.0 L474.5,430.0 Z" fill="#4A4556" stroke="#4A4556" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="480" y="429" class="m" font-size="12" font-weight="600" fill="#17141F">build.rom</text>
+<path d="M846.0,408.0 L846.0,431.5" fill="none" stroke="#4A4556" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
+<path d="M846.0,438.0 L841.5,430.0 L850.5,430.0 Z" fill="#4A4556" stroke="#4A4556" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="856" y="429" class="m" font-size="12" font-weight="600" fill="#17141F">appends every event</text>
+<rect x="236" y="524" width="340" height="164" rx="18" fill="#FBF9F3" stroke="#CFC6B2" stroke-width="1"/>
+<rect x="256" y="543" width="9" height="9" rx="3" fill="#17141F"/>
+<text x="274" y="552" class="m" font-size="12" font-weight="700" letter-spacing="1.4" fill="#17141F">D · CREATURE</text>
+<text x="556" y="552" class="m" font-size="12" text-anchor="end" fill="#6E6878">creature/</text>
+<rect x="256" y="572" width="145" height="46" rx="10" fill="#F4F0E6" stroke="#DDD5C3" stroke-width="1"/>
+<text x="270" y="592" class="s" font-size="14" font-weight="600" fill="#17141F">mGBA + tap</text>
+<text x="270" y="609" class="m" font-size="12" fill="#6E6878">:7300 · :7301</text>
+<rect x="411" y="572" width="145" height="46" rx="10" fill="#F4F0E6" stroke="#DDD5C3" stroke-width="1"/>
+<text x="425" y="592" class="s" font-size="14" font-weight="600" fill="#17141F">Heal overlay</text>
+<text x="425" y="609" class="m" font-size="12" fill="#6E6878">static → pixels</text>
+<rect x="256" y="626" width="145" height="46" rx="10" fill="#F4F0E6" stroke="#DDD5C3" stroke-width="1"/>
+<text x="270" y="646" class="s" font-size="14" font-weight="600" fill="#17141F">Hot-swap</text>
+<text x="270" y="663" class="m" font-size="12" fill="#6E6878">loads build.rom</text>
+<rect x="411" y="626" width="145" height="46" rx="10" fill="#F4F0E6" stroke="#DDD5C3" stroke-width="1"/>
+<text x="425" y="646" class="s" font-size="14" font-weight="600" fill="#17141F">Phone page</text>
+<text x="425" y="663" class="m" font-size="12" fill="#6E6878">browser · :7401</text>
+<rect x="726" y="524" width="426" height="164" rx="18" fill="#FBF9F3" stroke="#CFC6B2" stroke-width="1"/>
+<rect x="746" y="543" width="9" height="9" rx="3" fill="#17141F"/>
+<text x="764" y="552" class="m" font-size="12" font-weight="700" letter-spacing="1.4" fill="#17141F">C · STAGE</text>
+<text x="1132" y="552" class="m" font-size="12" text-anchor="end" fill="#6E6878">stage/</text>
+<rect x="746" y="576" width="58" height="26" rx="13" fill="#F4F0E6" stroke="#CFC6B2" stroke-width="1.25"/>
+<text x="775" y="593.32" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#17141F">Title</text>
+<rect x="812" y="576" width="58" height="26" rx="13" fill="#F4F0E6" stroke="#CFC6B2" stroke-width="1.25"/>
+<text x="841" y="593.32" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#17141F">Split</text>
+<rect x="878" y="576" width="65.2" height="26" rx="13" fill="#F4F0E6" stroke="#CFC6B2" stroke-width="1.25"/>
+<text x="910.6" y="593.32" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#17141F">Versus</text>
+<rect x="951.2" y="576" width="94" height="26" rx="13" fill="#F4F0E6" stroke="#CFC6B2" stroke-width="1.25"/>
+<text x="998.2" y="593.32" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#17141F">Time trial</text>
+<rect x="1053.2" y="576" width="65.2" height="26" rx="13" fill="#F4F0E6" stroke="#CFC6B2" stroke-width="1.25"/>
+<text x="1085.8" y="593.32" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#17141F">Ending</text>
+<rect x="746" y="622" width="386" height="50" rx="10" fill="#F4F0E6" stroke="#DDD5C3" stroke-width="1"/>
+<text x="760" y="642" class="s" font-size="14" font-weight="600" fill="#17141F">Event-driven show</text>
+<text x="760" y="659" class="m" font-size="12" fill="#6E6878">tails events.jsonl → ws :7202 · replay 1–20×</text>
+<path d="M290.0,484.0 L290.0,515.5" fill="none" stroke="#4A4556" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
+<path d="M290.0,522.0 L285.5,514.0 L294.5,514.0 Z" fill="#4A4556" stroke="#4A4556" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="300" y="501" class="m" font-size="12" font-weight="600" fill="#17141F">fn.matched</text>
+<text x="300" y="517" class="m" font-size="12" fill="#6E6878">build.rom</text>
+<path d="M446.0,524.0 L446.0,492.5" fill="none" stroke="#4A4556" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
+<path d="M446.0,486.0 L450.5,494.0 L441.5,494.0 Z" fill="#4A4556" stroke="#4A4556" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="456" y="501" class="m" font-size="12" font-weight="600" fill="#17141F">rom.swapped</text>
+<text x="456" y="517" class="m" font-size="12" fill="#6E6878">patch.verified</text>
+<path d="M846.0,484.0 L846.0,515.5" fill="none" stroke="#4A4556" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
+<path d="M846.0,522.0 L841.5,514.0 L850.5,514.0 Z" fill="#4A4556" stroke="#4A4556" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="856" y="509" class="m" font-size="12" font-weight="600" fill="#17141F">tail → ws :7202</text>
+<rect x="646" y="438" width="10" height="48" fill="#F4F0E6"/>
+<path d="M576.0,595.0 L639.0,595.0 Q651.0,595.0 651.0,583.0 L651.0,381.0 Q651.0,369.0 663.0,369.0 L737.5,369.0" fill="none" stroke="#4A4556" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M744.0,369.0 L736.0,373.5 L736.0,364.5 Z" fill="#4A4556" stroke="#4A4556" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="661" y="429" class="m" font-size="12" font-weight="600" fill="#17141F">heartbeat</text>
+<rect x="236" y="736" width="916" height="60" rx="18" fill="#EBE5D7" stroke="#CFC6B2" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="258" y="771" class="m" font-size="12" font-weight="600" letter-spacing="1.4" fill="#6E6878">THE ROOM</text>
+<rect x="364" y="754" width="14" height="24" rx="3" fill="none" stroke="#4A4556" stroke-width="1.75"/>
+<text x="390" y="771" class="s" font-size="14" font-weight="500" fill="#17141F">everyone plays on a phone</text>
+<rect x="844" y="755" width="26" height="18" rx="3" fill="none" stroke="#4A4556" stroke-width="1.75"/>
+<path d="M852.0,778.0 L862.0,778.0" fill="none" stroke="#4A4556" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="882" y="771" class="s" font-size="14" font-weight="500" fill="#17141F">judges watch the projector</text>
+<path d="M348.0,688.0 L348.0,727.5" fill="none" stroke="#4A4556" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M348.0,734.0 L343.5,726.0 L352.5,726.0 Z" fill="#4A4556" stroke="#4A4556" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="358" y="716" class="m" font-size="12" font-weight="600" fill="#17141F">QR · phone.published</text>
+<path d="M826.0,688.0 L826.0,727.5" fill="none" stroke="#4A4556" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M826.0,734.0 L821.5,726.0 L830.5,726.0 Z" fill="#4A4556" stroke="#4A4556" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="836" y="716" class="m" font-size="12" font-weight="600" fill="#17141F">the show</text>
+<text x="40" y="452" class="m" font-size="12" font-weight="600" letter-spacing="1.4" fill="#4A4556">THE ORGANS</text>
+<rect x="40" y="472" width="88" height="22" rx="11" fill="#DCEFFC"/>
+<text x="84" y="487.32" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#0B4F7C">Muse Spark</text>
+<text x="42" y="512" class="s" font-size="13" fill="#4A4556">the hands</text>
+<rect x="40" y="526" width="80.8" height="22" rx="11" fill="#E6E5FF"/>
+<text x="80.4" y="541.32" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#4F47CF">SubQ Snap</text>
+<text x="42" y="566" class="s" font-size="13" fill="#4A4556">the judgment</text>
+<rect x="40" y="580" width="73.6" height="22" rx="11" fill="#FFF0BC"/>
+<text x="76.8" y="595.32" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#6B4C00">Fetch.ai</text>
+<text x="42" y="620" class="s" font-size="13" fill="#4A4556">the front door</text>
+<rect x="40" y="634" width="66.4" height="22" rx="11" fill="#DBF5E8"/>
+<text x="73.2" y="649.32" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#0A7552">MongoDB</text>
+<text x="42" y="674" class="s" font-size="13" fill="#4A4556">the memory</text>
+<rect x="40" y="688" width="59.2" height="22" rx="11" fill="#FFE4D3"/>
+<text x="69.6" y="703.32" class="m" font-size="12" font-weight="600" text-anchor="middle" fill="#9A3B12">Gemini</text>
+<text x="42" y="728" class="s" font-size="13" fill="#4A4556">the second opinion</text></svg>

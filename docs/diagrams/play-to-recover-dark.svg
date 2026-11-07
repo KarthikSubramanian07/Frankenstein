@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="668" viewBox="0 0 1200 668" role="img" aria-labelledby="t d"><title id="t">Play to recover</title><desc id="d">A loop. A player plays on the controller. The tap samples the running functions and frames. SubQ Snap's director picks the next function from what is on screen. The crew recovers it and the Checker proves it. The Lab rebuilds the ROM with an identical SHA-1. The rebuilt ROM is hot-swapped into the running game, and that region of the screen heals, back in front of the player.</desc><style>.s{font-family:'Inter Tight', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif}.m{font-family:'JetBrains Mono', SFMono-Regular, ui-monospace, Menlo, Consolas, 'Liberation Mono', monospace}.f{font-family:Fraunces, Georgia, 'Times New Roman', serif}</style><defs><pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#ECEAF6" stroke-opacity="0.04" stroke-width="1"/></pattern><radialGradient id="f" cx="50%" cy="38%" r="62%"><stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><mask id="m"><rect width="1200" height="668" fill="url(#f)"/></mask></defs>
+<rect x="0" y="0" width="1200" height="668" rx="24" fill="#12101E"/>
+<rect width="1200" height="668" rx="24" fill="url(#g)" mask="url(#m)"/>
+<text x="48" y="60" class="m" font-size="12" font-weight="600" letter-spacing="1.4" fill="#C9C5DE">PLAY TO RECOVER</text>
+<text x="48" y="98" class="f" font-size="30" font-weight="600" letter-spacing="-0.4" fill="#ECEAF6">The game tells the crew where to dig.</text>
+<path d="M340,222 H860 A178.0,178.0 0 0 1 860,578 H340 A178.0,178.0 0 0 1 340,222 Z" fill="none" stroke="#ECEAF6" stroke-opacity="0.07" stroke-width="18"/>
+<path d="M162.0,400 A178.0,178.0 0 0 1 340,222 H600" fill="none" stroke="#9894B0" stroke-width="2"/>
+<path d="M600,222 H860" fill="none" stroke="#9A9AFF" stroke-width="2.5"/>
+<path d="M860,222 A178.0,178.0 0 0 1 1038.0,400" fill="none" stroke="#9894B0" stroke-width="2"/>
+<path d="M1038.0,400 A178.0,178.0 0 0 1 860,578 H340 A178.0,178.0 0 0 1 162.0,400" fill="none" stroke="#7CF2C8" stroke-width="2.5"/>
+<path d="M476.0,222.0 L465.0,228.2 L465.0,215.8 Z" fill="#9894B0" stroke="#9894B0" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M736.0,222.0 L725.0,228.2 L725.0,215.8 Z" fill="#9A9AFF" stroke="#9A9AFF" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M985.9,274.1 L973.7,270.7 L982.4,262.0 Z" fill="#9894B0" stroke="#9894B0" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M985.9,525.9 L989.3,513.7 L998.0,522.4 Z" fill="#7CF2C8" stroke="#7CF2C8" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M594.0,578.0 L605.0,571.8 L605.0,584.2 Z" fill="#7CF2C8" stroke="#7CF2C8" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M214.1,525.9 L226.3,529.3 L217.6,538.0 Z" fill="#7CF2C8" stroke="#7CF2C8" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M214.1,274.1 L210.7,286.3 L202.0,277.6 Z" fill="#9894B0" stroke="#9894B0" stroke-width="1.5" stroke-linejoin="round"/>
+<rect x="54" y="334" width="216" height="132" rx="20" fill="#ECEAF6"/>
+<text x="72" y="362" class="m" font-size="12" font-weight="600" letter-spacing="1.2" fill="#5E5A70">01 · YOU</text>
+<text x="72" y="390" class="f" font-size="24" font-weight="600" font-style="italic" fill="#17141F">You play</text>
+<text x="72" y="412" class="m" font-size="12" fill="#5E5A70">controller or phone</text>
+<rect x="198" y="352" width="54" height="28" rx="14" fill="none" stroke="#17141F" stroke-width="1.75"/>
+<path d="M212.0,361.0 L212.0,371.0" fill="none" stroke="#17141F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M207.0,366.0 L217.0,366.0" fill="none" stroke="#17141F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="236.0" cy="363.0" r="2.6" fill="#7CF2C8"/><circle cx="242.0" cy="369.0" r="2.6" fill="#FFD23F"/>
+<text x="72" y="444" class="s" font-size="13" fill="#4A4556">static where code is lost</text>
+<rect x="240" y="176" width="200" height="92" rx="16" fill="#1B1830" stroke="#3A3560" stroke-width="1"/>
+<text x="256" y="202" class="m" font-size="12" font-weight="600" letter-spacing="1.2" fill="#9894B0">02 · CREATURE</text>
+<text x="256" y="228" class="s" font-size="16" font-weight="600" fill="#ECEAF6">Tap samples it</text>
+<text x="256" y="250" class="m" font-size="12" fill="#9894B0">running fns + frames</text>
+<rect x="500" y="176" width="200" height="92" rx="16" fill="#1B1830" stroke="#9A9AFF" stroke-width="1.5"/>
+<text x="516" y="202" class="m" font-size="12" font-weight="600" letter-spacing="1.2" fill="#9894B0">03 · SNAP</text>
+<text x="516" y="228" class="s" font-size="16" font-weight="600" fill="#ECEAF6">Director picks next</text>
+<text x="516" y="250" class="m" font-size="12" fill="#9894B0">what's on screen</text>
+<circle cx="678" cy="197" r="9" fill="#E6E5FF" stroke="#9A9AFF" stroke-width="1.5"/>
+<text x="678" y="201.3" class="m" font-size="12" font-weight="700" text-anchor="middle" fill="#4F47CF">?</text>
+<rect x="760" y="176" width="200" height="92" rx="16" fill="#1B1830" stroke="#3A3560" stroke-width="1"/>
+<text x="776" y="202" class="m" font-size="12" font-weight="600" letter-spacing="1.2" fill="#9894B0">04 · CREW</text>
+<text x="776" y="228" class="s" font-size="16" font-weight="600" fill="#ECEAF6">Crew recovers it</text>
+<text x="776" y="250" class="m" font-size="12" fill="#9894B0">Diggers + Checker</text>
+<rect x="938" y="354" width="200" height="92" rx="16" fill="#1B1830" stroke="#7CF2C8" stroke-width="1.5"/>
+<text x="954" y="380" class="m" font-size="12" font-weight="600" letter-spacing="1.2" fill="#9894B0">05 · LAB</text>
+<text x="954" y="406" class="s" font-size="16" font-weight="600" fill="#ECEAF6">Lab rebuilds</text>
+<text x="954" y="428" class="m" font-size="12" fill="#9894B0">SHA-1 identical</text>
+<circle cx="1116" cy="375" r="9" fill="#7CF2C8"/>
+<path d="M1112,375 l2.8,2.9 l5.2,-5.8" fill="none" stroke="#063D2B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="630" y="532" width="200" height="92" rx="16" fill="#1B1830" stroke="#3A3560" stroke-width="1"/>
+<text x="646" y="558" class="m" font-size="12" font-weight="600" letter-spacing="1.2" fill="#9894B0">06 · CREATURE</text>
+<text x="646" y="584" class="s" font-size="16" font-weight="600" fill="#ECEAF6">Hot-swap, live</text>
+<text x="646" y="606" class="m" font-size="12" fill="#9894B0">rom.swapped</text>
+<rect x="370" y="532" width="200" height="92" rx="16" fill="#1B1830" stroke="#3A3560" stroke-width="1"/>
+<text x="386" y="558" class="m" font-size="12" font-weight="600" letter-spacing="1.2" fill="#9894B0">07 · CREATURE</text>
+<text x="386" y="584" class="s" font-size="16" font-weight="600" fill="#ECEAF6">The region heals</text>
+<text x="386" y="606" class="m" font-size="12" fill="#9894B0">static → pixels</text>
+<text x="600" y="382" class="f" font-size="32" font-weight="600" text-anchor="middle" letter-spacing="-0.4" fill="#ECEAF6">Play it, and we rebuild it.</text>
+<text x="600" y="414" class="s" font-size="15" text-anchor="middle" fill="#C9C5DE">Snap watches what's on screen and sends the crew there.</text>
+<text x="600" y="436" class="s" font-size="15" text-anchor="middle" fill="#C9C5DE">Every swap is byte-identical, or it doesn't ship.</text>
+<rect x="406.4" y="456" width="187.6" height="24" rx="12" fill="#7CF2C8"/>
+<text x="500.2" y="472.32" class="m" font-size="12" font-weight="700" text-anchor="middle" fill="#063D2B">✓ swap: proved by bytes</text>
+<rect x="606" y="456" width="187.6" height="24" rx="12" fill="#E6E5FF" stroke="#9A9AFF" stroke-width="1.25"/>
+<text x="699.8" y="472.32" class="m" font-size="12" font-weight="700" text-anchor="middle" fill="#4F47CF">? pick: Snap's judgment</text></svg>
