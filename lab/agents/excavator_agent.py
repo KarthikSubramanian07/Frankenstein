@@ -48,7 +48,7 @@ def run_crew_job(fn: str | None, query: str) -> tuple[str | None, str, dict]:
     """Blocking. Returns (src or None, fn, last job status). src is None when the crew didn't match."""
     # $0.5 is plenty: the Digger stops at attempt_budget() (4 tries for small fns, ~$0.04), not at max_usd. A smaller
     # cap only shrinks the $ reservation (max_usd * 1.2) against CREW_HOURLY_USD, so more jobs fit per hour.
-    job = _http("POST", f"{CREW_URL}/jobs", {"fn": fn, "max_usd": JOB_MAX_USD} if fn else {"query": query[:200], "max_usd": JOB_MAX_USD},
+    job = _http("POST", f"{CREW_URL}/jobs", {"fn": fn, "max_usd": JOB_MAX_USD} if fn else {"query": query[:200], "live": True, "max_usd": JOB_MAX_USD},
                 errors=True)
     if job is None:
         return None, fn or "?", {"status": "crew_down"}
@@ -75,7 +75,8 @@ def crew_failure_reply(fn: str, status: dict) -> str:
         return ("The crew (the agents that write the C) is down right now, so I can't start a recovery. "
                 "Nothing was sent to the Referee agent. Try again shortly.")
     if s == "refused":
-        return (f"The crew refused the job (HTTP {status['http_status']}): {status['error']}. "
+        busy = " The crew is busy; try again in a minute." if status["http_status"] == 429 else ""
+        return (f"The crew refused the job (HTTP {status['http_status']}): {status['error']}.{busy} "
                 "Nothing was sent to the Referee agent.")
     if s == "unrouted":
         return "The crew couldn't tie those words to a function in the game. Try an id like `fn_0801B724`."
