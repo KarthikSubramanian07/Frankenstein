@@ -1,0 +1,50 @@
+/* Rebuild (split): the game on the left, one giant count on the right. */
+
+/* the game window: Lane D composes the capture here (x20 y92, 960x640) */
+.split .sp-win {
+  position: absolute; left: 20px; top: 92px; width: 960px; height: 640px;
+  background: #070605;
+  box-shadow: 0 0 0 6px var(--metal), 0 0 0 8px var(--metal-hi), 0 0 0 12px #1c1410, 0 10px 0 12px #000;
+  display: grid; place-items: center; overflow: hidden;
+}
+.split .sp-win.obs { background: transparent; box-shadow: none; }
+.split .sp-win iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000; }
+.split .sp-cap { font: 600 32px/1 var(--text); color: var(--ash); letter-spacing: 3px; text-transform: uppercase; }
+.split .sp-runon {
+  position: absolute; left: 20px; top: 776px; width: 960px;
+  font: 600 40px/1.2 var(--text); color: var(--bone); text-align: center;
+}
+
+/* right: one number, one bar, the newest piece */
+.split .sp-right { position: absolute; left: 1060px; top: 170px; width: 820px; }
+.split .sp-count { display: flex; align-items: baseline; gap: 28px; white-space: nowrap; }
+.split .sp-num { font: 400 300px/0.9 var(--display); color: var(--fire); letter-spacing: -2px; }
+.split .sp-den { font: 400 120px/1 var(--display); color: var(--ash); }
+.split .sp-lbl { margin-top: 18px; font: 600 56px/1 var(--text); color: var(--bone); letter-spacing: 1px; }
+
+.split .sp-bar { position: relative; margin-top: 48px; height: 56px; overflow: hidden; }
+.split .sp-bar i {
+  position: absolute; left: 6px; top: 6px; bottom: 8px; display: block; width: 0; max-width: calc(100% - 12px);
+  background: var(--toxic); box-shadow: inset 0 3px 0 #c8ff9a, inset 0 -4px 0 #4f9a12;
+  transition: width 600ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.split .sp-new { margin-top: 72px; height: 200px; overflow: hidden; }
+.split .sp-tag {
+  display: inline-block; font: 700 28px/1 var(--text); letter-spacing: 4px;
+  color: var(--bg); background: var(--toxic); padding: 8px 14px;
+}
+.split .sp-nm {
+  display: block; margin-top: 18px; width: 100%; white-space: nowrap; overflow: hidden;
+  font: 400 88px/1.15 var(--display); color: var(--bone); letter-spacing: 1px;
+}
+.split .sp-nm.guess, .split .sp-nm em { color: var(--guess); font-style: normal; }
+.split .sp-new.is-face .sp-nm { color: var(--fire); }
+.split .sp-new.slide { animation: sp-slide 520ms cubic-bezier(.2, .9, .25, 1) both; }
+@keyframes sp-slide { from { transform: translateX(120px); opacity: 0; } to { transform: none; opacity: 1; } }
+.split .sp-wait { font: 600 48px/1.2 var(--text); color: var(--ash); }
+
+.split .sp-line {
+  position: absolute; left: 1060px; top: 952px; width: 820px;
+  font: 600 36px/1.2 var(--text); color: var(--ash); letter-spacing: 1px;
+}
