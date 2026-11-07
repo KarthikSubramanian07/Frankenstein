@@ -225,6 +225,7 @@ class Run:
                       budget_usd=self.args.budget_usd, game_id=self.target.game_id, fn_total=self.fn_total,
                       referee=getattr(self.referee, "kind", "lab"), reasoning_effort=self.cfg.reasoning_effort,
                       escalation_model=self.cfg.escalation_model or None, cartographer=bool(self.args.cartographer),
+                      library_backend=self.library.backend,
                       snap=bool(self.snap_scores) or (self.checker.snap_review is not None))
         if self.args.live:
             live = self.cfg.runs_dir / "live"
