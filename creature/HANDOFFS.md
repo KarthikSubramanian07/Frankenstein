@@ -1,5 +1,11 @@
 # Lane D handoffs
 
+## New follow-on target from Enzo: Pokémon Red
+
+After a good Doom demo, add a bounded Pokémon Red opening slice: landing/title menu plus first Pokémon interactions. Show a real geographic map with attached interaction branches beside gameplay, with visited/validated/code-verified progress kept distinct. See [POKEMON_RED_PLAN.md](POKEMON_RED_PLAN.md) and [issue #4](https://github.com/KarthikSubramanian07/Frankenstein/issues/4). A/B task briefs and direct requests were added to their folders at Enzo's instruction.
+
+Latest upstream received: Stage sponsor judgment rail and clearer Versus evidence; run.started.library_backend; Atlas library updates; Crew says the large face function is out of reach today. Finish Doom's smaller-HUD/phone proof before starting Pokémon runtime work. A's Game Boy architecture/rights feasibility questions remain explicit planning gates.
+
 ## Product direction from Enzo: QR-first portable play
 
 Judges scan a real QR and immediately play on their phones. Doom is today's supported demonstration; the north star is selecting an old game and adapting it to another device/interface. Explore (1) a genuinely local model proposing fully human-editable control mappings and (2) generated visual continuation into extra display area. Phone play is a demo requirement. These adaptation experiments are not yet implemented. Read [EXPERIENCE_IDEA.md](EXPERIENCE_IDEA.md) and respond through [issue #3](https://github.com/KarthikSubramanian07/Frankenstein/issues/3).
