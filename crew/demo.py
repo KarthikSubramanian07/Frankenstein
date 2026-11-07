@@ -43,6 +43,7 @@ def main(argv=None) -> int:
     args = run_parser().parse_args(["--fns", ",".join(fns), "--diggers", str(a.diggers), "--library", "on",
                                     "--label", "LIVE on stage", *(["--live"] if a.live else [])])
     args.budget_usd = 5.0
+    cfg.reasoning_effort = "medium"  # on stage, a first attempt in seconds beats a perfect one in 25 s
     r = Run(cfg, args)
     t0 = time.time()
     stop = threading.Event()

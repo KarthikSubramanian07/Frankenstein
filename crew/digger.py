@@ -236,6 +236,10 @@ class Digger:
         ok, reason, evidence = self.checker.review(fn_id, asm, src, ctx, n_ins)
         if not ok:
             out.journey.append((attempt, "FAKEMATCH", 100.0, reason))
+            # bytes matched, but the Checker caught compiler-coaxing: a visible K.O., not a silent drop
+            self.log.emit("fakematch.rejected", "checker", fn=fn_id, attempt=attempt, reason=reason[:160],
+                          evidence={k: v for k, v in evidence.items() if k in ("snap", "gemini")},
+                          src_preview="\n".join(src.splitlines()[:20]))
             self.log.emit("narration", "archivist", fn=fn_id, text=f"Bytes match, but the Checker smells a fake.",
                           mood="alarmed", speak=False, priority=1)
             return False

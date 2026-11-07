@@ -266,6 +266,9 @@ def build_run(manifest, sub_of, rng: random.Random):
 
     # periodic and one-off events
     emit(600.0, "types.proposed", "cartographer", source="subq", structs=7, signatures=31)
+    emit(611.0, "fakematch.rejected", "checker", fn=game[3]["id"], attempt=2,
+         reason="volatile used to coax codegen", evidence={"snap": {"fakematch_p": 0.91}},
+         src_preview="int fn(int *p){ volatile int t = p[4]; return t; }")
     rebuild_at = sorted(matched_ts)[-1] + 8
     rec = len(matched_ts)
     swaps = [(sorted(matched_ts)[i] + 5, i + 1) for i in range(9, rec, 12)]
