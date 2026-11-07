@@ -13,8 +13,20 @@ import sys
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-FIXTURES = Path(__file__).resolve().parents[2] / "contracts" / "fixtures"
+REPO = Path(__file__).resolve().parents[2]
+FIXTURES = REPO / "contracts" / "fixtures"
 MAX_BODY = 256 * 1024
+REBUILD_ROOTS = (REPO / "runs", REPO / "crew" / "exports")
+
+
+def confined_recovered_dir(raw) -> str:
+    """/rebuild reads only run directories: runs/ or crew/exports/, never an arbitrary path from the body."""
+    if not isinstance(raw, str):
+        raise ValueError("recovered_dir must be a string")
+    p = (REPO / raw).resolve()
+    if not any(p == r.resolve() or r.resolve() in p.parents for r in REBUILD_ROOTS):
+        raise ValueError("recovered_dir must be inside runs/ or crew/exports/")
+    return str(p)
 
 
 def make_handler(referee, mock: bool):
@@ -23,7 +35,6 @@ def make_handler(referee, mock: bool):
             data = (json.dumps(body) if isinstance(body, dict) else body).encode()
             self.send_response(code)
             self.send_header("Content-Type", "application/json" if isinstance(body, dict) else "text/plain")
-            self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Content-Length", str(len(data)))
             self.end_headers()
             self.wfile.write(data)
@@ -42,13 +53,18 @@ def make_handler(referee, mock: bool):
             self._send(404, {"error": "not found"})
 
         def do_POST(self) -> None:
-            length = int(self.headers.get("Content-Length") or 0)
-            if length > MAX_BODY:
+            try:
+                length = int(self.headers.get("Content-Length") or 0)
+            except ValueError:
+                return self._send(400, {"error": "bad Content-Length"})
+            if length < 0 or length > MAX_BODY:
                 return self._send(413, {"error": "body too large"})
             try:
                 body = json.loads(self.rfile.read(length) or b"{}")
-            except json.JSONDecodeError:
+            except (json.JSONDecodeError, UnicodeDecodeError):
                 return self._send(400, {"error": "invalid JSON"})
+            if not isinstance(body, dict):
+                return self._send(400, {"error": "body must be a JSON object"})
             if self.path == "/check":
                 fn, src = body.get("fn"), body.get("src")
                 if not isinstance(fn, str) or not isinstance(src, str):
@@ -68,7 +84,7 @@ def make_handler(referee, mock: bool):
                 linker = RomLinker(referee)
                 try:
                     if self.path == "/rebuild":
-                        return self._send(200, linker.rebuild(str(body.get("recovered_dir", "runs/live/recovered")), emit=bool(body.get("emit"))))
+                        return self._send(200, linker.rebuild(confined_recovered_dir(body.get("recovered_dir", "runs/live/recovered")), emit=bool(body.get("emit"))))
                     fn, src = body.get("fn"), body.get("src")
                     if not isinstance(fn, str) or not isinstance(src, str):
                         return self._send(400, {"error": "need {fn, src} strings"})

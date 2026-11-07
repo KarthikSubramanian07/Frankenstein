@@ -19,6 +19,12 @@ CONTAINER = "frank-lab"
 OBJDUMP = "$DEVKITARM/bin/arm-none-eabi-objdump"
 GCC = "$DEVKITARM/bin/arm-none-eabi-gcc"
 MAX_DIFF = 64
+COMPILE_TIMEOUT_S = 60
+DIAG_FLAGS = "-fmax-errors=20"  # diagnostics only; does not change code
+# A compile log may only talk about the candidate, its ctx header and the toolchain's own headers. Anything else
+# (an include that slipped past lint) would print another file's lines, so the whole log is withheld.
+LOG_PATH_RE = re.compile(r"^(?:In file included from|\s+from)?\s*([^\s:]+):\d+(?::\d+)?[:,]", re.M)
+LOG_ALLOWED = ("lab/out/tmp/", "lab/out/ctx/", "/opt/devkitpro/", "<command-line>", "<built-in>")
 
 # GBADoom's Makefile CFLAGS minus -flto=8 (lab/TOOLCHAIN.md). -g and include paths do not change code.
 THUMB_FLAGS = ("-O3 -mcpu=arm7tdmi -mtune=arm7tdmi -fgcse-after-reload -fallow-store-data-races -ffast-math "
@@ -100,16 +106,16 @@ class Referee:
         (work / "cand.c").write_text(src)
         rel = work.relative_to(REPO)
         flags = ARM_FLAGS if mode == "arm" else THUMB_FLAGS
-        cmd = (f"{GCC} {flags} -include lab/out/ctx/{fn}.h -c {rel}/cand.c -o {rel}/cand.o 2>&1 && "
+        cmd = (f"{GCC} {flags} {DIAG_FLAGS} -include lab/out/ctx/{fn}.h -c {rel}/cand.c -o {rel}/cand.o 2>&1 && "
                f"{OBJDUMP} -dr {rel}/cand.o > {rel}/cand.dis && {OBJDUMP} -t {rel}/cand.o > {rel}/cand.sym")
-        proc = _docker(cmd)
+        proc = _docker(cmd, timeout=COMPILE_TIMEOUT_S)
         if proc.returncode != 0:
-            return False, proc.stdout + proc.stderr, []
+            return False, scrub_log(proc.stdout + proc.stderr), []
         blocks = _blocks((work / "cand.dis").read_text())
         if fn not in blocks:
-            return False, f"{proc.stdout}\nno function named {fn} in the object (define it non-static, named exactly {fn})", []
+            return False, f"{scrub_log(proc.stdout)}\nno function named {fn} in the object (define it non-static, named exactly {fn})", []
         symtab = _symtab((work / "cand.sym").read_text())
-        return True, proc.stdout, [self._normalize(i, symtab, own_ids=True) for i in blocks[fn]]
+        return True, scrub_log(proc.stdout), [self._normalize(i, symtab, own_ids=True) for i in blocks[fn]]
 
     # ---------- target ----------
     def _target(self, fn: str) -> list[dict]:
@@ -242,8 +248,22 @@ def _elf_ids() -> dict[str, str]:
     return ids
 
 
-def _docker(cmd: str, check: bool = False) -> subprocess.CompletedProcess:
-    proc = subprocess.run(["docker", "exec", "-w", "/work", CONTAINER, "bash", "-c", cmd], capture_output=True, text=True)
+def scrub_log(log: str) -> str:
+    for m in LOG_PATH_RE.finditer(log):
+        path = m.group(1).removeprefix("/work/").removeprefix("./")
+        if not path.startswith(LOG_ALLOWED):
+            return "compile log withheld: the compiler reported on a file outside the candidate and its headers"
+    return log
+
+
+def _docker(cmd: str, check: bool = False, timeout: int = 300) -> subprocess.CompletedProcess:
+    argv = ["docker", "exec", "-w", "/work", CONTAINER, "timeout", "-k", "5", str(timeout), "bash", "-c", cmd]
+    try:
+        proc = subprocess.run(argv, capture_output=True, text=True, timeout=timeout + 30)
+    except subprocess.TimeoutExpired:
+        proc = subprocess.CompletedProcess(argv, 124, "", f"timed out after {timeout} s")
+    if proc.returncode == 124 and not proc.stderr:
+        proc.stderr = f"\ntimed out after {timeout} s"
     if check and proc.returncode != 0:
         raise RuntimeError(proc.stderr[-2000:])
     return proc

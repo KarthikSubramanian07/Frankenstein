@@ -12,4 +12,4 @@ A candidate that breaks any rule gets `LINT_FAIL` and is never compiled. Lane B'
 | L006 | Hard-coded RAM or ROM addresses (0x02, 0x03, 0x08 regions); use the `fn_`/`data_` ids. I/O, palette, VRAM and OAM casts are allowed |
 | L007 | More than 8 non-blank lines per target instruction (padding to coax the compiler) |
 | L008 | Three or more long instructions from the function's asm copied into comments or strings |
-| L009 | Any include except a `<system>` header: quoted, absolute, `..`, `#embed` or macro includes could read `lab/secrets` through the compile log |
+| L009 | Any include except a `<system>` header: quoted, absolute, `..`, `#embed`, `__has_include` or macro includes could read `lab/secrets` or `.env` through the compile log. Lint sees the source as the preprocessor does (line splices joined, `%:` digraphs as `#`, strings lexed before comments), and the referee withholds any compile log that mentions another file |

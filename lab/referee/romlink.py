@@ -14,7 +14,7 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
-from .core import GCC, OBJDUMP, OUT, REPO, ARM_FLAGS, THUMB_FLAGS, Referee, _docker
+from .core import COMPILE_TIMEOUT_S, DIAG_FLAGS, GCC, OBJDUMP, OUT, REPO, ARM_FLAGS, THUMB_FLAGS, Referee, _docker, scrub_log
 from .lint import lint
 
 ROM_BASE = 0x08000000
@@ -134,9 +134,10 @@ class RomLinker:
         (work / "fix.c").write_text(src)
         rel = work.relative_to(REPO)
         flags = ARM_FLAGS if mode == "arm" else THUMB_FLAGS
-        proc = _docker(f"{GCC} {flags} -include lab/out/ctx/{fn}.h -c {rel}/fix.c -o {rel}/fix.o 2>&1 && {NM} -u {rel}/fix.o")
+        proc = _docker(f"{GCC} {flags} {DIAG_FLAGS} -include lab/out/ctx/{fn}.h -c {rel}/fix.c -o {rel}/fix.o 2>&1 && {NM} -u {rel}/fix.o",
+                       timeout=COMPILE_TIMEOUT_S)
         if proc.returncode != 0:
-            return proc.stdout + proc.stderr
+            return scrub_log(proc.stdout + proc.stderr)
         undefined = [line.split()[-1] for line in proc.stdout.splitlines() if line.strip().startswith("U ")]
         # Typed symbols, not --defsym: an untyped absolute symbol looks like ARM code to ld, which then inserts
         # Thumb-to-ARM veneers. .thumb_set marks Thumb functions so calls stay direct bl instructions.
@@ -161,7 +162,7 @@ class RomLinker:
                        f"{LD} -T {rel}/fix.ld {rel}/fix.o {rel}/syms.o -o {rel}/fix.elf 2>&1 && "
                        f"{OBJDUMP} -h {rel}/fix.elf && {OBJCOPY} -O binary -j .text {rel}/fix.elf {rel}/fix.bin")
         if link.returncode != 0:
-            return link.stdout + link.stderr
+            return scrub_log(link.stdout + link.stderr)
         for line in link.stdout.splitlines():
             parts = line.split()
             if len(parts) > 2 and parts[1] in (".data", ".bss") and int(parts[2], 16) > 0:
