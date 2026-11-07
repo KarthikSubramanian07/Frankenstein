@@ -1,3 +1,5 @@
+> Current integration update: browser boot/menu/newgame/movement verified. Packaging and package-aware preflight implemented. B exports and C geometry/routes received. See [STATUS.md](STATUS.md) and [runtime/BOOT.md](runtime/BOOT.md). Only unresolved hero-cycle prerequisite is A's current static-face build/id/activation; older requests below are historical until reconciled by STATUS.
+
 # Lane D handoffs and integration status
 
 Owner: Enzo / Lane D. Updated 2026-11-07, from main's current DECISIONS.md.
