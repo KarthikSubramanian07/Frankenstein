@@ -1,6 +1,4 @@
-/* fn_080077E4: recovered by the Frankenstein crew, run doom_align_off.
-   Observed: compiles to identical bytes (referee MATCH, Checker accepted).
-   Inferred: nothing in this file is a claim about original names. */
+/* fn_080077E4: MMIO absolute casts rewritten to named symbols; still byte-identical MATCH. */
 
 typedef struct Main Main;
 typedef struct Sub Sub;

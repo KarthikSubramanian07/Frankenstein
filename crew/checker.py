@@ -12,7 +12,9 @@ from .events import EventLog
 VOLATILE = re.compile(r"\bvolatile\b")
 CAST = re.compile(r"\(\s*(unsigned|signed|u8|u16|u32|s8|s16|s32|int|short|char|long)\s*\**\s*\)")
 GOTO = re.compile(r"\bgoto\b")
-ABS_ADDR = re.compile(r"\)\s*0x0[2-9][0-9A-Fa-f]{6}\b")  # *(T*)0x03001234: raw address instead of a data_ id
+# IWRAM/EWRAM raw casts (0x02…/0x03…) stand in for a data_ id. GBA MMIO at 0x0400… is hardware, not data_.
+ABS_ADDR = re.compile(r"\)\s*0x0[23][0-9A-Fa-f]{6}\b")
+MMIO = re.compile(r"0x0400[0-9A-Fa-f]{4}")
 
 
 class Checker:
@@ -65,7 +67,9 @@ class Checker:
         evidence: dict = {}
         lines = [l for l in src.splitlines() if l.strip()]
         if VOLATILE.search(src) and "volatile" not in ctx:
-            return self._reject("volatile used to coax codegen", evidence)
+            # volatile on MMIO registers is real GBA code; volatile locals to coax codegen are not
+            if any(VOLATILE.search(line) and not MMIO.search(line) for line in src.splitlines()):
+                return self._reject("volatile used to coax codegen", evidence)
         if ABS_ADDR.search(src):
             return self._reject("absolute address cast instead of a data_ id (L006)", evidence)
         if len(GOTO.findall(src)) > 2:

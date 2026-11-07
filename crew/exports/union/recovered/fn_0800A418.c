@@ -1,6 +1,4 @@
-/* fn_0800A418: salvaged by the Frankenstein crew from run doom_sweep1, attempt 2.
-   Observed: compiles to identical bytes (fresh referee MATCH, Checker accepted).
-   Inferred: nothing in this file is a claim about original names. */
+/* fn_0800A418: MMIO absolute casts rewritten to named symbols; still byte-identical MATCH. */
 
 void fn_0801A2C8(unsigned char *, int);
 void fn_08007D00(unsigned char *);

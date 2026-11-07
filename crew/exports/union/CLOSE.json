@@ -1,39 +1,21 @@
 {
   "v": 1,
-  "generated_at": "2026-11-07T22:40:15+00:00",
+  "generated_at": "2026-11-07T22:53:05+00:00",
   "rule": "game function not in UNION.json and never fn.matched, whose best match_pct over every verdict is >= 90",
   "label": "close = best attempt >=90% byte-match, not accepted, not counted",
   "threshold_pct": 90.0,
-  "close": 21,
-  "close_95": 12,
+  "close": 17,
+  "close_95": 8,
   "of": 568,
-  "proven_exact": 166,
+  "proven_exact": 170,
   "matched_pending_union": 0,
-  "runs_scanned": 34,
+  "runs_scanned": 41,
   "rows": [
     {
       "fn": "fn_0800060C",
       "size": 132,
       "best_match_pct": 95.3,
       "run": "doom_sweep2"
-    },
-    {
-      "fn": "fn_08004D4C",
-      "size": 92,
-      "best_match_pct": 100.0,
-      "run": "doom_align_off"
-    },
-    {
-      "fn": "fn_08004E14",
-      "size": 28,
-      "best_match_pct": 100.0,
-      "run": "doom_sweep1"
-    },
-    {
-      "fn": "fn_08004E30",
-      "size": 28,
-      "best_match_pct": 100.0,
-      "run": "doom_sweep1"
     },
     {
       "fn": "fn_08004E84",
@@ -130,12 +112,6 @@
       "size": 32,
       "best_match_pct": 91.7,
       "run": "doom_sweep1"
-    },
-    {
-      "fn": "fn_0801B1F8",
-      "size": 80,
-      "best_match_pct": 100.0,
-      "run": "doom_hud01"
     }
   ]
 }

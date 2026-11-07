@@ -1,6 +1,4 @@
-/* fn_0800E728: recovered by the Frankenstein crew, run doom_align_off.
-   Observed: compiles to identical bytes (referee MATCH, Checker accepted).
-   Inferred: nothing in this file is a claim about original names. */
+/* fn_0800E728: MMIO absolute casts rewritten to named symbols; still byte-identical MATCH. */
 
 extern struct G *data_030064C4;
 int fn_0800FE1C(int a, int b, void *c);

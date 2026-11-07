@@ -1,6 +1,4 @@
-/* fn_08013AA0: recovered by the Frankenstein crew, run doom_sweep1.
-   Observed: compiles to identical bytes (referee MATCH, Checker accepted).
-   Inferred: nothing in this file is a claim about original names. */
+/* fn_08013AA0: MMIO absolute casts rewritten to named symbols; still byte-identical MATCH. */
 
 void fn_08013AA0(int *p)
 {

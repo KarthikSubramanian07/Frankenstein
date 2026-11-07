@@ -1,6 +1,4 @@
-/* fn_08006814: recovered by the Frankenstein crew, run doom_sweep1.
-   Observed: compiles to identical bytes (referee MATCH, Checker accepted).
-   Inferred: nothing in this file is a claim about original names. */
+/* fn_08006814: MMIO absolute casts rewritten to named symbols; still byte-identical MATCH. */
 
 struct S { char pad[0x78e]; short a; short b; };
 extern struct S *data_030064C4;

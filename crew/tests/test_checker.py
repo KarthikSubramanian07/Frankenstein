@@ -79,6 +79,9 @@ def test_review_rejects(rig, src, ctx, reason):
     (f"int {FN}(int a)\n{{\n    if (a) goto out;\n    a = 1;\nout:\n    return a;\n}}", ""),
     (f"int {FN}(int a)\n{{\n    return (s16)(u8)a;\n}}", ""),
     (f"extern u32 data_03001234;\nvoid {FN}(void)\n{{\n    data_03001234 = 0x03001234;\n}}", ""),
+    # GBA MMIO at 0x0400… is hardware, not a missing data_ id; volatile on those lines is normal
+    (f"void {FN}(void)\n{{\n    unsigned short s = *(unsigned short *)0x04000208;\n    *(unsigned short *)0x04000208 = 0;\n    *(unsigned short *)0x04000208 = s;\n}}", ""),
+    (f"void {FN}(void)\n{{\n    *(volatile unsigned short *)0x04000208 = 0;\n}}", ""),
 ])
 def test_review_accepts_plain_code(rig, src, ctx):
     _, _, ch = rig

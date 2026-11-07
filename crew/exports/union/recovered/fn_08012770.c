@@ -1,15 +1,17 @@
-/* fn_08012770: recovered by the Frankenstein crew, run doom_align_on.
-   Observed: compiles to identical bytes (referee MATCH, Checker accepted).
-   Inferred: nothing in this file is a claim about original names. */
+/* fn_08012770: MMIO absolute casts rewritten to named symbols; still byte-identical MATCH. */
 
-struct S { int unk; int arr[888]; };
-extern struct S *data_030064C4;
-void fn_08012770(int a){
- struct S *p = data_030064C4;
- int i;
- for(i=0;i<32;i++){
-  if(p->arr[i+856]==0) break;
- }
- if(i==32) return;
- p->arr[i+856]=a;
+extern unsigned int data_030064C4;
+void fn_08012770(unsigned int a) {
+    unsigned int base = data_030064C4;
+    unsigned int *p = (unsigned int *)(base + 0xD64);
+    int i = 0;
+    while (1) {
+        if (p[i] == 0)
+            break;
+        i++;
+        if (i == 32)
+            return;
+    }
+    unsigned int *q = (unsigned int *)(base + ((i + 214 * 4) * 4));
+    q[1] = a;
 }

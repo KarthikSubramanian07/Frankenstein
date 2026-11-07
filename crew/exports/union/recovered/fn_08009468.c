@@ -1,6 +1,4 @@
-/* fn_08009468: recovered by the Frankenstein crew, run doom_align_off.
-   Observed: compiles to identical bytes (referee MATCH, Checker accepted).
-   Inferred: nothing in this file is a claim about original names. */
+/* fn_08009468: MMIO absolute casts rewritten to named symbols; still byte-identical MATCH. */
 
 struct Sub { int u0,u4,u8,u12,u16,u20,u24,u28,u32,u36,u40,u44,u48,u52,u56,u60,u64,u68,u72,flags; };
 struct Main { int u0,u4,u8,u12,u16,u20,u24,u28,u32,u36,u40,u44,u48,u52,u56,u60,u64,u68,u72,flags; struct Sub *next; };

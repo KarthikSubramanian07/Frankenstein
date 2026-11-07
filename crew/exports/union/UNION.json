@@ -1,11 +1,11 @@
 {
   "v": 1,
-  "functions": 166,
+  "functions": 170,
   "of": 568,
-  "pct_functions": 29.2,
-  "bytes": 6546,
+  "pct_functions": 29.9,
+  "bytes": 6774,
   "of_bytes": 141774,
-  "pct_bytes": 4.62,
+  "pct_bytes": 4.78,
   "reverified_by_referee": true,
   "rejected_on_reverify": [],
   "target_rom_sha1": "d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2",
@@ -221,11 +221,32 @@
       "sha1": "6efce79389e0ea08961d0584c3b22ec5fbdf8de5"
     },
     {
+      "fn": "fn_08004D4C",
+      "size": 92,
+      "split": "heldout",
+      "from": "runs/salvage04",
+      "sha1": "3553b4f76bead6283a8a9f60e4beab418cb08d30"
+    },
+    {
       "fn": "fn_08004DA8",
       "size": 12,
       "split": "train",
       "from": "crew/exports/r_asi_01",
       "sha1": "e69bdb53fed49e561cb3c541d496f66d0c10172a"
+    },
+    {
+      "fn": "fn_08004E14",
+      "size": 28,
+      "split": "train",
+      "from": "runs/salvage04",
+      "sha1": "38afc3d12764b52eb075cb42b659e5f8b613dd3a"
+    },
+    {
+      "fn": "fn_08004E30",
+      "size": 28,
+      "split": "train",
+      "from": "runs/salvage04",
+      "sha1": "da5909ccf61b86f9d1c5785ee129264c883bbaf7"
     },
     {
       "fn": "fn_08004E4C",
@@ -266,8 +287,8 @@
       "fn": "fn_08005020",
       "size": 40,
       "split": "train",
-      "from": "runs/salvage01",
-      "sha1": "5510e2fa9d3298502a724310dd0fa073eb5f77c2"
+      "from": "runs/repair02",
+      "sha1": "259b4d19157eb86454be1bc1c6d41cdb04a01e9c"
     },
     {
       "fn": "fn_08005048",
@@ -280,8 +301,8 @@
       "fn": "fn_0800504C",
       "size": 2,
       "split": "heldout",
-      "from": "runs/doom_sweep1",
-      "sha1": "6ae5af6531fd8181d2b933f00bde520ab04ebb14"
+      "from": "runs/repair02",
+      "sha1": "b08a0ad70b796c6d5b28163bef0d4c4063978701"
     },
     {
       "fn": "fn_08005050",
@@ -301,8 +322,8 @@
       "fn": "fn_080050D0",
       "size": 12,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "bc6c8fa16cf42664a68a655bccd7abfa4f8f35b6"
+      "from": "runs/repair02",
+      "sha1": "32b43ae7ca451ea4965a6e7e7887fe70818f0b80"
     },
     {
       "fn": "fn_080050DC",
@@ -329,15 +350,15 @@
       "fn": "fn_0800549C",
       "size": 42,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "0cc6b81e6234bf417da14643818e6444c6d5fa5a"
+      "from": "runs/repair02",
+      "sha1": "eae093d30c1047fda624f6a64424d76a87dfe229"
     },
     {
       "fn": "fn_080054C8",
       "size": 72,
       "split": "heldout",
-      "from": "runs/doom_sweep1",
-      "sha1": "3cd4e20a6ff3c46e7ff02095f5b3e7922efa3023"
+      "from": "runs/repair02",
+      "sha1": "22271fbfe3ab3ddfa4f19e64bc71585533e4e3be"
     },
     {
       "fn": "fn_080056FC",
@@ -350,15 +371,15 @@
       "fn": "fn_08005764",
       "size": 12,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "52b4217a49aa13c5c1fa43294d0f9a7ad0739a55"
+      "from": "runs/repair02",
+      "sha1": "44af2286d570bd9c987962b6e171cfa3b5daccf0"
     },
     {
       "fn": "fn_08005770",
       "size": 24,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "7f362dd2e4d5b0d4d064907f7cbc797013c623bd"
+      "from": "runs/repair02",
+      "sha1": "16726325c5077074472b5dfb8cd0566e25fef691"
     },
     {
       "fn": "fn_08005788",
@@ -371,22 +392,22 @@
       "fn": "fn_080057A0",
       "size": 24,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "d8cb9afa176f3f2433471b30e82cd7a543bf113d"
+      "from": "runs/repair02",
+      "sha1": "1fca76d9ccd2444c4af264a9df947b7c88280b36"
     },
     {
       "fn": "fn_080057B8",
       "size": 24,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "62d2dd64262c58148ff29330974a6647b34a0be7"
+      "from": "runs/repair02",
+      "sha1": "58ba80e55452843f7c239d1b0e952d52628955ec"
     },
     {
       "fn": "fn_080057D0",
       "size": 24,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "3fe7678cfc2268d5b9bb61938834681ce594f79f"
+      "from": "runs/repair02",
+      "sha1": "d784ba5c81789eb9b2172155657ee9e1a97ce502"
     },
     {
       "fn": "fn_08005A90",
@@ -427,22 +448,22 @@
       "fn": "fn_080067DC",
       "size": 28,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "4ca4b703438f38cbadd8b5120a7815f4556b5359"
+      "from": "runs/repair02",
+      "sha1": "2072b7dd5a854c7d37e28ee250747c3a5263ab42"
     },
     {
       "fn": "fn_080067F8",
       "size": 28,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "d9445cca7fb8ecee086f059fe55df82c1970bb57"
+      "from": "runs/repair02",
+      "sha1": "ef6690707aaad00cfdc8f986b11f75927951b71c"
     },
     {
       "fn": "fn_08006814",
       "size": 56,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "60fdc43c07e03c63bb12978a713293b60ecbcdf8"
+      "from": "runs/repair02",
+      "sha1": "decee79397cf8f3a64e7e0e4851c3539663ffc8f"
     },
     {
       "fn": "fn_0800684C",
@@ -476,22 +497,22 @@
       "fn": "fn_08006F18",
       "size": 88,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "42b7635345c81a656f1dc2f87370e8701a061914"
+      "from": "runs/repair02",
+      "sha1": "32cd08b45e69e016447e6b2276c68f33735a086f"
     },
     {
       "fn": "fn_0800702C",
       "size": 32,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "61f8096e6144181436262f3a7445fc9eb38fd0cf"
+      "from": "runs/repair02",
+      "sha1": "e8916ea6abf4820a024ccd9ae9ea58c438a95334"
     },
     {
       "fn": "fn_080077E4",
       "size": 76,
       "split": "heldout",
-      "from": "runs/doom_align_off",
-      "sha1": "6ea0d689a9c69284b57ad57a1152419680adf4d9"
+      "from": "runs/repair02",
+      "sha1": "edef9603e001d56859c854595bac10a0810b7e0d"
     },
     {
       "fn": "fn_08008D04",
@@ -511,15 +532,15 @@
       "fn": "fn_08009468",
       "size": 76,
       "split": "heldout",
-      "from": "runs/doom_align_off",
-      "sha1": "69e4b73adbf5d29c00193331f8706e7d09f253b5"
+      "from": "runs/repair02",
+      "sha1": "f4dba2d0b8803515acff71c4479ce4398d71df26"
     },
     {
       "fn": "fn_08009758",
       "size": 14,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "7760163a2f41630b1c4c533c6908192608e25798"
+      "from": "runs/repair02",
+      "sha1": "6a2f3442e6cfb6b4326f942f45ddc81df37446f0"
     },
     {
       "fn": "fn_08009850",
@@ -532,8 +553,8 @@
       "fn": "fn_08009F8C",
       "size": 14,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "f3e7406ebb8b20e300991ec7e0ccca3f58a6983d"
+      "from": "runs/repair02",
+      "sha1": "48c7946fa6a5ee5d4419a7ff865929f1c61ac572"
     },
     {
       "fn": "fn_08009F9C",
@@ -546,43 +567,43 @@
       "fn": "fn_08009FC8",
       "size": 10,
       "split": "heldout",
-      "from": "runs/doom_sweep1",
-      "sha1": "8ce122959810d0cfdbba3edd4a05b133c05c28db"
+      "from": "runs/repair02",
+      "sha1": "a14281ca41fb3bae7c3b8af7877b8fbe8cf61cd2"
     },
     {
       "fn": "fn_08009FD4",
       "size": 16,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "0aae83363a76aff42af281a1148252092c0ff67f"
+      "from": "runs/repair02",
+      "sha1": "93f2751e7841789fe0815550004daac0652ea461"
     },
     {
       "fn": "fn_0800A11C",
       "size": 24,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "496ba3b652f7ab4ea5e123dc93cac209296793e7"
+      "from": "runs/repair02",
+      "sha1": "455066cfc06ccfd0adecb9a3b8435fa5a175f108"
     },
     {
       "fn": "fn_0800A134",
       "size": 24,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "636a368ecefa8fd92c673400fde8486016963ff0"
+      "from": "runs/repair02",
+      "sha1": "85964a148d749dffb65a2b4f8125d8f6100c956d"
     },
     {
       "fn": "fn_0800A14C",
       "size": 24,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "8d1b719968f3d7e2dfe220ee0e44d1ed57d7dbe7"
+      "from": "runs/repair02",
+      "sha1": "2de6fd9e0dd48519f477ebedae76ba0f8f91216c"
     },
     {
       "fn": "fn_0800A164",
       "size": 16,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "47f7d265f9a095aa6d642bd99dfdbd8e15a8e035"
+      "from": "runs/repair02",
+      "sha1": "53bca7d4d8256c9965f64e01c7363794f01e98f0"
     },
     {
       "fn": "fn_0800A174",
@@ -595,8 +616,8 @@
       "fn": "fn_0800A184",
       "size": 28,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "9419ffe36f11ed84299021f22a815508d4bd7724"
+      "from": "runs/repair02",
+      "sha1": "4c7965fc5f958f9854f8659d1d5b28ec828e0a3d"
     },
     {
       "fn": "fn_0800A1A0",
@@ -609,8 +630,8 @@
       "fn": "fn_0800A260",
       "size": 16,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "23b6cc88cf582286d9a67240e67cff7e9a393a12"
+      "from": "runs/repair02",
+      "sha1": "3d90805fba0f7a322086acb1e3febe334d1f7b7c"
     },
     {
       "fn": "fn_0800A270",
@@ -630,15 +651,15 @@
       "fn": "fn_0800A370",
       "size": 12,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "783c5fb1a708dcf2726ad44687a589f7850ecf0d"
+      "from": "runs/repair02",
+      "sha1": "4de9fb9e1d2fbb21d438a36241d4f040e4946056"
     },
     {
       "fn": "fn_0800A418",
       "size": 36,
       "split": "train",
-      "from": "runs/salvage01",
-      "sha1": "339e7298e54ba1df63391e834a838c4b28a19ed1"
+      "from": "runs/repair02",
+      "sha1": "a77ccbba5171c0710fcb9c5684204ae3f934d5ee"
     },
     {
       "fn": "fn_0800A43C",
@@ -651,29 +672,29 @@
       "fn": "fn_0800A484",
       "size": 20,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "3f25a31a325b3f1cf6ecb10762bc1645a115241c"
+      "from": "runs/repair02",
+      "sha1": "46423eba1aef9e40e1d7786ecdb2a4e60de6d7fc"
     },
     {
       "fn": "fn_0800A498",
       "size": 40,
       "split": "train",
-      "from": "runs/salvage01",
-      "sha1": "0b6a8052b641a3406fe277aa8afee3a22a631316"
+      "from": "runs/repair02",
+      "sha1": "ddf37d8719387d28ad2d795cb4ddf206a77236e9"
     },
     {
       "fn": "fn_0800DD94",
       "size": 46,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "b9e233c6b349821aaf4fd550c1d5089e0ee7908a"
+      "from": "runs/repair02",
+      "sha1": "9cf22a03a938f3684ac5739c88ef9cee5d5b2519"
     },
     {
       "fn": "fn_0800DDC4",
       "size": 64,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "049270db38c3fa38d07e6cbc6de5fb73c68fa35a"
+      "from": "runs/repair02",
+      "sha1": "b004ec6ed0bad2f6dda7f8c50b30a874311a7ab9"
     },
     {
       "fn": "fn_0800DE40",
@@ -693,15 +714,15 @@
       "fn": "fn_0800E728",
       "size": 132,
       "split": "heldout",
-      "from": "runs/doom_align_off",
-      "sha1": "612218e76c32d9ac44c9cdc74adc755bafffa4ef"
+      "from": "runs/repair02",
+      "sha1": "c6617d9b7faf2bb2203ae69534489f9f501fc9d9"
     },
     {
       "fn": "fn_0800FDE4",
       "size": 2,
       "split": "heldout",
-      "from": "runs/doom_sweep1",
-      "sha1": "9b9b1c1e5869cab2d842c944972d7b68e31bf071"
+      "from": "runs/repair02",
+      "sha1": "5fa09a94d70ff2b164298515fae75b3a2c1d2cda"
     },
     {
       "fn": "fn_0800FDE8",
@@ -721,43 +742,43 @@
       "fn": "fn_080100E4",
       "size": 40,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "b3aad0d0a95b84999f95f81da40343ec91dd2493"
+      "from": "runs/repair02",
+      "sha1": "8e070a18747d7dac09d33de6a77c4cfccd55f681"
     },
     {
       "fn": "fn_08010D78",
       "size": 36,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "e1595bb952973d16d5a6114cc91ead7d3c12f939"
+      "from": "runs/repair02",
+      "sha1": "51a4755270ed859e37f7838f8ef7fe2566120bfa"
     },
     {
       "fn": "fn_08010D9C",
       "size": 80,
       "split": "train",
-      "from": "runs/doom_relay2",
-      "sha1": "591f205259a35af89d8bc5f1687b289753266cf8"
+      "from": "runs/repair02",
+      "sha1": "daa83215fd3b876d4b62933de7386e267a664c69"
     },
     {
       "fn": "fn_0801102C",
       "size": 140,
       "split": "heldout",
-      "from": "runs/doom_align_off",
-      "sha1": "f5ace9beff6ef9a1e5e3c92b691147ebd778482e"
+      "from": "runs/repair02",
+      "sha1": "12c4df0fa671c276c1c8a312daa4b05572c89cb7"
     },
     {
       "fn": "fn_080114B8",
       "size": 36,
       "split": "train",
-      "from": "runs/salvage01",
-      "sha1": "ab3a081450fd9f157dfecb66e961c3e0d8c60256"
+      "from": "runs/repair02",
+      "sha1": "d275a7323e1034e6f929a34f46f92091127359dc"
     },
     {
       "fn": "fn_08011B54",
       "size": 2,
       "split": "heldout",
-      "from": "runs/doom_sweep1",
-      "sha1": "f7cdb320db7c23634afc017b2313a9bbe80ba3e5"
+      "from": "runs/repair02",
+      "sha1": "13d9cbe8e58f90d2583c24ce95b9ad3a1cc9c76f"
     },
     {
       "fn": "fn_08011E6C",
@@ -770,36 +791,36 @@
       "fn": "fn_080126B8",
       "size": 100,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "9839f08efc48c1823120b3d95bc06c66a4f712cf"
+      "from": "runs/repair02",
+      "sha1": "eb65f677908610da63cb4df278c4a91f3b42ee8c"
     },
     {
       "fn": "fn_0801271C",
       "size": 84,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "b29af403aa0ce279924407b5eb432c8569563a10"
+      "from": "runs/repair02",
+      "sha1": "472db43c57d524399c59709dd2b21a23dcc62784"
     },
     {
       "fn": "fn_08012770",
       "size": 60,
       "split": "heldout",
-      "from": "runs/doom_align_on",
-      "sha1": "3098609a184e6cf0736e993a870bfece93520b99"
+      "from": "runs/repair02",
+      "sha1": "7a305f17726fa7efb0f0038c5ace25e80d0f5957"
     },
     {
       "fn": "fn_080127AC",
       "size": 84,
       "split": "train",
-      "from": "runs/doom_relay1",
-      "sha1": "72223f22ae55b4a6e8452e130ab8d9f33f93bc18"
+      "from": "runs/repair02",
+      "sha1": "0a91f6d409f8c7ee1d5b2cb4555141e872119b00"
     },
     {
       "fn": "fn_08012800",
       "size": 32,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "3bd36ed88a93dd19309691abdc33aea2d5e381b0"
+      "from": "runs/repair02",
+      "sha1": "d85effa179a001623043456746ddb26bb93a68da"
     },
     {
       "fn": "fn_08012FBC",
@@ -826,8 +847,8 @@
       "fn": "fn_080133B4",
       "size": 26,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "c9cd72d1e68dfda38873563490d16cc4192b4401"
+      "from": "runs/repair02",
+      "sha1": "f86af11a8eb31fd310b9007166403b483d58188c"
     },
     {
       "fn": "fn_08013A98",
@@ -840,8 +861,8 @@
       "fn": "fn_08013AA0",
       "size": 8,
       "split": "heldout",
-      "from": "runs/doom_sweep1",
-      "sha1": "7987be3482b0569e781022e75ec8b4104fa70d38"
+      "from": "runs/repair02",
+      "sha1": "ddc1096667f439b17f58238556eda592d4499ad7"
     },
     {
       "fn": "fn_08013AA8",
@@ -854,15 +875,15 @@
       "fn": "fn_08013B5C",
       "size": 16,
       "split": "train",
-      "from": "runs/doom_sweep1",
-      "sha1": "285bca49b21502bdc53102fa75b0f5b7593eb2ea"
+      "from": "runs/repair02",
+      "sha1": "b14c22195b5692175541e7cb14bd06df63f77a62"
     },
     {
       "fn": "fn_08013CA4",
       "size": 60,
       "split": "heldout",
-      "from": "runs/doom_align_on",
-      "sha1": "60338885a6414f7fd3017f56d97b4441bbea5eb0"
+      "from": "runs/repair02",
+      "sha1": "23affc7a143fe2a5319f8b565d60d29fc8e4cecb"
     },
     {
       "fn": "fn_080143EC",
@@ -1029,7 +1050,7 @@
       "fn": "fn_08019B94",
       "size": 28,
       "split": "train",
-      "from": "runs/salvage01",
+      "from": "runs/salvage03",
       "sha1": "6dd5e6de454260c7588aaf305a1a53bf41c0cf05"
     },
     {
@@ -1066,6 +1087,13 @@
       "split": "train",
       "from": "runs/doom_hud01",
       "sha1": "dbe586a09f5037cd8ee6b893e9eb83f895cebcf6"
+    },
+    {
+      "fn": "fn_0801B1F8",
+      "size": 80,
+      "split": "train",
+      "from": "runs/salvage04",
+      "sha1": "eab74a51caaacd3118692cfebf0eedfcaa4335c4"
     },
     {
       "fn": "fn_0801B724",
@@ -1127,7 +1155,7 @@
       "fn": "fn_0801C924",
       "size": 40,
       "split": "train",
-      "from": "runs/salvage01",
+      "from": "runs/salvage03",
       "sha1": "cffac5a8bee99b8fcaba37c660fd06ce163a238b"
     },
     {
@@ -1169,7 +1197,7 @@
       "fn": "fn_0801D780",
       "size": 34,
       "split": "train",
-      "from": "runs/salvage01",
+      "from": "runs/salvage03",
       "sha1": "78876fe08fd1e520fb1cefb9c5eb676578229237"
     }
   ]

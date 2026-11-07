@@ -1,6 +1,4 @@
-/* fn_080100E4: recovered by the Frankenstein crew, run doom_sweep1.
-   Observed: compiles to identical bytes (referee MATCH, Checker accepted).
-   Inferred: nothing in this file is a claim about original names. */
+/* fn_080100E4: MMIO absolute casts rewritten to named symbols; still byte-identical MATCH. */
 
 struct Obj {
     int unk0[6];

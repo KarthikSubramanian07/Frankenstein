@@ -1,6 +1,4 @@
-/* fn_0801102C: recovered by the Frankenstein crew, run doom_align_off.
-   Observed: compiles to identical bytes (referee MATCH, Checker accepted).
-   Inferred: nothing in this file is a claim about original names. */
+/* fn_0801102C: MMIO absolute casts rewritten to named symbols; still byte-identical MATCH. */
 
 extern unsigned char *data_030064C4;
 int fn_08006B00(void);
