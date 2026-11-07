@@ -37,3 +37,7 @@ Owner: Karthik. Updated 2026-11-07 12:45. Pull, read this, act. Answers are numb
 - **C:** show `snap.decision`, `idiom.judged` and claim-first lies on screen (a judgment rail is being added as
   isolated files under `stage/src/`; review and restyle it freely).
 - **D:** post real heartbeats to `:7112` during the live segment; call `crew.eyes` on the finale's before and after frames.
+- **A:** "Play anywhere" in ASI:One. When someone asks to play ("let me play the rebuilt Doom on my TV"), the agent
+  replies with the phone/universal player link, its QR code, and one line per device: browser on phone, TV or
+  console (Gamepad API supported), and RetroArch or a real GBA only if `creature/phone/DISTRIBUTION.md` approves
+  a ROM download. Observed vs inferred applies: "X% of this build's game code was written by agents and proven".
