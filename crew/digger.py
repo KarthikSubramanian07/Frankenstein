@@ -72,6 +72,7 @@ class Digger:
         # Diggers may stake a claim before seeing the verdict (real lies, caught)
         self.cases = getattr(library, "cases", None)  # CaseMemory: solved training functions, by similarity
         self.max_attempts = 0  # 0 = budget from difficulty (Snap triage or the manifest)
+        self.stall_limit = 0  # >0: after this many non-improving attempts think deeper once, then move on
         self.warm_start = None  # callable(fn_id) -> {"src", "match_pct", ...} or None (never in held-out evaluation)
         self.draft = None  # callable(fn_id) -> m2c draft C or None (crew.draft.get_draft), for big functions
         self.draft_min_bytes = 150
@@ -267,7 +268,7 @@ class Digger:
                         if perm.get("rejected"):
                             reply["permuted"]["note"] = ("The permuter matched the bytes but the Checker rejected it: "
                                                          + perm["rejected"] + ". Fix that, keep the structure.")
-                    if stall >= 3 and res["status"] != "MATCH":
+                    if self.stall_limit and stall >= self.stall_limit and res["status"] != "MATCH":
                         if not deeper_used:
                             deeper_used = True
                             reply["think_deeper"] = ("Three attempts without improvement. Stop small edits: re-read the "

@@ -214,3 +214,47 @@ def test_case_memory_never_stores_heldout_and_finds_similar(tmp_path):
     lib.mode = "off"
     assert mem.similar(a2) == []
     assert similarity(asm_signature(a1), asm_signature(a1)) > 0.9
+
+
+def test_stall_rule_thinks_deeper_once_then_moves_on(tmp_path):
+    """Wide, not deep: a function stuck at the same score stops after the stall limit plus one deeper try."""
+    import json as _j
+    from crew.checker import Checker
+    from crew.config import Config
+    from crew.digger import Digger
+    from crew.events import EventLog
+    from crew.library import Library
+    from crew.target import Target
+
+    class Ref:
+        kind = "stub"
+
+        def check(self, fn, src):
+            return {"status": "PARTIAL", "match_pct": 50.0, "diff": [], "lint": {"ok": True, "violations": []},
+                    "first_diff": {"offset": 0, "expected": "", "got": "", "expected_ins": "a", "got_ins": "b"},
+                    "compile": {"ok": True, "log": ""}}
+
+    cfg = Config()
+    t = Target(cfg, Ref())
+    fn = next(f["id"] for f in t.game_functions())
+    seen = []
+
+    class LLMStub:
+        def __init__(self):
+            self.cfg = cfg
+            self.i = 0
+
+        def chat(self, messages, **k):
+            self.i += 1
+            last = messages[-1].get("content") or ""
+            seen.append("think_deeper" in last)
+            return {"message": {"role": "assistant", "content": None, "tool_calls": [{"id": f"c{self.i}", "type": "function",
+                    "function": {"name": "referee_check", "arguments": _j.dumps({"src": f"int f(void){{return {self.i};}}"})}}]},
+                    "tin": 1, "tout": 1, "cost": 0.0, "model": cfg.model}
+
+    log = EventLog(tmp_path, "t")
+    d = Digger("digger-1", LLMStub(), t, Checker(Ref(), log), Library(cfg, mode="off", path=tmp_path / "l.json"), log)
+    d.max_attempts, d.stall_limit = 12, 3
+    out = d.dig(fn)
+    assert out.status == "abandoned" and out.attempts < 12   # moved on early, budget left for other functions
+    assert any(seen)                                          # got exactly the "think deeper" nudge first

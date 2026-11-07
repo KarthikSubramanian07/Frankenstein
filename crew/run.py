@@ -268,11 +268,14 @@ class Run:
                        max_usd=self.args.max_usd_per_fn, types_slice=self.types_slice, budget_ok=self.budget_ok,
                        snap_decide=snap_decide)
             d.warm_start = d0
+            if not self.args.no_permute and self.args.permute_s > 0 and getattr(self.referee, "kind", "") == "lab":
+                d.permute = self._permuter()
             if self.args.draft and getattr(self.referee, "kind", "") == "lab":
                 from .draft import get_draft
                 d.draft = get_draft
                 d.draft_min_bytes = self.args.draft_min_bytes
             d.max_attempts = self.args.max_attempts
+            d.stall_limit = self.args.stall
             while self.budget_ok():
                 with qlock:
                     if not queue:
@@ -368,6 +371,19 @@ class Run:
                     self.director.steer()
         threading.Thread(target=steer_loop, daemon=True).start()
 
+    def _permuter(self):
+        """crew.permuter on near-misses: in-process referee core when it is on this machine, else HTTP."""
+        from . import permuter
+
+        check = permuter.lab_check if getattr(self.referee, "aligner", None) is not None else \
+            permuter.http_checker(self.referee.url)
+        budget = self.args.permute_s
+
+        def run(fn: str, src: str) -> dict:
+            return permuter.permute(fn, src, budget_s=budget, max_checks=int(budget * 10), workers=6,
+                                    seed=int(fn[3:], 16) & 0xFFFF, check=check)
+        return run
+
     def _best_prior_attempt(self, fn: str):
         """Best earlier attempt at this exact function across runs/*/ (full source from attempts/).
         Only for non-evaluation runs: held-out comparisons must never carry state between arms."""
@@ -451,6 +467,7 @@ class Run:
             "snap_reviews": self.checker.snap_reviews, "second_opinion_reviews": self.checker.second_reviews, "cartographer": bool(self.args.cartographer),
             "snap": self._snap_stats(),
             "aligned_feedback": getattr(self.referee, "aligner", None) is not None,
+            "permuter": {"on": not self.args.no_permute and self.args.permute_s > 0, "budget_s": self.args.permute_s},
             "draft": bool(self.args.draft), "draft_used": sum(1 for o in self.outcomes if getattr(o, "draft_used", False)),
             "cost_estimated": any(m not in ("muse-spark-1.3",) for m in self.usage.by_model),
         }
@@ -486,10 +503,15 @@ def parser() -> argparse.ArgumentParser:
     ap.add_argument("--warm-start", action="store_true",
                     help="resume each function from its best earlier attempt (never use in held-out evaluation)")
     ap.add_argument("--max-attempts", type=int, default=0, help="override the per-function attempt budget")
+    ap.add_argument("--permute-s", type=float, default=45.0,
+                    help="seconds of source permutation on near-misses (crew/permuter.py); 0 disables")
+    ap.add_argument("--no-permute", action="store_true", help="never run the permuter")
     ap.add_argument("--draft", action=argparse.BooleanOptionalAction, default=True,
                     help="put m2c's machine draft in the first message for big functions (crew/draft.py)")
     ap.add_argument("--draft-min-bytes", type=int, default=150)
     ap.add_argument("--no-align", action="store_true", help="ablation: no aligned side-by-side feedback")
+    ap.add_argument("--stall", type=int, default=3,
+                    help="attempts without improvement before 'think deeper', then move on (0 = off)")
     ap.add_argument("--director", action="store_true", help="Play to recover: SubQ Snap steers by live heartbeats")
     ap.add_argument("--director-port", type=int, default=7112)
     ap.add_argument("--director-every", type=float, default=4.0, help="seconds between Snap steering decisions")
