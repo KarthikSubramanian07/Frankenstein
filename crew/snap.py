@@ -316,3 +316,46 @@ def decide_next(cfg: Config, fn_id: str, asm: str, history, *, timeout: float = 
     except Exception as e:  # noqa: BLE001 - the Digger must never fail because Snap did
         return {"action": "keep", "confidence": 0.0, "probs": {}, "p_match_within_budget": None,
                 "error": f"{type(e).__name__}: {e}"[:300]}
+
+
+# --------------------------------------------------------------------------------------------- route
+
+def route(cfg: Config, target, query: str, *, k: int = 5, fns: list[str] | None = None, workers: int = 5,
+          timeout: float = 60, state: str | None = None) -> dict:
+    """Map a person's words ("bring back Doomguy's face", "the shotgun") to candidate functions.
+
+    The crew never sees the hidden file map (viz_map), so this is pure inference from the whole-program
+    disassembly: one yes/no question per function, 128 per request, requests in parallel. Every answer is
+    labelled inferred; the referee still proves any recovery. Used by ASI:One requests through crew.serve."""
+    if state is None:
+        state, _ = whole_program_state(target)
+    if fns is None:
+        fns = [f["id"] for f in sorted(target.game_functions(), key=lambda f: int(f["addr"], 16))
+               if f["id"] not in target.recovered]
+    batches = [fns[i:i + MAX_QUESTIONS] for i in range(0, len(fns), MAX_QUESTIONS)]
+
+    def qs(batch):
+        return {_qname("r", fn): {
+            "type": "noul",
+            "instructions": f"A person asked to recover: \"{query[:200]}\". Is function {fn} (under '### {fn}') "
+                            "part of the code that does that?",
+            "criteria": {"true": "Its asm plausibly implements or directly drives what was asked",
+                         "false": "Unrelated to the request"}} for fn in batch}
+
+    t0 = time.perf_counter()
+
+    def run(batch):
+        return batch, decide(cfg, state, qs(batch), op="route", timeout=timeout)
+
+    scores: dict = {}
+    with ThreadPoolExecutor(max_workers=max(1, min(workers, len(batches) or 1))) as ex:
+        for batch, d in ex.map(run, batches):
+            ans = d.get("answers") or {}
+            for fn in batch:
+                p = (ans.get(_qname("r", fn)) or {}).get("noul")
+                if p is not None:
+                    scores[fn] = float(p)
+    ranked = sorted(scores, key=lambda f: -scores[f])[:k]
+    return {"query": query, "fns": ranked, "p": {f: round(scores[f], 4) for f in ranked}, "inferred": True,
+            "basis": "SubQ Snap over the whole-program disassembly (no hidden map)", "considered": len(scores),
+            "latency_ms": round((time.perf_counter() - t0) * 1000)}

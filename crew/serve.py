@@ -4,6 +4,8 @@
     python -m crew.serve --port 7111 --mock   # fixture-backed, instant, for building against
 
 POST /jobs {"fn": "fn_08000A1C", "max_usd": 1.5} -> {"job_id": "j_1", "run_id": "r_asi_01"}
+POST /jobs {"query": "bring back Doomguy's face"} -> SubQ Snap routes the words to a function, then starts the job
+POST /route {"query": "...", "k": 5} -> candidate functions with probabilities (inferred)
 GET  /jobs/{job_id}   GET /status   GET /names/{fn}   GET /health
 Names are always marked inferred: true. Nothing is reported matched without a Checker-accepted referee MATCH.
 """
@@ -12,6 +14,7 @@ from __future__ import annotations
 import argparse
 import itertools
 import json
+import re
 import threading
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -21,6 +24,7 @@ from .config import ROOT, Config
 
 FIX = ROOT / "contracts" / "fixtures"
 MAX_BODY = 256 * 1024
+FN_ID = re.compile(r"fn_[0-9A-F]{8}")  # contracts: ^fn_[0-9A-F]{8}$
 
 
 class Jobs:
@@ -72,6 +76,18 @@ class Jobs:
             job.update(status="failed", error=str(e)[:300])
         finally:
             job.pop("_run", None)
+
+    def route(self, query: str, k: int = 5) -> dict:
+        if self.mock:
+            names = json.loads((FIX / "names.sample.json").read_text())["names"][:k]
+            return {"query": query, "fns": [n["fn"] for n in names], "p": {n["fn"]: 0.5 for n in names},
+                    "inferred": True, "basis": "fixture (mock)", "fixture": True, "latency_ms": 0}
+        from . import snap
+        from .target import Target
+
+        if not hasattr(self, "_target"):
+            self._target = Target(self.cfg)
+        return snap.route(self.cfg, self._target, query, k=max(1, min(10, k)))
 
     def get(self, job_id: str) -> dict | None:
         job = self.jobs.get(job_id)
@@ -159,20 +175,40 @@ def make_handler(jobs: Jobs):
             self._send(404, {"error": "not found"})
 
         def do_POST(self):
-            if self.path.rstrip("/") != "/jobs":
+            path = self.path.rstrip("/")
+            if path not in ("/jobs", "/route"):
                 return self._send(404, {"error": "not found"})
             n = int(self.headers.get("Content-Length") or 0)
             if n > MAX_BODY:
                 return self._send(413, {"error": "body too large"})
             try:
                 body = json.loads(self.rfile.read(n) or b"{}")
+            except json.JSONDecodeError:
+                return self._send(400, {"error": "invalid JSON"})
+            # natural language -> functions (SubQ Snap over the whole program; inferred, never the hidden map)
+            if path == "/route" or ("query" in body and "fn" not in body):
+                q = str(body.get("query") or "").strip()
+                if not q:
+                    return self._send(400, {"error": "expected {\"query\": \"bring back Doomguy's face\"}"})
+                try:
+                    r = jobs.route(q, int(body.get("k", 5)))
+                except Exception as e:
+                    return self._send(503, {"error": f"router unavailable: {str(e)[:160]}"})
+                if path == "/route" or not r.get("fns"):
+                    return self._send(200, r)
+                body = {**body, "fn": r["fns"][0]}
+                routed = r
+            else:
+                routed = None
+            try:
                 fn = str(body["fn"])
-            except (json.JSONDecodeError, KeyError, TypeError):
+                max_usd = min(5.0, max(0.1, float(body.get("max_usd", 1.5))))
+            except (json.JSONDecodeError, KeyError, TypeError, ValueError):
                 return self._send(400, {"error": "expected {\"fn\": \"fn_XXXXXXXX\", \"max_usd\": 1.5}"})
-            if not (fn.startswith("fn_") and len(fn) == 11):
+            if not FN_ID.fullmatch(fn):
                 return self._send(400, {"error": "fn must look like fn_08000A1C"})
-            max_usd = min(5.0, max(0.1, float(body.get("max_usd", 1.5))))
-            self._send(200, jobs.start(fn, max_usd))
+            started = jobs.start(fn, max_usd)
+            self._send(200, {**started, "route": routed} if routed else started)
 
     return H
 
