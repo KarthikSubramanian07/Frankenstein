@@ -166,3 +166,5 @@ Repo About: "Lost games, rebuilt and proven. 87% of classic games are endangered
 - 2026-11-07 15:08 (B): new Meta key installed; Muse digs resumed (doom_dig03 + parallel sweep3/play01). Union refreshed to **173 of 568 (30.5%)**.
 
 - 2026-11-07 15:31 (B): permuter closed 0 of 17 ≥90% near-misses; Muse digs continuing. Union **179 of 568 (31.5%)**, 7,566 of 141,774 code bytes (5.34%).
+
+- 2026-11-07 15:43 (B): doom_par0 matched 5 near-misses; union climbed with sweep3. Headline **219 of 568 (38.6%)**, 10118 of 141774 code bytes (7.14%).
