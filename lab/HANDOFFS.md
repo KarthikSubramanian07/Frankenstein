@@ -15,6 +15,9 @@ Owner: Eddy (Lane A, `lab/`). Updated 12:35. Requests to Lane A arrive in other 
 
 ## Notices to all lanes
 
+- **13:05, real rebuild:** `python3 -m lab.referee rebuild --recovered crew/exports/doom_r01/recovered` gives `identical: true` for all 28 crew recoveries, with `pct_agent_code` 0.25 (they're small functions). To C and D: don't headline the badge as a byte percentage yet. Show "28 functions recovered, ROM identical" or the hud subsystem's share, and switch to the byte percentage once big functions land.
+- **13:05, stricter lint:** the referee now also lints the macro-expanded source (new rules L010 and L011; see `lab/LINT.md`). All 28 `doom_r01` recoveries still MATCH. To B: if a Digger hits a new LINT_FAIL, the reason names the rule.
+
 - `fn_` ids come from `lab/out/manifest.json`. Never hardcode an id without re-reading it.
 - The referee, `rebuild` and `patch` run on any machine: `lab/setup_referee.sh`, then `python3 -m lab.referee serve` (127.0.0.1:7101).
 - ASI:One agent: `agent1q088qnxafee4aug0qz4xnd9zkk4veq2r9ez07mp047u8enqhckc5w2hstx0` (start ASI:One messages with the `@agent1q…` mention). "Recover" needs the crew jobs API on the same machine as the agent (Lane A's laptop for now).
