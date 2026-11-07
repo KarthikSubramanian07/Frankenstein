@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b0b2e">
+  <title>Player 2 · Frankenstein</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header><span class="eyebrow">FRANKENSTEIN / PLAYER 2</span><h1>IT'S ALIVE<span class="dot">.</span></h1><p>The game can change again.</p></header>
+  <section class="screen" aria-label="Game screen">
+    <div class="screenbar"><span>GBADOOM</span><span id="signal">WAITING</span></div>
+    <div class="viewport"><canvas id="game" width="240" height="160" aria-label="Game Boy Advance emulator output"></canvas><div id="cover"><span class="cross">✚</span><strong>PLAYER 2<br>PRESS START</strong></div></div>
+    <p id="status" role="status" aria-live="polite">Ready to load the local demo.</p>
+  </section>
+  <div class="utility"><button id="boot">START DEMO</button><button id="pause" disabled>PAUSE</button><button id="mute" disabled>SOUND ON</button><button id="fullscreen">FULLSCREEN</button></div>
+  <section class="controller" aria-label="Touch controller">
+    <div class="shoulders"><button data-key="l">L</button><button data-key="r">R</button></div>
+    <div class="pad"><button data-key="up" aria-label="Up">▲</button><button data-key="left" aria-label="Left">◀</button><span></span><button data-key="right" aria-label="Right">▶</button><button data-key="down" aria-label="Down">▼</button></div>
+    <div class="actions"><button data-key="b">B</button><button data-key="a">A</button></div>
+    <div class="system"><button data-key="select">SELECT</button><button data-key="start">START</button></div>
+  </section>
+  <p class="hint">ARROWS move · X / Z = A / B · A / S = L / R · ENTER start · BACKSPACE select</p>
+  <details><summary>Load a local game file</summary><label for="rom">Choose the team's assembled .gba file</label><input id="rom" type="file" accept=".gba"><p>Your file stays in this browser.</p></details>
+  <footer><p>Doom © id Software · prBoom by its authors · GBADoom by doomhack</p><p>Browser emulation: mGBA / Jeffrey Pfau and Nicholas VanCise · <a href="https://github.com/thenick775/mgba/tree/feature/wasm">MPL-2.0 core source</a></p><p>Built today: this player page. Game, engine and emulator are prior work.</p><a href="https://github.com/KarthikSubramanian07/Frankenstein">FRANKENSTEIN SOURCE ↗</a></footer>
+</main>
+<script type="module" src="player.js"></script>
+</body></html>
