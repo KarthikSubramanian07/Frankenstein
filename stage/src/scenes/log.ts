@@ -6,7 +6,7 @@ import type { Ctx, Scene } from '../types.ts';
 import { h, esc } from '../types.ts';
 import { gameTotal } from './common.ts';
 
-const RAW = 60; // lines rendered; the column shows the newest that fit
+const RAW = 500; // lines kept on screen; the column scrolls
 
 export class LogScene implements Scene {
   id = 'log' as const;
@@ -29,13 +29,18 @@ export class LogScene implements Scene {
     const total = gameTotal(ctx);
     const tail = s.raw.slice(-RAW);
     const last = tail[tail.length - 1];
-    const key = `${s.matched.length}/${total}|${s.raw.length}|${last?.ts}|${last?.text}`;
+    const key = `${s.matched.length}/${total}|${s.events}|${s.raw.length}|${last?.ts}|${last?.text}`;
     if (key === this.memo) return;
     this.memo = key;
-    // the machine log: newest at the bottom, the column clips the oldest at the top like a terminal
+    // the machine log: newest at the bottom; it follows new lines unless someone scrolled up to read
     const log = this.el.querySelector('[data-k="log"]') as HTMLElement;
+    const pinned = log.scrollHeight - log.scrollTop - log.clientHeight < 30;
+    const fromBottom = log.scrollHeight - log.scrollTop;
     log.innerHTML = tail.length
       ? tail.map((l) => `<li class="${l.kind}"><span class="t">${l.time}</span><span class="w">${esc(l.who)}</span><span class="f">${esc(l.fn)}</span><span class="x">${esc(l.text)}</span></li>`).join('')
       : '<li class="dim"><span class="x">waiting for events…</span></li>';
+    // pinned: stay on the newest line; scrolled up: keep the same lines in view as new ones arrive
+    log.scrollTop = pinned ? log.scrollHeight : log.scrollHeight - fromBottom;
+    log.classList.toggle('back', !pinned);
   }
 }

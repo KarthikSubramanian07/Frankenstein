@@ -82,7 +82,7 @@ export type State = {
   lastChecked: Checked | null; // newest claim the Checker re-ran
   fakes: FakeRejected[]; // fakematch.rejected: bytes matched but the Checker refused it (contract v1.1)
   modelsUsed: Record<string, number>; // attempts per Muse model
-  raw: RawLine[]; // the machine log: one line per real event (rawlog.ts), last 200
+  raw: RawLine[]; // the machine log: one line per real event (rawlog.ts), last 500
   judge: Judge; // the judgment rail: sponsor lines (judgment.ts)
 };
 
@@ -142,7 +142,7 @@ export function apply(s: State, e: Ev): Effect[] {
   if (e.type === 'fixture') { s.fixture = true; return fx; }
   s.events++;
   const rl = rawLine(e);
-  if (rl) { s.raw.push(rl); if (s.raw.length > 200) s.raw.shift(); }
+  if (rl) { s.raw.push(rl); if (s.raw.length > 500) s.raw.shift(); }
   if (t != null) {
     if (s.t0 == null) s.t0 = t;
     if (s.tNow == null || t > s.tNow) s.tNow = t;

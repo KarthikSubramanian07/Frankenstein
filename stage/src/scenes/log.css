@@ -108,3 +108,10 @@ body.obs .lg-game .ttl { display: none; }
 .stage[data-scene='log'] #mark { top: 128px; left: 190px; background: #000; padding: 0 10px; font-size: 18px; line-height: 24px; }
 .lg-raw li { height: 22px; } .lg-raw li .w { vertical-align: top; }
 .lg-raw { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 48px); mask-image: linear-gradient(to bottom, transparent 0, #000 48px); }
+
+/* scrollable: wheel or trackpad goes back through the log; the newest line stays at the bottom */
+.lg-raw { overflow-y: auto; justify-content: flex-start; scrollbar-width: thin; scrollbar-color: #2a2a2a transparent; overscroll-behavior: contain; }
+.lg-raw > li:first-child { margin-top: auto; }
+.lg-raw::-webkit-scrollbar { width: 6px; }
+.lg-raw::-webkit-scrollbar-thumb { background: #2a2a2a; }
+.lg-raw.back { -webkit-mask-image: none; mask-image: none; }
