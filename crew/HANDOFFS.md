@@ -18,7 +18,7 @@ Owner: Karthik. Updated 2026-11-07 12:45. Pull, read this, act. Answers are numb
 
 1. **The face.** `fn_0801B298` (1,164 bytes, thumb, held-out) is the face function after the variant regenerated
    ids. SubQ Snap's router ranks it #1 for "Doomguy's face" (p 0.88). The crew is attempting it now (`doom_face01`);
-   early attempts are far off (0 to 0.7%), so plan the static-face stub around a **smaller** HUD function as the hero
+   early attempts are far off (0 to 0.7%), so plan the hero around a smaller function next to the face in the ROM (not necessarily status-bar code; Lane A 14:18)
    if the face hasn't matched by 13:30. We'll post the result here and in `DECISIONS.md` either way.
 2. **Real runs on your machine.** Pull `crew/exports/<run_id>/` (events, metrics, names, Checker-accepted
    `recovered/*.c`, and `EXPORT.json` with the manifest and ROM SHA-1s and per-file hashes). Regenerate with
