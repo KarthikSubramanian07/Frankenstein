@@ -111,7 +111,7 @@ def build_agent():
 
     agent = Agent(name="frankenstein-excavator", seed=_seed(), port=8002, mailbox=True, publish_agent_details=True,
                   readme_path=str(Path(__file__).with_name("EXCAVATOR_README.md")),
-                  description="Recovers DOOM GBA functions with an agent crew, then has the Frankenstein Referee agent verify them.")
+                  description="Recovers lost games' source code with an agent crew, then has the Frankenstein Referee agent verify it. First patient: Doom.")
     chat = Protocol(spec=chat_protocol_spec)
 
     async def ask_referee(ctx: Context, fn: str, src: str) -> str | None:
@@ -189,7 +189,7 @@ def build_agent():
     return agent
 
 
-HELP = """I'm Frankenstein's Excavator. A crew of coding agents digs DOOM's lost C source out of the Game Boy Advance ROM; \
+HELP = """I'm Frankenstein's Excavator. Frankenstein brings back the lost source code of classic games; Doom is our first patient. A crew of coding agents digs its C source out of the Game Boy Advance ROM; \
 I hand what they find to a separate agent, the Frankenstein Referee, which accepts it only if it compiles byte-identical.
 
 Try:

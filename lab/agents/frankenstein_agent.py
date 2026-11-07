@@ -101,7 +101,7 @@ def _route(text: str) -> str | tuple[str, dict]:
     return HELP
 
 
-HELP = """I'm Frankenstein's referee. Agents rebuild DOOM's lost C source for the Game Boy Advance, and nothing counts unless a compiler proves it is byte-for-byte identical.
+HELP = """I'm Frankenstein's referee. Frankenstein brings back the lost source code of classic games: agents rewrite it from the cartridge, and nothing counts unless a compiler proves it is byte-for-byte identical. Doom (Game Boy Advance) is our first patient.
 
 Try:
 - "Which functions can I try?"
@@ -421,7 +421,7 @@ def build_agent():
 
     agent = Agent(name="frankenstein-referee", seed=_seed(), port=8001, mailbox=True, publish_agent_details=True,
                   readme_path=str(Path(__file__).with_name("AGENT_README.md")),
-                  description="Rebuilds DOOM's lost source for the Game Boy Advance and proves every function byte-identical.")
+                  description="Brings back lost games' source code from the cartridge and proves every function byte-identical. First patient: Doom.")
     chat = Protocol(spec=chat_protocol_spec)
 
     @chat.on_message(ChatMessage)
