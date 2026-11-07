@@ -28,6 +28,7 @@ a{color:var(--violet)}
 /* Controls */
 #controls{position:fixed;inset:0;pointer-events:none;visibility:hidden}
 [data-state=playing] #controls{visibility:visible}
+html:not([data-input=touch]) #controls>*:not(#pause){display:none!important}
 #controls>*{position:fixed;pointer-events:auto;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 #controls b{font-weight:800;letter-spacing:.06em;display:block;line-height:1}
 #controls small{display:block;font-size:9px;letter-spacing:.14em;opacity:.7;margin-top:3px;line-height:1}
@@ -119,5 +120,48 @@ html:not([data-state=playing]) #resume,html:not([data-state=playing]) #mute{disp
 .ledger b{display:block;font-size:10px;letter-spacing:.16em;color:var(--mint);margin-bottom:2px}
 .ledger p+p b{color:var(--violet)}
 .source{font-size:11px;letter-spacing:.12em}
+/* Keyboard / controller legend and toast */
+#legend{position:fixed;display:none;z-index:3;pointer-events:none;font-size:11px;letter-spacing:.04em;color:#d8d5f0;transition:opacity .6s}
+[data-state=playing]:not([data-input=touch]) #legend{display:flex}
+#legend span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+#legend kbd{font:inherit;font-weight:800;color:var(--bolt);padding:2px 6px;border:1px solid var(--line);border-radius:4px;background:rgba(11,11,46,.8)}
+#legend[data-place=column]{flex-direction:column;justify-content:center;gap:12px}
+#legend[data-place=strip],#legend[data-place=below]{flex-wrap:wrap;justify-content:center;gap:8px 14px}
+#legend[data-place=strip]{padding:8px 10px;background:rgba(5,5,20,.72);border-radius:6px}
+#legend.fade[data-place=strip]{opacity:0}
+#toast{position:fixed;z-index:10;left:50%;top:max(14px,env(safe-area-inset-top));transform:translate(-50%,-160%);padding:10px 16px;border:2px solid var(--mint);border-radius:6px;background:#06061a;color:var(--mint);font-size:12px;letter-spacing:.08em;white-space:nowrap;transition:transform .25s;pointer-events:none}
+#toast.show{transform:translate(-50%,0)}
+/* Play it your way */
+#ways{width:100%;border:1px solid var(--line);padding:10px 12px}
+#ways summary{cursor:pointer;color:var(--mint);font-size:12px;letter-spacing:.12em;font-weight:700}
+#ways[open]{display:grid;gap:10px}
+#ways .cta{display:inline-flex;align-items:center;text-decoration:none;font-size:14px;min-height:48px}
+#qr{width:180px;max-width:60vw;background:#fff;border-radius:4px}
+#qr:empty{display:none}
+#qr svg{display:block;width:100%;height:auto}
+/* TV, console browsers, Steam Deck desktop: large type, heavy focus, no mouse needed */
+@media (min-width:1200px) and (min-height:650px){
+  :focus-visible{outline-width:5px;outline-offset:5px}
+  .gate-inner{width:min(100%,900px);gap:20px}
+  #gate h1{font-size:clamp(48px,7vh,96px)}
+  #gate-line{font-size:22px}
+  .fine,.link,.link-button{font-size:16px}
+  .eyebrow{font-size:14px}
+  .cta{min-height:80px;font-size:26px;padding:0 44px}
+  #progress{height:22px}
+  .sheet-inner{width:min(100%,960px);gap:18px}
+  .sheet-head h2{font-size:56px}
+  .sheet-head p,.legend{font-size:18px}
+  .chip{min-height:60px;font-size:16px;padding:0 24px}
+  #sheet h3,#ways summary{font-size:15px}
+  .ledger p{font-size:15px}
+  #legend{font-size:18px}
+  #gate-line{max-width:52ch}
+  #gate .cta:focus{outline:5px solid #3bc7ff;outline-offset:5px}
+  #legend[data-place=column]{gap:18px}
+  #toast{font-size:18px;padding:14px 22px}
+  .round{transform:scale(1.4)}
+  #qr{width:240px}
+}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media (orientation:landscape) and (max-height:480px){.gate-inner{gap:8px}#gate-line{font-size:13px}.cta{min-height:50px}}

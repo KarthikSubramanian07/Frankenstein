@@ -9,9 +9,11 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Player 2">
   <meta name="format-detection" content="telephone=no">
-  <meta name="description" content="Player 2: play the Frankenstein Doom ROM on your phone in a browser GBA emulator.">
+  <meta name="description" content="Play the Frankenstein Doom ROM in a browser Game Boy Advance emulator (mGBA core). Touch, keyboard or controller, on a phone, a laptop, a TV or a console browser.">
   <title>Player 2 · Frankenstein</title>
-  <link rel="icon" href="data:,">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -40,6 +42,9 @@
   <p id="rotate">↻ Turn sideways for the big screen.</p>
 </div>
 
+<aside id="legend" aria-label="Controls"></aside>
+<div id="toast" role="status" aria-live="polite"></div>
+
 <section id="gate" aria-live="polite">
   <div class="gate-inner">
     <span class="eyebrow">FRANKENSTEIN / PLAYER 2</span>
@@ -49,9 +54,9 @@
     <p id="progress-text" class="fine">&nbsp;</p>
     <button id="start" class="cta">PRESS START</button>
     <button id="retry" class="cta ghost">TRY AGAIN</button>
-    <label id="pick" class="link-button">Have the .gba? Load it from this phone<input id="rom" type="file" accept=".gba,application/octet-stream"></label>
+    <label id="pick" class="link-button">Have the .gba? Load it from this device<input id="rom" type="file" accept=".gba,application/octet-stream"></label>
     <p id="gate-note" class="fine">Real emulator, real ROM. This page doesn't vouch for how the ROM was built.</p>
-    <button class="link" data-open-sheet>Controls &amp; credits</button>
+    <button class="link" data-open-sheet>Controls, credits &amp; other devices</button>
   </div>
 </section>
 
@@ -63,6 +68,7 @@
       <button id="mute" class="chip">SOUND ON</button>
       <button id="fullscreen" class="chip">FULL SCREEN</button>
     </div>
+    <p id="sheet-label" class="fine"></p>
     <h3>How to play</h3>
     <dl class="legend">
       <dt>D-pad</dt><dd>Move and turn. Slide your thumb for diagonals.</dd>
@@ -72,14 +78,22 @@
       <dt>USE + STRAFE</dt><dd>Change weapon.</dd>
       <dt>MAP · SELECT</dt><dd>Automap.</dd>
       <dt>MENU · START</dt><dd>Doom's own menu.</dd>
-      <dt>Keyboard</dt><dd>Arrows move. Z fires (B), X uses (A), A / S strafe (L / R), Enter is Start, Backspace is Select.</dd>
+      <dt>Keyboard</dt><dd>Arrows move. Z fires (B), X uses (A), A / S strafe (L / R), Enter is Start, Backspace is Select, Esc pauses.</dd>
+      <dt>Controller</dt><dd>Left stick moves and strafes, right stick turns. A or RT fires, X, B or LT uses, LB / RB strafe, Y changes weapon, Menu is Start, View is Select. View + Menu together pauses.</dd>
     </dl>
     <p class="fine">On iPhone, Safari can't go full screen. Turn sideways, or add this page to your Home Screen.</p>
-    <label class="link-button">Load a .gba from this phone<input id="rom-sheet" type="file" accept=".gba,application/octet-stream"></label>
+    <label class="link-button">Load a .gba from this device<input id="rom-sheet" type="file" accept=".gba,application/octet-stream"></label>
+    <details id="ways">
+      <summary>Play it your way</summary>
+      <div id="ways-download"><p class="fine">Download coming after the license check. <a href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/creature/phone/DISTRIBUTION.md" target="_blank" rel="noopener">What we're checking</a>.</p></div>
+      <p class="fine">Hand this page to another device: scan it with a phone, or open the address on a TV or console browser.</p>
+      <div id="qr" aria-label="QR code of this page"></div>
+      <p id="qr-url" class="fine"></p>
+    </details>
     <h3>Built today / Not ours</h3>
     <div class="ledger">
-      <p><b>Built today</b>This player page: the touch controller, the layout and the loading screens.</p>
-      <p><b>Not ours</b>Doom © id Software. prBoom by its authors. GBADoom by doomhack. mGBA by Jeffrey Pfau, WASM bindings by Nicholas VanCise (<a href="https://github.com/thenick775/mgba/tree/feature/wasm" target="_blank" rel="noopener">MPL-2.0 source</a>).</p>
+      <p><b>Built today</b>This player page: the touch, keyboard and controller input, the layouts, the loading screens and the offline cache.</p>
+      <p><b>Not ours</b>Doom © id Software. prBoom by its authors. GBADoom by doomhack. mGBA by Jeffrey Pfau, WASM bindings by Nicholas VanCise (<a href="https://github.com/thenick775/mgba/tree/feature/wasm" target="_blank" rel="noopener">MPL-2.0 source</a>). QR encoder by Kazuhiko Arase (MIT).</p>
     </div>
     <a class="source" href="https://github.com/KarthikSubramanian07/Frankenstein" target="_blank" rel="noopener">FRANKENSTEIN SOURCE ↗</a>
     <button id="close-sheet" class="link">Close</button>
