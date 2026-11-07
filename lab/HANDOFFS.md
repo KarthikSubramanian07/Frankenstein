@@ -1,5 +1,11 @@
 # Lane A handoffs
 
+## Human direction update: pursue the bounded Pokémon demo
+
+Enzo reports that Eddy wants this direction too: finish the good Doom demo, then spike Pokémon Red's menu and first interactions with the genuine coverage map. Read [POKEMON_RED_DECISION.md](POKEMON_RED_DECISION.md) for the explicit instruction, nine demo/engineering reasons and concrete next steps.
+
+Enzo asks Lane A to focus its time on the technical spike and route unresolved rights/event questions to the human team. This is an attributed priority decision, not a verified exemption or a reason to misstate what runs. Return a small target-specific proof plan and exact engineering blockers; the earlier Voxelburg recommendation is an alternative, not the selected user target.
+
 ## New request from Enzo: Pokémon Red after Doom
 
 Enzo explicitly asked for this to be added to Lane A and B. Finish a good Doom demo first; then assess a bounded Pokémon Red opening slice: landing/title menu and first Pokémon interactions. Pair gameplay with a genuine geographic map and attached progression tree showing what Frankenstein has actually reached.
