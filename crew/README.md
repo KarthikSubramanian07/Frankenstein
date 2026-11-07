@@ -1,10 +1,10 @@
 # crew/ · Lane B · The Crew
 
-`python` `multi-agent` `matching-decompilation` `muse-spark` `subq-snap` `fetch-ai` `mongodb-atlas`
+`video-game-preservation` `multi-agent` `matching-decompilation` `muse-spark` `subq-snap` `fetch-ai` `mongodb-atlas`
 
-> Software dies when its source code does. The crew brings it back from the binary, and a compiler proves every byte. Doom is just the first patient.
+> **Lost games, rebuilt and proven.** 87% of classic US games are critically endangered (VGHF and SPN, 2023), and for most of them the source code is gone. Games don't have to die.
 
-The crew is the part of Frankenstein that writes code. It gets one compiled function at a time as anonymized Thumb disassembly, writes C until the referee (a real compiler with the target's exact flags) says the bytes are identical, and then tries hard to prove itself wrong before anything is accepted. It learns generic compiler habits as it goes, so run N+1 is faster than run N. It never sees original names, hidden source, or the visual map. Doom is our proof case because we can check every answer against hidden source. The method works on any program you're allowed to rebuild.
+The crew is the part of Frankenstein that rebuilds a game's lost source code from the only thing that survives, the compiled game. It takes one function at a time, as anonymized Thumb disassembly, and writes C until the referee (a real compiler with the game's exact flags) says the bytes are identical. Then it tries hard to prove itself wrong before anything is accepted. Once the source is back, the game can be fixed again. The crew learns generic compiler habits as it goes, so each run is faster than the last. It never sees original names, hidden source or the visual map. Doom is our first patient, chosen because it is famous and we can check every answer against hidden source. Victor Frankenstein never checked his work. Ours checks everything.
 
 Deep dive: [`ARCHITECTURE.md`](ARCHITECTURE.md). Results: [`EXPERIMENTS.md`](EXPERIMENTS.md). Contracts: [`../contracts/CONTRACTS.md`](../contracts/CONTRACTS.md) sections 4b, 5 and 6.
 
@@ -115,6 +115,8 @@ What we do about it:
 - **Idioms are generic.** An idiom whose example shares 3 or more consecutive lines with the accepted source is rejected, so the held-out runs stay honest.
 - **Results we don't like still ship.** If the library or the Cartographer doesn't help, `EXPERIMENTS.md` says so.
 
+The same method works anywhere the only thing left is the compiled program, as long as you're allowed to rebuild it.
+
 ## Files
 
 | File | What it does |
@@ -135,7 +137,7 @@ What we do about it:
 | `events.py` | Append-only, thread-safe `events.jsonl` writer |
 | `guard.py` | Isolation: the paths the crew may never read |
 | `serve.py` | Crew jobs API on :7111 for ASI:One |
-| `demo.py` | On-stage live segment with a terminal timer |
+| `demo.py` | On-stage live segment: picks 2 or 3 small unrecovered functions (or takes `--fns`), recovers them live with real model calls and real verdicts, and shows a terminal timer |
 | `doctor.py` | Dependency check |
 | `config.py` | The one place that reads the environment |
 | `bench/` | Real-compiler bench: 20 original functions and a contract-compatible referee ([`TOOLCHAIN.md`](bench/TOOLCHAIN.md)) |

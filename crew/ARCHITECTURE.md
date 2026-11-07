@@ -1,6 +1,6 @@
 # Crew architecture
 
-How Lane B turns one anonymized function into proved C, how a run is put together, and how a live game steers the work. The file formats are the contracts in [`../contracts/CONTRACTS.md`](../contracts/CONTRACTS.md) (4b jobs API, 5 events, 6 metrics). The decisions behind them are in [`../DECISIONS.md`](../DECISIONS.md). Everything here is stdlib Python plus optional `pymongo`.
+Frankenstein rebuilds a lost game's source code from the compiled game, and a compiler accepts only byte-identical pieces. Doom is the first patient. This page explains how Lane B turns one anonymized function into proved C, how a run is put together, and how a live game steers the work. The file formats are the contracts in [`../contracts/CONTRACTS.md`](../contracts/CONTRACTS.md) (4b jobs API, 5 events, 6 metrics). The decisions behind them are in [`../DECISIONS.md`](../DECISIONS.md). Everything here is stdlib Python plus optional `pymongo`.
 
 ## 1. One function's life
 
