@@ -23,6 +23,26 @@ Extra websocket fields: `fixture` (boolean), `run_id` (string/null), `source_sta
 
 Healing is unique accepted `fn.matched` ids divided by game-function ids in each viz group. Library ids and unknown ids do not count. Run switches, file truncation, changed file identity, or replaced prefix reset recovery. Partial last lines wait for a newline. Start the bridge again when switching to a different manifest/build; never reuse old function ids after an address-changing build.
 
-Crew integration request: `crew/director.py` supports `Director.heartbeat(running, frame_png)` but the current `crew/serve.py` does not expose a heartbeat endpoint. This checkpoint serves the observed `running` samples for local consumers; it does not guess a director HTTP API, submit jobs, read hidden viz grouping into Crew, or claim SubQ has acted. A later explicit local integration must pass observed ids and screenshot bytes only, with model decisions labeled as inferred.
+## Play-to-recover adapter
+
+The actual integration lives in `crew/run.py`: starting a run with `--director` opens `POST http://127.0.0.1:7112/heartbeat` (change with `--director-port`) and steers its pending recovery queue every four seconds. The separate `crew.serve` jobs API does not provide this route.
+
+Start the bridge and real tap first. Inspect eligibility without forwarding or triggering Crew's model work:
+
+```sh
+python -m creature.bridge.director_adapter --once
+```
+
+Once an already-running, budgeted Crew run has enabled `--director`, feed it actual samples:
+
+```sh
+python -m creature.bridge.director_adapter --forward --shots-root creature/shots
+```
+
+The adapter polls localhost, forwards each real emulator frame at most once, and sends only `running` ids plus optional `frame_png_b64`. It rejects fixture, missing-source, stale, unknown, and empty samples. It never sends the hidden `viz_map`, subsystem labels, or healing values to Crew. It does not start jobs or call models itself; the opted-in Crew run may make Snap steering calls under its configured budget. A successful HTTP acknowledgment only means Crew received telemetry, not that Snap succeeded or any function recovered.
+
+Screenshots must be PNG files inside the configured shots directory, at most 4 MiB, received within four seconds. The tap supplies an actual local `screenshot_path`; no image is synthesized. Missing screenshots do not prevent genuine PC-only heartbeats. Additional snapshot fields `screenshot_path` and `screenshot_age_s` are local integration metadata; do not publish the machine path in presentation UI.
+
+Remaining B handoff: `Director` currently retains old heartbeat samples until replaced (rolling count window), so B should expire samples by time when the tap stops; D stops forwarding stale frames immediately. B should also ensure the director HTTP listener shuts down when its run finishes, before a second run reuses port 7112. These are Crew-owned lifecycle changes.
 
 All listeners bind localhost. Launching with missing manifest/viz files fails clearly instead of substituting sample data. Ports can be changed with `--tap-port`, `--ws-port`, and `--http-port`.
