@@ -53,6 +53,8 @@ class Run:
         self.cfg = cfg
         self.args = args
         self.referee = make_referee(cfg.referee_url)
+        if getattr(args, "no_align", False) and hasattr(self.referee, "aligner"):
+            self.referee.aligner = None  # ablation: positional feedback only
         self.target = Target(cfg, self.referee)
         cfg.runs_dir.mkdir(parents=True, exist_ok=True)
         self.run_id = args.run_id or new_run_id(cfg.runs_dir)
@@ -444,6 +446,7 @@ class Run:
             "library_status": self.library.counts(), "case_memory": len(self.library.cases.items), "library_baseline": round(self.library.baseline(), 3),
             "snap_reviews": self.checker.snap_reviews, "second_opinion_reviews": self.checker.second_reviews, "cartographer": bool(self.args.cartographer),
             "snap": self._snap_stats(),
+            "aligned_feedback": getattr(self.referee, "aligner", None) is not None,
             "cost_estimated": any(m not in ("muse-spark-1.3",) for m in self.usage.by_model),
         }
         if getattr(self.referee, "kind", "") == "mock" or self.target.fixture:
@@ -478,6 +481,7 @@ def parser() -> argparse.ArgumentParser:
     ap.add_argument("--warm-start", action="store_true",
                     help="resume each function from its best earlier attempt (never use in held-out evaluation)")
     ap.add_argument("--max-attempts", type=int, default=0, help="override the per-function attempt budget")
+    ap.add_argument("--no-align", action="store_true", help="ablation: no aligned side-by-side feedback")
     ap.add_argument("--director", action="store_true", help="Play to recover: SubQ Snap steers by live heartbeats")
     ap.add_argument("--director-port", type=int, default=7112)
     ap.add_argument("--director-every", type=float, default=4.0, help="seconds between Snap steering decisions")
