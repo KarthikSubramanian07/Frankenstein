@@ -78,7 +78,11 @@ def check_file(vals, path: Path) -> list[str]:
 def default_targets() -> list[Path]:
     files = sorted(p for p in FIX.iterdir() if p.suffix in (".json", ".jsonl"))
     runs = ROOT / "runs"
+    # Helper-tool runs (permuter, salvage, repair) write their own report formats, not a crew run's contract.
+    tool_run = ("permute", "salvage", "repair", "_")
     for d in sorted(p for p in runs.iterdir() if p.is_dir() and not p.is_symlink()) if runs.exists() else []:
+        if d.name.startswith(tool_run):
+            continue
         files += [p for p in (d / "events.jsonl", d / "metrics.json", d / "names.json") if p.exists()]
     for p in (ROOT / "lab" / "out").glob("*.json"):
         files.append(p)
