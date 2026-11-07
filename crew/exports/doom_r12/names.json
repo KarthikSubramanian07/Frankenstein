@@ -1,0 +1,42 @@
+{
+  "v": 1,
+  "run_id": "doom_r12",
+  "names": [
+    {
+      "fn": "fn_08013CA4",
+      "name": "reset_global_state",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08012770",
+      "name": "insert_into_first_zero_slot",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080039F8",
+      "name": "gather_words_then_byte_copy",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080077E4",
+      "name": "alloc_init_and_link_structs",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08009468",
+      "name": "process_next_clear_flag_and_update",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801102C",
+      "name": "conditional_counter_update",
+      "inferred": true,
+      "basis": "recovered code"
+    }
+  ]
+}

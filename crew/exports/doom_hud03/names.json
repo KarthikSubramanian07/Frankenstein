@@ -1,0 +1,12 @@
+{
+  "v": 1,
+  "run_id": "doom_hud03",
+  "names": [
+    {
+      "fn": "fn_0801ABC0",
+      "name": "guarded_dispatch_and_clear",
+      "inferred": true,
+      "basis": "recovered code"
+    }
+  ]
+}

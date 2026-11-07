@@ -1,0 +1,21 @@
+{
+  "v": 1,
+  "run_id": "doom_r12",
+  "manifest": "lab/out/manifest.json",
+  "manifest_sha1": "a6ff9e7ec03e776f5a539f9db47f925d32e5c5d7",
+  "target_rom_sha1": "d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2",
+  "game_id": "doom",
+  "recovered": 6,
+  "files": {
+    "events.jsonl": "465c91d570e4e6af9fdc7a5c1bef72d4cf69ce42",
+    "metrics.json": "66e0ba147d978b513c898bdf86fd3fff2070d3db",
+    "names.json": "9fac314ca3dbf629877e70bcaf72e751ff2a1be9",
+    "recovered/fn_080039F8.c": "dc026db7b9c8982904a875e4e3e520ca735f51eb",
+    "recovered/fn_080077E4.c": "1cded49cfb7211c584263631cc5de729119949f8",
+    "recovered/fn_08009468.c": "62039bf6c1e25264d78e278ba0cf61887793786b",
+    "recovered/fn_0801102C.c": "4a5e483280cd43758eb600487debe89c0314baba",
+    "recovered/fn_08012770.c": "21308a95ae610383a50ebbafea76dc6ef665d82d",
+    "recovered/fn_08013CA4.c": "adc3e262f67150dea4b56f80c1648fe1e375c017"
+  },
+  "fixture": false
+}

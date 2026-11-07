@@ -1,0 +1,110 @@
+{
+  "v": 1,
+  "run_id": "doom_hud03",
+  "label": "doom \u00b7 the status bar, warm start",
+  "split": "train",
+  "library": "on",
+  "model": "muse-spark-1.3",
+  "reasoning_effort": "high",
+  "fn_total": 6,
+  "matched": 1,
+  "match_rate": 0.167,
+  "attempts_per_match": 10.0,
+  "minutes_per_match": 3.46,
+  "cost_per_match_usd": 1.5601,
+  "false_claims_caught": 0,
+  "fakematches_rejected": 0,
+  "cost_usd": 1.5601,
+  "curve": [
+    {
+      "t_min": 0,
+      "matched": 0
+    },
+    {
+      "t_min": 1,
+      "matched": 0
+    },
+    {
+      "t_min": 2,
+      "matched": 0
+    },
+    {
+      "t_min": 3,
+      "matched": 0
+    },
+    {
+      "t_min": 4,
+      "matched": 1
+    },
+    {
+      "t_min": 5,
+      "matched": 1
+    },
+    {
+      "t_min": 6,
+      "matched": 1
+    }
+  ],
+  "muse": {
+    "calls": 64,
+    "tool_calls": 66,
+    "image_calls": 0,
+    "tokens_in": 663846,
+    "tokens_out": 171843,
+    "reasoning_effort": "high",
+    "cost_usd": 1.5601,
+    "by_model": {
+      "muse-spark-1.3": {
+        "calls": 18,
+        "cost_usd": 0.5181
+      },
+      "muse-wonder-1.0": {
+        "calls": 46,
+        "cost_usd": 1.042
+      }
+    }
+  },
+  "attempts_total": 54,
+  "elapsed_s": 355.6,
+  "referee": "lab",
+  "fixture_target": false,
+  "library_backend": "mongodb-atlas:idioms__doom_lib",
+  "library_size": 38,
+  "library_status": {
+    "candidate": 38,
+    "adopted": 0,
+    "retired": 0
+  },
+  "case_memory": 28,
+  "library_baseline": 0.5,
+  "snap_reviews": 1,
+  "second_opinion_reviews": 1,
+  "cartographer": false,
+  "snap": {
+    "on": true,
+    "model": "subq-snap-1.1",
+    "snap_calls": 45,
+    "errors": 0,
+    "latency_ms_mean": 656.3,
+    "input_tokens": 130413,
+    "cost_usd": 0.005217,
+    "by_op": {
+      "decide_next": {
+        "calls": 44,
+        "latency_ms_total": 28738.32433510688,
+        "input_tokens": 128637
+      },
+      "review": {
+        "calls": 1,
+        "latency_ms_total": 793.5935840068851,
+        "input_tokens": 1776
+      }
+    }
+  },
+  "cost_estimated": true,
+  "memory": {
+    "backend": "mongodb-atlas",
+    "events_written": 318,
+    "error": null
+  }
+}

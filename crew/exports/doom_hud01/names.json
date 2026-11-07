@@ -1,0 +1,18 @@
+{
+  "v": 1,
+  "run_id": "doom_hud01",
+  "names": [
+    {
+      "fn": "fn_0801AC0C",
+      "name": "guarded_clear_array_field",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801C130",
+      "name": "forward_first_args_with_last_arg_transformed",
+      "inferred": true,
+      "basis": "recovered code"
+    }
+  ]
+}
