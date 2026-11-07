@@ -1,0 +1,1404 @@
+{
+ "v": 1,
+ "game": "pokered",
+ "build_sha1": "ea9bcae617fdf159b045185467ae58b2e4a48b9a",
+ "proof": "rgbds-1.0.4 per-routine byte match",
+ "slice": "title screen + main menu (stops at new-game intro, overworld entry, cable club, debug paths, soft reset)",
+ "method": "static call closure from 3 entry points; jump tables/jp hl not followed",
+ "units": 148,
+ "bytes": 8708,
+ "banks": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  7,
+  8,
+  13,
+  15,
+  16,
+  28,
+  31
+ ],
+ "boundary_units": 5,
+ "routines": [
+  {
+   "id": "rt_00_0061",
+   "bank": 0,
+   "addr": "0061",
+   "size": 26,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_007b",
+   "bank": 0,
+   "addr": "007b",
+   "size": 7,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_0082",
+   "bank": 0,
+   "addr": "0082",
+   "size": 11,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_009d",
+   "bank": 0,
+   "addr": "009d",
+   "size": 24,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_00b5",
+   "bank": 0,
+   "addr": "00b5",
+   "size": 9,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_019a",
+   "bank": 0,
+   "addr": "019a",
+   "size": 20,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_12f8",
+   "bank": 0,
+   "addr": "12f8",
+   "size": 27,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_1313",
+   "bank": 0,
+   "addr": "1313",
+   "size": 35,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_1389",
+   "bank": 0,
+   "addr": "1389",
+   "size": 71,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_13d0",
+   "bank": 0,
+   "addr": "13d0",
+   "size": 9,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_13d9",
+   "bank": 0,
+   "addr": "13d9",
+   "size": 35,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_1537",
+   "bank": 0,
+   "addr": "1537",
+   "size": 125,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_1627",
+   "bank": 0,
+   "addr": "1627",
+   "size": 62,
+   "depth": 4,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_1665",
+   "bank": 0,
+   "addr": "1665",
+   "size": 13,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_17f7",
+   "bank": 0,
+   "addr": "17f7",
+   "size": 22,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_182b",
+   "bank": 0,
+   "addr": "182b",
+   "size": 29,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_1848",
+   "bank": 0,
+   "addr": "1848",
+   "size": 62,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_1886",
+   "bank": 0,
+   "addr": "1886",
+   "size": 62,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_190f",
+   "bank": 0,
+   "addr": "190f",
+   "size": 19,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_1922",
+   "bank": 0,
+   "addr": "1922",
+   "size": 51,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_1955",
+   "bank": 0,
+   "addr": "1955",
+   "size": 1,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_1f49",
+   "bank": 0,
+   "addr": "1f49",
+   "size": 11,
+   "depth": 4,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_1f54",
+   "bank": 0,
+   "addr": "1f54",
+   "size": 176,
+   "depth": 2,
+   "boundary": true,
+   "root": false
+  },
+  {
+   "id": "rt_00_200e",
+   "bank": 0,
+   "addr": "200e",
+   "size": 22,
+   "depth": 5,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_20af",
+   "bank": 0,
+   "addr": "20af",
+   "size": 11,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_20ba",
+   "bank": 0,
+   "addr": "20ba",
+   "size": 23,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_23b1",
+   "bank": 0,
+   "addr": "23b1",
+   "size": 120,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_2429",
+   "bank": 0,
+   "addr": "2429",
+   "size": 25,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_24fd",
+   "bank": 0,
+   "addr": "24fd",
+   "size": 29,
+   "depth": 5,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_251a",
+   "bank": 0,
+   "addr": "251a",
+   "size": 60,
+   "depth": 6,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_2670",
+   "bank": 0,
+   "addr": "2670",
+   "size": 27,
+   "depth": 7,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_268b",
+   "bank": 0,
+   "addr": "268b",
+   "size": 20,
+   "depth": 7,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_2b7f",
+   "bank": 0,
+   "addr": "2b7f",
+   "size": 23,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_30e8",
+   "bank": 0,
+   "addr": "30e8",
+   "size": 21,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_35bc",
+   "bank": 0,
+   "addr": "35bc",
+   "size": 17,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_35cd",
+   "bank": 0,
+   "addr": "35cd",
+   "size": 9,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3680",
+   "bank": 0,
+   "addr": "3680",
+   "size": 32,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_36a0",
+   "bank": 0,
+   "addr": "36a0",
+   "size": 32,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_36e0",
+   "bank": 0,
+   "addr": "36e0",
+   "size": 11,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_36f4",
+   "bank": 0,
+   "addr": "36f4",
+   "size": 13,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3701",
+   "bank": 0,
+   "addr": "3701",
+   "size": 8,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3709",
+   "bank": 0,
+   "addr": "3709",
+   "size": 16,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3719",
+   "bank": 0,
+   "addr": "3719",
+   "size": 12,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3725",
+   "bank": 0,
+   "addr": "3725",
+   "size": 20,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3739",
+   "bank": 0,
+   "addr": "3739",
+   "size": 7,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3748",
+   "bank": 0,
+   "addr": "3748",
+   "size": 21,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3831",
+   "bank": 0,
+   "addr": "3831",
+   "size": 52,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3a87",
+   "bank": 0,
+   "addr": "3a87",
+   "size": 7,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3abe",
+   "bank": 0,
+   "addr": "3abe",
+   "size": 4,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3b7c",
+   "bank": 0,
+   "addr": "3b7c",
+   "size": 112,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3bec",
+   "bank": 0,
+   "addr": "3bec",
+   "size": 13,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3bf9",
+   "bank": 0,
+   "addr": "3bf9",
+   "size": 11,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3c49",
+   "bank": 0,
+   "addr": "3c49",
+   "size": 16,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3c5f",
+   "bank": 0,
+   "addr": "3c5f",
+   "size": 312,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3dab",
+   "bank": 0,
+   "addr": "3dab",
+   "size": 2,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3dd4",
+   "bank": 0,
+   "addr": "3dd4",
+   "size": 3,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3dd7",
+   "bank": 0,
+   "addr": "3dd7",
+   "size": 5,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3ddc",
+   "bank": 0,
+   "addr": "3ddc",
+   "size": 9,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3de5",
+   "bank": 0,
+   "addr": "3de5",
+   "size": 8,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3ded",
+   "bank": 0,
+   "addr": "3ded",
+   "size": 2,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3def",
+   "bank": 0,
+   "addr": "3def",
+   "size": 10,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3e5c",
+   "bank": 0,
+   "addr": "3e5c",
+   "size": 17,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_00_3e94",
+   "bank": 0,
+   "addr": "3e94",
+   "size": 25,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_42b1",
+   "bank": 1,
+   "addr": "42b1",
+   "size": 6,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_42b7",
+   "bank": 1,
+   "addr": "42b7",
+   "size": 38,
+   "depth": 0,
+   "boundary": false,
+   "root": true
+  },
+  {
+   "id": "rt_01_42dd",
+   "bank": 1,
+   "addr": "42dd",
+   "size": 441,
+   "depth": 0,
+   "boundary": false,
+   "root": true
+  },
+  {
+   "id": "rt_01_4496",
+   "bank": 1,
+   "addr": "4496",
+   "size": 43,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_44c1",
+   "bank": 1,
+   "addr": "44c1",
+   "size": 14,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_44cf",
+   "bank": 1,
+   "addr": "44cf",
+   "size": 14,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_44dd",
+   "bank": 1,
+   "addr": "44dd",
+   "size": 60,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_4519",
+   "bank": 1,
+   "addr": "4519",
+   "size": 11,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_4524",
+   "bank": 1,
+   "addr": "4524",
+   "size": 15,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_4533",
+   "bank": 1,
+   "addr": "4533",
+   "size": 5,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_4598",
+   "bank": 1,
+   "addr": "4598",
+   "size": 9,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_4c34",
+   "bank": 1,
+   "addr": "4c34",
+   "size": 40,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_4c5c",
+   "bank": 1,
+   "addr": "4c5c",
+   "size": 20,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_4c70",
+   "bank": 1,
+   "addr": "4c70",
+   "size": 258,
+   "depth": 4,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_4d72",
+   "bank": 1,
+   "addr": "4d72",
+   "size": 19,
+   "depth": 5,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_4da5",
+   "bank": 1,
+   "addr": "4da5",
+   "size": 1,
+   "depth": 1,
+   "boundary": true,
+   "root": false
+  },
+  {
+   "id": "rt_01_4e31",
+   "bank": 1,
+   "addr": "4e31",
+   "size": 150,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_4ed1",
+   "bank": 1,
+   "addr": "4ed1",
+   "size": 247,
+   "depth": 4,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_4fc8",
+   "bank": 1,
+   "addr": "4fc8",
+   "size": 3,
+   "depth": 5,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_4fcb",
+   "bank": 1,
+   "addr": "4fcb",
+   "size": 51,
+   "depth": 5,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_4ffe",
+   "bank": 1,
+   "addr": "4ffe",
+   "size": 89,
+   "depth": 5,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_5057",
+   "bank": 1,
+   "addr": "5057",
+   "size": 28,
+   "depth": 5,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_5073",
+   "bank": 1,
+   "addr": "5073",
+   "size": 12,
+   "depth": 5,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_507f",
+   "bank": 1,
+   "addr": "507f",
+   "size": 46,
+   "depth": 5,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_50ad",
+   "bank": 1,
+   "addr": "50ad",
+   "size": 16,
+   "depth": 5,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_50bd",
+   "bank": 1,
+   "addr": "50bd",
+   "size": 31,
+   "depth": 5,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_50dc",
+   "bank": 1,
+   "addr": "50dc",
+   "size": 123,
+   "depth": 5,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_5157",
+   "bank": 1,
+   "addr": "5157",
+   "size": 23,
+   "depth": 6,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_516e",
+   "bank": 1,
+   "addr": "516e",
+   "size": 153,
+   "depth": 6,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_5207",
+   "bank": 1,
+   "addr": "5207",
+   "size": 40,
+   "depth": 5,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_522f",
+   "bank": 1,
+   "addr": "522f",
+   "size": 7,
+   "depth": 5,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_5236",
+   "bank": 1,
+   "addr": "5236",
+   "size": 112,
+   "depth": 4,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_52a6",
+   "bank": 1,
+   "addr": "52a6",
+   "size": 12,
+   "depth": 5,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_52b2",
+   "bank": 1,
+   "addr": "52b2",
+   "size": 5,
+   "depth": 5,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_52b7",
+   "bank": 1,
+   "addr": "52b7",
+   "size": 3,
+   "depth": 5,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_52ba",
+   "bank": 1,
+   "addr": "52ba",
+   "size": 9,
+   "depth": 6,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_52c3",
+   "bank": 1,
+   "addr": "52c3",
+   "size": 62,
+   "depth": 5,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_5301",
+   "bank": 1,
+   "addr": "5301",
+   "size": 22,
+   "depth": 6,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_5ab3",
+   "bank": 1,
+   "addr": "5ab3",
+   "size": 45,
+   "depth": 5,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_5ae0",
+   "bank": 1,
+   "addr": "5ae0",
+   "size": 6,
+   "depth": 6,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_5af2",
+   "bank": 1,
+   "addr": "5af2",
+   "size": 269,
+   "depth": 0,
+   "boundary": false,
+   "root": true
+  },
+  {
+   "id": "rt_01_5bff",
+   "bank": 1,
+   "addr": "5bff",
+   "size": 11,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_5d52",
+   "bank": 1,
+   "addr": "5d52",
+   "size": 5,
+   "depth": 1,
+   "boundary": true,
+   "root": false
+  },
+  {
+   "id": "rt_01_5d5f",
+   "bank": 1,
+   "addr": "5d5f",
+   "size": 31,
+   "depth": 1,
+   "boundary": true,
+   "root": false
+  },
+  {
+   "id": "rt_01_5db5",
+   "bank": 1,
+   "addr": "5db5",
+   "size": 58,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_5e2f",
+   "bank": 1,
+   "addr": "5e2f",
+   "size": 19,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_5e42",
+   "bank": 1,
+   "addr": "5e42",
+   "size": 19,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_5e55",
+   "bank": 1,
+   "addr": "5e55",
+   "size": 21,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_5e8a",
+   "bank": 1,
+   "addr": "5e8a",
+   "size": 310,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_601f",
+   "bank": 1,
+   "addr": "601f",
+   "size": 45,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_604c",
+   "bank": 1,
+   "addr": "604c",
+   "size": 74,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_609e",
+   "bank": 1,
+   "addr": "609e",
+   "size": 44,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_62ce",
+   "bank": 1,
+   "addr": "62ce",
+   "size": 49,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_62ff",
+   "bank": 1,
+   "addr": "62ff",
+   "size": 192,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_64ea",
+   "bank": 1,
+   "addr": "64ea",
+   "size": 1,
+   "depth": 2,
+   "boundary": true,
+   "root": false
+  },
+  {
+   "id": "rt_01_72ea",
+   "bank": 1,
+   "addr": "72ea",
+   "size": 98,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_734c",
+   "bank": 1,
+   "addr": "734c",
+   "size": 14,
+   "depth": 4,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_735a",
+   "bank": 1,
+   "addr": "735a",
+   "size": 13,
+   "depth": 4,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_7367",
+   "bank": 1,
+   "addr": "7367",
+   "size": 14,
+   "depth": 4,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_7375",
+   "bank": 1,
+   "addr": "7375",
+   "size": 18,
+   "depth": 4,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_7559",
+   "bank": 1,
+   "addr": "7559",
+   "size": 229,
+   "depth": 4,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_763e",
+   "bank": 1,
+   "addr": "763e",
+   "size": 24,
+   "depth": 5,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_01_7656",
+   "bank": 1,
+   "addr": "7656",
+   "size": 27,
+   "depth": 5,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_02_5876",
+   "bank": 2,
+   "addr": "5876",
+   "size": 672,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_03_4000",
+   "bank": 3,
+   "addr": "4000",
+   "size": 52,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_03_4034",
+   "bank": 3,
+   "addr": "4034",
+   "size": 8,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_03_403c",
+   "bank": 3,
+   "addr": "403c",
+   "size": 17,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_03_4754",
+   "bank": 3,
+   "addr": "4754",
+   "size": 94,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_03_71a6",
+   "bank": 3,
+   "addr": "71a6",
+   "size": 34,
+   "depth": 6,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_03_71e6",
+   "bank": 3,
+   "addr": "71e6",
+   "size": 63,
+   "depth": 7,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_04_7a8f",
+   "bank": 4,
+   "addr": "7a8f",
+   "size": 17,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_07_498a",
+   "bank": 7,
+   "addr": "498a",
+   "size": 55,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_08_6035",
+   "bank": 8,
+   "addr": "6035",
+   "size": 672,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_0d_7258",
+   "bank": 13,
+   "addr": "7258",
+   "size": 18,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_0d_726a",
+   "bank": 13,
+   "addr": "726a",
+   "size": 54,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_0d_72ac",
+   "bank": 13,
+   "addr": "72ac",
+   "size": 24,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_0d_72c4",
+   "bank": 13,
+   "addr": "72c4",
+   "size": 18,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_0f_70d0",
+   "bank": 15,
+   "addr": "70d0",
+   "size": 51,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_10_5010",
+   "bank": 16,
+   "addr": "5010",
+   "size": 20,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_1c_5ddf",
+   "bank": 28,
+   "addr": "5ddf",
+   "size": 32,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_1c_5fc2",
+   "bank": 28,
+   "addr": "5fc2",
+   "size": 41,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_1c_75e8",
+   "bank": 28,
+   "addr": "75e8",
+   "size": 54,
+   "depth": 1,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_1c_7623",
+   "bank": 28,
+   "addr": "7623",
+   "size": 109,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_1c_7690",
+   "bank": 28,
+   "addr": "7690",
+   "size": 45,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_1c_76bd",
+   "bank": 28,
+   "addr": "76bd",
+   "size": 58,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_1c_76f7",
+   "bank": 28,
+   "addr": "76f7",
+   "size": 1,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_1c_76f8",
+   "bank": 28,
+   "addr": "76f8",
+   "size": 9,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_1c_7856",
+   "bank": 28,
+   "addr": "7856",
+   "size": 13,
+   "depth": 3,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_1c_7b6a",
+   "bank": 28,
+   "addr": "7b6a",
+   "size": 51,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  },
+  {
+   "id": "rt_1f_58ea",
+   "bank": 31,
+   "addr": "58ea",
+   "size": 672,
+   "depth": 2,
+   "boundary": false,
+   "root": false
+  }
+ ]
+}
