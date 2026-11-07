@@ -67,3 +67,4 @@ A dated log. Every assumption, contradiction, and partner-prize answer goes here
 ## 2026-11-07 11:20 · Lane A
 
 - 2026-11-07 11:20 (A): T1 passes. devkitARM r68, GCC 16.1.0 in Docker (digest in `lab/TOOLCHAIN.md`), GBADoom @7763f5f minus `-flto=8`. Target SHA-1 `a6c18b5d4d0f7fb503423a7350a88237f43f2bb1`, 840 functions in the ELF. Static helpers inline at -O3, so the face code is one function (`ST_updateFaceWidget`, 1,160 bytes).
+- 2026-11-07 11:40 (A): manifest is real. 796 functions: 569 game (171 heldout, seed 7, 3 of every 10 by size), 227 library (toolchain, libtimidity, C++ layer, .s). Subsystems: hud 12, weapons 31, enemies 66, world 460. Committed `lab/out/manifest.json`, `viz_map.json`, `asm/`, `ctx/` (GPL notice in `lab/out/NOTICE.md`); ROM and answer key stay ignored. Known gap: globals reached through literal pools show as raw `.word` addresses and are not yet listed in ctx headers.

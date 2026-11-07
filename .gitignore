@@ -4,6 +4,11 @@ lab/secrets/*
 !lab/secrets/.gitkeep
 lab/out/*
 !lab/out/.gitkeep
+!lab/out/manifest.json
+!lab/out/viz_map.json
+!lab/out/NOTICE.md
+!lab/out/asm/
+!lab/out/ctx/
 runs/*
 !runs/.gitkeep
 node_modules/
