@@ -16,8 +16,8 @@ Commit only inside `lab/`. Build against `contracts/fixtures/` until the real th
 ## Running the referee (live since 11:24)
 
 ```
-docker run -d --name frank-lab -v "$PWD":/work -w /work $(grep -o 'devkitpro/devkitarm@sha256:[0-9a-f]*' lab/build_target.sh) sleep infinity
-python3 -m lab.referee serve --port 7101          # real; needs lab/secrets (Eddy's machine)
+lab/setup_referee.sh                              # once: rebuild target from GitHub, verify, start container (Docker)
+python3 -m lab.referee serve                      # real referee on 127.0.0.1:7101
 python3 -m lab.referee mock serve --port 7101     # fixtures; works anywhere
 python3 -m lab.referee check --fn fn_0801B7D4 --src cand.c
 python3 -m pytest -q lab/tests                    # T2, T3 (needs lab/secrets)

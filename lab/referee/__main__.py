@@ -79,7 +79,7 @@ def main() -> None:
     p.add_argument("--fn")
     p.add_argument("--src")
     p.add_argument("--port", type=int, default=7101)
-    p.add_argument("--host", default="0.0.0.0")
+    p.add_argument("--host", default="127.0.0.1")
     p.add_argument("--json", action="store_true")
     a = p.parse_args()
 
