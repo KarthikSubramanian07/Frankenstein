@@ -45,3 +45,7 @@ Keys: `0` Title · `1` Split · `5`/`h` Hi-score · `2` Versus · `3` Time trial
 - **Ending**: true % recovered, original and rebuilt SHA-1, IDENTICAL only when proved, patch notes, the phone QR, and the Built today / Not ours card.
 
 Fonts (all OFL, from Google Fonts) are self-hosted in `public/fonts/` so the Stage works offline. Sounds are synthesized square waves; the announcer uses the browser's speech voice.
+
+## Director mode
+
+`/?director=1` runs the 3-minute judging-room show from `director/show.json`: `space` next beat, `b` back, `r` restart. Beats replay the real `doom_r01` export (labelled REPLAY · 8X), then switch to `runs/live` without a reload for the live segment, then Time trial, Ending and the Built today / Not ours card. Each beat's `say` is the speaker's line from `docs/MESSAGING.md`; it is never shown on screen. Point `runs/live` at the live run before the demo (it shows SAMPLE DATA while it points at a fixture).

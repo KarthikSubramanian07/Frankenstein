@@ -58,6 +58,11 @@ export class EndingScene implements Scene {
   /** the credits card carries no data, so no sample mark; the main page follows the stream */
   sample() { return this.page === 'credits' ? false : null; }
 
+  setPage(p: 'main' | 'credits') {
+    this.page = p;
+    this.el.classList.toggle('show-credits', p === 'credits');
+  }
+
   key(_ctx: Ctx, k: string) {
     if (k !== ' ') return false;
     this.page = this.page === 'main' ? 'credits' : 'main';

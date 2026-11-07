@@ -1,0 +1,52 @@
+{
+  "v": 1,
+  "name": "judging room, 3 minutes, one laptop",
+  "notes": "space = next beat, b = back, r = restart. Replays are real runs from crew/exports, labelled REPLAY · Nx on screen. The live beat switches the Stage to runs/live without a reload. 'say' is the speaker's line (docs/MESSAGING.md); it is never shown on screen.",
+  "beats": [
+    {
+      "at": "0:00",
+      "scene": "title",
+      "source": { "replay": "doom_r01", "speed": 8, "t": 999 },
+      "say": "87% of classic games are endangered, and most of their source code is gone. Lost games, rebuilt and proven."
+    },
+    {
+      "at": "0:15",
+      "scene": "split",
+      "source": { "replay": "doom_r01", "speed": 8, "t": 0 },
+      "say": "Doom is our first patient. Muse writes it. Snap judges it. The compiler proves it. Every green cell is a piece of Doom proved byte for byte. This is a real run, at 8x."
+    },
+    {
+      "at": "0:50",
+      "scene": "versus",
+      "say": "Agents lie. The referee doesn't. Every claim is re-run by the compiler, and two labs screen every match for fakes."
+    },
+    {
+      "at": "1:10",
+      "scene": "hiscore",
+      "say": "Counts, not vibes: functions proved out of all of Doom. Violet with a question mark is our guess; everything else is proved."
+    },
+    {
+      "at": "1:25",
+      "scene": "split",
+      "source": { "live": true },
+      "say": "This part is live. Play it, and we rebuild it: the crew is working on Doomguy's face right now."
+    },
+    {
+      "at": "1:50",
+      "scene": "timetrial",
+      "say": "Every game we bring back makes the next one faster. Same model, same budget: these are the numbers, per run."
+    },
+    {
+      "at": "2:15",
+      "scene": "ending",
+      "page": "main",
+      "say": "Emulators keep games playable. Source code keeps them alive. It's alive."
+    },
+    {
+      "at": "2:45",
+      "scene": "ending",
+      "page": "credits",
+      "say": "Built today, and what's not ours. Games don't have to die."
+    }
+  ]
+}

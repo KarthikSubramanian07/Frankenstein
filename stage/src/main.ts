@@ -13,6 +13,8 @@ import { TitleScene } from './scenes/title.ts';
 import { HiscoreScene } from './scenes/hiscore.ts';
 import { TimeTrialScene } from './scenes/timetrial.ts';
 import { EndingScene } from './scenes/ending.ts';
+import { Director } from './director.ts';
+import type { Source } from './director.ts';
 
 const params = new URLSearchParams(location.search);
 const host = params.get('server') || '127.0.0.1';
@@ -134,24 +136,40 @@ function handle(e: Ev) {
   dirty = true;
 }
 
+// the event source: a replay of a finished run (?replay=) or runs/live. Director beats switch it in place.
+let source: Source = params.get('replay')
+  ? { replay: params.get('replay')!, speed: Number(params.get('speed') || 8), t: Number(params.get('t') || 0) }
+  : { live: true };
+let ws: WebSocket | null = null;
+let gen = 0;
 function connect() {
+  const mine = ++gen;
   const q = new URLSearchParams();
-  const replay = params.get('replay');
-  if (replay) {
-    q.set('replay', replay);
-    q.set('speed', params.get('speed') || '8');
-    if (params.get('t')) q.set('t', params.get('t')!);
+  if (source.replay) {
+    q.set('replay', source.replay);
+    q.set('speed', String(source.speed ?? 8));
+    if (source.t) q.set('t', String(source.t));
   }
-  const ws = new WebSocket(`${WS}/?${q}`);
-  ws.onopen = () => { connected = true; dirty = true; };
-  ws.onmessage = (m) => {
+  const sock = new WebSocket(`${WS}/?${q}`);
+  ws = sock;
+  sock.onopen = () => { if (mine === gen) { connected = true; dirty = true; } };
+  sock.onmessage = (m) => {
+    if (mine !== gen) return; // an old source still draining
     try { handle(JSON.parse(String(m.data))); } catch { /* skip a bad line */ }
   };
-  ws.onclose = () => {
+  sock.onclose = () => {
+    if (mine !== gen) return;
     connected = false;
     dirty = true;
-    setTimeout(connect, 1000);
+    setTimeout(() => { if (mine === gen) connect(); }, 1000);
   };
+}
+function setSource(s: Source) {
+  source = s;
+  const old = ws;
+  gen++; // silence the old socket before closing it
+  old?.close();
+  connect();
 }
 connect();
 setInterval(() => { void refreshNames(HTTP, ctx.side).then(() => { dirty = true; }); }, 5000);
@@ -170,6 +188,7 @@ function frame() {
 const KEYS: Record<string, SceneId> = { '0': 'title', '1': 'split', '2': 'versus', '3': 'timetrial', '4': 'ending', '5': 'hiscore', h: 'hiscore' };
 addEventListener('keydown', (k) => {
   unlockAudio();
+  if (director?.key(k.key)) { k.preventDefault(); dirty = true; return; }
   if (scenes[current]?.key?.(ctx, k.key)) { dirty = true; return; }
   if (KEYS[k.key]) go(KEYS[k.key]);
   else if (k.key === ' ' && current === 'title') go('hiscore');
@@ -177,6 +196,24 @@ addEventListener('keydown', (k) => {
 });
 addEventListener('pointerdown', unlockAudio);
 
+// ---------- director mode: the run of show on space / b / r ----------
+const cueEl = h('div');
+cueEl.id = 'cue';
+stageEl.append(cueEl);
+let cueTimer = 0;
+const director = params.get('director') === '1' ? new Director({
+  go: (id, instant) => (instant ? show(id) : go(id)),
+  setSource,
+  setPage: (p) => { ending.setPage(p); dirty = true; },
+  cue: (text) => {
+    cueEl.textContent = text;
+    cueEl.classList.add('on');
+    clearTimeout(cueTimer);
+    cueTimer = window.setTimeout(() => cueEl.classList.remove('on'), 1600);
+  },
+}) : null;
+
 const want = params.get('scene') as SceneId | null;
 show(want && scenes[want] ? want : 'title');
+director?.start();
 requestAnimationFrame(frame);
