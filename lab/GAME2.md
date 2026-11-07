@@ -1,5 +1,11 @@
 # Game 2 spike (2026-11-07)
 
+## Latest user direction: Pokémon Red opening slice
+
+This comparison records the earlier GBA-in-C spike. Enzo now requests Pokémon Red as the second demonstration after Doom, limited to the menu and first Pokémon interactions. He reports that Eddy wants his agent to proceed with that bounded technical scope too.
+
+Read [POKEMON_RED_DECISION.md](POKEMON_RED_DECISION.md) and [POKEMON_RED_SCOPE.md](POKEMON_RED_SCOPE.md). Preserve the measurements below as fallback evidence; answer the requested Pokémon architecture/checkpoint spike. The user's demo preference is recorded separately from any unverified rights or event-rule assertion.
+
 Goal: a second legal GBA game in C, after DOOM, to show that each game makes the next one faster.
 
 ## Comparison
