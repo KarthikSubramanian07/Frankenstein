@@ -3,38 +3,40 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Game over · FRANKENSTEIN</title>
-<meta name="description" content="This page was never in the ROM.">
+<title>Not found · Frankenstein</title>
+<meta name="description" content="This page never compiled.">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#0B0B2E">
+<meta name="theme-color" content="#F4F0E6">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Press+Start+2P&family=Chakra+Petch:wght@400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500&family=Inter+Tight:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-:root{--midnight:#0B0B2E;--deep:#07071F;--line:#3E2C7A;--ink:#ECECFF;--muted:#B4B4DE;--yellow:#FFD23F;--cyan:#3BC7FF;--red:#FF3B3B}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--midnight);color:var(--ink);font:400 1.05rem/1.6 "Chakra Petch",system-ui,sans-serif;padding:24px 16px;text-align:center;background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);background-size:28px 28px}
-main{max-width:560px}
-.code{font:12px/1 "Press Start 2P",monospace;color:var(--red);letter-spacing:.1em;margin:0}
-h1{font:400 clamp(64px,18vw,140px)/.85 "Jersey 10",Impact,sans-serif;margin:18px 0 0;color:var(--yellow);text-shadow:.035em .035em 0 var(--cyan),.07em .07em 0 var(--line)}
-p{color:var(--muted)}
-.box{margin:28px auto 0;background:var(--deep);border:4px solid var(--line);box-shadow:8px 8px 0 #000;padding:20px;font:11px/2.2 "Press Start 2P",monospace;text-align:left;width:max-content;max-width:100%}
-.box a{color:var(--ink);text-decoration:none;display:block;padding:2px 6px}
-.box a::before{content:"\25B6  ";color:var(--yellow)}
-.box a:hover,.box a:focus-visible{background:var(--yellow);color:var(--midnight);outline:none}
-.box a:hover::before,.box a:focus-visible::before{color:var(--midnight)}
+body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px 16px;background:#F4F0E6;color:#17141F;font:400 1.06rem/1.6 "Inter Tight",system-ui,sans-serif;
+  background-image:linear-gradient(rgba(23,20,31,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(23,20,31,.045) 1px,transparent 1px);background-size:44px 44px}
+main{max-width:560px;text-align:center}
+.diff{display:inline-grid;gap:6px;text-align:left;background:#12101E;color:#ECEAF6;border-radius:18px;padding:16px 20px;font:400 .9rem/1.4 "JetBrains Mono",monospace;box-shadow:0 30px 50px -28px rgba(18,16,30,.6);transform:rotate(-1.5deg)}
+.diff span{color:#9894B0;display:inline-block;width:84px}
+.ok{color:#7CF2C8}.bad{color:#FF8A82}
+h1{font:600 clamp(2.6rem,9vw,4.4rem)/1 "Fraunces",Georgia,serif;letter-spacing:-.025em;margin:34px 0 0}
+h1 em{font-weight:500;color:#4F47CF}
+p{color:#4A4556;margin:16px 0 0}
+a{display:inline-flex;align-items:center;gap:.5em;margin-top:28px;background:#17141F;color:#F4F0E6;text-decoration:none;font-weight:600;padding:14px 22px;border-radius:999px;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+a:hover{transform:translateY(-2px)}
+:focus-visible{outline:2px solid #4F47CF;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){a{transition:none}.diff{transform:none}}
 </style>
 </head>
 <body>
 <main>
-  <p class="code">ERROR 404</p>
-  <h1>GAME OVER</h1>
-  <p>This page was never in the ROM. No compiler can prove it exists.</p>
-  <nav class="box" aria-label="Continue">
-    <a href="/">CONTINUE</a>
-    <a href="https://github.com/KarthikSubramanian07/Frankenstein" rel="noopener">READ THE SOURCE</a>
-  </nav>
+  <div class="diff" aria-hidden="true">
+    <div><span>expected</span><b class="ok">this page</b></div>
+    <div><span>got</span><b class="bad">404</b></div>
+  </div>
+  <h1>This page never <em>compiled.</em></h1>
+  <p>The referee looked for it and found nothing byte-identical. Let's get you back to something proven.</p>
+  <a href="/">Back to the start <span aria-hidden="true">&#8594;</span></a>
 </main>
 </body>
 </html>

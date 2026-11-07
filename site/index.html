@@ -3,486 +3,439 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FRANKENSTEIN · Lost games, rebuilt and proven, byte for byte</title>
-<meta name="description" content="Coding agents rebuild Doom's lost C source for the Game Boy Advance from the compiled ROM, one function at a time. A compiler referee accepts only C that compiles to byte-identical code.">
+<title>Frankenstein · Lost games, rebuilt and proven</title>
+<meta name="description" content="Lost games, rebuilt and proven. AI agents bring a game's dead source code back from the cartridge, and a compiler checks every byte. Doom is our first patient.">
 <link rel="canonical" href="https://tryfrankenstein.pages.dev/">
-<meta name="theme-color" content="#0B0B2E">
-<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#F4F0E6">
 <meta name="robots" content="index, follow">
 
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="FRANKENSTEIN">
-<meta property="og:title" content="FRANKENSTEIN · Lost games, rebuilt and proven, byte for byte">
-<meta property="og:description" content="Coding agents rebuild a Game Boy Advance game's lost C source from its ROM. Nothing gets in unless a compiler referee proves it byte-identical.">
+<meta property="og:site_name" content="Frankenstein">
+<meta property="og:title" content="Frankenstein · Lost games, rebuilt and proven">
+<meta property="og:description" content="Lost games, rebuilt and proven. AI agents bring a game's dead source code back from the cartridge, and a compiler checks every byte. Doom is our first patient.">
 <meta property="og:url" content="https://tryfrankenstein.pages.dev/">
 <meta property="og:image" content="https://tryfrankenstein.pages.dev/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="FRANKENSTEIN title screen: File 1, Doom, source code lost. Press start.">
+<meta property="og:image:alt" content="Frankenstein: target bytes and candidate bytes side by side, all matching, stamped MATCH 100%.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="FRANKENSTEIN · Lost games, rebuilt and proven, byte for byte">
-<meta name="twitter:description" content="Coding agents rebuild a GBA game's lost C source from its ROM. A compiler referee accepts only byte-identical code.">
+<meta name="twitter:title" content="Frankenstein · Lost games, rebuilt and proven">
+<meta name="twitter:description" content="Lost games, rebuilt and proven. AI agents bring a game's dead source code back from the cartridge, and a compiler checks every byte. Doom is our first patient.">
 <meta name="twitter:image" content="https://tryfrankenstein.pages.dev/assets/og.png">
-<meta name="twitter:image:alt" content="FRANKENSTEIN title screen: File 1, Doom, source code lost. Press start.">
+<meta name="twitter:image:alt" content="Frankenstein: target bytes and candidate bytes side by side, all matching, stamped MATCH 100%.">
 
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600&family=Jersey+10&family=Pixelify+Sans:wght@500&family=Press+Start+2P&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&text=PRESSTARTNEWGAME%2B%20&display=swap">
+<link rel="stylesheet" href="/assets/site.css?v=6">
+<noscript><style>[data-reveal],.step-text,.step-vis,.check-ok,.check-card .bubble,.idiom.front,.verdict,.stamp,.bytes-read .pill,.g-opts .on{opacity:1!important;transform:none!important}</style></noscript>
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
-  "name": "FRANKENSTEIN",
-  "alternateName": "Frankenstein: lost games, rebuilt and proven, byte for byte",
-  "description": "Coding agents rebuild a Game Boy Advance game's lost C source from the compiled ROM, function by function. An independent Checker re-verifies every claim, and a compiler referee accepts only C that compiles to byte-identical code. Target: GBADoom, built without LTO.",
+  "name": "Frankenstein",
+  "alternateName": "Frankenstein: lost games, rebuilt and proven",
+  "description": "Video game preservation: coding agents rebuild a game's lost C source from the compiled game, one function at a time. An independent Checker re-verifies every claim, and a compiler referee accepts only byte-identical code. The first patient is GBADoom, built without LTO.",
   "url": "https://tryfrankenstein.pages.dev/",
   "codeRepository": "https://github.com/KarthikSubramanian07/Frankenstein",
   "programmingLanguage": ["Python", "C"],
   "runtimePlatform": "devkitARM GCC (ARM7TDMI, Thumb)",
   "license": "https://opensource.org/licenses/MIT",
   "dateCreated": "2026-11-07",
-  "keywords": "matching decompilation, coding agents, multi-agent, verification, game preservation, reverse engineering, Game Boy Advance, GBADoom",
-  "creator": { "@type": "Organization", "name": "Team FRANKENSTEIN" },
+  "keywords": "game preservation, matching decompilation, coding agents, multi-agent, verification, game preservation, reverse engineering, Game Boy Advance, GBADoom",
+  "creator": { "@type": "Organization", "name": "Team Frankenstein" },
   "isBasedOn": { "@type": "SoftwareSourceCode", "name": "GBADoom", "codeRepository": "https://github.com/doomhack/GBADoom", "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" }
 }
 </script>
-
-<style>
-:root{
-  --midnight:#0B0B2E; --deep:#07071F; --panel:#13133D; --line:#3E2C7A;
-  --ink:#ECECFF; --muted:#B4B4DE;
-  --yellow:#FFD23F; --gold:#FFE36B; --cyan:#3BC7FF; --magenta:#FF6BD6;
-  --red:#FF3B3B; --mint:#7CF2C8; --violet:#9A9AFF;
-  --hud:"Press Start 2P",ui-monospace,monospace;
-  --logo:"Jersey 10",Impact,sans-serif;
-  --pix:"Pixelify Sans",ui-rounded,sans-serif;
-  --body:"Chakra Petch",system-ui,sans-serif;
-  --gutter:clamp(16px,4vw,40px);
-}
-*,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{
-  margin:0;background:var(--midnight);color:var(--ink);
-  font:400 1.0625rem/1.6 var(--body);
-  background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px);
-  background-size:28px 28px;
-  overflow-x:hidden;
-}
-a{color:var(--cyan)}
-a:hover{color:var(--yellow)}
-:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
-img,svg{display:block;max-width:100%}
-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;color:var(--gold);word-break:break-word}
-.wrap{width:min(1120px,100%);margin:0 auto;padding:0 var(--gutter)}
-.skip{position:absolute;left:-999px;top:8px;z-index:20;background:var(--yellow);color:var(--midnight);padding:8px 12px;font:12px/1 var(--hud)}
-.skip:focus{left:8px}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-
-/* ---------- top HUD ---------- */
-.hud{position:sticky;top:0;z-index:10;background:rgba(7,7,31,.92);border-bottom:3px solid var(--line);backdrop-filter:blur(6px)}
-.hud .wrap{display:flex;align-items:center;gap:20px;min-height:56px}
-.brand{display:flex;align-items:center;gap:10px;color:var(--yellow);text-decoration:none;font:12px/1 var(--hud);letter-spacing:.04em}
-.brand svg{width:22px;height:22px}
-.hud nav{margin-left:auto}
-.hud ul{display:flex;gap:18px;list-style:none;margin:0;padding:0}
-.hud nav a{font:10px/1 var(--hud);color:var(--muted);text-decoration:none;letter-spacing:.06em;padding:8px 0;display:inline-block}
-.hud nav a:hover{color:var(--yellow)}
-.hud nav a.gh{color:var(--midnight);background:var(--yellow);padding:8px 10px}
-.hud nav a.gh:hover{background:var(--gold);color:var(--midnight)}
-@media (max-width:760px){.hud nav li.opt{display:none}}
-@media (max-width:440px){.hud nav li.opt2{display:none}.hud .wrap{gap:12px}}
-
-/* ---------- title screen ---------- */
-.title{padding:clamp(40px,8vw,96px) 0 clamp(56px,8vw,96px);text-align:center;position:relative}
-.kicker{font:10px/1.8 var(--hud);letter-spacing:.08em;color:var(--cyan);margin:0 0 18px}
-.logo{
-  font:400 clamp(58px,15.5vw,208px)/.82 var(--logo);margin:0;color:var(--yellow);letter-spacing:.01em;
-  text-shadow:.035em .035em 0 var(--cyan),.07em .07em 0 var(--line);
-}
-.tagline{font:500 clamp(1.15rem,3.4vw,1.7rem)/1.3 var(--pix);margin:28px auto 0;max-width:30ch}
-.screen{
-  position:relative;margin:clamp(32px,5vw,52px) auto 0;width:min(640px,100%);text-align:left;
-  background:var(--deep);border:4px solid var(--line);box-shadow:8px 8px 0 #000;padding:22px clamp(14px,4vw,32px) 26px;overflow:hidden;
-}
-.screen::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px)}
-.screen-h{font:11px/1 var(--hud);color:var(--muted);margin:0 0 18px;letter-spacing:.1em}
-.files{list-style:none;margin:0;padding:0;font:clamp(9px,2.4vw,13px)/1.4 var(--hud)}
-.files li{display:grid;grid-template-columns:1.6em 6.5em 1fr;gap:6px 10px;padding:9px 0;color:#6A6A9C;align-items:baseline}
-.files li.on{color:var(--ink)}
-.files .cur{color:var(--yellow)}
-.files .st{grid-column:3}
-.lost{color:var(--red);position:relative}
-.start{
-  display:block;width:max-content;margin:24px auto 0;font:clamp(12px,3vw,16px)/1 var(--hud);color:var(--yellow);
-  text-decoration:none;padding:12px 14px;letter-spacing:.08em;animation:blink 1s steps(1) infinite;
-}
-.start:hover,.start:focus-visible{animation:none;background:var(--yellow);color:var(--midnight)}
-@keyframes blink{50%{opacity:0}}
-.line{margin:clamp(32px,5vw,44px) auto 0;max-width:46ch;color:var(--muted);font-size:1.08rem}
-.line strong{color:var(--ink);font-weight:600}
-.ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px}
-.btn{
-  font:11px/1 var(--hud);letter-spacing:.06em;text-decoration:none;padding:15px 18px;
-  color:var(--midnight);background:var(--yellow);box-shadow:4px 4px 0 var(--cyan);border:0;
-  transition:transform .08s steps(2),box-shadow .08s steps(2);
-}
-.btn:hover{color:var(--midnight);transform:translate(2px,2px);box-shadow:2px 2px 0 var(--cyan)}
-.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 3px var(--line),4px 4px 0 var(--line)}
-.btn.ghost:hover{color:var(--yellow);box-shadow:inset 0 0 0 3px var(--yellow),2px 2px 0 var(--line)}
-
-/* glitch on LOST */
-.lost::before{content:attr(data-t);position:absolute;left:0;top:0;color:var(--cyan);clip-path:inset(0 0 55% 0);transform:translateX(2px);opacity:0;animation:glitch 2.4s steps(1) infinite}
-@keyframes glitch{0%,86%,100%{opacity:0}88%{opacity:1;transform:translateX(3px)}92%{opacity:1;transform:translateX(-2px)}}
-
-/* ---------- sections ---------- */
-section.sec{padding:clamp(56px,9vw,104px) 0;border-top:3px solid var(--line)}
-.sec-h{max-width:720px;margin-bottom:clamp(28px,4vw,44px)}
-.sec-h h2{font:400 clamp(44px,8vw,76px)/.9 var(--logo);margin:0;color:var(--ink);letter-spacing:.01em}
-.sec-h h2 em{font-style:normal;color:var(--yellow)}
-.lede{color:var(--muted);margin:16px 0 0;max-width:62ch}
-
-/* pipeline */
-.pipe{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:28px;counter-reset:s}
-.step{position:relative;background:var(--panel);border:3px solid var(--line);box-shadow:6px 6px 0 #000;padding:22px 20px 20px}
-.step:not(:last-child)::after{
-  content:"";position:absolute;right:-26px;top:50%;width:20px;height:20px;margin-top:-10px;background:var(--yellow);
-  clip-path:polygon(0 30%,50% 30%,50% 0,100% 50%,50% 100%,50% 70%,0 70%);
-}
-.step-n{font:10px/1 var(--hud);color:var(--muted);margin:0 0 14px}
-.step h3{font:15px/1.3 var(--hud);margin:0 0 12px;letter-spacing:.04em}
-.step.dig h3{color:var(--cyan)} .step.chk h3{color:var(--magenta)} .step.ref h3{color:var(--yellow)}
-.step p{margin:0 0 12px;font-size:1rem}
-.says{font:500 1rem/1.35 var(--pix);color:var(--ink);border-top:2px dashed var(--line);padding-top:12px;margin:14px 0 0!important}
-.says b{font-weight:500;color:var(--mint)}
-.says.no b{color:var(--red)}
-@media (max-width:860px){
-  .pipe{grid-template-columns:1fr;gap:30px}
-  .step:not(:last-child)::after{right:auto;left:50%;top:auto;bottom:-27px;margin:0 0 0 -10px;transform:rotate(90deg)}
-}
-
-/* versus card */
-.vs{margin:clamp(36px,5vw,56px) 0 0;background:var(--deep);border:3px solid var(--line);box-shadow:6px 6px 0 #000}
-.vs-top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;padding:16px clamp(12px,3vw,24px);border-bottom:3px solid var(--line);font:clamp(9px,2.2vw,12px)/1.4 var(--hud)}
-.vs-top .p1{color:#7FA0FF} .vs-top .p2{color:#FF7A70;text-align:right} .vs-top .x{color:var(--gold)}
-.bar{height:8px;margin-top:8px;background:#2A2A5A;position:relative}
-.bar i{position:absolute;inset:0 auto 0 0;width:100%;background:var(--gold)}
-.p2 .bar i{left:auto;right:0}
-.vs-body{padding:18px clamp(12px,3vw,24px) 20px;font:clamp(9px,2.3vw,13px)/2 var(--hud)}
-.vs-body p{margin:0}
-.vs-body .k{color:var(--muted);display:inline-block;min-width:10ch}
-.vs-body .exp{color:var(--mint)} .vs-body .got{color:var(--red)}
-.ko{font:400 clamp(30px,6vw,52px)/1 var(--logo)!important;color:var(--gold);margin-top:14px!important;letter-spacing:.02em}
-.ko span{color:var(--red)}
-.vs figcaption{font:500 .9rem/1.4 var(--pix);color:var(--muted);padding:0 clamp(12px,3vw,24px) 16px}
-.vs.arm .seq{opacity:0}
-.vs.arm.go .seq{animation:pop .01s steps(1) forwards;animation-delay:calc(var(--d) * 420ms)}
-.vs.arm.go .bar.hit i{animation:drain .6s steps(6) forwards;animation-delay:2.1s}
-@keyframes pop{to{opacity:1}}
-@keyframes drain{to{width:0}}
-
-/* evidence */
-.ev{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-.card{background:var(--panel);border:3px solid var(--line);box-shadow:6px 6px 0 #000;padding:24px 22px}
-.card h3{font:13px/1.4 var(--hud);margin:0 0 6px;letter-spacing:.04em}
-.card > p{margin:0 0 18px;color:var(--muted)}
-.chips{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
-.chips li{font:clamp(9px,2.3vw,12px)/1.5 var(--hud);padding:12px 12px;background:var(--deep);border-left:6px solid currentColor}
-.proved h3{color:var(--mint)}
-.proved .chips li:nth-child(1){color:var(--mint)} .proved .chips li:nth-child(2){color:var(--mint)}
-.proved .chips li:nth-child(3){color:var(--red)} .proved .chips li:nth-child(4){color:var(--yellow)}
-.guess{border-style:dashed;border-color:var(--violet)}
-.guess h3,.guess .chips li{color:var(--violet)}
-.guess .chips li{border-left-style:dashed}
-.key{margin:28px 0 0;font:clamp(9px,2.3vw,12px)/1.8 var(--hud);text-align:center;padding:14px;border:3px solid var(--line);background:var(--deep)}
-.key b{color:var(--violet);font-weight:400}
-@media (max-width:760px){.ev{grid-template-columns:1fr}}
-
-/* results board */
-.board{background:var(--deep);border:3px solid var(--line);box-shadow:6px 6px 0 #000}
-.board table{width:100%;border-collapse:collapse;font:clamp(9px,2.2vw,12px)/1.6 var(--hud)}
-.board caption{caption-side:top;text-align:left;padding:16px clamp(12px,3vw,24px);border-bottom:3px solid var(--line);color:var(--yellow);font:clamp(10px,2.4vw,13px)/1.5 var(--hud);letter-spacing:.06em}
-.board th,.board td{padding:14px clamp(12px,3vw,24px);text-align:left;vertical-align:top;border-bottom:2px solid #1D1D4D}
-.board th{font-weight:400;color:var(--ink)}
-.board th small{display:block;font:500 .82rem/1.4 var(--pix);color:var(--muted);margin-top:6px;letter-spacing:0;text-transform:none}
-.board td{text-align:right;white-space:nowrap}
-.board td.real{color:var(--mint)}
-.board td.tbd{color:#7D7DB0}
-.board tr:last-child th,.board tr:last-child td{border-bottom:0}
-.board-note{margin:18px 0 0;color:var(--muted);font-size:.98rem;max-width:70ch}
-@media (max-width:560px){
-  .board tr{display:block;border-bottom:2px solid #1D1D4D;padding:12px 0}
-  .board th,.board td{display:block;border:0;padding:4px clamp(12px,3vw,24px);text-align:left;white-space:normal}
-}
-
-/* lanes */
-.lanes{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
-.lane{display:grid;grid-template-columns:auto 1fr;gap:18px;background:var(--panel);border:3px solid var(--line);box-shadow:6px 6px 0 #000;padding:22px 20px}
-.lane .ltr{font:400 64px/.8 var(--logo);width:56px;height:56px;display:grid;place-items:center;background:var(--deep);border:3px solid currentColor;padding-top:4px}
-.lane:nth-child(1) .ltr{color:var(--cyan)} .lane:nth-child(2) .ltr{color:var(--magenta)}
-.lane:nth-child(3) .ltr{color:var(--yellow)} .lane:nth-child(4) .ltr{color:var(--mint)}
-.lane h3{font:12px/1.5 var(--hud);margin:2px 0 8px;letter-spacing:.04em}
-.lane p{margin:0;font-size:.98rem;color:var(--muted)}
-.lane p code{color:var(--ink)}
-@media (max-width:760px){.lanes{grid-template-columns:1fr}}
-
-/* built with */
-.stack{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-.stack li{border-top:6px solid var(--c);background:var(--panel);padding:20px 18px 18px;box-shadow:6px 6px 0 #000}
-.stack h3{font:11px/1.6 var(--hud);margin:0 0 4px;color:var(--c)}
-.stack .by{font:500 .9rem/1.3 var(--pix);color:var(--muted);margin:0 0 12px}
-.stack p{margin:0;font-size:.98rem}
-@media (max-width:980px){.stack{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:560px){.stack{grid-template-columns:1fr}}
-
-/* credits */
-.credits{display:grid;grid-template-columns:1fr 1fr;border:3px solid var(--line);box-shadow:6px 6px 0 #000;background:var(--panel)}
-.credits > div{padding:24px 22px}
-.credits > div + div{border-left:3px solid var(--line);background:var(--deep)}
-.credits h3{font:13px/1.4 var(--hud);margin:0 0 4px}
-.credits .ours h3{color:var(--mint)} .credits .theirs h3{color:var(--gold)}
-.credits .sub{font:500 .92rem/1.4 var(--pix);color:var(--muted);margin:0 0 16px}
-.credits ul{margin:0;padding:0;list-style:none}
-.credits li{padding:9px 0 9px 22px;position:relative;border-bottom:1px dashed #2E2E66;font-size:.98rem}
-.credits li:last-child{border-bottom:0}
-.credits li::before{content:"";position:absolute;left:2px;top:17px;width:8px;height:8px;background:currentColor}
-.credits .ours li::before{background:var(--mint)} .credits .theirs li::before{background:var(--gold)}
-.credits .prior{margin-top:18px;padding:14px;border:2px dashed var(--line);font-size:.95rem;color:var(--muted)}
-.credits .prior b{color:var(--ink);font-weight:600}
-@media (max-width:760px){.credits{grid-template-columns:1fr}.credits > div + div{border-left:0;border-top:3px solid var(--line)}}
-
-/* footer */
-footer{border-top:3px solid var(--line);padding:40px 0 56px;background:var(--deep)}
-footer .wrap{display:flex;flex-wrap:wrap;gap:18px 32px;justify-content:space-between;align-items:flex-start}
-.fin{font:400 44px/1 var(--logo);color:var(--yellow);margin:0}
-footer p{margin:6px 0 0;color:var(--muted);font-size:.95rem;max-width:58ch}
-footer .legal{font-size:.85rem}
-
-@media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{animation:none!important;transition:none!important}
-  .vs.arm .seq{opacity:1}
-  .lost::before{display:none}
-}
-</style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
-<header class="hud">
-  <div class="wrap">
-    <a class="brand" href="/" aria-label="FRANKENSTEIN home">
-      <svg viewBox="0 0 16 16" aria-hidden="true" shape-rendering="crispEdges"><path fill="#3BC7FF" d="M7 1h5v1h-5zM6 2h5v1h-5zM5 3h5v1h-5zM4 4h5v1h-5zM3 5h10v1h-10zM3 6h10v1h-10zM8 7h4v1h-4zM7 8h4v1h-4zM6 9h4v1h-4zM5 10h4v1h-4zM5 11h3v1h-3zM4 12h3v1h-3zM4 13h2v1h-2zM3 14h2v1h-2z"/><path fill="#FFD23F" d="M6 0h5v1h-5zM5 1h5v1h-5zM4 2h5v1h-5zM3 3h5v1h-5zM2 4h10v1h-10zM2 5h10v1h-10zM7 6h4v1h-4zM6 7h4v1h-4zM5 8h4v1h-4zM4 9h4v1h-4zM4 10h3v1h-3zM3 11h3v1h-3zM3 12h2v1h-2zM2 13h2v1h-2z"/></svg>
-      FRANKENSTEIN
-    </a>
-    <nav aria-label="Sections">
-      <ul>
-        <li class="opt"><a href="#how">HOW</a></li>
-        <li class="opt"><a href="#evidence">EVIDENCE</a></li>
-        <li class="opt"><a href="#lanes">LANES</a></li>
-        <li class="opt2"><a href="#credits">CREDITS</a></li>
-        <li><a class="gh" href="https://github.com/KarthikSubramanian07/Frankenstein" rel="noopener">GITHUB</a></li>
-      </ul>
-    </nav>
-  </div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="bolt" viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="#3BC7FF" d="M7 2h5v1h-5zM6 3h5v1h-5zM5 4h5v1h-5zM4 5h5v1h-5zM3 6h10v1h-10zM3 7h10v1h-10zM8 8h4v1h-4zM7 9h4v1h-4zM6 10h4v1h-4zM5 11h4v1h-4zM5 12h3v1h-3zM4 13h3v1h-3zM4 14h2v1h-2zM3 15h2v1h-2z"/><path fill="#FFD23F" d="M6 0h5v1h-5zM5 1h5v1h-5zM4 2h5v1h-5zM3 3h5v1h-5zM2 4h10v1h-10zM2 5h10v1h-10zM7 6h4v1h-4zM6 7h4v1h-4zM5 8h4v1h-4zM4 9h4v1h-4zM4 10h3v1h-3zM3 11h3v1h-3zM3 12h2v1h-2zM2 13h2v1h-2z"/></symbol>
+  </defs>
+</svg>
+
+<header class="nav-wrap">
+  <nav class="nav" aria-label="Main">
+    <a class="logo" href="/" aria-label="Frankenstein home"><svg class="logo-bolt" aria-hidden="true"><use href="#bolt"/></svg><span>Frankenstein</span></a>
+    <ul class="nav-links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#liar">Proof</a></li>
+      <li><a href="#play">Play</a></li>
+      <li><a href="#stack">Built with</a></li>
+      <li><a href="#credits">Credits</a></li>
+    </ul>
+    <a class="btn btn-dark btn-sm" href="https://github.com/KarthikSubramanian07/Frankenstein" rel="noopener">Source <span aria-hidden="true">&#8599;</span></a>
+  </nav>
 </header>
 
 <main id="main">
 
-<section class="title" aria-labelledby="title-h">
-  <div class="wrap">
-    <p class="kicker">AI ENGINEER CODE SUMMIT HACKATHON · SHACK15 SF · NOV 7 2026</p>
-    <h1 id="title-h" class="logo">FRANKENSTEIN</h1>
-    <p class="tagline">Lost games, rebuilt and proven, byte for byte.</p>
-
-    <div class="screen" role="group" aria-label="Save file menu">
-      <p class="screen-h">SELECT FILE</p>
-      <ol class="files">
-        <li class="on"><span class="cur" aria-hidden="true">&#9654;</span><span>FILE 1</span><span>DOOM</span><span class="st lost" data-t="SOURCE CODE: LOST">SOURCE CODE: LOST</span></li>
-        <li><span></span><span>FILE 2</span><span>EMPTY</span></li>
-        <li><span></span><span>FILE 3</span><span>EMPTY</span></li>
-      </ol>
-      <a class="start" href="#how">PRESS START</a>
+<!-- ───────────── HERO ───────────── -->
+<section class="hero" aria-labelledby="hero-h">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow-row" data-reveal>
+        <span class="chip-pixel">PRESS START<i aria-hidden="true"></i></span>
+        <span class="eyebrow">Built in a day · AI Engineer Code Summit · Nov 7, 2026</span>
+      </p>
+      <h1 id="hero-h" class="display" data-reveal style="--i:1">Lost games,<br> rebuilt and<br> <em class="hand">proven.<svg class="squiggle" viewBox="0 0 220 24" preserveAspectRatio="none" aria-hidden="true"><path d="M4 16 C 40 6, 70 22, 110 12 S 180 6, 216 14"/></svg></em></h1>
+      <p class="lead" data-reveal style="--i:2">87% of classic games are endangered, and most of their source code is gone. Frankenstein's agents rebuild it from the cartridge, one piece at a time. <strong>A compiler checks every byte.</strong></p>
+      <div class="cta-row" data-reveal style="--i:3">
+        <a class="btn btn-dark" href="#how">See how it works <span aria-hidden="true">&#8594;</span></a>
+        <a class="btn btn-ghost" href="https://github.com/KarthikSubramanian07/Frankenstein" rel="noopener">Read the source <span aria-hidden="true">&#8599;</span></a>
+      </div>
+      <p class="aside-note" data-reveal style="--i:4">Victor Frankenstein never checked his work. <strong>Ours checks everything.</strong></p>
     </div>
 
-    <p class="line">Coding agents rebuild a Game Boy Advance game's C source from the compiled ROM, one function at a time. Victor Frankenstein never checked his work. <strong>Ours checks everything.</strong></p>
-    <div class="ctas">
-      <a class="btn" href="https://github.com/KarthikSubramanian07/Frankenstein" rel="noopener">READ THE SOURCE</a>
-      <a class="btn ghost" href="#credits">WHAT WE BUILT TODAY</a>
+    <div class="hero-stage" data-reveal style="--i:2">
+      <figure class="machine" id="machine" aria-label="Animation: the referee compares the target function's bytes with the bytes compiled from an agent's C. Two instructions differ on the first attempt; on the second attempt every byte matches.">
+        <div class="m-bar">
+          <span class="m-title"><svg class="m-bolt" aria-hidden="true"><use href="#bolt"/></svg>referee</span>
+          <span class="m-fn">fn_08000230 <span class="dim">· thumb · 20 B code</span></span>
+          <span class="m-status" data-state="idle"><b>Idle</b></span>
+        </div>
+        <div class="m-head" aria-hidden="true">
+          <span>off</span><span>target</span><span class="m-asm-h">instruction</span><span>agent C</span><span></span>
+        </div>
+        <ol class="m-rows" aria-hidden="true"></ol>
+        <div class="m-foot" aria-hidden="true">
+          <span class="m-attempt">attempt <b>1</b></span>
+          <span class="m-note">+ 12 B literal pool, compared by id</span>
+        </div>
+        <div class="m-stamp" aria-hidden="true">MATCH <span>&#10003;</span> 100%</div>
+      </figure>
+      <p class="hand-note" aria-hidden="true">
+        <svg viewBox="0 0 64 52"><path d="M6 46 C 24 44, 46 34, 52 6"/><path d="M44 14 L 52 4 L 60 13"/></svg>
+        <span>one wrong register is a rejection</span>
+      </p>
+      <p class="fig-cap">A real bench function we wrote today, replayed. The retry is illustrative.</p>
     </div>
   </div>
 </section>
 
-<section class="sec" id="how" aria-labelledby="how-h">
+<!-- ───────────── PROBLEM ───────────── -->
+<section class="problem" aria-labelledby="prob-h">
   <div class="wrap">
-    <div class="sec-h">
-      <p class="kicker">STAGE 1</p>
-      <h2 id="how-h">How a piece <em>gets in</em></h2>
-      <p class="lede">The ROM is cut into anonymous functions named only by address, like <code>fn_08xxxxxx</code>. No names, no hints. Each function is one piece, and a piece only goes back into the game when three separate parties agree.</p>
+    <div class="prob-grid">
+      <div class="stat" data-reveal>
+        <p class="stat-n"><span class="count" data-to="87">0</span><span class="pct">%</span></p>
+        <p class="stat-l">of classic video games released in the US are critically endangered.</p>
+        <p class="stat-src">Video Game History Foundation and Software Preservation Network, 2023</p>
+      </div>
+      <div class="prob-copy" data-reveal style="--i:1">
+        <h2 id="prob-h" class="h2">Emulators keep games playable. <em>Source code keeps them alive.</em></h2>
+        <p class="sub">For most classic games, only the compiled cartridge survives. It still runs, but nobody can fix it, port it or change it.</p>
+        <p class="who-for">First users: preservation groups and rights holders. <strong>Only games we're allowed to rebuild.</strong></p>
+      </div>
     </div>
 
-    <ol class="pipe">
-      <li class="step dig">
-        <p class="step-n">01 / WRITE</p>
-        <h3>DIGGER</h3>
-        <p>An agent on Muse Spark reads one function's assembly and writes C for it, then asks the referee. Many Diggers work in parallel.</p>
-        <p class="says">"I matched it." <b>CLAIM</b></p>
+    <div class="rule-wrap" data-reveal>
+      <p class="rule-line">Byte-identical, <span class="hl">or it's out.</span></p>
+      <div class="legend">
+        <div class="legend-item"><span class="pill pill-mint">MATCH 100%</span><p><b>Bright means proved by the compiler.</b></p></div>
+        <div class="legend-item"><span class="pill pill-violet">update_face<i>?</i></span><p><b>Violet with a "?" means our guess.</b></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── PIPELINE ───────────── -->
+<section class="slab slab-paper" id="how" aria-labelledby="how-h">
+  <div class="wrap">
+    <header class="sec-head" data-reveal>
+      <p class="eyebrow"><span class="dot dot-mint"></span>How it works</p>
+      <h2 id="how-h" class="h2">Dig. Check. <em>Learn.</em></h2>
+    </header>
+
+    <ol class="pipe" id="pipe">
+      <li class="pipe-rail" aria-hidden="true"><span class="rail-fill"></span></li>
+
+      <li class="step" data-step>
+        <div class="step-text">
+          <p class="step-n">01 · Muse Spark, steered by SubQ Snap</p>
+          <h3>Dig.</h3>
+          <p>Agents read the compiled game and write C, one function at a time.</p>
+        </div>
+        <div class="step-vis">
+          <div class="card-lab code-card">
+            <div class="cc-top"><span class="tab">fn_08000230.c</span><span class="dim">Digger 4</span></div>
+            <pre class="type" data-type><code><span class="k">extern</span> u32 data_A7868023;
+
+u32 <span class="f">fn_08000230</span>(<span class="k">void</span>)
+{
+    data_A7868023 = data_A7868023 * <span class="n">1103515245u</span> + <span class="n">12345u</span>;
+    <span class="k">return</span> (data_A7868023 &gt;&gt; <span class="n">16</span>) &amp; <span class="n">0x7FFF</span>;
+}</code></pre>
+          </div>
+        </div>
       </li>
-      <li class="step chk">
-        <p class="step-n">02 / DOUBT</p>
-        <h3>CHECKER</h3>
-        <p>Trusts no Digger. Re-runs every claim with a fresh referee call and screens every match for tricks, like raw addresses or <code>volatile</code> used to coax the compiler.</p>
-        <p class="says no">"Prove it." <b>LIES COUNTED</b></p>
+
+      <li class="step" data-step>
+        <div class="step-text">
+          <p class="step-n">02 · The referee and the Checker</p>
+          <h3>Check.</h3>
+          <p>A compiler rebuilds every piece. Byte-identical or it's out. Lies get caught.</p>
+        </div>
+        <div class="step-vis">
+          <div class="card-lab bytes-card">
+            <div class="bytes" aria-hidden="true"></div>
+            <p class="bytes-read"><span class="pill pill-mint">MATCH &#10003; 100%</span><span class="mono dim">0.1 to 0.2 s per check</span></p>
+          </div>
+        </div>
       </li>
-      <li class="step ref">
-        <p class="step-n">03 / PROVE</p>
-        <h3>REFEREE</h3>
-        <p>Compiles the C with the original toolchain (devkitARM GCC, GBADoom's own flags minus LTO) and compares every instruction.</p>
-        <p class="says">Byte-identical or nothing. <b>MATCH</b></p>
+
+      <li class="step" data-step>
+        <div class="step-text">
+          <p class="step-n">03 · MongoDB Atlas</p>
+          <h3>Learn.</h3>
+          <p>Every match teaches the crew a habit, so the next game goes faster.</p>
+        </div>
+        <div class="step-vis">
+          <div class="idiom-stack">
+            <div class="idiom back2"><span class="mono">idiom</span></div>
+            <div class="idiom back1"><span class="mono">idiom</span></div>
+            <div class="idiom front">
+              <p class="mono dim">new habit · never an answer</p>
+              <p class="idiom-t">Signed <code>x / 2</code> is a shift trick, not a divide:</p>
+              <pre><code>lsrs r3, r0, #31
+adds r0, r3, r0
+asrs r0, r0, #1</code></pre>
+            </div>
+          </div>
+        </div>
       </li>
     </ol>
-
-    <figure class="vs" aria-label="Illustration of a rejected claim">
-      <div class="vs-top" aria-hidden="true">
-        <div class="p1">DIGGER<div class="bar hit"><i></i></div></div>
-        <div class="x">VS</div>
-        <div class="p2">REFEREE<div class="bar"><i></i></div></div>
-      </div>
-      <div class="vs-body">
-        <p class="seq" style="--d:0"><span class="k">CLAIM</span> MATCH</p>
-        <p class="seq" style="--d:1"><span class="k">EXPECTED</span> <span class="exp">adds r0, r1, #0</span></p>
-        <p class="seq" style="--d:2"><span class="k">GOT</span> <span class="got">adds r0, r2, #0</span></p>
-        <p class="seq ko" style="--d:4">K.O. <span>CLAIM REJECTED</span></p>
-      </div>
-      <figcaption>Illustration of how a false claim looks on our Stage. One wrong register is enough.</figcaption>
-    </figure>
   </div>
 </section>
 
-<section class="sec" id="evidence" aria-labelledby="ev-h">
-  <div class="wrap">
-    <div class="sec-h">
-      <p class="kicker">STAGE 2</p>
-      <h2 id="ev-h">The <em>evidence rule</em></h2>
-      <p class="lede">Agents are good at sounding sure. So every screen, every chat answer and this page keep two kinds of statement apart.</p>
+<!-- ───────────── LIAR ───────────── -->
+<section class="slab slab-lab" id="liar" aria-labelledby="liar-h">
+  <div class="wrap liar-grid">
+    <div class="liar-copy" data-reveal>
+      <p class="eyebrow eyebrow-lab"><span class="dot dot-red"></span>Liar caught</p>
+      <h2 id="liar-h" class="h2 h2-lab">Agents lie. <em>The referee doesn't.</em></h2>
+      <p class="sub sub-lab">A claim is just a claim until a fresh compile agrees. Every lie is logged and counted.</p>
+      <button class="btn btn-light btn-sm replay" type="button" data-replay>Replay <span aria-hidden="true">&#8635;</span></button>
     </div>
-    <div class="ev">
-      <div class="card proved">
-        <h3>BRIGHT = PROVED</h3>
-        <p>Checked by the compiler. Match percentages, checksums, the exact instruction that differs.</p>
-        <ul class="chips" aria-label="Examples of proved statements">
-          <li>MATCH 100%</li>
-          <li>ROM CHECKSUM IDENTICAL</li>
-          <li>DIFFERS AT INSTRUCTION 4</li>
-          <li>1 FUNCTION CHANGED</li>
+    <div class="liar-scene" id="liarScene" aria-label="Illustration: an agent claims a match; the Checker's re-run finds a different instruction and stamps the claim rejected.">
+      <div class="who"><span class="avatar">D4</span><span>Digger 4 <span class="dim">· Muse Spark</span></span></div>
+      <div class="bubble bubble-big">Matched it. Pretty sure.</div>
+      <div class="verdict">
+        <p class="mono dim">checker → fresh referee call</p>
+        <div class="diff">
+          <p><span class="dk">first diff</span><span class="mono">+0x000A</span></p>
+          <p><span class="dk">expected</span><span class="mono ok">adds r0, r0, r2</span></p>
+          <p><span class="dk">got</span><span class="mono bad">adds r0, r2, r0</span></p>
+        </div>
+      </div>
+      <div class="stamp" aria-hidden="true">REJECTED</div>
+      <p class="fig-cap fig-cap-lab">Illustration.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── NUMBERS ───────────── -->
+<section class="slab slab-paper" id="numbers" aria-labelledby="num-h">
+  <div class="wrap">
+    <header class="sec-head" data-reveal>
+      <p class="eyebrow"><span class="dot dot-spark"></span>The first patient</p>
+      <h2 id="num-h" class="h2">Doom is our <em>first patient.</em></h2>
+      <p class="sub">Famous, hidden from the agents, scrambled so they can't recite it, and checkable byte for byte. Numbers only from run files.</p>
+    </header>
+
+    <div class="score-grid">
+      <article class="score score-bench" data-reveal>
+        <header><span class="tag tag-spark">BENCH</span><span class="mono dim">runs/bench_r01 · not Doom</span></header>
+        <div class="big"><span class="count" data-to="14">0</span><span class="of">/14</span></div>
+        <p class="big-l">train functions matched</p>
+        <dl class="mini">
+          <div><dt>first try</dt><dd><span class="count" data-to="12">0</span></dd></div>
+          <div><dt>wall time</dt><dd><span class="count" data-to="80">0</span> s</dd></div>
+          <div><dt>Muse Spark spend</dt><dd>$<span class="count" data-to="0.29" data-dec="2">0.00</span></dd></div>
+          <div><dt>false claims</dt><dd><span class="count" data-to="0">0</span></dd></div>
+          <div><dt>idioms learned</dt><dd><span class="count" data-to="24">0</span></dd></div>
+        </dl>
+        <p class="foot">Bench, not Doom: 20 small functions we wrote today, at <code>-O2</code>. Doom is harder.</p>
+      </article>
+
+      <article class="score score-doom" data-reveal style="--i:1">
+        <header><span class="tag tag-ink">DOOM</span><span class="mono dim">GBADoom, private variant · no LTO</span></header>
+        <div class="doom-facts">
+          <div><span class="count big-n" data-to="795">0</span><p>functions in the target</p></div>
+          <div><span class="count big-n" data-to="170">0</span><p>held out from the library</p></div>
+        </div>
+        <ul class="live-list">
+          <li><span>Functions matched</span><span class="live">measured live today</span></li>
+          <li><span>False claims caught</span><span class="live">measured live today</span></li>
+          <li><span>Held-out matches, library off vs on</span><span class="live">measured live today</span></li>
+          <li><span>Attempts per match</span><span class="live">measured live today</span></li>
         </ul>
+        <p class="foot">Counts from <code>lab/out/manifest.json</code>.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── PLAY ───────────── -->
+<section class="slab slab-peach" id="play" aria-labelledby="play-h">
+  <div class="wrap play-grid">
+    <div class="play-copy" data-reveal>
+      <p class="eyebrow"><span class="dot dot-red"></span>Play to recover</p>
+      <h2 id="play-h" class="h2">Play it, <em>and we rebuild it.</em></h2>
+      <p class="sub">The emulator tells SubQ Snap what's on screen and which code is running. Snap picks what to rebuild next, so what you're looking at heals first.</p>
+      <ol class="heal-log" aria-label="Recovery order in the illustration">
+        <li data-heal-log="0"><span class="tick"></span>status bar</li>
+        <li data-heal-log="1"><span class="tick"></span>weapon</li>
+        <li data-heal-log="2"><span class="tick"></span>walls and floor</li>
+        <li data-heal-log="3"><span class="tick"></span>the face<span class="q">?</span></li>
+      </ol>
+    </div>
+    <div class="play-stage" data-reveal style="--i:1">
+      <div class="console" id="console">
+        <div class="screen" aria-label="Stylised game frame: static clears region by region as code is recovered.">
+          <svg class="scene" viewBox="0 0 240 160" preserveAspectRatio="none" aria-hidden="true">
+            <rect width="240" height="160" fill="#2A1F2E"/>
+            <polygon points="0,0 240,0 170,44 70,44" fill="#3B2C3C"/>
+            <polygon points="0,124 240,124 170,84 70,84" fill="#5A3A2E"/>
+            <polygon points="0,0 70,44 70,84 0,124" fill="#6E4A3A"/>
+            <polygon points="240,0 170,44 170,84 240,124" fill="#62423A"/>
+            <rect x="70" y="44" width="100" height="40" fill="#1A1420"/>
+            <rect x="104" y="52" width="32" height="32" fill="#0E0A12"/>
+            <g fill="#8A6250" opacity=".7"><rect x="10" y="30" width="34" height="6"/><rect x="10" y="62" width="40" height="6"/><rect x="196" y="30" width="34" height="6"/><rect x="190" y="62" width="40" height="6"/></g>
+            <g fill="#FFD23F" opacity=".9"><rect x="114" y="46" width="12" height="3"/></g>
+            <g class="gun"><rect x="106" y="96" width="28" height="28" fill="#4A4A55"/><rect x="114" y="86" width="12" height="14" fill="#6C6C7A"/><rect x="100" y="112" width="40" height="12" fill="#3A3A44"/></g>
+            <rect x="0" y="124" width="240" height="36" fill="#3A3A44"/>
+            <g fill="#232329"><rect x="6" y="130" width="52" height="24"/><rect x="64" y="130" width="52" height="24"/><rect x="124" y="130" width="24" height="24"/><rect x="154" y="130" width="80" height="24"/></g>
+            <g fill="#FF5B4D"><rect x="12" y="135" width="6" height="14"/><rect x="20" y="135" width="6" height="14"/><rect x="28" y="135" width="6" height="14"/></g>
+            <g fill="#FFD23F"><rect x="70" y="135" width="6" height="14"/><rect x="78" y="135" width="6" height="14"/></g>
+            <rect x="128" y="133" width="16" height="18" fill="#9A9AFF"/>
+            <text x="136" y="146.5" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#16131F">?</text>
+            <g fill="#7CF2C8"><rect x="160" y="137" width="18" height="10"/><rect x="182" y="137" width="18" height="10"/><rect x="204" y="137" width="24" height="10"/></g>
+          </svg>
+          <div class="static" aria-hidden="true">
+            <i data-heal="0" style="--x:0;--y:77.5;--w:100;--h:22.5"></i>
+            <i data-heal="1" style="--x:40;--y:52;--w:20;--h:25.5"></i>
+            <i data-heal="2" style="--x:0;--y:0;--w:40;--h:77.5"></i>
+            <i data-heal="2" style="--x:60;--y:0;--w:40;--h:77.5"></i>
+            <i data-heal="2" style="--x:40;--y:0;--w:20;--h:52"></i>
+          </div>
+          <div class="scan" aria-hidden="true"></div>
+          <span class="screen-tag">looking at: <b data-looking>status bar</b></span>
+        </div>
+        <div class="console-bottom" aria-hidden="true">
+          <span class="led"></span><span class="mono">mGBA · tap</span><span class="grille"><i></i><i></i><i></i><i></i></span>
+        </div>
       </div>
-      <div class="card guess">
-        <h3>VIOLET ? = OUR GUESS</h3>
-        <p>Inferred by a model. Names, descriptions, types. Useful, never presented as fact.</p>
-        <ul class="chips" aria-label="Examples of guesses">
-          <li>UPDATE FACE WIDGET?</li>
-          <li>WEAPON STATE TICK?</li>
-          <li>struct player?</li>
-          <li>"handles the pain face"?</li>
-        </ul>
-      </div>
+      <p class="fig-cap">Stylised illustration, not game footage. The face stays violet: what it does is still our guess.</p>
     </div>
-    <p class="key"><b>?</b> = OUR GUESS. EVERYTHING ELSE IS PROVED.</p>
   </div>
 </section>
 
-<section class="sec" id="results" aria-labelledby="res-h">
+<!-- ───────────── STACK ───────────── -->
+<section class="slab slab-paper" id="stack" aria-labelledby="stack-h">
   <div class="wrap">
-    <div class="sec-h">
-      <p class="kicker">STAGE 3</p>
-      <h2 id="res-h">Hi-score, <em>measured live</em></h2>
-      <p class="lede">We don't print a number until a saved run produced it. Results land from <code>runs/*/metrics.json</code> during the event.</p>
-    </div>
-    <div class="board">
-      <table>
-        <caption>FILE 1 · DOOM (GBADOOM VARIANT, NO LTO)</caption>
-        <tbody>
-          <tr><th scope="row">FUNCTIONS IN THE TARGET<small>Game code plus library code, split from the ROM. From <code>lab/out/manifest.json</code>.</small></th><td class="real">795</td></tr>
-          <tr><th scope="row">HELD OUT<small>Game functions kept away from the idiom library, to test whether it really helps.</small></th><td class="real">170</td></tr>
-          <tr><th scope="row">REFEREE CHECK TIME<small>One compile plus compare, measured on the real referee.</small></th><td class="real">0.1–0.2 S</td></tr>
-          <tr><th scope="row">FUNCTIONS MATCHED<small>Byte-identical, re-verified by the Checker.</small></th><td class="tbd">MEASURED LIVE TODAY</td></tr>
-          <tr><th scope="row">FALSE CLAIMS CAUGHT<small>"I matched it" claims that did not hold up.</small></th><td class="tbd">MEASURED LIVE TODAY</td></tr>
-          <tr><th scope="row">HELD-OUT MATCHES, LIBRARY OFF VS ON<small>Same functions, same budget, idiom library switched off and on.</small></th><td class="tbd">MEASURED LIVE TODAY</td></tr>
-          <tr><th scope="row">ATTEMPTS PER MATCH<small>Should fall as the library grows. We'll show it either way.</small></th><td class="tbd">MEASURED LIVE TODAY</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="board-note">The target is a private variant of GBADoom with small body-only edits, so a model cannot simply recite the published source. The first three rows come from the built target and the running referee. The rest stay blank on purpose until a real run writes them; every figure we show will trace to a file in the repo.</p>
-  </div>
-</section>
+    <header class="sec-head" data-reveal>
+      <p class="eyebrow"><span class="dot dot-violet"></span>Built with</p>
+      <h2 id="stack-h" class="h2">Sponsors are the organs, <em>not the logos.</em></h2>
+      <p class="sub">Muse writes it. Snap judges it. The compiler proves it. MongoDB remembers it. ASI:One lets anyone ask for it.</p>
+    </header>
 
-<section class="sec" id="lanes" aria-labelledby="lanes-h">
-  <div class="wrap">
-    <div class="sec-h">
-      <p class="kicker">STAGE 4</p>
-      <h2 id="lanes-h">Four lanes, <em>one contract</em></h2>
-      <p class="lede">The team splits into four lanes that share only file shapes, two HTTP APIs and one append-only event log, all defined in <code>contracts/</code>.</p>
-    </div>
-    <ul class="lanes">
-      <li class="lane"><span class="ltr" aria-hidden="true">A</span><div><h3>THE LAB</h3><p>Builds GBADoom reproducibly without LTO, splits it into <code>fn_</code> functions, and runs the referee and the fakematch linter. Home of the ASI:One agents.</p></div></li>
-      <li class="lane"><span class="ltr" aria-hidden="true">B</span><div><h3>THE CREW</h3><p>The Diggers, the Checker, the idiom library and the held-out experiment. Writes every run to <code>events.jsonl</code> and <code>metrics.json</code>.</p></div></li>
-      <li class="lane"><span class="ltr" aria-hidden="true">C</span><div><h3>THE STAGE</h3><p>Retro-game scenes driven only by the event stream: Title, Split, Hi-score, Versus for every rejected claim, and a Time trial for the results.</p></div></li>
-      <li class="lane"><span class="ltr" aria-hidden="true">D</span><div><h3>THE CREATURE</h3><p>Doom running in an emulator, healing as its code comes back, the rebuilt ROM swapped in, and a phone page so the room can play.</p></div></li>
+    <ul class="roles">
+      <li class="role role-hands" data-tilt data-reveal>
+        <div class="role-art" aria-hidden="true">
+          <svg viewBox="0 0 160 110"><rect x="18" y="16" width="124" height="80" rx="12" class="a-card"/><text x="40" y="66" class="a-brace">{</text><rect x="62" y="38" width="44" height="7" rx="3.5" class="a-line"/><rect x="62" y="52" width="58" height="7" rx="3.5" class="a-line a2"/><rect x="62" y="66" width="30" height="7" rx="3.5" class="a-line a3"/><rect x="96" y="65" width="3" height="10" class="a-caret"/><text x="114" y="82" class="a-brace">}</text></svg>
+        </div>
+        <p class="role-who">Meta Model API · Muse Spark, Muse Wonder</p>
+        <h3>The hands</h3>
+        <p>Writes every line of recovered C.</p>
+      </li>
+      <li class="role role-judge" data-tilt data-reveal style="--i:1">
+        <div class="role-art" aria-hidden="true">
+          <svg viewBox="0 0 160 110"><path d="M30 86 A 50 50 0 0 1 130 86" class="a-arc"/><path d="M30 86 A 50 50 0 0 1 130 86" class="a-arc2" pathLength="100"/><g class="a-needle"><line x1="80" y1="86" x2="80" y2="46"/><circle cx="80" cy="86" r="6"/></g></svg>
+        </div>
+        <p class="role-who">Subquadratic · SubQ Snap</p>
+        <h3>The judgment</h3>
+        <p>Reads the whole game at once and decides where every attempt goes.</p>
+      </li>
+      <li class="role role-door" data-tilt data-reveal style="--i:2">
+        <div class="role-art" aria-hidden="true">
+          <svg viewBox="0 0 160 110"><rect x="44" y="14" width="56" height="86" rx="4" class="a-frame"/><path d="M48 18 L 84 26 L 84 104 L 48 96 Z" class="a-door"/><circle cx="78" cy="62" r="3" class="a-knob"/><rect x="98" y="22" width="48" height="26" rx="10" class="a-chat"/><path d="M106 48 L 104 56 L 114 48 Z" class="a-chat"/><circle cx="112" cy="35" r="2.5" class="a-dot"/><circle cx="122" cy="35" r="2.5" class="a-dot d2"/><circle cx="132" cy="35" r="2.5" class="a-dot d3"/></svg>
+        </div>
+        <p class="role-who">Fetch.ai · ASI:One</p>
+        <h3>The front door</h3>
+        <p>Ask for a recovery in a chat. Get proof back.</p>
+      </li>
+      <li class="role role-memory" data-tilt data-reveal style="--i:3">
+        <div class="role-art" aria-hidden="true">
+          <svg viewBox="0 0 160 110"><g class="a-db"><ellipse cx="80" cy="80" rx="42" ry="12" class="a-cyl"/><rect x="38" y="62" width="84" height="18" class="a-cylb"/><ellipse cx="80" cy="62" rx="42" ry="12" class="a-cyl"/><rect x="38" y="44" width="84" height="18" class="a-cylb"/><ellipse cx="80" cy="44" rx="42" ry="12" class="a-cyl"/></g><g class="a-drop"><rect x="62" y="6" width="36" height="20" rx="5" class="a-chip"/></g></svg>
+        </div>
+        <p class="role-who">MongoDB Atlas</p>
+        <h3>The memory</h3>
+        <p>Remembers every trick, so the next game is faster.</p>
+      </li>
+      <li class="role role-second" data-tilt data-reveal style="--i:4">
+        <div class="role-art" aria-hidden="true">
+          <svg viewBox="0 0 160 110"><circle cx="62" cy="56" r="30" class="a-lens"/><circle cx="98" cy="56" r="30" class="a-lens a-lens2"/><path d="M68 56 l8 8 l16 -18" class="a-check"/></svg>
+        </div>
+        <div>
+          <p class="role-who">Google Gemini</p>
+          <h3>The second opinion</h3>
+          <p>A different lab double-checks every match.</p>
+        </div>
+      </li>
     </ul>
+
+    <div class="lanes" data-reveal>
+      <p class="eyebrow"><span class="dot dot-ink"></span>Four lanes, one contract</p>
+      <ul>
+        <li><b>A</b><span><strong>The Lab.</strong> Reproducible build, the split, the referee and linter, the ASI:One agents.</span></li>
+        <li><b>B</b><span><strong>The Crew.</strong> Diggers, Checker, idiom library, the held-out experiment.</span></li>
+        <li><b>C</b><span><strong>The Stage.</strong> The live show, driven only by the event stream.</span></li>
+        <li><b>D</b><span><strong>The Creature.</strong> Doom in an emulator, healing as its code returns.</span></li>
+      </ul>
+    </div>
   </div>
 </section>
 
-<section class="sec" id="stack" aria-labelledby="stack-h">
+<!-- ───────────── CREDITS ───────────── -->
+<section class="slab slab-mint" id="credits" aria-labelledby="cr-h">
   <div class="wrap">
-    <div class="sec-h">
-      <p class="kicker">STAGE 5</p>
-      <h2 id="stack-h">Built <em>with</em></h2>
-      <p class="lede">Each platform has one job in the loop. The referee, not any model, has the last word.</p>
-    </div>
-    <ul class="stack">
-      <li style="--c:var(--cyan)"><h3>MUSE SPARK</h3><p class="by">on the Meta Model API</p><p>Powers every Digger. It reads assembly, writes C and calls the referee as a tool. Easy functions start at lower reasoning effort.</p></li>
-      <li style="--c:var(--magenta)"><h3>SUBQ SNAP</h3><p class="by">by Subquadratic</p><p>Reads the whole program's disassembly in one window to triage every function by difficulty, and takes a second look at each match for fakes.</p></li>
-      <li style="--c:var(--yellow)"><h3>ASI:ONE</h3><p class="by">agents by Fetch.ai</p><p>Agents on Agentverse let anyone ask, in a chat, whether a fix really compiles to the bytes it claims.</p></li>
-      <li style="--c:var(--mint)"><h3>MONGODB ATLAS</h3><p class="by">the idiom library</p><p>Stores generic compiler habits learned from accepted matches. Never the answers: idioms that copy a solution are rejected.</p></li>
-    </ul>
-  </div>
-</section>
-
-<section class="sec" id="credits" aria-labelledby="cr-h">
-  <div class="wrap">
-    <div class="sec-h">
-      <p class="kicker">CREDITS</p>
-      <h2 id="cr-h">Built today / <em>Not ours</em></h2>
-      <p class="lede">What our team made during the hackathon, and everything we stand on. The commit history after 10:45 PT is the record.</p>
-    </div>
+    <header class="sec-head" data-reveal>
+      <p class="eyebrow"><span class="dot dot-mint-ink"></span>Credits</p>
+      <h2 id="cr-h" class="h2">Built today. <em>And what isn't ours.</em></h2>
+      <p class="sub">The commit history after 10:45 PT is the record.</p>
+    </header>
     <div class="credits">
-      <div class="ours">
-        <h3>BUILT TODAY</h3>
-        <p class="sub">Nov 7, 2026, after 10:45 PT</p>
+      <div class="cr cr-ours" data-reveal>
+        <h3>Built today</h3>
+        <p class="cr-sub mono">Nov 7, 2026 · after 10:45 PT</p>
         <ul>
           <li>The shared contracts, schemas and fixtures in <code>contracts/</code></li>
-          <li>The referee, the fakematch linter and the build and split scripts in <code>lab/</code></li>
-          <li>The Diggers, the Checker, the idiom library and SubQ Snap triage in <code>crew/</code></li>
-          <li>The Stage scenes in <code>stage/</code></li>
-          <li>The emulator overlay and phone page in <code>creature/</code></li>
-          <li>The ASI:One agents</li>
-          <li>This site, its pixel art and the README</li>
+          <li>The build, split, referee and fakematch linter in <code>lab/</code></li>
+          <li>The Diggers, the Checker, the idiom library and SubQ Snap steering in <code>crew/</code></li>
+          <li>The Stage in <code>stage/</code> and the emulator overlay and phone page in <code>creature/</code></li>
+          <li>The Frankenstein Referee agent on ASI:One</li>
+          <li>This site, its illustrations and the README</li>
         </ul>
       </div>
-      <div class="theirs">
-        <h3>NOT OURS</h3>
-        <p class="sub">Credited with thanks</p>
+      <div class="cr cr-theirs" data-reveal style="--i:1">
+        <h3>Not ours, with thanks</h3>
+        <p class="cr-sub mono">credited, never claimed</p>
         <ul>
           <li><b>Doom</b> by id Software</li>
           <li><b>prBoom</b> by its authors</li>
-          <li><b>GBADoom</b> by doomhack (GPL-2.0-or-later). Used only as the hidden answer key, never committed</li>
-          <li><b>devkitARM</b> GCC by devkitPro, and the mGBA emulator</li>
-          <li>Platforms: <b>Muse Spark</b> (Meta), <b>ASI:One</b> and Agentverse (Fetch.ai), <b>MongoDB Atlas</b>, <b>SubQ</b> (Subquadratic)</li>
-          <li>Fonts by their designers, served by Google Fonts</li>
+          <li><b>GBADoom</b> by doomhack, GPL-2.0-or-later. Used only as the hidden answer key, never committed</li>
+          <li><b>devkitARM</b> GCC by devkitPro, and the <b>mGBA</b> emulator</li>
+          <li><b>Muse Spark</b> and <b>Muse Wonder</b> (Meta), <b>SubQ Snap</b> (Subquadratic), <b>ASI:One</b> and Agentverse (Fetch.ai), <b>MongoDB Atlas</b>, <b>Gemini</b> (Google)</li>
+          <li>Fonts by their designers, via Google Fonts</li>
         </ul>
         <p class="prior"><b>Prior work we brought:</b> the planning kit in <code>docs/</code>, including <code>docs/design_system.html</code> (a visual reference only, never shipped or pasted), and the event clock <code>tools/hackclock.py</code>.</p>
       </div>
@@ -490,18 +443,30 @@ footer .legal{font-size:.85rem}
   </div>
 </section>
 
+<!-- ───────────── NEW GAME+ ───────────── -->
+<section class="ngplus" aria-labelledby="ng-h">
+  <div class="wrap" data-reveal>
+    <span class="chip-pixel">NEW GAME+</span>
+    <h2 id="ng-h" class="ng-line">Anywhere the only thing left is the compiled program, <em>Frankenstein can bring the source back.</em></h2>
+  </div>
+</section>
+
 </main>
 
-<footer>
-  <div class="wrap">
+<footer class="footer">
+  <div class="wrap foot-grid">
     <div>
-      <p class="fin">IT'S ALIVE?</p>
-      <p>Built at the AI Engineer Code Summit hackathon, Shack15, San Francisco, November 7, 2026. Source on <a href="https://github.com/KarthikSubramanian07/Frankenstein" rel="noopener">GitHub</a>, MIT licensed.</p>
+      <p class="alive" data-reveal>It's alive<span class="q">?</span></p>
+      <p class="alive-note">Games don't have to die.</p>
     </div>
-    <p class="legal">Doom is a trademark of id Software. This project is not affiliated with or endorsed by id Software, doomhack, or any platform named here. All pixel art on this page is original.</p>
+    <div class="foot-links">
+      <a class="btn btn-dark" href="https://github.com/KarthikSubramanian07/Frankenstein" rel="noopener">Source on GitHub <span aria-hidden="true">&#8599;</span></a>
+      <p>Built at the AI Engineer Code Summit hackathon, Shack15, San Francisco, November 7, 2026. MIT licensed.</p>
+      <p class="legal">Doom is a trademark of id Software. Not affiliated with or endorsed by id Software, doomhack, or any platform named here. All illustrations are original.</p>
+    </div>
   </div>
 </footer>
 
-<script src="/assets/main.js?v=2" defer></script>
+<script src="/assets/app.js?v=6" defer></script>
 </body>
 </html>
