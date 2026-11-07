@@ -83,5 +83,5 @@ fn_0800A4C0:
  800a56a:	bc01      	pop	{r0}
  800a56c:	4700      	bx	r0
  800a56e:	46c0      	nop			@ (mov r8, r8)
- 800a570:	030064c4 	.word	0x030064c4
+ 800a570:	030064c4 	.word	0x030064c4	@ data_030064C4
  800a574:	fffffdff 	.word	0xfffffdff

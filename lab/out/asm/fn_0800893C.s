@@ -354,7 +354,7 @@ fn_0800893C:
  8008c1a:	dd00      	ble.n	8008c1e <fn_0800893C+0x2e2>
  8008c1c:	e70b      	b.n	8008a36 <fn_0800893C+0xfa>
  8008c1e:	e728      	b.n	8008a72 <fn_0800893C+0x136>
- 8008c20:	030064c4 	.word	0x030064c4
+ 8008c20:	030064c4 	.word	0x030064c4	@ data_030064C4
  8008c24:	ff400000 	.word	0xff400000
  8008c28:	ffc00000 	.word	0xffc00000
  8008c2c:	002bffff 	.word	0x002bffff

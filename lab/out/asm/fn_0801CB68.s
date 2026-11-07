@@ -297,7 +297,7 @@ fn_0801CB68:
  801cde0:	e710      	b.n	801cc04 <fn_0801CB68+0x9c>
  801cde2:	f7e6 fbbf 	bl	8003564 <fn_08003564>
  801cde6:	e70d      	b.n	801cc04 <fn_0801CB68+0x9c>
- 801cde8:	030064c4 	.word	0x030064c4
+ 801cde8:	030064c4 	.word	0x030064c4	@ data_030064C4
  801cdec:	00005a38 	.word	0x00005a38
  801cdf0:	00005a88 	.word	0x00005a88
  801cdf4:	00005a44 	.word	0x00005a44

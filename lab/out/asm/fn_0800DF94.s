@@ -31,4 +31,4 @@ fn_0800DF94:
  800dfd6:	bc70      	pop	{r4, r5, r6}
  800dfd8:	bc01      	pop	{r0}
  800dfda:	4700      	bx	r0
- 800dfdc:	0800ddc5 	.word	0x0800ddc5
+ 800dfdc:	0800ddc5 	.word	0x0800ddc5	@ fn_0800DDC4

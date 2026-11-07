@@ -137,6 +137,6 @@ fn_08014994:
  8014aa2:	428b      	cmp	r3, r1
  8014aa4:	d1cf      	bne.n	8014a46 <fn_08014994+0xb2>
  8014aa6:	e7de      	b.n	8014a66 <fn_08014994+0xd2>
- 8014aa8:	030064c4 	.word	0x030064c4
+ 8014aa8:	030064c4 	.word	0x030064c4	@ data_030064C4
  8014aac:	00000e0c 	.word	0x00000e0c
  8014ab0:	0000ffff 	.word	0x0000ffff

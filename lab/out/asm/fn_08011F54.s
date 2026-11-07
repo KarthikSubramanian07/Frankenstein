@@ -90,5 +90,5 @@ fn_08011F54:
  801200c:	0020      	movs	r0, r4
  801200e:	f008 f95b 	bl	801a2c8 <fn_0801A2C8>
  8012012:	e7c2      	b.n	8011f9a <fn_08011F54+0x46>
- 8012014:	030064c4 	.word	0x030064c4
+ 8012014:	030064c4 	.word	0x030064c4	@ data_030064C4
  8012018:	fffeffff 	.word	0xfffeffff

@@ -48,5 +48,5 @@ fn_0800E58C:
  800e5ea:	1e43      	subs	r3, r0, #1
  800e5ec:	4198      	sbcs	r0, r3
  800e5ee:	e7e6      	b.n	800e5be <fn_0800E58C+0x32>
- 800e5f0:	030064c4 	.word	0x030064c4
+ 800e5f0:	030064c4 	.word	0x030064c4	@ data_030064C4
  800e5f4:	0000088c 	.word	0x0000088c

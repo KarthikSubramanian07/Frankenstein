@@ -32,6 +32,6 @@ fn_08010D9C:
  8010dda:	bc02      	pop	{r1}
  8010ddc:	4708      	bx	r1
  8010dde:	46c0      	nop			@ (mov r8, r8)
- 8010de0:	030064c4 	.word	0x030064c4
+ 8010de0:	030064c4 	.word	0x030064c4	@ data_030064C4
  8010de4:	000010ec 	.word	0x000010ec
  8010de8:	0000074c 	.word	0x0000074c

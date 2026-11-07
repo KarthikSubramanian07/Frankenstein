@@ -183,5 +183,5 @@ fn_0800A578:
  800a6f4:	6920      	ldr	r0, [r4, #16]
  800a6f6:	f00a fed9 	bl	80154ac <fn_080154AC>
  800a6fa:	e79b      	b.n	800a634 <fn_0800A578+0xbc>
- 800a6fc:	030064c4 	.word	0x030064c4
+ 800a6fc:	030064c4 	.word	0x030064c4	@ data_030064C4
  800a700:	000010ec 	.word	0x000010ec

@@ -168,7 +168,7 @@ fn_0800B738:
  800b89a:	db94      	blt.n	800b7c6 <fn_0800B738+0x8e>
  800b89c:	e75d      	b.n	800b75a <fn_0800B738+0x22>
  800b89e:	46c0      	nop			@ (mov r8, r8)
- 800b8a0:	030064c4 	.word	0x030064c4
+ 800b8a0:	030064c4 	.word	0x030064c4	@ data_030064C4
  800b8a4:	0000ffff 	.word	0x0000ffff
  800b8a8:	00000e0c 	.word	0x00000e0c
- 800b8ac:	0800a579 	.word	0x0800a579
+ 800b8ac:	0800a579 	.word	0x0800a579	@ fn_0800A578

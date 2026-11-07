@@ -45,7 +45,7 @@ fn_0801C150:
  801c1a6:	d1ef      	bne.n	801c188 <fn_0801C150+0x38>
  801c1a8:	e7ea      	b.n	801c180 <fn_0801C150+0x30>
  801c1aa:	46c0      	nop			@ (mov r8, r8)
- 801c1ac:	030064c4 	.word	0x030064c4
+ 801c1ac:	030064c4 	.word	0x030064c4	@ data_030064C4
  801c1b0:	00005a30 	.word	0x00005a30
  801c1b4:	040000d4 	.word	0x040000d4
  801c1b8:	040000d8 	.word	0x040000d8

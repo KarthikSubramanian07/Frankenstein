@@ -41,5 +41,5 @@ fn_0801D588:
  801d5da:	3c04      	subs	r4, #4
  801d5dc:	e7d8      	b.n	801d590 <fn_0801D588+0x8>
  801d5de:	46c0      	nop			@ (mov r8, r8)
- 801d5e0:	03006780 	.word	0x03006780
+ 801d5e0:	03006780 	.word	0x03006780	@ data_03006780
  801d5e4:	0814a9fc 	.word	0x0814a9fc

@@ -234,6 +234,6 @@ fn_0800B8B0:
  800ba9e:	469a      	mov	sl, r3
  800baa0:	e7c1      	b.n	800ba26 <fn_0800B8B0+0x176>
  800baa2:	46c0      	nop			@ (mov r8, r8)
- 800baa4:	030064c4 	.word	0x030064c4
- 800baa8:	0800a81d 	.word	0x0800a81d
+ 800baa4:	030064c4 	.word	0x030064c4	@ data_030064C4
+ 800baa8:	0800a81d 	.word	0x0800a81d	@ fn_0800A81C
  800baac:	00000e0c 	.word	0x00000e0c

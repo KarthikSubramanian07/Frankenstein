@@ -110,5 +110,5 @@ fn_08009BCC:
  8009cb6:	6d21      	ldr	r1, [r4, #80]	@ 0x50
  8009cb8:	e79f      	b.n	8009bfa <fn_08009BCC+0x2e>
  8009cba:	46c0      	nop			@ (mov r8, r8)
- 8009cbc:	030064c4 	.word	0x030064c4
- 8009cc0:	081397cc 	.word	0x081397cc
+ 8009cbc:	030064c4 	.word	0x030064c4	@ data_030064C4
+ 8009cc0:	081397cc 	.word	0x081397cc	@ data_081397CC

@@ -163,5 +163,5 @@ fn_030017D0:
  3001a54:	e5c53000 	strb	r3, [r5]
  3001a58:	e8bd41f0 	pop	{r4, r5, r6, r7, r8, lr}
  3001a5c:	e12fff1e 	bx	lr
- 3001a60:	030064cc 	.word	0x030064cc
+ 3001a60:	030064cc 	.word	0x030064cc	@ data_030064CC
  3001a64:	0812f6c3 	.word	0x0812f6c3

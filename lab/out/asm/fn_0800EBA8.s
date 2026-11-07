@@ -246,7 +246,7 @@ fn_0800EBA8:
  800ed9e:	681b      	ldr	r3, [r3, #0]
  800eda0:	deff      	udf	#255	@ 0xff
  800eda2:	46c0      	nop			@ (mov r8, r8)
- 800eda4:	030064c4 	.word	0x030064c4
+ 800eda4:	030064c4 	.word	0x030064c4	@ data_030064C4
  800eda8:	000008f8 	.word	0x000008f8
  800edac:	00000904 	.word	0x00000904
  800edb0:	000008fc 	.word	0x000008fc

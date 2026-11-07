@@ -56,10 +56,10 @@ fn_0800FB6C:
  800fbda:	bcf0      	pop	{r4, r5, r6, r7}
  800fbdc:	bc01      	pop	{r0}
  800fbde:	4700      	bx	r0
- 800fbe0:	030064c4 	.word	0x030064c4
+ 800fbe0:	030064c4 	.word	0x030064c4	@ data_030064C4
  800fbe4:	000008f8 	.word	0x000008f8
- 800fbe8:	081397cc 	.word	0x081397cc
+ 800fbe8:	081397cc 	.word	0x081397cc	@ data_081397CC
  800fbec:	000008fc 	.word	0x000008fc
  800fbf0:	00000904 	.word	0x00000904
  800fbf4:	00000908 	.word	0x00000908
- 800fbf8:	0800edcd 	.word	0x0800edcd
+ 800fbf8:	0800edcd 	.word	0x0800edcd	@ fn_0800EDCC

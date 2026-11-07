@@ -241,9 +241,9 @@ fn_0800C9F0:
  800cbde:	2208      	movs	r2, #8
  800cbe0:	029b      	lsls	r3, r3, #10
  800cbe2:	e7b9      	b.n	800cb58 <fn_0800C9F0+0x168>
- 800cbe4:	030064c4 	.word	0x030064c4
+ 800cbe4:	030064c4 	.word	0x030064c4	@ data_030064C4
  800cbe8:	00000e04 	.word	0x00000e04
  800cbec:	0000ffff 	.word	0x0000ffff
  800cbf0:	00000e0c 	.word	0x00000e0c
- 800cbf4:	0800704d 	.word	0x0800704d
+ 800cbf4:	0800704d 	.word	0x0800704d	@ fn_0800704C
  800cbf8:	fffc0000 	.word	0xfffc0000

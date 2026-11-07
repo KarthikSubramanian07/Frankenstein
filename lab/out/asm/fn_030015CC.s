@@ -17,4 +17,4 @@ fn_030015CC:
  3001608:	e12fff1e 	bx	lr
  300160c:	e003000c 	and	r0, r3, ip
  3001610:	e12fff1e 	bx	lr
- 3001614:	0801fce0 	.word	0x0801fce0
+ 3001614:	0801fce0 	.word	0x0801fce0	@ fn_0801FCE0

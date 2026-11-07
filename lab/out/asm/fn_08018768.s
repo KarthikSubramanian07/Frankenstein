@@ -381,7 +381,7 @@ fn_08018768:
  8018a7a:	46c0      	nop			@ (mov r8, r8)
  8018a7c:	fffbffff 	.word	0xfffbffff
  8018a80:	ffffefff 	.word	0xffffefff
- 8018a84:	030064c4 	.word	0x030064c4
+ 8018a84:	030064c4 	.word	0x030064c4	@ data_030064C4
  8018a88:	000010fc 	.word	0x000010fc
  8018a8c:	0000074c 	.word	0x0000074c
  8018a90:	000005d2 	.word	0x000005d2
@@ -389,5 +389,5 @@ fn_08018768:
  8018a98:	0005ffff 	.word	0x0005ffff
  8018a9c:	fc71c71d 	.word	0xfc71c71d
  8018aa0:	f8e38e3a 	.word	0xf8e38e3a
- 8018aa4:	081397cc 	.word	0x081397cc
+ 8018aa4:	081397cc 	.word	0x081397cc	@ data_081397CC
  8018aa8:	038e38e3 	.word	0x038e38e3

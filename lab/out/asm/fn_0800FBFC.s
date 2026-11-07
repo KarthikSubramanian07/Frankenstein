@@ -62,7 +62,7 @@ fn_0800FBFC:
  800fc78:	5898      	ldr	r0, [r3, r2]
  800fc7a:	f00a fb25 	bl	801a2c8 <fn_0801A2C8>
  800fc7e:	e7e5      	b.n	800fc4c <fn_0800FBFC+0x50>
- 800fc80:	030064c4 	.word	0x030064c4
- 800fc84:	081397cc 	.word	0x081397cc
- 800fc88:	0800e729 	.word	0x0800e729
- 800fc8c:	0800e5f9 	.word	0x0800e5f9
+ 800fc80:	030064c4 	.word	0x030064c4	@ data_030064C4
+ 800fc84:	081397cc 	.word	0x081397cc	@ data_081397CC
+ 800fc88:	0800e729 	.word	0x0800e729	@ fn_0800E728
+ 800fc8c:	0800e5f9 	.word	0x0800e5f9	@ fn_0800E5F8

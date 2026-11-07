@@ -77,10 +77,10 @@ fn_0800FD28:
  800fdc2:	bcf0      	pop	{r4, r5, r6, r7}
  800fdc4:	bc02      	pop	{r1}
  800fdc6:	4708      	bx	r1
- 800fdc8:	030064c4 	.word	0x030064c4
+ 800fdc8:	030064c4 	.word	0x030064c4	@ data_030064C4
  800fdcc:	00000e28 	.word	0x00000e28
  800fdd0:	ffe00000 	.word	0xffe00000
  800fdd4:	00000927 	.word	0x00000927
  800fdd8:	00000e2c 	.word	0x00000e2c
  800fddc:	00000926 	.word	0x00000926
- 800fde0:	0800f599 	.word	0x0800f599
+ 800fde0:	0800f599 	.word	0x0800f599	@ fn_0800F598

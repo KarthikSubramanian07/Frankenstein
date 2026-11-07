@@ -303,9 +303,9 @@ fn_0800F808:
  800fa8e:	59eb      	ldr	r3, [r5, r7]
  800fa90:	6203      	str	r3, [r0, #32]
  800fa92:	e7e1      	b.n	800fa58 <fn_0800F808+0x250>
- 800fa94:	030064c4 	.word	0x030064c4
+ 800fa94:	030064c4 	.word	0x030064c4	@ data_030064C4
  800fa98:	000008e8 	.word	0x000008e8
- 800fa9c:	0800e67d 	.word	0x0800e67d
+ 800fa9c:	0800e67d 	.word	0x0800e67d	@ fn_0800E67C
  800faa0:	00010001 	.word	0x00010001
  800faa4:	fffff800 	.word	0xfffff800
  800faa8:	000008ec 	.word	0x000008ec

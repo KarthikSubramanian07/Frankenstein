@@ -100,7 +100,7 @@ fn_0800F720:
  800f7f2:	5053      	str	r3, [r2, r1]
  800f7f4:	e7a1      	b.n	800f73a <fn_0800F720+0x1a>
  800f7f6:	46c0      	nop			@ (mov r8, r8)
- 800f7f8:	030064c4 	.word	0x030064c4
+ 800f7f8:	030064c4 	.word	0x030064c4	@ data_030064C4
  800f7fc:	000008ec 	.word	0x000008ec
  800f800:	000008e8 	.word	0x000008e8
- 800f804:	081397cc 	.word	0x081397cc
+ 800f804:	081397cc 	.word	0x081397cc	@ data_081397CC

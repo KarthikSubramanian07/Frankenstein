@@ -406,12 +406,12 @@ fn_0800C3E8:
  800c72a:	46a2      	mov	sl, r4
  800c72c:	001e      	movs	r6, r3
  800c72e:	e012      	b.n	800c756 <fn_0800C3E8+0x36e>
- 800c730:	030064c4 	.word	0x030064c4
+ 800c730:	030064c4 	.word	0x030064c4	@ data_030064C4
  800c734:	00000e04 	.word	0x00000e04
  800c738:	ffffd000 	.word	0xffffd000
  800c73c:	0000ffff 	.word	0x0000ffff
  800c740:	00000e0c 	.word	0x00000e0c
- 800c744:	0800a579 	.word	0x0800a579
+ 800c744:	0800a579 	.word	0x0800a579	@ fn_0800A578
  800c748:	465b      	mov	r3, fp
  800c74a:	221e      	movs	r2, #30
  800c74c:	5e9b      	ldrsh	r3, [r3, r2]

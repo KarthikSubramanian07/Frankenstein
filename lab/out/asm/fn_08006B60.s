@@ -237,7 +237,7 @@ fn_08006B60:
  8006d46:	6920      	ldr	r0, [r4, #16]
  8006d48:	e7ea      	b.n	8006d20 <fn_08006B60+0x1c0>
  8006d4a:	46c0      	nop			@ (mov r8, r8)
- 8006d4c:	030064c4 	.word	0x030064c4
+ 8006d4c:	030064c4 	.word	0x030064c4	@ data_030064C4
  8006d50:	000010ec 	.word	0x000010ec
  8006d54:	0812e48c 	.word	0x0812e48c
  8006d58:	0002ffff 	.word	0x0002ffff

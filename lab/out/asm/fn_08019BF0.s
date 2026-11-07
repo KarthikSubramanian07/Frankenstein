@@ -86,7 +86,7 @@ fn_08019BF0:
  8019c9e:	e7c4      	b.n	8019c2a <fn_08019BF0+0x3a>
  8019ca0:	00c0      	lsls	r0, r0, #3
  8019ca2:	e7ed      	b.n	8019c80 <fn_08019BF0+0x90>
- 8019ca4:	081397cc 	.word	0x081397cc
- 8019ca8:	030064c4 	.word	0x030064c4
+ 8019ca4:	081397cc 	.word	0x081397cc	@ data_081397CC
+ 8019ca8:	030064c4 	.word	0x030064c4	@ data_030064C4
  8019cac:	00005630 	.word	0x00005630
  8019cb0:	009fffff 	.word	0x009fffff

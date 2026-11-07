@@ -54,5 +54,5 @@ fn_0801143C:
  80114a8:	f008 ff0e 	bl	801a2c8 <fn_0801A2C8>
  80114ac:	e7f8      	b.n	80114a0 <fn_0801143C+0x64>
  80114ae:	46c0      	nop			@ (mov r8, r8)
- 80114b0:	030064c4 	.word	0x030064c4
+ 80114b0:	030064c4 	.word	0x030064c4	@ data_030064C4
  80114b4:	fffeffff 	.word	0xfffeffff

@@ -42,7 +42,7 @@ fn_0801D91C:
  801d972:	68a4      	ldr	r4, [r4, #8]
  801d974:	e7f0      	b.n	801d958 <fn_0801D91C+0x3c>
  801d976:	46c0      	nop			@ (mov r8, r8)
- 801d978:	03006780 	.word	0x03006780
+ 801d978:	03006780 	.word	0x03006780	@ data_03006780
  801d97c:	0814aa7c 	.word	0x0814aa7c
  801d980:	0814aab4 	.word	0x0814aab4
  801d984:	0814aaec 	.word	0x0814aaec

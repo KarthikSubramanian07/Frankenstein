@@ -63,7 +63,7 @@ fn_0801BF34:
  801bfb2:	bcf0      	pop	{r4, r5, r6, r7}
  801bfb4:	bc01      	pop	{r0}
  801bfb6:	4700      	bx	r0
- 801bfb8:	030064c4 	.word	0x030064c4
+ 801bfb8:	030064c4 	.word	0x030064c4	@ data_030064C4
  801bfbc:	00005a30 	.word	0x00005a30
  801bfc0:	8400000c 	.word	0x8400000c
  801bfc4:	040000d4 	.word	0x040000d4

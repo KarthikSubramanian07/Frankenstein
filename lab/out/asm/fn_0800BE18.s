@@ -402,11 +402,11 @@ fn_0800BE18:
  800c156:	4264      	negs	r4, r4
  800c158:	e67d      	b.n	800be56 <fn_0800BE18+0x3e>
  800c15a:	46c0      	nop			@ (mov r8, r8)
- 800c15c:	030064c4 	.word	0x030064c4
+ 800c15c:	030064c4 	.word	0x030064c4	@ data_030064C4
  800c160:	00000e04 	.word	0x00000e04
  800c164:	000ffffc 	.word	0x000ffffc
  800c168:	ffffc000 	.word	0xffffc000
- 800c16c:	08006b61 	.word	0x08006b61
+ 800c16c:	08006b61 	.word	0x08006b61	@ fn_08006B60
  800c170:	0812e5c0 	.word	0x0812e5c0
  800c174:	0000ffff 	.word	0x0000ffff
  800c178:	00000e0c 	.word	0x00000e0c

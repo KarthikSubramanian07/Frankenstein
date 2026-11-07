@@ -37,4 +37,4 @@ fn_03000DE0:
  3000e6c:	1afffff6 	bne	3000e4c <fn_03000DE0+0x6c>
  3000e70:	e8bd41f0 	pop	{r4, r5, r6, r7, r8, lr}
  3000e74:	e12fff1e 	bx	lr
- 3000e78:	030064cc 	.word	0x030064cc
+ 3000e78:	030064cc 	.word	0x030064cc	@ data_030064CC

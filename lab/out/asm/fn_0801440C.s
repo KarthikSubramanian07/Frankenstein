@@ -108,7 +108,7 @@ fn_0801440C:
  80144ee:	bcf0      	pop	{r4, r5, r6, r7}
  80144f0:	bc01      	pop	{r0}
  80144f2:	4700      	bx	r0
- 80144f4:	030064c4 	.word	0x030064c4
+ 80144f4:	030064c4 	.word	0x030064c4	@ data_030064C4
  80144f8:	00000e8c 	.word	0x00000e8c
- 80144fc:	0812ec8c 	.word	0x0812ec8c
+ 80144fc:	0812ec8c 	.word	0x0812ec8c	@ data_0812EC8C
  8014500:	0814a0c4 	.word	0x0814a0c4

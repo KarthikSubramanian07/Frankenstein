@@ -7,5 +7,5 @@ fn_08003D20:
  8003d2a:	23d4      	movs	r3, #212	@ 0xd4
  8003d2c:	54d1      	strb	r1, [r2, r3]
  8003d2e:	4770      	bx	lr
- 8003d30:	030064bc 	.word	0x030064bc
- 8003d34:	030064c4 	.word	0x030064c4
+ 8003d30:	030064bc 	.word	0x030064bc	@ data_030064BC
+ 8003d34:	030064c4 	.word	0x030064c4	@ data_030064C4

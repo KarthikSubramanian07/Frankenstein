@@ -129,4 +129,4 @@ fn_0801D328:
  801d42a:	3a20      	subs	r2, #32
  801d42c:	e7f3      	b.n	801d416 <fn_0801D328+0xee>
  801d42e:	46c0      	nop			@ (mov r8, r8)
- 801d430:	0814b3b9 	.word	0x0814b3b9
+ 801d430:	0814b3b9 	.word	0x0814b3b9	@ data_0814B3B8+0x1

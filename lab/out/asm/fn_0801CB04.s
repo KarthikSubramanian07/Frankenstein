@@ -27,7 +27,7 @@ fn_0801CB04:
  801cb36:	4a0b      	ldr	r2, [pc, #44]	@ (801cb64 <fn_0801CB04+0x60>)
  801cb38:	5099      	str	r1, [r3, r2]
  801cb3a:	4770      	bx	lr
- 801cb3c:	030064c4 	.word	0x030064c4
+ 801cb3c:	030064c4 	.word	0x030064c4	@ data_030064C4
  801cb40:	00005a3c 	.word	0x00005a3c
  801cb44:	00005a38 	.word	0x00005a38
  801cb48:	00005a88 	.word	0x00005a88

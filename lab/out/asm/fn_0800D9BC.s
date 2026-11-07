@@ -392,8 +392,8 @@ fn_0800D9BC:
  800dce8:	f003 fa90 	bl	801120c <fn_0801120C>
  800dcec:	e7a7      	b.n	800dc3e <fn_0800D9BC+0x282>
  800dcee:	46c0      	nop			@ (mov r8, r8)
- 800dcf0:	030064c4 	.word	0x030064c4
- 800dcf4:	081397cc 	.word	0x081397cc
+ 800dcf0:	030064c4 	.word	0x030064c4	@ data_030064C4
+ 800dcf4:	081397cc 	.word	0x081397cc	@ data_081397CC
  800dcf8:	000003e7 	.word	0x000003e7
  800dcfc:	feffbdfb 	.word	0xfeffbdfb
  800dd00:	00100400 	.word	0x00100400
@@ -459,5 +459,5 @@ fn_0800D9BC:
  800dd84:	e776      	b.n	800dc74 <fn_0800D9BC+0x2b8>
  800dd86:	46c0      	nop			@ (mov r8, r8)
  800dd88:	0000074c 	.word	0x0000074c
- 800dd8c:	030064c4 	.word	0x030064c4
+ 800dd8c:	030064c4 	.word	0x030064c4	@ data_030064C4
  800dd90:	feffbffb 	.word	0xfeffbffb

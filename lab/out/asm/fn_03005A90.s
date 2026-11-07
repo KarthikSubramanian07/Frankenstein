@@ -68,4 +68,4 @@ fn_03005A90:
  3005b98:	e35300ff 	cmp	r3, #255	@ 0xff
  3005b9c:	1affffd5 	bne	3005af8 <fn_03005A90+0x68>
  3005ba0:	eaffffee 	b	3005b60 <fn_03005A90+0xd0>
- 3005ba4:	030064c4 	.word	0x030064c4
+ 3005ba4:	030064c4 	.word	0x030064c4	@ data_030064C4

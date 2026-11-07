@@ -263,6 +263,6 @@ fn_08012DA0:
  8012faa:	4663      	mov	r3, ip
  8012fac:	e724      	b.n	8012df8 <fn_08012DA0+0x58>
  8012fae:	46c0      	nop			@ (mov r8, r8)
- 8012fb0:	030064c4 	.word	0x030064c4
+ 8012fb0:	030064c4 	.word	0x030064c4	@ data_030064C4
  8012fb4:	0812e748 	.word	0x0812e748
  8012fb8:	0812e76c 	.word	0x0812e76c

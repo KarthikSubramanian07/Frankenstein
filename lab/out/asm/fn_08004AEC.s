@@ -48,5 +48,5 @@ fn_08004AEC:
  8004b4a:	5483      	strb	r3, [r0, r2]
  8004b4c:	e7da      	b.n	8004b04 <fn_08004AEC+0x18>
  8004b4e:	46c0      	nop			@ (mov r8, r8)
- 8004b50:	030064c4 	.word	0x030064c4
+ 8004b50:	030064c4 	.word	0x030064c4	@ data_030064C4
  8004b54:	000003ed 	.word	0x000003ed

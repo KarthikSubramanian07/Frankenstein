@@ -103,8 +103,8 @@ fn_08014E08:
  8014ed2:	bcf0      	pop	{r4, r5, r6, r7}
  8014ed4:	bc02      	pop	{r1}
  8014ed6:	4708      	bx	r1
- 8014ed8:	030064c4 	.word	0x030064c4
- 8014edc:	030065c4 	.word	0x030065c4
+ 8014ed8:	030064c4 	.word	0x030064c4	@ data_030064C4
+ 8014edc:	030065c4 	.word	0x030065c4	@ data_030065C4
  8014ee0:	0000ffff 	.word	0x0000ffff
  8014ee4:	00000e14 	.word	0x00000e14
  8014ee8:	00000e0c 	.word	0x00000e0c

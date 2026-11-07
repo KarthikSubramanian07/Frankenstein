@@ -24,8 +24,8 @@ fn_08006AAC:
  8006ada:	bc01      	pop	{r0}
  8006adc:	4700      	bx	r0
  8006ade:	46c0      	nop			@ (mov r8, r8)
- 8006ae0:	030064c4 	.word	0x030064c4
- 8006ae4:	080260c0 	.word	0x080260c0
+ 8006ae0:	030064c4 	.word	0x030064c4	@ data_030064C4
+ 8006ae4:	080260c0 	.word	0x080260c0	@ data_080260C0
  8006ae8:	00000784 	.word	0x00000784
  8006aec:	00000792 	.word	0x00000792
  8006af0:	0000078e 	.word	0x0000078e

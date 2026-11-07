@@ -35,7 +35,7 @@ fn_0801C990:
  801c9d2:	545a      	strb	r2, [r3, r1]
  801c9d4:	e7f2      	b.n	801c9bc <fn_0801C990+0x2c>
  801c9d6:	46c0      	nop			@ (mov r8, r8)
- 801c9d8:	030064c4 	.word	0x030064c4
+ 801c9d8:	030064c4 	.word	0x030064c4	@ data_030064C4
  801c9dc:	00005a48 	.word	0x00005a48
  801c9e0:	00005a38 	.word	0x00005a38
  801c9e4:	00005a3c 	.word	0x00005a3c

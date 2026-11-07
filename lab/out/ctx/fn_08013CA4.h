@@ -6,6 +6,7 @@
 
 /* Every function and global this code touches, by anonymous id. Declare their types yourself in
    your candidate; the referee matches calls and loads by these ids. */
+/* global data_030064C4 (4 bytes); used at offsets +0x0 */
 /* function fn_08019244 (52 bytes) */
 /* function fn_0801D5E8 (148 bytes) */
 /* function fn_0801D8A4 (120 bytes) */

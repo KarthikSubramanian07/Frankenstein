@@ -111,4 +111,4 @@ fn_0800CEE8:
  800cfc2:	54e2      	strb	r2, [r4, r3]
  800cfc4:	e7c6      	b.n	800cf54 <fn_0800CEE8+0x6c>
  800cfc6:	46c0      	nop			@ (mov r8, r8)
- 800cfc8:	030064c4 	.word	0x030064c4
+ 800cfc8:	030064c4 	.word	0x030064c4	@ data_030064C4

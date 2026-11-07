@@ -13,5 +13,5 @@ fn_08001A94:
  8001aae:	bc70      	pop	{r4, r5, r6}
  8001ab0:	bc01      	pop	{r0}
  8001ab2:	4700      	bx	r0
- 8001ab4:	030064c4 	.word	0x030064c4
+ 8001ab4:	030064c4 	.word	0x030064c4	@ data_030064C4
  8001ab8:	0000041a 	.word	0x0000041a

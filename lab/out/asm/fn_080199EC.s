@@ -91,7 +91,7 @@ fn_080199EC:
  8019aa6:	681c      	ldr	r4, [r3, #0]
  8019aa8:	e7b3      	b.n	8019a12 <fn_080199EC+0x26>
  8019aaa:	46c0      	nop			@ (mov r8, r8)
- 8019aac:	030064c4 	.word	0x030064c4
+ 8019aac:	030064c4 	.word	0x030064c4	@ data_030064C4
  8019ab0:	000004dc 	.word	0x000004dc
  8019ab4:	000004e4 	.word	0x000004e4
  8019ab8:	000004d4 	.word	0x000004d4

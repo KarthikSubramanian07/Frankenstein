@@ -33,6 +33,6 @@ fn_08006F70:
  8006fae:	bc02      	pop	{r1}
  8006fb0:	4708      	bx	r1
  8006fb2:	46c0      	nop			@ (mov r8, r8)
- 8006fb4:	030064c4 	.word	0x030064c4
+ 8006fb4:	030064c4 	.word	0x030064c4	@ data_030064C4
  8006fb8:	0000085c 	.word	0x0000085c
  8006fbc:	000007dc 	.word	0x000007dc

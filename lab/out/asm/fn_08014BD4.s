@@ -77,6 +77,6 @@ fn_08014BD4:
  8014c6a:	bc02      	pop	{r1}
  8014c6c:	4708      	bx	r1
  8014c6e:	46c0      	nop			@ (mov r8, r8)
- 8014c70:	030064c4 	.word	0x030064c4
+ 8014c70:	030064c4 	.word	0x030064c4	@ data_030064C4
  8014c74:	00000e0c 	.word	0x00000e0c
  8014c78:	0000ffff 	.word	0x0000ffff

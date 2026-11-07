@@ -11,4 +11,4 @@ fn_08001BA0:
  8001bb2:	5499      	strb	r1, [r3, r2]
  8001bb4:	4770      	bx	lr
  8001bb6:	46c0      	nop			@ (mov r8, r8)
- 8001bb8:	030064c4 	.word	0x030064c4
+ 8001bb8:	030064c4 	.word	0x030064c4	@ data_030064C4

@@ -37,7 +37,7 @@ fn_0801C27C:
  801c2c2:	bc01      	pop	{r0}
  801c2c4:	4700      	bx	r0
  801c2c6:	46c0      	nop			@ (mov r8, r8)
- 801c2c8:	030064c4 	.word	0x030064c4
+ 801c2c8:	030064c4 	.word	0x030064c4	@ data_030064C4
  801c2cc:	00005a30 	.word	0x00005a30
  801c2d0:	040000d4 	.word	0x040000d4
  801c2d4:	040000d8 	.word	0x040000d8

@@ -27,7 +27,7 @@ fn_0801ABC0:
  801abf4:	f7ea f91c 	bl	8004e30 <fn_08004E30>
  801abf8:	e7f1      	b.n	801abde <fn_0801ABC0+0x1e>
  801abfa:	46c0      	nop			@ (mov r8, r8)
- 801abfc:	080257f5 	.word	0x080257f5
- 801ac00:	030064c4 	.word	0x030064c4
+ 801abfc:	080257f5 	.word	0x080257f5	@ data_080257F5
+ 801ac00:	030064c4 	.word	0x030064c4	@ data_030064C4
  801ac04:	00005638 	.word	0x00005638
  801ac08:	00005640 	.word	0x00005640

@@ -103,7 +103,7 @@ fn_080079E4:
  8007ab6:	e7e9      	b.n	8007a8c <fn_080079E4+0xa8>
  8007ab8:	2300      	movs	r3, #0
  8007aba:	e7df      	b.n	8007a7c <fn_080079E4+0x98>
- 8007abc:	030064c4 	.word	0x030064c4
+ 8007abc:	030064c4 	.word	0x030064c4	@ data_030064C4
  8007ac0:	0000025d 	.word	0x0000025d
  8007ac4:	bfffffff 	.word	0xbfffffff
  8007ac8:	7ffffffe 	.word	0x7ffffffe

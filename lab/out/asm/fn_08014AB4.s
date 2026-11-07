@@ -137,6 +137,6 @@ fn_08014AB4:
  8014bc2:	428b      	cmp	r3, r1
  8014bc4:	d1cf      	bne.n	8014b66 <fn_08014AB4+0xb2>
  8014bc6:	e7de      	b.n	8014b86 <fn_08014AB4+0xd2>
- 8014bc8:	030064c4 	.word	0x030064c4
+ 8014bc8:	030064c4 	.word	0x030064c4	@ data_030064C4
  8014bcc:	00000e0c 	.word	0x00000e0c
  8014bd0:	0000ffff 	.word	0x0000ffff

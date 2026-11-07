@@ -73,6 +73,6 @@ fn_0801460C:
  801469a:	bcf0      	pop	{r4, r5, r6, r7}
  801469c:	bc02      	pop	{r1}
  801469e:	4708      	bx	r1
- 80146a0:	030064c4 	.word	0x030064c4
+ 80146a0:	030064c4 	.word	0x030064c4	@ data_030064C4
  80146a4:	00000e0c 	.word	0x00000e0c
  80146a8:	0000ffff 	.word	0x0000ffff

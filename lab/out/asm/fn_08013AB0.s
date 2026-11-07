@@ -73,7 +73,7 @@ fn_08013AB0:
  8013b46:	bc01      	pop	{r0}
  8013b48:	4700      	bx	r0
  8013b4a:	46c0      	nop			@ (mov r8, r8)
- 8013b4c:	030064c4 	.word	0x030064c4
+ 8013b4c:	030064c4 	.word	0x030064c4	@ data_030064C4
  8013b50:	000008f4 	.word	0x000008f4
  8013b54:	01999999 	.word	0x01999999
  8013b58:	3fffffe8 	.word	0x3fffffe8

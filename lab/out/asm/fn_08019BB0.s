@@ -7,4 +7,4 @@ fn_08019BB0:
  8019bba:	00db      	lsls	r3, r3, #3
  8019bbc:	54d0      	strb	r0, [r2, r3]
  8019bbe:	4770      	bx	lr
- 8019bc0:	030064c4 	.word	0x030064c4
+ 8019bc0:	030064c4 	.word	0x030064c4	@ data_030064C4

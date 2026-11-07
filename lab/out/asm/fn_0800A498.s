@@ -16,4 +16,4 @@ fn_0800A498:
  800a4b6:	bc10      	pop	{r4}
  800a4b8:	bc01      	pop	{r0}
  800a4ba:	4700      	bx	r0
- 800a4bc:	030064c4 	.word	0x030064c4
+ 800a4bc:	030064c4 	.word	0x030064c4	@ data_030064C4

@@ -94,8 +94,8 @@ fn_0801AACC:
  801ab86:	58c0      	ldr	r0, [r0, r3]
  801ab88:	e7e3      	b.n	801ab52 <fn_0801AACC+0x86>
  801ab8a:	46c0      	nop			@ (mov r8, r8)
- 801ab8c:	080257f6 	.word	0x080257f6
- 801ab90:	030064c4 	.word	0x030064c4
+ 801ab8c:	080257f6 	.word	0x080257f6	@ data_080257F6
+ 801ab90:	030064c4 	.word	0x030064c4	@ data_030064C4
  801ab94:	000055d0 	.word	0x000055d0
  801ab98:	000055dc 	.word	0x000055dc
  801ab9c:	000055e8 	.word	0x000055e8
@@ -103,7 +103,7 @@ fn_0801AACC:
  801aba4:	0000560c 	.word	0x0000560c
  801aba8:	00005618 	.word	0x00005618
  801abac:	00005624 	.word	0x00005624
- 801abb0:	080257f5 	.word	0x080257f5
+ 801abb0:	080257f5 	.word	0x080257f5	@ data_080257F5
  801abb4:	00005640 	.word	0x00005640
  801abb8:	0000563c 	.word	0x0000563c
- 801abbc:	0812ffd8 	.word	0x0812ffd8
+ 801abbc:	0812ffd8 	.word	0x0812ffd8	@ data_0812FFD8

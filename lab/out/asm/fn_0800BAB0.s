@@ -399,11 +399,11 @@ fn_0800BAB0:
  800bde6:	4698      	mov	r8, r3
  800bde8:	4264      	negs	r4, r4
  800bdea:	e680      	b.n	800baee <fn_0800BAB0+0x3e>
- 800bdec:	030064c4 	.word	0x030064c4
+ 800bdec:	030064c4 	.word	0x030064c4	@ data_030064C4
  800bdf0:	00000e04 	.word	0x00000e04
  800bdf4:	000ffffa 	.word	0x000ffffa
  800bdf8:	ffffa000 	.word	0xffffa000
- 800bdfc:	0800a579 	.word	0x0800a579
+ 800bdfc:	0800a579 	.word	0x0800a579	@ fn_0800A578
  800be00:	0812e5a0 	.word	0x0812e5a0
  800be04:	0000ffff 	.word	0x0000ffff
  800be08:	00000e0c 	.word	0x00000e0c

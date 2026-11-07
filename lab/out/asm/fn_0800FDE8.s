@@ -5,5 +5,5 @@ fn_0800FDE8:
  800fdee:	4b02      	ldr	r3, [pc, #8]	@ (800fdf8 <fn_0800FDE8+0x10>)
  800fdf0:	50d1      	str	r1, [r2, r3]
  800fdf2:	4770      	bx	lr
- 800fdf4:	030064c4 	.word	0x030064c4
+ 800fdf4:	030064c4 	.word	0x030064c4	@ data_030064C4
  800fdf8:	0000088c 	.word	0x0000088c

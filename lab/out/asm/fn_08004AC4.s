@@ -15,4 +15,4 @@ fn_08004AC4:
  8004ae2:	bc01      	pop	{r0}
  8004ae4:	4700      	bx	r0
  8004ae6:	46c0      	nop			@ (mov r8, r8)
- 8004ae8:	030064c4 	.word	0x030064c4
+ 8004ae8:	030064c4 	.word	0x030064c4	@ data_030064C4

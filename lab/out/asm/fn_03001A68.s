@@ -8,4 +8,4 @@ fn_03001A68:
  3001a80:	e1a00003 	mov	r0, r3
  3001a84:	e583c014 	str	ip, [r3, #20]
  3001a88:	eaffff50 	b	30017d0 <fn_030017D0>
- 3001a8c:	030064cc 	.word	0x030064cc
+ 3001a8c:	030064cc 	.word	0x030064cc	@ data_030064CC

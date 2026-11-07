@@ -51,4 +51,4 @@ fn_0800D0E0:
  800d142:	2000      	movs	r0, #0
  800d144:	e7ed      	b.n	800d122 <fn_0800D0E0+0x42>
  800d146:	46c0      	nop			@ (mov r8, r8)
- 800d148:	0812e67c 	.word	0x0812e67c
+ 800d148:	0812e67c 	.word	0x0812e67c	@ data_0812E67C

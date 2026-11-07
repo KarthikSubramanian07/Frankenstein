@@ -213,7 +213,7 @@ fn_0801BCDC:
  801bec6:	46c0      	nop			@ (mov r8, r8)
  801bec8:	0814a868 	.word	0x0814a868
  801becc:	0814a85c 	.word	0x0814a85c
- 801bed0:	030064c4 	.word	0x030064c4
+ 801bed0:	030064c4 	.word	0x030064c4	@ data_030064C4
  801bed4:	00001592 	.word	0x00001592
  801bed8:	0000159c 	.word	0x0000159c
  801bedc:	0814a874 	.word	0x0814a874

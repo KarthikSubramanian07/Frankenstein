@@ -39,5 +39,5 @@ fn_08013B6C:
  8013bba:	5d62      	ldrb	r2, [r4, r5]
  8013bbc:	e7e3      	b.n	8013b86 <fn_08013B6C+0x1a>
  8013bbe:	46c0      	nop			@ (mov r8, r8)
- 8013bc0:	030064c4 	.word	0x030064c4
+ 8013bc0:	030064c4 	.word	0x030064c4	@ data_030064C4
  8013bc4:	00000754 	.word	0x00000754

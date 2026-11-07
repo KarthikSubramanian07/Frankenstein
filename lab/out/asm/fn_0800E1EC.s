@@ -106,4 +106,4 @@ fn_0800E1EC:
  800e2c2:	4019      	ands	r1, r3
  800e2c4:	9100      	str	r1, [sp, #0]
  800e2c6:	e79e      	b.n	800e206 <fn_0800E1EC+0x1a>
- 800e2c8:	030064c4 	.word	0x030064c4
+ 800e2c8:	030064c4 	.word	0x030064c4	@ data_030064C4

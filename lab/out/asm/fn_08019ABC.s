@@ -59,7 +59,7 @@ fn_08019ABC:
  8019b2e:	bc01      	pop	{r0}
  8019b30:	4700      	bx	r0
  8019b32:	46c0      	nop			@ (mov r8, r8)
- 8019b34:	030064c4 	.word	0x030064c4
+ 8019b34:	030064c4 	.word	0x030064c4	@ data_030064C4
  8019b38:	ffffcbbd 	.word	0xffffcbbd
  8019b3c:	000004dc 	.word	0x000004dc
  8019b40:	000004e4 	.word	0x000004e4

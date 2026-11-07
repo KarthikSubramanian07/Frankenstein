@@ -160,7 +160,7 @@ fn_0800E7AC:
  800e8f6:	0618      	lsls	r0, r3, #24
  800e8f8:	0e00      	lsrs	r0, r0, #24
  800e8fa:	e772      	b.n	800e7e2 <fn_0800E7AC+0x36>
- 800e8fc:	030064c4 	.word	0x030064c4
+ 800e8fc:	030064c4 	.word	0x030064c4	@ data_030064C4
  800e900:	000008a8 	.word	0x000008a8
  800e904:	0000ffff 	.word	0x0000ffff
  800e908:	0000088c 	.word	0x0000088c

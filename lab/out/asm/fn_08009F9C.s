@@ -18,4 +18,4 @@ fn_08009F9C:
  8009fbc:	4700      	bx	r0
  8009fbe:	f010 f983 	bl	801a2c8 <fn_0801A2C8>
  8009fc2:	e7f9      	b.n	8009fb8 <fn_08009F9C+0x1c>
- 8009fc4:	030064c4 	.word	0x030064c4
+ 8009fc4:	030064c4 	.word	0x030064c4	@ data_030064C4

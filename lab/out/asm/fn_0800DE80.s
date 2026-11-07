@@ -31,4 +31,4 @@ fn_0800DE80:
  800dec2:	bc01      	pop	{r0}
  800dec4:	4700      	bx	r0
  800dec6:	46c0      	nop			@ (mov r8, r8)
- 800dec8:	0800de05 	.word	0x0800de05
+ 800dec8:	0800de05 	.word	0x0800de05	@ fn_0800DE04

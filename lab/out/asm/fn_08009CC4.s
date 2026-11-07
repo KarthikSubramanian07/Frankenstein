@@ -95,6 +95,6 @@ fn_08009CC4:
  8009d92:	6220      	str	r0, [r4, #32]
  8009d94:	e7bf      	b.n	8009d16 <fn_08009CC4+0x52>
  8009d96:	46c0      	nop			@ (mov r8, r8)
- 8009d98:	030064c4 	.word	0x030064c4
- 8009d9c:	081397cc 	.word	0x081397cc
+ 8009d98:	030064c4 	.word	0x030064c4	@ data_030064C4
+ 8009d9c:	081397cc 	.word	0x081397cc	@ data_081397CC
  8009da0:	0013ffff 	.word	0x0013ffff

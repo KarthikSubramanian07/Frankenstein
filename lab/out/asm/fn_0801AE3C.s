@@ -196,11 +196,11 @@ fn_0801AE3C:
  801afca:	2300      	movs	r3, #0
  801afcc:	e7f4      	b.n	801afb8 <fn_0801AE3C+0x17c>
  801afce:	46c0      	nop			@ (mov r8, r8)
- 801afd0:	030064c4 	.word	0x030064c4
+ 801afd0:	030064c4 	.word	0x030064c4	@ data_030064C4
  801afd4:	00005a30 	.word	0x00005a30
  801afd8:	040000d4 	.word	0x040000d4
  801afdc:	040000d8 	.word	0x040000d8
  801afe0:	040000dc 	.word	0x040000dc
- 801afe4:	08130000 	.word	0x08130000
+ 801afe4:	08130000 	.word	0x08130000	@ data_08130000
  801afe8:	000007ca 	.word	0x000007ca
  801afec:	fffff836 	.word	0xfffff836

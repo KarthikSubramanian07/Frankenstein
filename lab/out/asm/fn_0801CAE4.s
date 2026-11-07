@@ -10,5 +10,5 @@ fn_0801CAE4:
  801caf6:	bc01      	pop	{r0}
  801caf8:	4700      	bx	r0
  801cafa:	46c0      	nop			@ (mov r8, r8)
- 801cafc:	030064c4 	.word	0x030064c4
+ 801cafc:	030064c4 	.word	0x030064c4	@ data_030064C4
  801cb00:	00005a98 	.word	0x00005a98

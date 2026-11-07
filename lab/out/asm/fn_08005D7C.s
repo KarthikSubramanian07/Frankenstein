@@ -18,5 +18,5 @@ fn_08005D7C:
  8005d9c:	f7fd febc 	bl	8003b18 <fn_08003B18>
  8005da0:	e7f1      	b.n	8005d86 <fn_08005D7C+0xa>
  8005da2:	46c0      	nop			@ (mov r8, r8)
- 8005da4:	08025a44 	.word	0x08025a44
- 8005da8:	030064c4 	.word	0x030064c4
+ 8005da4:	08025a44 	.word	0x08025a44	@ data_08025A44
+ 8005da8:	030064c4 	.word	0x030064c4	@ data_030064C4

@@ -19,6 +19,6 @@ fn_0801D19C:
  801d1c0:	4700      	bx	r0
  801d1c2:	f7ff fe31 	bl	801ce28 <fn_0801CE28>
  801d1c6:	e7f9      	b.n	801d1bc <fn_0801D19C+0x20>
- 801d1c8:	030064c4 	.word	0x030064c4
+ 801d1c8:	030064c4 	.word	0x030064c4	@ data_030064C4
  801d1cc:	00005a3c 	.word	0x00005a3c
  801d1d0:	00005a98 	.word	0x00005a98

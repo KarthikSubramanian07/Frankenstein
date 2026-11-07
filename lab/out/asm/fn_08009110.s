@@ -78,5 +78,5 @@ fn_08009110:
  80091b8:	005b      	lsls	r3, r3, #1
  80091ba:	f004 fbff 	bl	800d9bc <fn_0800D9BC>
  80091be:	e7d7      	b.n	8009170 <fn_08009110+0x60>
- 80091c0:	030064c4 	.word	0x030064c4
+ 80091c0:	030064c4 	.word	0x030064c4	@ data_030064C4
  80091c4:	002bffff 	.word	0x002bffff

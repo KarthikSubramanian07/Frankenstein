@@ -179,13 +179,13 @@ fn_08016C5C:
  8016dd6:	58ca      	ldr	r2, [r1, r3]
  8016dd8:	e76c      	b.n	8016cb4 <fn_08016C5C+0x58>
  8016dda:	46c0      	nop			@ (mov r8, r8)
- 8016ddc:	030064c4 	.word	0x030064c4
+ 8016ddc:	030064c4 	.word	0x030064c4	@ data_030064C4
  8016de0:	00000dec 	.word	0x00000dec
  8016de4:	0812ec44 	.word	0x0812ec44
  8016de8:	0000109c 	.word	0x0000109c
  8016dec:	000010ec 	.word	0x000010ec
  8016df0:	00000dfc 	.word	0x00000dfc
  8016df4:	00000e04 	.word	0x00000e04
- 8016df8:	080143ed 	.word	0x080143ed
+ 8016df8:	080143ed 	.word	0x080143ed	@ fn_080143EC
  8016dfc:	4708      	bx	r1
  8016dfe:	46c0      	nop			@ (mov r8, r8)

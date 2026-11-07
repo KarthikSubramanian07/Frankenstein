@@ -371,7 +371,7 @@ fn_080181A8:
  80184ae:	681b      	ldr	r3, [r3, #0]
  80184b0:	deff      	udf	#255	@ 0xff
  80184b2:	46c0      	nop			@ (mov r8, r8)
- 80184b4:	030064c4 	.word	0x030064c4
+ 80184b4:	030064c4 	.word	0x030064c4	@ data_030064C4
  80184b8:	0000ffff 	.word	0x0000ffff
- 80184bc:	081397cc 	.word	0x081397cc
+ 80184bc:	081397cc 	.word	0x081397cc	@ data_081397CC
  80184c0:	00000e0c 	.word	0x00000e0c

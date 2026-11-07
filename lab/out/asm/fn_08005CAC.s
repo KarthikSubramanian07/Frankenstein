@@ -29,5 +29,5 @@ fn_08005CAC:
  8005ce6:	3b01      	subs	r3, #1
  8005ce8:	508b      	str	r3, [r1, r2]
  8005cea:	e7e5      	b.n	8005cb8 <fn_08005CAC+0xc>
- 8005cec:	030064c4 	.word	0x030064c4
+ 8005cec:	030064c4 	.word	0x030064c4	@ data_030064C4
  8005cf0:	00005630 	.word	0x00005630

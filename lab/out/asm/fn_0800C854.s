@@ -184,9 +184,9 @@ fn_0800C854:
  800c9d2:	2380      	movs	r3, #128	@ 0x80
  800c9d4:	031b      	lsls	r3, r3, #12
  800c9d6:	e7a5      	b.n	800c924 <fn_0800C854+0xd0>
- 800c9d8:	030064c4 	.word	0x030064c4
+ 800c9d8:	030064c4 	.word	0x030064c4	@ data_030064C4
  800c9dc:	00000e04 	.word	0x00000e04
  800c9e0:	ffffd080 	.word	0xffffd080
- 800c9e4:	08006b61 	.word	0x08006b61
+ 800c9e4:	08006b61 	.word	0x08006b61	@ fn_08006B60
  800c9e8:	0000ffff 	.word	0x0000ffff
  800c9ec:	00000e0c 	.word	0x00000e0c

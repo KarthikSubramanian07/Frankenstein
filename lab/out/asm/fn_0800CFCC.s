@@ -133,5 +133,5 @@ fn_0800CFCC:
  800d0d2:	54c2      	strb	r2, [r0, r3]
  800d0d4:	2201      	movs	r2, #1
  800d0d6:	e7bc      	b.n	800d052 <fn_0800CFCC+0x86>
- 800d0d8:	030064c4 	.word	0x030064c4
+ 800d0d8:	030064c4 	.word	0x030064c4	@ data_030064C4
  800d0dc:	00000754 	.word	0x00000754

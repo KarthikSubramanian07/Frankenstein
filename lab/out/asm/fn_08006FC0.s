@@ -21,5 +21,5 @@ fn_08006FC0:
  8006fe6:	605a      	str	r2, [r3, #4]
  8006fe8:	4770      	bx	lr
  8006fea:	46c0      	nop			@ (mov r8, r8)
- 8006fec:	030064c4 	.word	0x030064c4
+ 8006fec:	030064c4 	.word	0x030064c4	@ data_030064C4
  8006ff0:	000007dc 	.word	0x000007dc

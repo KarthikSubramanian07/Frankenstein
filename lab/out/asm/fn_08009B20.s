@@ -74,5 +74,5 @@ fn_08009B20:
  8009bbe:	6d21      	ldr	r1, [r4, #80]	@ 0x50
  8009bc0:	18c0      	adds	r0, r0, r3
  8009bc2:	e7c1      	b.n	8009b48 <fn_08009B20+0x28>
- 8009bc4:	030064c4 	.word	0x030064c4
- 8009bc8:	081397cc 	.word	0x081397cc
+ 8009bc4:	030064c4 	.word	0x030064c4	@ data_030064C4
+ 8009bc8:	081397cc 	.word	0x081397cc	@ data_081397CC

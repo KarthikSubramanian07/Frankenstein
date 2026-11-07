@@ -48,4 +48,4 @@ fn_0800DF24:
  800df8a:	3001      	adds	r0, #1
  800df8c:	e7f5      	b.n	800df7a <fn_0800DF24+0x56>
  800df8e:	46c0      	nop			@ (mov r8, r8)
- 800df90:	0800dd95 	.word	0x0800dd95
+ 800df90:	0800dd95 	.word	0x0800dd95	@ fn_0800DD94

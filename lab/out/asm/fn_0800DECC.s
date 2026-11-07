@@ -36,4 +36,4 @@ fn_0800DECC:
  800df1a:	bc70      	pop	{r4, r5, r6}
  800df1c:	bc01      	pop	{r0}
  800df1e:	4700      	bx	r0
- 800df20:	0800de41 	.word	0x0800de41
+ 800df20:	0800de41 	.word	0x0800de41	@ fn_0800DE40

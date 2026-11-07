@@ -338,11 +338,11 @@ fn_0800CBFC:
  800cebe:	4698      	mov	r8, r3
  800cec0:	4264      	negs	r4, r4
  800cec2:	e6b9      	b.n	800cc38 <fn_0800CBFC+0x3c>
- 800cec4:	030064c4 	.word	0x030064c4
+ 800cec4:	030064c4 	.word	0x030064c4	@ data_030064C4
  800cec8:	00000e04 	.word	0x00000e04
  800cecc:	ffffc400 	.word	0xffffc400
  800ced0:	1ffff880 	.word	0x1ffff880
- 800ced4:	0800704d 	.word	0x0800704d
+ 800ced4:	0800704d 	.word	0x0800704d	@ fn_0800704C
  800ced8:	0000ffff 	.word	0x0000ffff
  800cedc:	00000e0c 	.word	0x00000e0c
  800cee0:	fffc0000 	.word	0xfffc0000

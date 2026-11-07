@@ -59,4 +59,4 @@ fn_08008E44:
  8008ec2:	d0de      	beq.n	8008e82 <fn_08008E44+0x3e>
  8008ec4:	e7eb      	b.n	8008e9e <fn_08008E44+0x5a>
  8008ec6:	46c0      	nop			@ (mov r8, r8)
- 8008ec8:	030064c4 	.word	0x030064c4
+ 8008ec8:	030064c4 	.word	0x030064c4	@ data_030064C4

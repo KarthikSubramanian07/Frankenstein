@@ -102,10 +102,10 @@ fn_0801C9EC:
  801cac2:	2a02      	cmp	r2, #2
  801cac4:	d1d2      	bne.n	801ca6c <fn_0801C9EC+0x80>
  801cac6:	e7df      	b.n	801ca88 <fn_0801C9EC+0x9c>
- 801cac8:	030064c4 	.word	0x030064c4
+ 801cac8:	030064c4 	.word	0x030064c4	@ data_030064C4
  801cacc:	00005a40 	.word	0x00005a40
  801cad0:	0814a95c 	.word	0x0814a95c
- 801cad4:	08147828 	.word	0x08147828
+ 801cad4:	08147828 	.word	0x08147828	@ data_08147828
  801cad8:	00005a98 	.word	0x00005a98
  801cadc:	0814a964 	.word	0x0814a964
- 801cae0:	0814782c 	.word	0x0814782c
+ 801cae0:	0814782c 	.word	0x0814782c	@ data_0814782C

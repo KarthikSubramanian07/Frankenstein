@@ -68,13 +68,13 @@ fn_0800FAB8:
  800fb3e:	bc02      	pop	{r1}
  800fb40:	4708      	bx	r1
  800fb42:	46c0      	nop			@ (mov r8, r8)
- 800fb44:	030064c4 	.word	0x030064c4
+ 800fb44:	030064c4 	.word	0x030064c4	@ data_030064C4
  800fb48:	000008f8 	.word	0x000008f8
- 800fb4c:	081397cc 	.word	0x081397cc
+ 800fb4c:	081397cc 	.word	0x081397cc	@ data_081397CC
  800fb50:	000008fc 	.word	0x000008fc
  800fb54:	0000090c 	.word	0x0000090c
  800fb58:	ffff6000 	.word	0xffff6000
  800fb5c:	00000904 	.word	0x00000904
  800fb60:	000008f4 	.word	0x000008f4
- 800fb64:	0800eba9 	.word	0x0800eba9
+ 800fb64:	0800eba9 	.word	0x0800eba9	@ fn_0800EBA8
  800fb68:	00000908 	.word	0x00000908

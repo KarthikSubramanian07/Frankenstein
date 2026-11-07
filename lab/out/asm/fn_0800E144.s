@@ -79,4 +79,4 @@ fn_0800E144:
  800e1e2:	bc02      	pop	{r1}
  800e1e4:	4708      	bx	r1
  800e1e6:	46c0      	nop			@ (mov r8, r8)
- 800e1e8:	030064c4 	.word	0x030064c4
+ 800e1e8:	030064c4 	.word	0x030064c4	@ data_030064C4

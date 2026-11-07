@@ -66,5 +66,5 @@ fn_08006A1C:
  8006a9e:	4699      	mov	r9, r3
  8006aa0:	4655      	mov	r5, sl
  8006aa2:	e7cf      	b.n	8006a44 <fn_08006A1C+0x28>
- 8006aa4:	030064c4 	.word	0x030064c4
- 8006aa8:	0814b3b9 	.word	0x0814b3b9
+ 8006aa4:	030064c4 	.word	0x030064c4	@ data_030064C4
+ 8006aa8:	0814b3b9 	.word	0x0814b3b9	@ data_0814B3B8+0x1

@@ -150,8 +150,8 @@ fn_08007ACC:
  8007bfa:	2300      	movs	r3, #0
  8007bfc:	e7f6      	b.n	8007bec <fn_08007ACC+0x120>
  8007bfe:	46c0      	nop			@ (mov r8, r8)
- 8007c00:	030064c4 	.word	0x030064c4
- 8007c04:	0812e51c 	.word	0x0812e51c
+ 8007c00:	030064c4 	.word	0x030064c4	@ data_030064C4
+ 8007c04:	0812e51c 	.word	0x0812e51c	@ data_0812E51C
  8007c08:	000008dc 	.word	0x000008dc
  8007c0c:	00000232 	.word	0x00000232
  8007c10:	ffdfffff 	.word	0xffdfffff

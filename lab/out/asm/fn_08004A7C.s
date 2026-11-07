@@ -29,4 +29,4 @@ fn_08004A7C:
  8004aba:	6820      	ldr	r0, [r4, #0]
  8004abc:	e7e4      	b.n	8004a88 <fn_08004A7C+0xc>
  8004abe:	46c0      	nop			@ (mov r8, r8)
- 8004ac0:	030064c4 	.word	0x030064c4
+ 8004ac0:	030064c4 	.word	0x030064c4	@ data_030064C4

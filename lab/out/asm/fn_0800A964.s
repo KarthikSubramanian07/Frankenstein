@@ -402,9 +402,9 @@ fn_0800A964:
  800accc:	e65b      	b.n	800a986 <fn_0800A964+0x22>
  800acce:	46c0      	nop			@ (mov r8, r8)
  800acd0:	0812e55c 	.word	0x0812e55c
- 800acd4:	030064c4 	.word	0x030064c4
- 800acd8:	0800a579 	.word	0x0800a579
- 800acdc:	030065c4 	.word	0x030065c4
+ 800acd4:	030064c4 	.word	0x030064c4	@ data_030064C4
+ 800acd8:	0800a579 	.word	0x0800a579	@ fn_0800A578
+ 800acdc:	030065c4 	.word	0x030065c4	@ data_030065C4
  800ace0:	2380      	movs	r3, #128	@ 0x80
  800ace2:	21c0      	movs	r1, #192	@ 0xc0
  800ace4:	025b      	lsls	r3, r3, #9

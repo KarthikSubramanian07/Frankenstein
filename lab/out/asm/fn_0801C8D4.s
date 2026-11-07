@@ -11,7 +11,7 @@ fn_0801C8D4:
  801c8e6:	505a      	str	r2, [r3, r1]
  801c8e8:	4770      	bx	lr
  801c8ea:	46c0      	nop			@ (mov r8, r8)
- 801c8ec:	030064c4 	.word	0x030064c4
+ 801c8ec:	030064c4 	.word	0x030064c4	@ data_030064C4
  801c8f0:	00005a8c 	.word	0x00005a8c
  801c8f4:	00005a94 	.word	0x00005a94
  801c8f8:	00005a90 	.word	0x00005a90

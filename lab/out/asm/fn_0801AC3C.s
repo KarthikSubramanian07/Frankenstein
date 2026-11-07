@@ -98,8 +98,8 @@ fn_0801AC3C:
  801ad00:	f00a fc46 	bl	8025590 <fn_08025590>
  801ad04:	0003      	movs	r3, r0
  801ad06:	e7f0      	b.n	801acea <fn_0801AC3C+0xae>
- 801ad08:	080257f6 	.word	0x080257f6
- 801ad0c:	030064c4 	.word	0x030064c4
+ 801ad08:	080257f6 	.word	0x080257f6	@ data_080257F6
+ 801ad0c:	030064c4 	.word	0x030064c4	@ data_030064C4
  801ad10:	00005630 	.word	0x00005630
- 801ad14:	081397cc 	.word	0x081397cc
+ 801ad14:	081397cc 	.word	0x081397cc	@ data_081397CC
  801ad18:	009fffff 	.word	0x009fffff

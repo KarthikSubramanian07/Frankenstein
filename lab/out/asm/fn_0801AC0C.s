@@ -17,6 +17,6 @@ fn_0801AC0C:
  801ac2a:	6001      	str	r1, [r0, #0]
  801ac2c:	4770      	bx	lr
  801ac2e:	46c0      	nop			@ (mov r8, r8)
- 801ac30:	080257f6 	.word	0x080257f6
- 801ac34:	030064c4 	.word	0x030064c4
+ 801ac30:	080257f6 	.word	0x080257f6	@ data_080257F6
+ 801ac34:	030064c4 	.word	0x030064c4	@ data_030064C4
  801ac38:	000055d0 	.word	0x000055d0

@@ -55,8 +55,8 @@ fn_08019D74:
  8019dde:	5099      	str	r1, [r3, r2]
  8019de0:	4770      	bx	lr
  8019de2:	46c0      	nop			@ (mov r8, r8)
- 8019de4:	080257f6 	.word	0x080257f6
- 8019de8:	030064c4 	.word	0x030064c4
+ 8019de4:	080257f6 	.word	0x080257f6	@ data_080257F6
+ 8019de8:	030064c4 	.word	0x030064c4	@ data_030064C4
  8019dec:	000055d0 	.word	0x000055d0
  8019df0:	000055dc 	.word	0x000055dc
  8019df4:	000055e8 	.word	0x000055e8

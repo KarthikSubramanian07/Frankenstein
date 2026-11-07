@@ -49,8 +49,8 @@ fn_0801AA4C:
  801aab0:	2000      	movs	r0, #0
  801aab2:	f7ea f9bd 	bl	8004e30 <fn_08004E30>
  801aab6:	e7df      	b.n	801aa78 <fn_0801AA4C+0x2c>
- 801aab8:	080257f5 	.word	0x080257f5
- 801aabc:	030064c4 	.word	0x030064c4
+ 801aab8:	080257f5 	.word	0x080257f5	@ data_080257F5
+ 801aabc:	030064c4 	.word	0x030064c4	@ data_030064C4
  801aac0:	00005638 	.word	0x00005638
  801aac4:	00005640 	.word	0x00005640
  801aac8:	0814a838 	.word	0x0814a838

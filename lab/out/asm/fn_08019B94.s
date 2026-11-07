@@ -8,5 +8,5 @@ fn_08019B94:
  8019ba2:	bc10      	pop	{r4}
  8019ba4:	bc01      	pop	{r0}
  8019ba6:	4700      	bx	r0
- 8019ba8:	030064c4 	.word	0x030064c4
+ 8019ba8:	030064c4 	.word	0x030064c4	@ data_030064C4
  8019bac:	000004d4 	.word	0x000004d4

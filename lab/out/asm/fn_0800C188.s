@@ -276,9 +276,9 @@ fn_0800C188:
  800c3ca:	6153      	str	r3, [r2, #20]
  800c3cc:	e77c      	b.n	800c2c8 <fn_0800C188+0x140>
  800c3ce:	46c0      	nop			@ (mov r8, r8)
- 800c3d0:	030064c4 	.word	0x030064c4
+ 800c3d0:	030064c4 	.word	0x030064c4	@ data_030064C4
  800c3d4:	00000e04 	.word	0x00000e04
  800c3d8:	ffffcc00 	.word	0xffffcc00
  800c3dc:	0000ffff 	.word	0x0000ffff
  800c3e0:	00000e0c 	.word	0x00000e0c
- 800c3e4:	08012255 	.word	0x08012255
+ 800c3e4:	08012255 	.word	0x08012255	@ fn_08012254

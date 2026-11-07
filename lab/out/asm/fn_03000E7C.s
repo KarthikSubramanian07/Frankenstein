@@ -39,6 +39,6 @@ fn_03000E7C:
  3000f10:	e1c322b0 	strh	r2, [r3, #32]
  3000f14:	e49de004 	pop	{lr}		@ (ldr lr, [sp], #4)
  3000f18:	e12fff1e 	bx	lr
- 3000f1c:	030064cc 	.word	0x030064cc
- 3000f20:	030064c4 	.word	0x030064c4
- 3000f24:	0812f6d4 	.word	0x0812f6d4
+ 3000f1c:	030064cc 	.word	0x030064cc	@ data_030064CC
+ 3000f20:	030064c4 	.word	0x030064c4	@ data_030064C4
+ 3000f24:	0812f6d4 	.word	0x0812f6d4	@ data_0812F6D4

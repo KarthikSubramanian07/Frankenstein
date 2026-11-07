@@ -78,4 +78,4 @@ fn_030013E4:
  3001514:	8afffffa 	bhi	3001504 <fn_030013E4+0x120>
  3001518:	e8bd47f0 	pop	{r4, r5, r6, r7, r8, r9, sl, lr}
  300151c:	e12fff1e 	bx	lr
- 3001520:	030064ec 	.word	0x030064ec
+ 3001520:	030064ec 	.word	0x030064ec	@ data_030064EC

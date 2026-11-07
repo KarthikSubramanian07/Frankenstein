@@ -84,7 +84,7 @@ fn_0801D234:
  801d2de:	6003      	str	r3, [r0, #0]
  801d2e0:	e7ca      	b.n	801d278 <fn_0801D234+0x44>
  801d2e2:	46c0      	nop			@ (mov r8, r8)
- 801d2e4:	030064c4 	.word	0x030064c4
+ 801d2e4:	030064c4 	.word	0x030064c4	@ data_030064C4
  801d2e8:	00005a40 	.word	0x00005a40
  801d2ec:	00005a38 	.word	0x00005a38
  801d2f0:	00005a4c 	.word	0x00005a4c
