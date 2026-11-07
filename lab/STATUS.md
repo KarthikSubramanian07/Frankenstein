@@ -14,7 +14,7 @@ Updated 13:05. Owner: Eddy.
 | Crew-to-referee integration | done | `lab/INTEGRATION_CREW.md`: works end to end, 6 fixes requested from B |
 | Rebuild from the crew's 28 recoveries | done | `doom_r01`: identical SHA-1, 28 functions, 0.25% of code bytes |
 | Fetch.ai multi-agent | done | Excavator asks the Referee agent through Agentverse mailboxes; self-test MATCH logged by both agents |
-| Memory probe, both builds | done | 0 of 20 matched on both builds: 10 refused (even with GPL framing), 10 did not compile against the real headers |
+| Memory probe, both builds | done | memory alone: 0 of 20 compile (0 refusals); memory plus real headers: 3 of 20 exact, mean 22% |
 | Static-face demo ROMs for D | done | `python3 -m lab.demo.build_demo_roms`; one function changed (`fn_0801B298`) |
 | Globals labelled in asm and ctx | done | 761 literal-pool words annotated, 425 ctx headers list their globals |
 
