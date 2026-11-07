@@ -27,7 +27,7 @@ compiler proved every piece."**
 |---|---|
 | 170 of Doom's 568 functions, about 30% | `crew/exports/union/UNION.json` (14:53) |
 | 4.78% of the code by size | same |
-| 169 rebuilt into the game, checksum identical | `POST /rebuild` on the union, Lane A 14:56 (170 once Lane B restores `fn_080035CC.c`, `lab/HANDOFFS.md` 14:58; say 169 until A re-verifies) |
+| 170 rebuilt into the game, checksum identical | `POST /rebuild` on the union, re-verified by Lane A at 15:04 after Lane B restored `fn_080035CC.c` (170 agent-written, 398 original, 4.78%) |
 | 24 lies caught, 30 fakes rejected, 0 fakes let through | `DECISIONS.md` 14:52 (`tools/counts.py` on Lane B's machine, 33 runs). On Lane A's laptop the same script prints 9 / 6 / 0 from 13 local runs. **Say Lane B's figure only from the machine that prints it.** |
 | From memory alone: 0 of 20 compiled | `DECISIONS.md` 13:28 |
 | A check takes 0.1 to 0.2 s | `DECISIONS.md` 11:24 |
@@ -46,9 +46,9 @@ rehearsal first.
 |---|---|---|---|---|---|
 | **0:00 to 0:12** | Doom running full screen. | Watches. | "Most old games survive only as a cartridge: the source code is gone. Our agents read the cartridge's machine code and write the C back, and a compiler proves every piece. This is Doom." | Impact 20 (identity in 10 s) · Software Archaeology | No playable ROM on the demo laptop: start on the Stage's Split scene and say the same words. |
 | **0:12 to 0:20** | Terminal: `Judge: press ENTER to hire the agents.` | **Presses Enter.** | "Press Enter. You just hired two agents." | Technical Demo 35 (judge triggers it) | Referee down: "the referee is down, so nothing can count; here's the last real run", key `1` on the replay (REPLAY badge stays visible). |
-| **0:20 to 0:55** | Stage Split: machine code on one side, Muse writing C on the other, the MATCH stamp, then the judgment rail. | Watches the stamp. | "Left: what's on the cartridge. Right: C that Meta's Muse Spark is writing right now. One rule: it only counts if it compiles to the exact same bytes." (at MATCH) "There. Byte for byte, checked in a fifth of a second. Then SubQ Snap screens it for tricks." | Difficulty 30 · Meta (Muse writes every line) · Subquadratic (Snap's decision line on screen) | Nothing lands by 0:50: "Agents are slow; the referee isn't." Key `1` on the replay. |
+| **0:20 to 0:55** | Stage Split (open `http://localhost:5173/?legacy=1&scene=split`; the default Stage is the log plus the ending card): machine code on one side, Muse writing C on the other, the MATCH stamp, then the judgment rail. | Watches the stamp. | "Left: what's on the cartridge. Right: C that Meta's Muse Spark is writing right now. One rule: it only counts if it compiles to the exact same bytes." (at MATCH) "There. Byte for byte, checked in a fifth of a second. Then SubQ Snap screens it for tricks." | Difficulty 30 · Meta (Muse writes every line) · Subquadratic (Snap's decision line on screen) | Nothing lands by 0:50: "Agents are slow; the referee isn't." Key `1` on the replay. |
 | **0:55 to 1:15** | Versus or the Road scene: a claimed match, the referee's re-run, REJECTED with the first wrong instruction. | Reads the red line. | "Agents lie. Today they told us 'it matches' 24 times when it didn't. The referee re-runs every claim, and one instruction gives each of them away." | Trust but Verify · Difficulty 30 | Versus has no live lie: show the FALSE CLAIM card on `/judges` (real event from `doom_r12`). |
-| **1:15 to 1:35** | Ending: ORIGINAL and REBUILT checksums, IDENTICAL. Then the meter. | Compares the two lines. | "We put the agents' code back into Doom: 169 functions. Same checksum as the original, all 40 characters. That's 170 of Doom's 568 functions so far, the small ones first." | Software Archaeology (observed vs inferred) · Overall | Ending says NOT REBUILT YET: show the `/judges` rebuild card. |
+| **1:15 to 1:35** | Ending: ORIGINAL and REBUILT checksums, IDENTICAL. Then the meter. | Compares the two lines. | "We put the agents' code back into Doom: 170 functions. Same checksum as the original. Not similar: identical. That's 170 of Doom's 568 functions so far, the small ones first." | Software Archaeology (observed vs inferred) · Overall | Ending says NOT REBUILT YET: show the `/judges` rebuild card. |
 | **1:35 to 2:00** | Doom (original build), controller in the judge's hands. | **Presses Up Up Down Down Left Left Right Right**; god mode turns on (health 100%). | "Doom's god-mode cheat on the Game Boy is a button sequence. Press up, up, down, down, left, left, right, right. That just ran the god-mode function our agents rebuilt from machine code; the code that reads the buttons is still the original." | Technical Demo 35 (hands on) · Creativity 15 | Cheat doesn't trigger: say "the god-mode function is one we rebuilt", move on. Sequence and source: `lab/demo/iddqd.md`. **UNTESTED: confirm the sequence on our player and its key mapping.** |
 | **2:00 to 2:30** | Same cheat in the changed build: the status bar reads **200%**. Optional: Snap's eyes line "CHANGE CONFIRMED". | Presses the sequence again. | "And this is why source matters. An emulator can only play the game. We changed one line in the agents' god-mode C, rebuilt, and now god mode gives you 200% health. Everything else is byte for byte the same." | Creativity 15 · Software Archaeology ("extend") · Subquadratic (eyes) | `god_200` not playtested or doesn't boot: use `instant_raise` ("we changed the weapon-raise function, and now your gun appears instantly"). Neither works: cut the beat, say "Recovered code can be changed and rebuilt; that's next." **UNTESTED: both ROMs need packaging with the WAD and a playtest.** |
 | **2:30 to 2:45** | QR on screen; Enzo hands Phone A to a judge. | Scans or takes the phone. | "Scan it. That's the rebuilt game on your phone, in a browser emulator." | Impact 20 · Overall | No QR: hand over Phone A. No phone works: skip. |
@@ -61,7 +61,7 @@ Stop at 3:00, even mid-sentence.
 - The game is on screen at 0:00 and the judge acts by 0:20 (playbook: identity in 10 s, judge triggers by 0:45).
 - One proof moment early (MATCH at about 0:40), then one escalation that proves it isn't canned: the judge's own
   button presses (the cheat), then the same cheat in the changed build.
-- One number per scene, said aloud: 0.2 s, 24, 169, 170 of 568.
+- One number per scene, said aloud: 0.2 s, the lie count (from Lane B's repo-only tally), 170, 170 of 568.
 - Each prize sponsor acts on screen in its own scene: Muse writes (0:20), Snap judges (0:40, 2:00), Fetch.ai in
   the close and in Q&A. MongoDB and Gemini get one line each in Q&A only: neither has a prize track (`EVENT_GUIDE.md`).
 - The System That Gets Better is a Q&A answer, not a scene: our held-out result shows no measured gain, and
@@ -77,7 +77,7 @@ Today's work only. Real capture only. REPLAY badges stay on screen.
 | 5 to 12 | Enter pressed, Split: machine code next to Muse writing C | Meta's Muse Spark writes C from machine code. LIVE. |
 | 12 to 20 | MATCH stamp and the judgment rail | It only counts if it compiles to the exact same bytes. SubQ Snap screens every match. |
 | 20 to 28 | REJECTED card with the first wrong instruction | Agents lie: 24 false claims caught, 30 fakes rejected, 0 let through. |
-| 28 to 36 | Ending: two identical checksums, then the meter | 169 agent-written functions rebuilt into Doom. Identical checksum. 170 of 568 so far. |
+| 28 to 36 | Ending: two identical checksums, then the meter | 170 agent-written functions rebuilt into Doom. Identical checksum. 170 of 568 so far. |
 | 36 to 44 | God-mode button sequence, god mode on (if rehearsed) | This cheat runs a function our agents rebuilt. |
 | 44 to 52 | Same cheat in the changed build: health 200% (if playtested); otherwise a phone playing | Change one line of recovered C, and the game changes. |
 | 52 to 60 | Credits card | Built today: the referee, the agents, the Stage, the phone page. Not ours: Doom, GBADoom, the WAD, mGBA, devkitARM, the partner platforms. |
@@ -104,5 +104,5 @@ If the cheat or the change beat isn't rehearsed by 16:20, swap in the phone shot
 
 1. Lane D packages `god_200.gba` (first) and `instant_raise.gba` with the WAD and playtests both; result in `creature/STATUS.md`.
 2. Someone enters Up Up Down Down Left Left Right Right on the demo player and writes down which keys map to the D-pad.
-3. Lane B restores `fn_080035CC.c`; Lane A re-verifies the rebuild (169 becomes 170 in every line above).
+3. Done 15:04: Lane B restored `fn_080035CC.c`, Lane A re-verified 170 spliced.
 4. Two timed run-throughs of this cut. Whatever fails twice comes out.
