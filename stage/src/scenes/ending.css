@@ -1,0 +1,65 @@
+/* Alive (ending): IDENTICAL, the two checksums small underneath, IT'S ALIVE. QR on the right when the phone page is up. */
+
+.ending .en-main {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center; gap: 120px;
+  padding: 140px 100px 100px;
+}
+.ending .en-col { display: flex; flex-direction: column; align-items: center; text-align: center; min-width: 0; }
+
+.ending .en-verdict {
+  font: 400 260px/1 var(--display); letter-spacing: 6px; color: var(--ash); white-space: nowrap;
+  text-shadow: 0 10px 0 #000;
+}
+.ending[data-state='ok'] .en-verdict { color: var(--toxic); }
+.ending[data-state='bad'] .en-verdict { color: var(--blood); }
+.ending[data-state='none'] .en-verdict { font-size: 190px; }
+
+.ending .en-sums { margin-top: 56px; display: grid; gap: 14px; }
+.ending .en-sum { display: flex; align-items: baseline; gap: 28px; white-space: nowrap; }
+.ending .en-sum .l { width: 150px; text-align: right; font: 600 30px/1 var(--text); color: var(--ash); letter-spacing: 1px; }
+.ending .en-sum .v { font: 500 30px/1 var(--mono); color: var(--bone); letter-spacing: 0; }
+.ending[data-state='none'] .en-sum.rb { display: none; }
+.ending[data-state='bad'] .en-sum.rb .v { color: var(--blood); }
+
+.ending .en-foot { margin-top: 72px; font: 600 48px/1.1 var(--text); color: var(--ash); }
+.ending .en-foot b { color: var(--toxic); font-weight: 700; }
+.ending[data-state='ok'] .en-foot {
+  font: 400 150px/1 var(--display); letter-spacing: 8px; color: var(--fire);
+  text-shadow: 0 8px 0 var(--blood), 0 16px 0 #000;
+}
+
+/* QR: a white square, only when phone.published exists */
+.ending .en-qr { display: none; flex: none; width: 540px; text-align: center; }
+.ending.has-qr .en-qr { display: block; }
+.ending .en-qr .p2 { font: 400 50px/1 var(--display); letter-spacing: 3px; white-space: nowrap; color: var(--fire); text-transform: uppercase; margin-bottom: 28px; }
+.ending .en-qr .img {
+  position: relative; width: 520px; height: 520px; margin: 0 auto; background: #fff;
+  box-shadow: 0 0 0 8px var(--metal), 0 0 0 10px var(--metal-hi), 0 12px 0 10px #000;
+  display: grid; place-items: center;
+}
+.ending .en-qr img { position: absolute; inset: 24px; width: 472px; height: 472px; image-rendering: pixelated; visibility: hidden; }
+.ending .en-qr.loaded img { visibility: visible; }
+.ending .en-qr .img span { font: 600 30px/1 var(--text); color: var(--blood); }
+.ending .en-qr.loaded .img span { display: none; }
+.ending .en-qr .url { margin-top: 36px; font: 600 30px/1.2 var(--text); color: var(--ash); overflow-wrap: anywhere; }
+.ending.has-qr .en-verdict { font-size: 220px; }
+.ending.has-qr[data-state='none'] .en-verdict { font-size: 150px; }
+.ending.has-qr[data-state='ok'] .en-foot { font-size: 130px; }
+
+/* credits: Built today / Not ours, same words, new look */
+.ending .en-credits { display: none; position: absolute; inset: 0; padding: 150px 120px 80px; }
+.ending.show-credits .en-main { display: none; }
+.ending.show-credits .en-credits { display: block; }
+.ending .en-credits h1 { font: 400 130px/1 var(--display); letter-spacing: 4px; color: var(--bone); text-shadow: 0 8px 0 #000; }
+.ending .en-credits h1 span { color: var(--rust); }
+.ending .en-credits .cc { margin-top: 72px; display: grid; grid-template-columns: 1fr 1fr; gap: 100px; }
+.ending .en-credits h2 { font: 400 64px/1 var(--display); letter-spacing: 3px; color: var(--fire); padding-bottom: 18px; border-bottom: 6px solid var(--rust); }
+.ending .en-credits h2.no { color: var(--ash); }
+.ending .en-credits .when { margin-top: 20px; font: 600 30px/1.2 var(--text); color: var(--ash); }
+.ending .en-credits ul { list-style: none; margin-top: 24px; display: grid; gap: 20px; }
+.ending .en-credits li { position: relative; padding-left: 32px; font: 400 32px/1.25 var(--text); color: var(--bone); }
+.ending .en-credits li::before { content: ''; position: absolute; left: 0; top: 14px; width: 12px; height: 12px; background: var(--rust); }
+
+/* keep the corner mark clear of the content */
+.stage[data-scene='ending'] #mark, .stage[data-scene='title'] #mark { max-width: 560px; }
