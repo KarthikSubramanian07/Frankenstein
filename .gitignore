@@ -24,3 +24,4 @@ dist/
 *.mkv
 *.mp4
 !docs/**/*.mp4
+.wrangler/
