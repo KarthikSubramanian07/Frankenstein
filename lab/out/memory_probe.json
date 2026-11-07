@@ -1,15 +1,16 @@
 {
  "v": 1,
+ "prompt": "reconstruct",
  "model": "muse-spark-1.3",
  "fn_count": 20,
- "method": "model asked to write 20 public GBADoom functions (status bar and weapon code) from memory by their original names; each answer replaced the original in its real source file, compiled with the original headers, and was compared against (a) unmodified GBADoom and (b) our private variant",
+ "method": "model asked (reconstruct prompt) to write 20 public GBADoom functions (status bar and weapon code) from memory by their original names; each answer replaced the original in its real source file, compiled with the original headers, and was compared against (a) unmodified GBADoom and (b) our private variant",
  "unmodified": {
   "matched": 0,
   "outcomes": {
    "MATCH": 0,
    "PARTIAL": 0,
-   "NO_COMPILE": 10,
-   "REFUSED": 10
+   "NO_COMPILE": 20,
+   "REFUSED": 0
   },
   "match_rate": 0.0,
   "best_pct": 0.0,
@@ -20,8 +21,8 @@
   "outcomes": {
    "MATCH": 0,
    "PARTIAL": 0,
-   "NO_COMPILE": 10,
-   "REFUSED": 10
+   "NO_COMPILE": 20,
+   "REFUSED": 0
   },
   "match_rate": 0.0,
   "best_pct": 0.0,
@@ -33,11 +34,55 @@
   "outcomes": {
    "MATCH": 0,
    "PARTIAL": 0,
-   "NO_COMPILE": 1,
-   "REFUSED": 3
+   "NO_COMPILE": 4,
+   "REFUSED": 0
   },
   "match_rate": 0.0,
   "best_pct": 0.0,
   "mean_pct": 0.0
+ },
+ "verbatim_run": {
+  "v": 1,
+  "model": "muse-spark-1.3",
+  "fn_count": 20,
+  "method": "model asked to write 20 public GBADoom functions (status bar and weapon code) from memory by their original names; each answer replaced the original in its real source file, compiled with the original headers, and was compared against (a) unmodified GBADoom and (b) our private variant",
+  "unmodified": {
+   "matched": 0,
+   "outcomes": {
+    "MATCH": 0,
+    "PARTIAL": 0,
+    "NO_COMPILE": 10,
+    "REFUSED": 10
+   },
+   "match_rate": 0.0,
+   "best_pct": 0.0,
+   "mean_pct": 0.0
+  },
+  "variant": {
+   "matched": 0,
+   "outcomes": {
+    "MATCH": 0,
+    "PARTIAL": 0,
+    "NO_COMPILE": 10,
+    "REFUSED": 10
+   },
+   "match_rate": 0.0,
+   "best_pct": 0.0,
+   "mean_pct": 0.0
+  },
+  "variant_changed": {
+   "fn_count": 4,
+   "matched": 0,
+   "outcomes": {
+    "MATCH": 0,
+    "PARTIAL": 0,
+    "NO_COMPILE": 1,
+    "REFUSED": 3
+   },
+   "match_rate": 0.0,
+   "best_pct": 0.0,
+   "mean_pct": 0.0
+  },
+  "prompt": "verbatim"
  }
 }

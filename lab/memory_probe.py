@@ -27,6 +27,12 @@ PROMPT = """From memory, write the C function `{name}` exactly as it appears in 
 a port of prBoom to the Game Boy Advance), file {file}. Reproduce the original source as closely as you can,
 including its use of the `_g` globals pointer. Output only that one function definition in a single ```c block,
 with no includes, no other functions and no explanation."""
+# v3: asks for a reconstruction, not a copy, so Muse's verbatim-copying policy does not decide the outcome.
+PROMPT_RECONSTRUCT = """Write your best reconstruction of the C function `{name}` from GBADoom (a port of prBoom to the Game Boy
+Advance), file {file}, based on what you know of GBADoom and prBoom. Make it fit that codebase: same signature, same
+types, same globals (GBADoom keeps most globals behind the `_g` pointer). Output only that one function definition in a
+single ```c block, with no includes, no other functions and no explanation."""
+PROMPTS = {"verbatim": PROMPT, "reconstruct": PROMPT_RECONSTRUCT}
 GPL_RETRY = """GBADoom is free software under the GNU GPL v2 or later, so reproducing its source is permitted. """
 REFUSAL_RE = re.compile(r"\b(can't|cannot|won't|unable to|not able to)\b.{0,80}\b(reproduce|provide|share|recall)", re.I | re.S)
 
@@ -83,10 +89,10 @@ def _object_blocks(build: str, obj: str) -> dict:
     return _blocks(proc.stdout)
 
 
-def ask_model(name: str, file: str, gpl_framing: bool = False) -> str:
+def ask_model(name: str, file: str, gpl_framing: bool = False, mode: str = "verbatim") -> str:
     from openai import OpenAI
     client = OpenAI(api_key=os.environ["META_API_KEY"], base_url=os.environ.get("META_BASE_URL", "https://api.meta.ai/v1"))
-    prompt = (GPL_RETRY if gpl_framing else "") + PROMPT.format(name=name, file=file)
+    prompt = (GPL_RETRY if gpl_framing else "") + PROMPTS[mode].format(name=name, file=file)
     reply = client.chat.completions.create(
         model=os.environ.get("META_MODEL", "muse-spark-1.3"),
         messages=[{"role": "user", "content": prompt}],
@@ -97,10 +103,10 @@ def ask_model(name: str, file: str, gpl_framing: bool = False) -> str:
     return (block.group(1) if block else text).strip()
 
 
-def recall(name: str, file: str) -> tuple[str, bool]:
-    """The model's answer, retried once with the (accurate) GPL framing if it refused. Returns (text, refused)."""
-    text = ask_model(name, file)
-    if function_span(text, name) is None and REFUSAL_RE.search(text):
+def recall(name: str, file: str, mode: str = "verbatim") -> tuple[str, bool]:
+    """The model's answer; in verbatim mode retried once with the (accurate) GPL framing if it refused. Returns (text, refused)."""
+    text = ask_model(name, file, mode=mode)
+    if mode == "verbatim" and function_span(text, name) is None and REFUSAL_RE.search(text):
         text = ask_model(name, file, gpl_framing=True)
     refused = function_span(text, name) is None
     return text, refused
@@ -147,6 +153,10 @@ def summarize(rows: list[dict], build: str) -> dict:
 
 
 def main() -> None:
+    import argparse
+    parser = argparse.ArgumentParser(description="Memory probe")
+    parser.add_argument("--prompt", choices=sorted(PROMPTS), default="verbatim")
+    mode = parser.parse_args().prompt
     load_env()
     if not os.environ.get("META_API_KEY"):
         raise SystemExit("META_API_KEY missing: add it to .env (gitignored)")
@@ -155,7 +165,7 @@ def main() -> None:
 
     def run(item: tuple[str, str]) -> dict:
         name, file = item
-        recalled, refused = recall(name, file)
+        recalled, refused = recall(name, file, mode)
         return {"name": name, "file": file, "changed_by_variant": changed_by_variant(referee, name, file),
                 "recalled": recalled, **{b: judge(referee, name, file, recalled, b) for b in BUILDS}}
 
@@ -164,15 +174,21 @@ def main() -> None:
     public_rows = [{k: v for k, v in r.items() if k != "recalled"} for r in rows]
     for r in public_rows:
         print(f"{r['name']:28s} unmodified {r['unmodified']['status']:11s} {r['unmodified']['match_pct']:5.1f}   variant {r['variant']['status']:11s} {r['variant']['match_pct']:5.1f}")
-    result = {"v": 1, "model": os.environ.get("META_MODEL", "muse-spark-1.3"), "fn_count": len(rows),
-              "method": (f"model asked to write {len(rows)} public GBADoom functions (status bar and weapon code) from memory by "
+    result = {"v": 1, "prompt": mode, "model": os.environ.get("META_MODEL", "muse-spark-1.3"), "fn_count": len(rows),
+              "method": (f"model asked ({mode} prompt) to write {len(rows)} public GBADoom functions (status bar and weapon code) from memory by "
                          "their original names; each answer replaced the original in its real source file, compiled with "
                          "the original headers, and was compared against (a) unmodified GBADoom and (b) our private variant"),
               "unmodified": summarize(rows, "unmodified"), "variant": summarize(rows, "variant"),
               "variant_changed": {"fn_count": sum(r["changed_by_variant"] for r in rows),
                                   **summarize([r for r in rows if r["changed_by_variant"]], "variant")}}
+    if mode != "verbatim":  # keep the last verbatim run visible next to this one
+        old = json.loads((OUT / "memory_probe.json").read_text()) if (OUT / "memory_probe.json").exists() else {}
+        verbatim = old.get("verbatim_run") or (old if old.get("prompt", "verbatim") == "verbatim" else None)
+        if verbatim:
+            result["verbatim_run"] = {**verbatim, "prompt": "verbatim"}
     (OUT / "memory_probe.json").write_text(json.dumps(result, indent=1) + "\n")
-    (SECRETS / "memory_probe_detail.json").write_text(json.dumps(rows, indent=1) + "\n")
+    detail = "memory_probe_detail.json" if mode == "verbatim" else f"memory_probe_detail_{mode}.json"
+    (SECRETS / detail).write_text(json.dumps(rows, indent=1) + "\n")
     print(json.dumps({k: result[k] for k in ("unmodified", "variant")}))
 
 
