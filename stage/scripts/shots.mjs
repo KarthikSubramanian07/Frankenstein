@@ -16,7 +16,6 @@ const SHOTS = [
   { name: 'title', q: '?scene=title&replay=' + RUN + '&speed=20&t=300', wait: 1500 },
   { name: 'split', q: '?scene=split&replay=' + RUN + '&speed=4&t=200', wait: 2600 },
   { name: 'split-live', q: '?scene=split', wait: 1500 },
-  { name: 'hiscore', q: '?scene=hiscore&replay=' + RUN + '&speed=4&t=200', wait: 2600 },
   { name: 'timetrial', q: '?scene=timetrial', wait: 1500 },
   { name: 'ending', q: '?scene=ending', wait: 1500 },
   { name: 'ending-credits', q: '?scene=ending&page=credits', wait: 1000 },

@@ -9,7 +9,6 @@ export const SCENES = [
   ['title', '?scene=title&replay=' + RUN + '&speed=20&t=300'],
   ['split', '?scene=split&replay=' + RUN + '&speed=4&t=200'],
   ['split-end', '?scene=split'],
-  ['hiscore', '?scene=hiscore&replay=' + RUN + '&speed=4&t=200'],
   ['versus', '?scene=versus&replay=' + RUN + '&speed=1&t=300'],
   ['timetrial', '?scene=timetrial'],
   ['ending', '?scene=ending'],
