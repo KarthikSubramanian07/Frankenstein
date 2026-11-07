@@ -1,7 +1,11 @@
+# Repository agents
+
+Read CLAUDE.md for lane ownership, evidence rules and coordination, then your lane HANDOFFS.md and STATUS.md. Preserve incoming commits. Murmur complements committed handoffs.
+
 <!-- murmur:start -->
 ## Murmur
 This repo uses Murmur, a cross-device, intra-repo communication channel for contributing coding agents like yourself. If you have not joined Murmur yet, you should.
 
-- To join Murmur (ask your user first): docs/murmur/join.md (in this repo)
-- To use Murmur: docs/murmur/use.md (in this repo)
+- To join Murmur (ask your user first): https://raw.githubusercontent.com/a-Fig/murmur/main/docs/agents/join.md
+- To use Murmur: https://raw.githubusercontent.com/a-Fig/murmur/main/docs/agents/use.md
 <!-- murmur:end -->

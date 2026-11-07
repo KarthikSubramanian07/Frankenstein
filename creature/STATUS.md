@@ -1,54 +1,41 @@
 # Lane D integration status
 
-## Product direction from Enzo: QR-first portable play
+Latest checkpoint: 2026-11-07, 13:59 Pacific. Source checkpoint `54dca9e` is on main; incoming Stage polish and Lane A changes were received through `b2f7337`. No runtime recovery swap or public phone publication is claimed.
 
-Judges scan a real QR and immediately play on their phones. Doom is today's supported demonstration; the north star is selecting an old game and adapting it to another device/interface. Explore (1) a genuinely local model proposing fully human-editable control mappings and (2) generated visual continuation into extra display area. Phone play is a demo requirement. These adaptation experiments are not yet implemented. Read [EXPERIENCE_IDEA.md](EXPERIENCE_IDEA.md) and respond through [issue #3](https://github.com/KarthikSubramanian07/Frankenstein/issues/3).
+## Verified now
 
-## Real boot verified
+| Item | Evidence |
+|---|---|
+| Original variant boot | Title, menus and basic movement previously observed; engine SHA-1 `d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2`. A controlled continuous 30-second active-play check remains open. |
+| Static-face package | 5,704,780 bytes; SHA-1 `337fbb15462b57eb6cc5a35bcf11e36646e130e2`. Current player reached New Game/episode/skill and gameplay. Movement, turn, fire and changing face expressions at full health observed. Game ran across checks for over 30 seconds; no continuous video recorded. Local screenshot: `creature/shots/static-face-browser.jpg`. |
+| Matching data | Original playable SHA-1 `e1ddb8fb96764422d5fb6b1c84c83b85c98236bd`. Both packages omit GUS; processed-WAD SHA-1 `628f0749251adbc059e3f15bd9b18bd403285ad3`. Packager verified actual engine preservation and payload structure. |
+| Restore preflight | Third mode verifies baseline patch report, identical rebuild report, origins, actual hashes, one changed function and package/WAD chains. Python compilation and 19 synthetic protocol checks passed. No observed emulator swap. |
+| Phone deployment bundle | Allowlisted Cloudflare Pages folder, isolation headers, truthful status and pinned notices. Real packaged game and all file hashes checked; waiting states and refusal cases passed. Judging service worker caches shell only; ROM/status stay network-only. Not deployed. |
+| Stage | Frozen Vite build and TypeScript check passed. Eight of nine tests passed; remaining server test blocked by Windows symlink EPERM. No tracked Stage changes. |
+| Stage services | Frontend 5173 supplies COOP/COEP. HTTP 7201 and websocket 7202; health reports live:null. Real Doom replay renders 28/568 with REPLAY · 8X. No live run invented. |
+| Murmur | Official v0.2.3 checksum verified. Root AGENTS/CLAUDE discovery committed. Clone-local join/daemon and official MCP who/status/inbox calls worked. Only local peer, name pending; global registration and shell remote push blocked. See MURMUR.md. |
 
-Actual private-variant Doom now boots in the browser mGBA core. Title/menu/new-game/episode/skill screens and forward player movement were visually observed. See [runtime/BOOT.md](runtime/BOOT.md) for reproducible commands and exact identities. The package is original private-variant code, not a recovered-function rebuild. No swap, patch or public phone publication event was emitted.
+The static face is our hand-written display rule. `fn_0801B298` is absent from the 28-function recovered set. Restoring it must not be called face-source recovery.
 
-- Engine SHA-1: `d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2`.
-- Playable package: 5,704,780 bytes, SHA-1 `e1ddb8fb96764422d5fb6b1c84c83b85c98236bd`.
-- All 11 upstream utility/WAD dependencies verified against pinned Git blob hashes. Browser core npm SHA-512 verified.
-- Native Node server `node creature/phone/serve.mjs --port 7411 --rom <playable.gba>` is reachable with COOP/COEP. HTML/JS/WASM/game assets200; unrelated source paths404.
-- Real Crew export doom_r01 imported and all31 payload hashes + manifest/engine identities checked by runtime/sync_inputs.mjs. This is export consistency verification, not an independent compiler rerun.
-- Package-aware swap preflight now verifies actual engine files, packaged files, sidecar hashes, engine preservation and identical processed WAD payloads before applying referee gates. No real swap observed yet.
+## Remaining demo gates
 
-## Handoffs
+1. **A: actual rebuild report.** Main still lacks `lab/out/rebuild.json`; the exported doom_r01 stream has no build.rom. Issue #2 requests real original/ROM hashes, identical, recovered set and percentage. Do not manufacture a report from a documentation table.
+2. **Runtime finale.** After the report arrives, run production restore preflight, establish state compatibility, load generated Lua in mGBA and observe state/game/controls before any rom.swapped. Label ROM reopen/restart honestly if used instead.
+3. **C/D browser composition.** Direct player loads, but Stage's game iframe displayed Chromium's refused-to-connect page in the in-app browser. Both hosts supply isolation headers. A temporary document-only CORP same-site probe did not resolve it and was not committed. Browser iframe composition remains unverified. OBS separate game capture under transparent Stage is the alternative, also needing an actual capture test.
+4. **Phones / hosting.** Bundle is ready. Deploy only for Karthik's recorded judging window; verify HTTPS isolation headers, physical iOS Safari and Android Chrome, then five phones on venue Wi-Fi. Publish the actual QR/event afterward. Download stays hidden; remove production and old preview ROM deployments after the window.
+5. **Recording.** Desktop Lua tap/bridge-to-director, OBS scenes, continuous before/after footage and 60-second video remain unverified. End on Built today / Not ours.
 
-A: static-face source/build instructions received in lab/demo/README.md (fn_0801B298). Received committed lab/out/static_face.gba and lab/demo/static_face_report.json in9a45076. Static engine SHA-1 is752c61e50fc1255e301e8efa4011082bf380c3e2; its runtime behavior still needs testing. A verified recovered-function rebuild and actual observed swap remain required before the running-agent-code badge changes.
+## Follow-on direction
 
-B: real export delivery resolved. Director endpoint exists in crew.run --director at localhost7112/heartbeat; D's explicit --forward adapter is ready. B handoff reports 12-second stale-sample expiry and listener shutdown implemented; received.
+QR-first portable play remains the north star: choose an old game and move it to another interface. Local-model editable mappings and generated screen extension are still experiments (EXPERIENCE_IDEA.md).
 
-C: geometry/routes/ending handoff resolved through stage/HANDOFF_D.md. Exact Split rectangle x20/y92,960x640; credits route ending&page=credits. Updated OBS instructions in obs/RUN_OF_SHOW.md.
-
-## Active coordination
-
-Root integrates and publishes small creature-only checkpoints, checking latest main around each. Luna coordinator supervises active agents roughly once/minute while this session runs; this is not an unattended background service. WORKPLAN.md preserves ownership; issue#2 carries requests; EXPERIENCE_IDEA.md preserves Enzo's SubQ extension proposal.
-
-## Verification limits
-
-Desktop mGBA/Lua tap, live socket bridge, actual recovered-code swap, static-face recovery cycle, OBS capture/export, iOS/Android and multi-phone checks remain unverified. Browser boot/menu/input checks are real and separate from those claims. No public ROM distribution or QR success claimed. The Node serving alternative solved local browser preview; Python shell socket and Git/npm networking limitations remain.
+Pokémon work has started in A: `63c0cc9` reports a byte-identical pret build and per-routine assembly referee; `b100b93` adds the local crew target / Game Boy referee. Read lab/pokered/README.md and docs/POKEMON_IMPLEMENTATION.md. Original playback, visited locations, behavior validation and code verification stay distinct. D's Game Boy selector/adapter and geographic map integration are not implemented yet; Doom gates remain first.
 
 ## Entry points
 
-- Bridge: python -m creature.bridge --help
-- Director adapter: python -m creature.bridge.director_adapter --help (default inspection; --forward only to an already budgeted local Crew run)
-- Overlay: python creature/overlay/serve.py
-- Package setup and boot: runtime/BOOT.md
-- Swap checks: runtime/PACKAGE_SWAP.md
-- Phone setup: phone/README.md
-- Recording: obs/RUN_OF_SHOW.md
+- Packages: runtime/BOOT.md; swap: runtime/PACKAGE_SWAP.md.
+- Player: `node creature/phone/serve.mjs --port 7412 --rom creature/runtime/generated/doom-static-playable.gba` (7412 is this host's test override).
+- Static deployment: phone/README.md; coordination: MURMUR.md; capture: obs/RUN_OF_SHOW.md.
+- Bridge: `python -m creature.bridge --help`.
 
-## Host availability update
-
-The connected Windows environment became unavailable during the desktop ROM-open action. Desktop boot and Lua telemetry remain unverified. All source checkpoints and browser boot/package evidence notes are committed. Real static-face playtest, live tap and swap require the host connection to return. Browser screenshot was saved on that host at creature/shots/browser-boot.jpg before disconnection.
-
-Finale path chosen: honest visible modification rather than an unconfirmed original bug. A/B still need to nominate an accepted function and verify the patch; do not present this as completed.
-
-## Latest incoming review / requested next target
-
-Received Stage's sponsor judgment rail and Versus evidence polish, Crew's library_backend events and Atlas library updates, current A/B handoffs and experiment caveats, and Lane A's new static-face artifacts/integration audit. B reports fn_0801B298 out of reach today; face recovery must not be claimed. A's audit queues a distinct restore preflight mode, consistent music-bank packaging, baseline manifest validation and continuous target/static playtests; these are pending work, not fixed by this documentation checkpoint.
-
-After a good Doom demo, Enzo requests the Pokémon Red opening/menu + first-interaction slice with a genuine geographic/progression coverage map. Brief: POKEMON_RED_PLAN.md; A and B have direct task files and handoff entries; issue#4 tracks the request. Visited, behavior-validated and code-verified coverage stay separate. Pokémon implementation has not started.
+Root receives and publishes checkpoints during active work. Luna supervised this turn's parallel workers; it is not an unattended service after the conversation stops.
