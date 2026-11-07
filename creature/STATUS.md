@@ -1,5 +1,11 @@
 # Lane D integration status
 
+## Latest host checkpoint
+
+The Node player now accepts `--stage stage/dist`, serving the Stage at `/stage/` and the player at `/` on one origin. Source 49abd44 / docs 7d8f796 are on main. 29 HTTP checks passed, including isolation headers, real ROM, exact built assets, redirects, gzip/ETag/HEAD and invalid/source/traversal paths. Root also verified live HTTP routes at port 7416. Browser validation remains pending: Enzo stopped Computer Use with Escape, and no further UI actions were taken. A live Windows junction escape test was blocked by EPERM; canonical path containment is implemented, with that limitation documented.
+
+Murmur's normal-terminal registration and a real send succeeded. This Work chat's temporary MCP bridge is now being blocked even for who/inbox by automatic approval review citing telemetry, despite verified no-usage controls. D therefore cannot reliably hold a chat session online and keeps requests/status in GitHub. The native MCP registration remains installed.
+
 Latest checkpoint: 2026-11-07, 13:59 Pacific. Source checkpoint `54dca9e` is on main; incoming Stage one-screen revision and later site changes were received through `50d9270`. No runtime recovery swap or public phone publication is claimed.
 
 ## Verified now
