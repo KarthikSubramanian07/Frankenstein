@@ -22,7 +22,8 @@ TICKER = {
     "abandoned": ["{fn} resists. We will come back with better tools.",
                   "{fn} keeps its secrets for now. Best was {pct}%."],
 }
-ANNOUNCE = {25: "Quarter recovered!", 50: "Halfway recovered!", 75: "Three quarters!", 100: "Fully recovered!"}
+ANNOUNCE = {25: "Quarter of targets back!", 50: "Halfway there!", 75: "Three quarters!",
+            100: "Every target matched!"}  # announcer lines: four words max; about the run's targets, not the game
 
 
 class Archivist:
@@ -44,9 +45,13 @@ class Archivist:
         self.log.emit("narration", "archivist", text=text[:90], mood=mood, speak=speak, priority=priority)
 
     def milestone(self, matched: int, total: int) -> None:
+        """Milestones are about THIS run's targets. Small runs (live segments, ASI:One jobs) never say
+        "recovered", because a 2-of-2 run is not "fully recovered" when the game has 568 functions."""
         pct = matched * 100 // max(1, total)
         for m, line in ANNOUNCE.items():
             if pct >= m and m not in self._said:
+                if total < 20 and m < 100:
+                    continue  # a 2-3 function run only gets the closing line
                 self._said.add(m)
                 self.say(line, mood="proud", speak=True, priority=3, force=True)
 

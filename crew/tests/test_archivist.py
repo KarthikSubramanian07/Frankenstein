@@ -74,16 +74,26 @@ def test_rate_limit(clock):
 def test_milestones_once_each(clock):
     log = Log()
     a = Archivist(log)
-    a.milestone(1, 8)
+    a.milestone(5, 40)
     assert log.lines == []
-    a.milestone(2, 8)
-    a.milestone(3, 8)
-    assert [l["text"] for l in log.lines] == ["Quarter recovered!"]
-    a.milestone(8, 8)
-    a.milestone(8, 8)
+    a.milestone(10, 40)
+    a.milestone(11, 40)
+    assert [l["text"] for l in log.lines] == ["Quarter of targets back!"]
+    a.milestone(40, 40)
+    a.milestone(40, 40)
     texts = [l["text"] for l in log.lines]
-    assert texts == ["Quarter recovered!", "Halfway recovered!", "Three quarters!", "Fully recovered!"]
+    assert texts == ["Quarter of targets back!", "Halfway there!", "Three quarters!", "Every target matched!"]
     assert all(l["speak"] is True and l["priority"] == 3 and l["mood"] == "proud" for l in log.lines)
+
+
+def test_small_runs_only_get_the_closing_line_and_never_claim_the_game(clock):
+    """A 2-function live segment must not announce "recovered" while the game is 0.4% back."""
+    log = Log()
+    a = Archivist(log)
+    a.milestone(1, 2)
+    a.milestone(2, 2)
+    assert [l["text"] for l in log.lines] == ["Every target matched!"]
+    assert not any("recovered" in l["text"].lower() for l in log.lines)
 
 
 def test_false_claim_names_the_digger_and_offset(clock):
