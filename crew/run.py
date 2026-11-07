@@ -208,6 +208,9 @@ class Run:
             os.replace(tmp, live)  # atomic switch for the Stage
         tick = threading.Thread(target=self.ticker, daemon=True)
         tick.start()
+        self.director = None
+        if self.args.director:
+            self._start_director()
         queue = list(fns)
         qlock = threading.Lock()
 
@@ -222,9 +225,13 @@ class Run:
                 with qlock:
                     if not queue:
                         return
-                    # prefer a function whose callees are already recovered
-                    idx = next((k for k, f in enumerate(queue)
-                                if all(c in self.target.recovered for c in f["callees"])), 0)
+                    # 1) what the player is looking at right now (SubQ Snap director), 2) functions whose
+                    # callees are already recovered, 3) Snap triage order
+                    boosted = list(self.director.boosted) if self.director else []
+                    idx = next((k for b in boosted for k, f in enumerate(queue) if f["id"] == b), None)
+                    if idx is None:
+                        idx = next((k for k, f in enumerate(queue)
+                                    if all(c in self.target.recovered for c in f["callees"])), 0)
                     f = queue.pop(idx)
                     self.attempted += 1
                 if f["id"] in self.snap_scores:  # Snap's whole-program difficulty sets this function's budget
@@ -249,6 +256,53 @@ class Run:
         self._stop.set()
         self.tick()
         return self.finish()
+
+    def _start_director(self) -> None:
+        """POST /heartbeat {"running": [fn ids], "frame_png_b64": "..."} from Lane D's tap; Snap steers every few s."""
+        import base64
+        from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+        from .director import Director
+
+        self.director = Director(self.cfg, self.target, self.log)
+        run = self
+
+        class H(BaseHTTPRequestHandler):
+            def log_message(self, *a):
+                pass
+
+            def do_POST(self):
+                n = int(self.headers.get("Content-Length") or 0)
+                try:
+                    d = json.loads(self.rfile.read(min(n, 8_000_000)) or b"{}")
+                    png = base64.b64decode(d["frame_png_b64"]) if d.get("frame_png_b64") else None
+                    run.director.heartbeat(list(d.get("running") or []), png)
+                    body, code = {"ok": True, "boosted": run.director.boosted}, 200
+                except Exception as e:
+                    body, code = {"error": str(e)[:200]}, 400
+                data = json.dumps(body).encode()
+                self.send_response(code)
+                self.send_header("Content-Type", "application/json")
+                self.send_header("Content-Length", str(len(data)))
+                self.end_headers()
+                self.wfile.write(data)
+
+            def do_GET(self):
+                data = json.dumps({"boosted": run.director.boosted, "last": run.director.last}).encode()
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json")
+                self.send_header("Content-Length", str(len(data)))
+                self.end_headers()
+                self.wfile.write(data)
+
+        srv = ThreadingHTTPServer(("127.0.0.1", self.args.director_port), H)
+        threading.Thread(target=srv.serve_forever, daemon=True).start()
+
+        def steer_loop():
+            while not self._stop.wait(self.args.director_every):
+                if self.director.recent:
+                    self.director.steer()
+        threading.Thread(target=steer_loop, daemon=True).start()
 
     def _load_types(self):
         hdr = self.dir / "types.h"
@@ -326,6 +380,9 @@ def parser() -> argparse.ArgumentParser:
     ap.add_argument("--snap", action=argparse.BooleanOptionalAction, default=True, help="SubQ Snap triage + review")
     ap.add_argument("--names", action="store_true", help="name functions even when library is off")
     ap.add_argument("--no-rebuild", action="store_true")
+    ap.add_argument("--director", action="store_true", help="Play to recover: SubQ Snap steers by live heartbeats")
+    ap.add_argument("--director-port", type=int, default=7112)
+    ap.add_argument("--director-every", type=float, default=4.0, help="seconds between Snap steering decisions")
     ap.add_argument("--live", action="store_true", help="point runs/live at this run")
     ap.add_argument("--run-id", default="")
     return ap

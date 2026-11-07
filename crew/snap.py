@@ -84,15 +84,17 @@ def reset_stats() -> None:
 
 
 def decide(cfg: Config, state, questions: dict, *, op: str = "decide", timeout: float = 30,
-           retries: int = 3, model: str | None = None) -> dict:
+           retries: int = 3, model: str | None = None, images: list[dict] | None = None) -> dict:
     """One /v1/systemone call. Returns the parsed JSON ({"model", "answers", "usage"}) plus
     "latency_ms". Retries 429/5xx and network errors with short backoff; everything else raises."""
     if not cfg.subq_key:
         raise SnapError("SubQ key missing: get one at the Subquadratic table, set SUBQ_API_KEY in .env")
     if not 1 <= len(questions) <= MAX_QUESTIONS:
         raise SnapError(f"{len(questions)} questions; the API takes 1 to {MAX_QUESTIONS}")
-    body = json.dumps({"model": model or env("SUBQ_SNAP_MODEL", "subq-snap-1.1"), "state": state,
-                       "questions": questions}).encode()
+    payload = {"model": model or env("SUBQ_SNAP_MODEL", "subq-snap-1.1"), "state": state, "questions": questions}
+    if images:
+        payload["images"] = images[:4]  # API limit: 4 images, {mediaType, base64}
+    body = json.dumps(payload).encode()
     last = None
     for attempt in range(retries + 1):
         req = urllib.request.Request(f"{cfg.subq_url}/systemone", data=body, method="POST", headers={
