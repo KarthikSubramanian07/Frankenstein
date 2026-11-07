@@ -1,0 +1,67 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: contracts + crew (offline)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - name: Install
+        run: python -m pip install -q jsonschema python-dotenv pytest
+      - name: Fixtures are deterministic
+        run: |
+          python contracts/make_fixtures.py
+          git diff --exit-code contracts/fixtures
+      - name: Validate fixtures and committed outputs against the schemas
+        run: python contracts/validate.py
+      - name: Tests (no network, no API keys)
+        run: python -m pytest -q contracts/tests crew/tests -m "not live"
+
+  bench:
+    name: bench (apt arm-none-eabi-gcc)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - name: Install
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends gcc-arm-none-eabi binutils-arm-none-eabi
+          arm-none-eabi-gcc --version | head -1
+          python -m pip install -q jsonschema python-dotenv pytest
+      # These bench tests check the referee's linter, error paths, schemas, manifest and anonymisation.
+      # None of them depend on the exact bytes GCC emits, so they must pass with any arm-none-eabi-gcc.
+      - name: Bench tests that do not depend on exact codegen
+        run: >
+          python -m pytest -q crew/bench
+          -k "bench_size or lint_fail or l008 or no_compile or validate or no_original_names or guard_blocks"
+      # The committed targets in crew/bench/out were built with GCC 16.2.0 (crew/bench/TOOLCHAIN.md).
+      # Ubuntu's apt package is an older GCC whose codegen differs, so byte-exact MATCH tests can fail here
+      # for reasons that say nothing about the crew. Informational only; the test job above is the gate.
+      - name: Full bench (informational, GCC version differs from the bench's 16.2.0)
+        continue-on-error: true
+        run: python -m pytest -q crew/bench
