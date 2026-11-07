@@ -1,5 +1,9 @@
 # Lane B (Crew) handoffs
 
+## Active assignment from Enzo: implement Pokémon coverage support
+
+Read [docs/POKEMON_IMPLEMENTATION.md](../docs/POKEMON_IMPLEMENTATION.md). Publish STARTED / QUEUED AFTER DOOM (exact gate) / BLOCKED (exact input). Next checkpoint: game-scoped target handling plus a runnable coverage reducer/export with visited, behavior-validated and code-verified states separated. Use labelled fixtures while A's target input is pending; publish actual attempt evidence when available. Keep Doom intact.
+
 ## New request from Enzo: Pokémon Red partial coverage after Doom
 
 Enzo explicitly asked for this to be added to Lane A and B. Once the good Doom demo works, target Pokémon Red's landing/title menu and first Pokémon interactions as a bounded playable slice. Beside gameplay, a genuine world/location map and attached interaction tree show how far Frankenstein has reached.
