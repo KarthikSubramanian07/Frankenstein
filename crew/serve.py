@@ -185,6 +185,8 @@ def make_handler(jobs: Jobs):
                 body = json.loads(self.rfile.read(n) or b"{}")
             except json.JSONDecodeError:
                 return self._send(400, {"error": "invalid JSON"})
+            if not isinstance(body, dict):
+                return self._send(400, {"error": "expected a JSON object"})
             # natural language -> functions (SubQ Snap over the whole program; inferred, never the hidden map)
             if path == "/route" or ("query" in body and "fn" not in body):
                 q = str(body.get("query") or "").strip()
