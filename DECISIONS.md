@@ -4,24 +4,19 @@ A dated log. Every assumption, contradiction, and partner-prize answer goes here
 
 ## Corrections to the kit (2026-11-07, foundation, from the pre-hack audit). These override `docs/`.
 
-**Clock.** Hacking runs 10:45 to 17:00 (6 h 15 min), not 10:00 to 17:30. Feature freeze is 15:30 (deadline minus 90 min). Every gate now lands before freeze:
+**Clock (from `tools/hackclock.py`, judged live, and `docs/PLAYBOOK_LESSONS.md`).** Hacking 10:45 to 17:00 (6 h 15 min). **Freeze 14:55.** Record the video 16:10. Submit 16:30. Run `make clock` for the schedule; the repo's `.claude/settings.json` injects the current phase into every Claude Code prompt.
 
-| Time | Gate | If it fails |
+| Time | Phase / gate | If it fails |
 |---|---|---|
-| 11:00 | Lane 0: foundation pushed, tag `v0-foundation`, everyone cloned | Anyone pushes what exists |
-| 11:30 | A: GBADoom builds twice with an identical SHA-1 (devkitARM, no LTO) | Last call to switch target is 11:45 |
-| 12:00 | A: referee MATCH on the original source of 5 functions, PARTIAL on a 1-line edit | B, C, D stay on mocks |
-| 12:30 | B: first real match verified by the Checker through the real referee | Smallest functions first |
-| 12:45 | A: memory probe, both numbers (unmodified and variant) | Say "not measured" on stage |
-| **13:00** | **D: finale decided.** A real bug confirmed, or switch to the "it can change again" modification | Use the modification |
-| 13:30 | C: Stage tails a real `events.jsonl`. A: ASI:One verify works end to end | D pairs with A |
-| 14:00 | D: heal overlay reacts to real `fn.matched` events | Whole-screen heal by % |
-| 14:15 | B: ablation (library on vs off) on held-out functions has numbers | One run, said honestly |
-| 14:30 | A: `rebuild` (source-tree) and `patch` proven with tests | |
-| 14:45 | A + D: patched ROM verified (exactly one function changed) | |
-| 15:00 | D: phones load the patched ROM. A: Excavator and Curator working | Laptop only |
-| **15:30** | **Freeze.** Three clean golden-path runs, the 60 s video exported | Cut per the cut list |
-| 15:30 to 17:00 | Submit early. Rehearse the 3-minute judging-room demo three times | |
+| 10:45 to 11:20 | SPIKES. A: GBADoom builds and boots, then builds without LTO; one `st_stuff.c` function matched by hand. B: Muse Spark tries 5 small functions; count matches. D: emulator page plus QR on a public URL. A: an Agentverse agent answers in ASI:One | |
+| **11:20** | **Go / no-go.** | No devkitARM build: devkitPro Docker image. No matches at `-O3`: rebuild at `-O2`. Muse 0 of 5: Muse keeps the Checker, naming and ASI:One; another model writes first attempts and metrics report per-model counts. ASI:One silent by 12:20: drop Fetch.ai |
+| 11:20 to 12:20 | SKELETON. The whole demo path on hardcoded data: static face, one green function, face returns, game on a phone. In parallel: restructure the target functions, rebuild, play 30 s. Run the memory probe on both builds | |
+| 12:20 to 14:55 | BUILD in 38-minute timeboxes: live Digger loop, Checker, idiom library with held-out check, face rebuild, the bug hunt (**decided by 13:00**), ASI:One workflow. Lunch at 13:00 is the hero run | Ask "can we demo right now?" every 38 min |
+| **14:55** | **FREEZE.** No features. Start the long run over all target functions and save its numbers. Repo public, README built-today split, reset script | Cut per the cut list |
+| 14:55 to 16:10 | Harden and write: fresh-state demo runs, submission text, pitch | |
+| 16:10 | RECORD the 1-minute video of the real system | |
+| 16:30 | SUBMIT after the disqualifier audit (repo public, video under 1 min and only today's work, all teammates added, ASI:One submission agent done) | |
+| 16:30 to 17:00 | Rehearse three timed 3-minute run-throughs | |
 
 **Compiler (Lane A).** Skip agbcc entirely. Use devkitARM's GCC (install devkitARM via devkitPro, not Homebrew `arm-none-eabi-gcc`; GBADoom needs `$DEVKITARM`, `gba_rules`, its `gbadoom.specs`, and a GCC new enough for `-std=gnu23`). Pin the version in `lab/TOOLCHAIN.md`. Use the upstream Makefile flags (checked at doomhack/GBADoom@7763f5f: `-O3 -flto=8 -mcpu=arm7tdmi -mthumb -mthumb-interwork -std=gnu23 …`) **minus `-flto=8`**: LTO objects hold compiler IR, not machine code, and the linker inlines and merges functions across files, so per-function matching is impossible. Fall back to `-O2` if `-O3` inlining blocks matches. The contract `compiler` field says this.
 
@@ -43,12 +38,20 @@ A dated log. Every assumption, contradiction, and partner-prize answer goes here
 
 **Opener.** Cut it to about 20 seconds, with the glitching game on screen the whole time. Show the product by 0:15. Drop the "cartridge in a drawer" line (Doom's source is public). Keep "Ours checks everything" and the Doom reveal.
 
+**Settled conflicts with the gameplan (`docs/PLAYBOOK_LESSONS.md`).**
+- Fetch.ai: one ASI:One agent must answer by 12:20 or the layer is dropped (the gameplan overrides the kit's "never cut"); Excavator and Curator are bonus.
+- Models: Diggers start on `muse-spark-1.3`; escalate to `muse-wonder` (confirm the id with `GET /v1/models`) after 3 failed attempts. Gemini as a second-model Checker is optional. If Muse matches 0 of 5 at the 11:20 spike, another model writes first attempts and metrics report per-model counts.
+- Hero shot: the static-face stub built into the ROM (an honest display rule: "code we haven't recovered yet shows as static") is the primary; the OBS heal overlay is a bonus.
+- Scope: keep the existing contract tests, but add no more tests or CI outside the referee and crew core. SubQ Cartographer is cut unless everything else works.
+
 ## Seed decisions
 
 - Target game: **GBADoom** (https://github.com/doomhack/GBADoom, prBoom port in C, GPL-2.0-or-later, Doom shareware IWAD). No commercial ROMs, ever. Fallbacks, only if GBADoom won't build by 11:45: Attack on Voxelburg, then Celeste Classic GBA. Owner: Lane A.
-- Our repo is MIT and contains none of GBADoom's code or data. The answer key lives in gitignored `lab/secrets/`.
+- Our repo is MIT and contains none of GBADoom's code or data. Prior work we brought: the planning kit in `docs/` and `tools/hackclock.py` (event clock). The answer key lives in gitignored `lab/secrets/`.
 - Visual direction: "Frankenstein, the game" (five scenes) per `docs/02_DESIGN.md`.
 - Partner prizes: Meta $5,000 (best use of the Meta Model API), Fetch.ai $2,500 1st and $2,500 2nd. Others: ask at kickoff and record here.
-- Submission deadline: 17:00 Pacific per the event guide. Confirm at kickoff.
+- Submission deadline: 17:00 Pacific; form at cerebralvalley.ai/e/aie-code-2026-hackathon/hackathon/submit. Judging weights round one: Technical Demo 35%, Implementation Difficulty 30%, Impact 20%, Creativity 15%.
+- Never call the UI a dashboard ("a dashboard as the main feature" is banned). Lead with Doom running.
+- Check the Doom shareware license before hosting the patched ROM publicly; fallback is venue network only or demo screen only.
 - Fixtures: `metrics.sample.json` wraps three runs as `{"fixture": true, "runs": [...]}`. `make sample-runs` installs them as real-looking run dirs (`runs/fx01..fx03`, each marked `fixture: true`) for Stage and Creature development. The sample live run is about 11 minutes long (60 matched, 9 false claims, 3 lint fails).
 - Added `contracts/tests/` (pytest) and `make test`. No CI or root frameworks, per Lane 0.
