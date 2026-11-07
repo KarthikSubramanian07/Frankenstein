@@ -2,11 +2,11 @@
 // Owned by the asset pass (fork V1); the scenes read it and never hardcode numbers.
 export const DATA = {
   // FROZEN at 16:00 by Lane B's union; update here once, then re-render.
-  functions: 175, // PLACEHOLDER until the 16:00 freeze (counts.py at 15:20); crew/exports/union/UNION.json "functions" (python3 tools/counts.py)
+  functions: 179, // frozen at 16:00 (counts.py at 15:20); crew/exports/union/UNION.json "functions" (python3 tools/counts.py)
   totalFunctions: 568,
-  pctBytes: 5.01, // counts.py pct_bytes; PLACEHOLDER until the 16:00 freeze
+  pctBytes: 5.34, // counts.py pct_bytes; frozen at 16:00
   liesCaught: 24, // counts.py false_claims_caught (crew/exports, 35 runs)
-  fakesRejected: 30, // counts.py fakes_rejected
+  fakesRejected: 31, // counts.py fakes_rejected
   fakesAccepted: 0,
   sha1: 'd936259bcbe48b5ce5d8be4d5ffe935c1eece8b2', // original and rebuilt ROM (identical; DECISIONS 15:06)
   endangeredPct: 87, // VGHF and SPN, 2023 (DECISIONS 12:12)

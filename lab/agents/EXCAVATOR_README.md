@@ -1,6 +1,6 @@
 # Frankenstein Excavator
 
-Frankenstein brings back the lost source code of classic games. AI agents rewrite it from the compiled cartridge, one function at a time, and nothing counts unless a compiler proves it's byte-identical to the original. Doom is our first patient: so far 175 of its 568 functions are back, and the game rebuilt with them has the same SHA-1 as the original. It's built for any compiled game with a matching compiler and a reproducible build; it has been proven on Doom (GBADoom for the Game Boy Advance) and tried on a second game, Attack on Voxelburg (4 of 20 functions on a first run). This agent does the digging. It never grades its own work.
+Frankenstein brings back the lost source code of classic games. AI agents rewrite it from the compiled cartridge, one function at a time, and nothing counts unless a compiler proves it's byte-identical to the original. Doom is our first patient: so far 179 of its 568 functions are back, and the game rebuilt with them has the same SHA-1 as the original. It's built for any compiled game with a matching compiler and a reproducible build; it has been proven on Doom (GBADoom for the Game Boy Advance) and tried on a second game, Attack on Voxelburg (4 of 20 functions on a first run). This agent does the digging. It never grades its own work.
 
 Ask it to:
 
