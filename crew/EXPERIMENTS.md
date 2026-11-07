@@ -160,3 +160,25 @@ Same 20 hard held-out functions, library off, Snap and Gemini on, up to 6 attemp
 
 Same match count; 6 functions matched in both, 1 only with aligned feedback, 1 only without. It was 12% cheaper per match with the aligned view, inside the noise of one run each. Where it visibly helped was on near-misses outside held-out evaluation: best attempts climbed (fn_0801AFF0 4.5% to 81.8%) and, with warm start, fn_0801ABC0 went from 90% to a match. Honest conclusion: no measured change in match rate on held-out functions.
 
+
+## Permuter (crew/permuter.py, 14:30 to 14:45, no model spend)
+
+`crew/permute_queue.py` takes every game function never accepted anywhere (not in the union, not salvaged, never `fn.matched`), starts from its best saved PARTIAL attempt, and runs the permuter: exact C rewrites (operand swaps, mirrored comparisons, typed temporaries, statement and declaration order under strict data-flow rules, loop forms, int to unsigned when provably safe, identity casts, if/else swaps), scored in-process by Lane A's referee on an asm-differ-style penalty. A MATCH counts only after a fresh referee MATCH and `Checker.review` (rules, SubQ Snap, Gemini).
+
+| Run | Band (best attempt) | Functions | Matched and accepted | Checks | Wall time |
+|---|---|---|---|---|---|
+| permute01 | 90 to 100% | 21 (9 at 95% or more) | **1**: fn_0800A1A0, 97.7% to MATCH in 13 checks | 1,170 | 196 s |
+| permute03 | 60 to 90% | 17 | 0 (1 better on penalty, worse positionally) | 1,962 | 227 s |
+
+fn_0800A1A0 is exported (`crew/exports/permute01`). Its winning rewrite combined operand swaps, an if/else swap and int to unsigned on a local.
+
+**Why the yield is low (measured).** Forty single rewrites per function, compiled and compared byte for byte with the starting object: on the three near-misses at 96 to 98% that were tested (fn_08012A90, fn_08006F70, fn_0801143C), 1 of about 116 rewrites changed GCC 16's output at all. -O3 canonicalizes operand order, temporaries and most statement order away. On fn_0801AFF0 (81.8%), statement reorders and the signedness pass did change the code (13 of 40), but never towards the target in 163 checks. The residual diffs at 95% and above are mostly not register allocation:
+
+- operand order inside one instruction (`adds r0, r2, r3` against `adds r0, r3, r2`, `cmp r4, r3` against `cmp r3, r4`), which GCC derives from SSA creation order, not from how the source spells the expression (fn_080145A0, fn_0800060C, fn_08006F70);
+- a wrong callee (fn_08009A28 calls fn_08025560 where the target calls fn_0300275C), a semantic error the model must fix;
+- a string literal in `.rodata` modelled as an extern `data_` symbol (fn_08005424, fn_08006558);
+- one branch-layout difference (fn_08012A90).
+
+Six of the 90 to 95% functions are plain call sequences with no safe rewrite (fn_08004E84 and others), and the permuter correctly did nothing.
+
+**Not measured yet.** The planned Digger-path run (`doom_perm01`) and the m2c draft comparison (`doom_draft_on` and `doom_draft_off`) could not run: the Meta API returned HTTP 402 `monthly_spend_limit_reached` from about 14:20. Both draft runs stopped after 2 and 0 model attempts and say nothing about drafts. Rerun them once the limit is raised.
