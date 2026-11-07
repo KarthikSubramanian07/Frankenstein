@@ -1,0 +1,17 @@
+{
+  "report_source": "crew\\exports\\doom_r12\\events.jsonl",
+  "event_seq": 606,
+  "event_run_id": "doom_r12",
+  "recovered": 6,
+  "pct_agent_code": 0.36,
+  "engine_sha1": "d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2",
+  "same_processed_wad": true,
+  "restore_report_and_package_checks": true,
+  "state_compatibility_verified": false,
+  "runtime_swapped": false,
+  "source_commit": "3e7321042b4cb7c516452f3c4092be051670f42c",
+  "event_file_sha1_checkout": "e16bb6a1459274f4745de9f40995e511f86eae85",
+  "event_file_sha1_git_lf": "465c91d570e4e6af9fdc7a5c1bef72d4cf69ce42",
+  "export_files_verified_git_lf": 9,
+  "newline_note": "Windows checkout CRLF normalized to canonical Git LF before checking EXPORT SHA-1s"
+}
