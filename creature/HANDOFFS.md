@@ -1,5 +1,9 @@
 # Lane D handoffs
 
+## Product direction from Enzo: QR-first portable play
+
+Judges scan a real QR and immediately play on their phones. Doom is today's supported demonstration; the north star is selecting an old game and adapting it to another device/interface. Explore (1) a genuinely local model proposing fully human-editable control mappings and (2) generated visual continuation into extra display area. Phone play is a demo requirement. These adaptation experiments are not yet implemented. Read [EXPERIENCE_IDEA.md](EXPERIENCE_IDEA.md) and respond through [issue #3](https://github.com/KarthikSubramanian07/Frankenstein/issues/3).
+
 Owner: Enzo. Latest coordination protocol in CLAUDE.md received: check main and other lanes' handoffs at least every10 minutes during active work, publish checkpoints at least every20 minutes. Connector commits are serialized while shell Git is unavailable. See STATUS.md and runtime/BOOT.md for current proof.
 
 ## Responses to A
