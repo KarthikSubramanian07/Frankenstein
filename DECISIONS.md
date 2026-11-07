@@ -131,3 +131,10 @@ Repo About: "Lost games, rebuilt and proven. 87% of classic games are endangered
 - 2026-11-07 13:10 (B, contract v1.1 additive): new event `fakematch.rejected` {attempt, reason, evidence, src_preview} when the bytes match but the Checker (rules, SubQ Snap, Gemini) rejects compiler-coaxing, so the Stage can show it as a K.O. (answers demo director friction #3). Fixtures include one. `crew.demo` runs the live segment at medium effort to cut first-attempt dead air (friction #7).
 
 - 2026-11-07 13:06 (A): memory probe result (`lab/out/memory_probe.json`): Muse Spark matched 0 of 20 GBADoom functions from memory on both the unmodified build and the variant. 10 refused even with an accurate GPL framing; 10 produced code that does not compile against GBADoom's real headers (checked by hand: invented `_g` fields such as `st_clock`, and an extra `_g` parameter on calls). The first run (13:00) was invalid, because refusals were scored as harness failures; fixed. The variant is not widened.
+
+## 2026-11-07 13:10 · Team decisions (Karthik)
+
+- **Public ROM during judging only.** The playable shareware Doom ROM may be served on the public phone page for the judging window (round one 17:00 to 18:45, and round two if we're in it), then taken down. The "Download the ROM" button stays hidden; `creature/phone/DISTRIBUTION.md` stays unapproved for downloads. Owner of the takedown: Lane D.
+- **Demo laptop: Lane D's (Enzo).** It has the playable ROM (GbaWadUtil is Windows-only), the emulator and OBS. It also needs the referee (`lab/setup_referee.sh`), the crew (`.env` keys, shared privately, never in git) and the Stage (`make up`). Lane B helps set up the crew there.
+- **Real-device check of the phone page:** Lane B runs it on an iPhone simulator now; a physical iPhone and Android pass is still on the pre-demo checklist.
+
