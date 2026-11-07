@@ -12,17 +12,17 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def test_tokens_and_similarity():
-    assert sn.tokens("P_SetMobjState") == ["set", "mobj", "state"]
+    assert sn.tokens("X_SetThingState") == ["set", "thing", "state"]
     assert sn.tokens("ST_updateFaceWidget") == ["update", "face", "widget"]
-    assert sn.similarity("set_mobj_state", "P_SetMobjState") == 1.0
-    assert sn.similarity("set_state", "P_SetMobjState") == 2 / 3
-    assert sn.similarity(None, "P_SetMobjState") == 0.0
+    assert sn.similarity("set_thing_state", "X_SetThingState") == 1.0
+    assert sn.similarity("set_state", "X_SetThingState") == 2 / 3
+    assert sn.similarity(None, "X_SetThingState") == 0.0
 
 
 def test_fake_run_aggregate_without_secrets():
-    key = {"fn_00000001": {"name": "P_SetMobjState"}, "fn_00000002": {"name": "R_DrawColumn"}}
+    key = {"fn_00000001": {"name": "X_SetThingState"}, "fn_00000002": {"name": "X_DrawStripe"}}
     run = {"run_id": "t", "names": [
-        {"fn": "fn_00000001", "name": "set_mobj_state"},
+        {"fn": "fn_00000001", "name": "set_thing_state"},
         {"fn": "fn_00000002", "name": "draw_span", "subsystem": "render"},
         {"fn": "fn_00000003", "name": None}]}
     agg, _ = sn.score(run, key, {"fn_00000002": "render"})
