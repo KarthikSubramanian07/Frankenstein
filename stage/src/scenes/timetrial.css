@@ -1,0 +1,37 @@
+/* Faster: two bars, minutes per piece. Shorter is faster; the faster bar burns fire orange. */
+.timetrial { padding: 0 140px; }
+
+.timetrial .tt-head {
+  position: absolute; left: 140px; top: 120px;
+  font: 400 64px/1 var(--display); letter-spacing: 1px; text-transform: uppercase; color: var(--bone);
+}
+.timetrial .tt-head span { color: var(--ash); }
+
+.timetrial .tt-rows { position: absolute; left: 140px; right: 140px; top: 270px; display: flex; flex-direction: column; gap: 64px; }
+.timetrial .tt-label { font: 600 48px/1 var(--text); color: var(--bone); margin-bottom: 18px; }
+.timetrial .tt-track { display: flex; align-items: center; gap: 40px; height: 160px; }
+
+.timetrial .tt-bar {
+  height: 150px; width: 0; flex: none; position: relative;
+  transition: width 900ms cubic-bezier(.2, .8, .2, 1);
+}
+.timetrial.grown .tt-bar, .timetrial .tt-bar.empty { width: var(--w); }
+.timetrial .tt-bar.fast {
+  background: var(--fire);
+  box-shadow: inset 0 4px 0 rgba(255, 255, 255, .28), inset 0 -6px 0 rgba(0, 0, 0, .35), 0 6px 0 #000;
+}
+.timetrial .tt-bar.empty {
+  border: 4px dashed var(--metal-hi); background: transparent; display: flex; align-items: center; padding-left: 40px;
+}
+.timetrial .tt-bar.empty span { font: 600 44px/1 var(--text); color: var(--ash); }
+
+.timetrial .tt-val { font: 400 132px/1 var(--display); color: var(--ash); white-space: nowrap; }
+.timetrial .tt-val.fast { color: var(--fire); }
+
+.timetrial .tt-say {
+  position: absolute; left: 140px; right: 140px; top: 840px; white-space: nowrap;
+  font: 400 88px/1.05 var(--display); text-transform: uppercase; color: var(--bone);
+}
+.timetrial .tt-runs { position: absolute; left: 140px; bottom: 56px; font: 600 28px/1 var(--text); color: var(--ash); letter-spacing: 1px; }
+
+@media (prefers-reduced-motion: reduce) { .timetrial .tt-bar { width: var(--w); } }
