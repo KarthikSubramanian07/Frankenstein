@@ -1,0 +1,1 @@
+{"v": 1, "fn": "fn_08005008", "items": [{"off": 0, "bytes": "4800", "text": "ldr\tr0, [pc, #0]", "key": null}, {"off": 2, "bytes": "4770", "text": "bx\tlr", "key": null}, {"off": 4, "bytes": "00000000", "text": ".word\t0x00000000", "key": ["R_ARM_ABS32", "section:rodata", null]}]}

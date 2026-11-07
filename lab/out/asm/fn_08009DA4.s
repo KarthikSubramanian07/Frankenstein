@@ -38,14 +38,14 @@ fn_08009DA4:
  8009dec:	68c7      	ldr	r7, [r0, #12]
  8009dee:	0010      	movs	r0, r2
  8009df0:	4690      	mov	r8, r2
- 8009df2:	f01b fc4b 	bl	802568c <fn_0802568C>
+ 8009df2:	f01b fbf3 	bl	80255dc <fn_080255DC>
  8009df6:	00ad      	lsls	r5, r5, #2
  8009df8:	6933      	ldr	r3, [r6, #16]
  8009dfa:	5929      	ldr	r1, [r5, r4]
  8009dfc:	183f      	adds	r7, r7, r0
  8009dfe:	4640      	mov	r0, r8
  8009e00:	9301      	str	r3, [sp, #4]
- 8009e02:	f01b fc43 	bl	802568c <fn_0802568C>
+ 8009e02:	f01b fbeb 	bl	80255dc <fn_080255DC>
  8009e06:	9b01      	ldr	r3, [sp, #4]
  8009e08:	181c      	adds	r4, r3, r0
  8009e0a:	0022      	movs	r2, r4
@@ -95,12 +95,12 @@ fn_08009DA4:
  8009e6a:	0020      	movs	r0, r4
  8009e6c:	6d31      	ldr	r1, [r6, #80]	@ 0x50
  8009e6e:	3050      	adds	r0, #80	@ 0x50
- 8009e70:	f00e fbf8 	bl	8018664 <fn_08018664>
+ 8009e70:	f00e fb9e 	bl	80185b0 <fn_080185B0>
  8009e74:	2100      	movs	r1, #0
  8009e76:	0020      	movs	r0, r4
  8009e78:	f7ff ff24 	bl	8009cc4 <fn_08009CC4>
  8009e7c:	e7cd      	b.n	8009e1a <fn_08009DA4+0x76>
  8009e7e:	46c0      	nop			@ (mov r8, r8)
  8009e80:	030064c4 	.word	0x030064c4
- 8009e84:	081398a0 	.word	0x081398a0
+ 8009e84:	081397cc 	.word	0x081397cc
  8009e88:	00002710 	.word	0x00002710

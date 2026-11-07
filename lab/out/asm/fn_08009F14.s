@@ -23,7 +23,7 @@ fn_08009F14:
  8009f3e:	4700      	bx	r0
  8009f40:	f7fc fdde 	bl	8006b00 <fn_08006B00>
  8009f44:	2103      	movs	r1, #3
- 8009f46:	f01b fb27 	bl	8025598 <fn_08025598>
+ 8009f46:	f01b facf 	bl	80254e8 <fn_080254E8>
  8009f4a:	5d63      	ldrb	r3, [r4, r5]
  8009f4c:	313b      	adds	r1, #59	@ 0x3b
  8009f4e:	22fd      	movs	r2, #253	@ 0xfd
@@ -31,7 +31,7 @@ fn_08009F14:
  8009f52:	4213      	tst	r3, r2
  8009f54:	d114      	bne.n	8009f80 <fn_08009F14+0x6c>
  8009f56:	2000      	movs	r0, #0
- 8009f58:	f010 fa10 	bl	801a37c <fn_0801A37C>
+ 8009f58:	f010 f9b6 	bl	801a2c8 <fn_0801A2C8>
  8009f5c:	e7ed      	b.n	8009f3a <fn_08009F14+0x26>
  8009f5e:	000a      	movs	r2, r1
  8009f60:	3a3e      	subs	r2, #62	@ 0x3e
@@ -50,6 +50,6 @@ fn_08009F14:
  8009f7c:	4213      	tst	r3, r2
  8009f7e:	d0ea      	beq.n	8009f56 <fn_08009F14+0x42>
  8009f80:	0020      	movs	r0, r4
- 8009f82:	f010 f9fb 	bl	801a37c <fn_0801A37C>
+ 8009f82:	f010 f9a1 	bl	801a2c8 <fn_0801A2C8>
  8009f86:	e7d8      	b.n	8009f3a <fn_08009F14+0x26>
  8009f88:	030064c4 	.word	0x030064c4

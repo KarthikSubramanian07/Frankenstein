@@ -9,5 +9,5 @@
 /* function fn_08006B00 (32 bytes) */
 /* function fn_08009850 (112 bytes) */
 /* function fn_08010DEC (384 bytes) */
-/* function fn_08018664 (4 bytes) */
-/* function fn_08025610 (12 bytes) */
+/* function fn_080185B0 (4 bytes) */
+/* function fn_08025560 (12 bytes) */

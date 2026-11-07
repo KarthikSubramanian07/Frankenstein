@@ -32,7 +32,7 @@ fn_0800BE18:
  800be54:	4264      	negs	r4, r4
  800be56:	0021      	movs	r1, r4
  800be58:	4648      	mov	r0, r9
- 800be5a:	f009 f96d 	bl	8015138 <fn_08015138>
+ 800be5a:	f009 f913 	bl	8015084 <fn_08015084>
  800be5e:	1e04      	subs	r4, r0, #0
  800be60:	da00      	bge.n	800be64 <fn_0800BE18+0x4c>
  800be62:	e096      	b.n	800bf92 <fn_0800BE18+0x17a>
@@ -46,21 +46,21 @@ fn_0800BE18:
  800be72:	18ed      	adds	r5, r5, r3
  800be74:	0029      	movs	r1, r5
  800be76:	2001      	movs	r0, #1
- 800be78:	f009 fafc 	bl	8015474 <fn_08015474>
+ 800be78:	f009 faa2 	bl	80153c0 <fn_080153C0>
  800be7c:	2800      	cmp	r0, #0
  800be7e:	d1ea      	bne.n	800be56 <fn_0800BE18+0x3e>
  800be80:	9005      	str	r0, [sp, #20]
  800be82:	2200      	movs	r2, #0
  800be84:	2103      	movs	r1, #3
  800be86:	2040      	movs	r0, #64	@ 0x40
- 800be88:	f011 fc50 	bl	801d72c <fn_0801D72C>
+ 800be88:	f011 fbf8 	bl	801d67c <fn_0801D67C>
  800be8c:	4680      	mov	r8, r0
  800be8e:	2240      	movs	r2, #64	@ 0x40
  800be90:	2100      	movs	r1, #0
  800be92:	9004      	str	r0, [sp, #16]
- 800be94:	f014 fdd4 	bl	8020a40 <fn_08020A40>
+ 800be94:	f014 fd7c 	bl	8020990 <fn_08020990>
  800be98:	4640      	mov	r0, r8
- 800be9a:	f00c fb99 	bl	80185d0 <fn_080185D0>
+ 800be9a:	f00c fb3f 	bl	801851c <fn_0801851C>
  800be9e:	4641      	mov	r1, r8
  800bea0:	4bb2      	ldr	r3, [pc, #712]	@ (800c16c <fn_0800BE18+0x354>)
  800bea2:	6169      	str	r1, [r5, #20]
@@ -177,7 +177,7 @@ fn_0800BE18:
  800bf80:	d005      	beq.n	800bf8e <fn_0800BE18+0x176>
  800bf82:	0029      	movs	r1, r5
  800bf84:	2001      	movs	r0, #1
- 800bf86:	f009 fa75 	bl	8015474 <fn_08015474>
+ 800bf86:	f009 fa1b 	bl	80153c0 <fn_080153C0>
  800bf8a:	2800      	cmp	r0, #0
  800bf8c:	d00b      	beq.n	800bfa6 <fn_0800BE18+0x18e>
  800bf8e:	2300      	movs	r3, #0
@@ -232,7 +232,7 @@ fn_0800BE18:
  800bff0:	d800      	bhi.n	800bff4 <fn_0800BE18+0x1dc>
  800bff2:	e07e      	b.n	800c0f2 <fn_0800BE18+0x2da>
  800bff4:	0021      	movs	r1, r4
- 800bff6:	f009 f839 	bl	801506c <fn_0801506C>
+ 800bff6:	f008 ffdf 	bl	8014fb8 <fn_08014FB8>
  800bffa:	2800      	cmp	r0, #0
  800bffc:	d00e      	beq.n	800c01c <fn_0800BE18+0x204>
  800bffe:	2325      	movs	r3, #37	@ 0x25
@@ -263,7 +263,7 @@ fn_0800BE18:
  800c032:	4663      	mov	r3, ip
  800c034:	0020      	movs	r0, r4
  800c036:	141d      	asrs	r5, r3, #16
- 800c038:	f008 ff40 	bl	8014ebc <fn_08014EBC>
+ 800c038:	f008 fee6 	bl	8014e08 <fn_08014E08>
  800c03c:	1400      	asrs	r0, r0, #16
  800c03e:	4643      	mov	r3, r8
  800c040:	4343      	muls	r3, r0
@@ -286,7 +286,7 @@ fn_0800BE18:
  800c062:	0028      	movs	r0, r5
  800c064:	2b00      	cmp	r3, #0
  800c066:	d05f      	beq.n	800c128 <fn_0800BE18+0x310>
- 800c068:	f008 fd7e 	bl	8014b68 <fn_08014B68>
+ 800c068:	f008 fd24 	bl	8014ab4 <fn_08014AB4>
  800c06c:	9b04      	ldr	r3, [sp, #16]
  800c06e:	6198      	str	r0, [r3, #24]
  800c070:	465b      	mov	r3, fp
@@ -327,10 +327,10 @@ fn_0800BE18:
  800c0b6:	7303      	strb	r3, [r0, #12]
  800c0b8:	e7b0      	b.n	800c01c <fn_0800BE18+0x204>
  800c0ba:	0028      	movs	r0, r5
- 800c0bc:	f008 fde4 	bl	8014c88 <fn_08014C88>
+ 800c0bc:	f008 fd8a 	bl	8014bd4 <fn_08014BD4>
  800c0c0:	e789      	b.n	800bfd6 <fn_0800BE18+0x1be>
  800c0c2:	0028      	movs	r0, r5
- 800c0c4:	f008 fb4c 	bl	8014760 <fn_08014760>
+ 800c0c4:	f008 faf2 	bl	80146ac <fn_080146AC>
  800c0c8:	e785      	b.n	800bfd6 <fn_0800BE18+0x1be>
  800c0ca:	9b04      	ldr	r3, [sp, #16]
  800c0cc:	6158      	str	r0, [r3, #20]
@@ -349,10 +349,10 @@ fn_0800BE18:
  800c0e6:	7313      	strb	r3, [r2, #12]
  800c0e8:	e798      	b.n	800c01c <fn_0800BE18+0x204>
  800c0ea:	0028      	movs	r0, r5
- 800c0ec:	f008 fe20 	bl	8014d30 <fn_08014D30>
+ 800c0ec:	f008 fdc6 	bl	8014c7c <fn_08014C7C>
  800c0f0:	e771      	b.n	800bfd6 <fn_0800BE18+0x1be>
  800c0f2:	0021      	movs	r1, r4
- 800c0f4:	f008 ff54 	bl	8014fa0 <fn_08014FA0>
+ 800c0f4:	f008 fefa 	bl	8014eec <fn_08014EEC>
  800c0f8:	e77f      	b.n	800bffa <fn_0800BE18+0x1e2>
  800c0fa:	464b      	mov	r3, r9
  800c0fc:	8a98      	ldrh	r0, [r3, #20]
@@ -377,7 +377,7 @@ fn_0800BE18:
  800c122:	230b      	movs	r3, #11
  800c124:	730b      	strb	r3, [r1, #12]
  800c126:	e779      	b.n	800c01c <fn_0800BE18+0x204>
- 800c128:	f008 fc8e 	bl	8014a48 <fn_08014A48>
+ 800c128:	f008 fc34 	bl	8014994 <fn_08014994>
  800c12c:	9b04      	ldr	r3, [sp, #16]
  800c12e:	6158      	str	r0, [r3, #20]
  800c130:	465b      	mov	r3, fp
@@ -407,7 +407,7 @@ fn_0800BE18:
  800c164:	000ffffc 	.word	0x000ffffc
  800c168:	ffffc000 	.word	0xffffc000
  800c16c:	08006b61 	.word	0x08006b61
- 800c170:	0812e670 	.word	0x0812e670
+ 800c170:	0812e5c0 	.word	0x0812e5c0
  800c174:	0000ffff 	.word	0x0000ffff
  800c178:	00000e0c 	.word	0x00000e0c
  800c17c:	ffe00000 	.word	0xffe00000

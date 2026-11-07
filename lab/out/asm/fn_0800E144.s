@@ -17,7 +17,7 @@ fn_0800E144:
  800e162:	54e7      	strb	r7, [r4, r3]
  800e164:	0031      	movs	r1, r6
  800e166:	9801      	ldr	r0, [sp, #4]
- 800e168:	f006 ffe6 	bl	8015138 <fn_08015138>
+ 800e168:	f006 ff8c 	bl	8015084 <fn_08015084>
  800e16c:	1e06      	subs	r6, r0, #0
  800e16e:	db30      	blt.n	800e1d2 <fn_0800E144+0x8e>
  800e170:	4643      	mov	r3, r8
@@ -54,7 +54,7 @@ fn_0800E144:
  800e1ae:	015b      	lsls	r3, r3, #5
  800e1b0:	0021      	movs	r1, r4
  800e1b2:	18c0      	adds	r0, r0, r3
- 800e1b4:	f006 fa4e 	bl	8014654 <fn_08014654>
+ 800e1b4:	f006 f9f4 	bl	80145a0 <fn_080145A0>
  800e1b8:	2800      	cmp	r0, #0
  800e1ba:	d004      	beq.n	800e1c6 <fn_0800E144+0x82>
  800e1bc:	465b      	mov	r3, fp

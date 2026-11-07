@@ -10,8 +10,8 @@
 /* function fn_0800D9BC (984 bytes) */
 /* function fn_0800FC90 (152 bytes) */
 /* function fn_08010D78 (36 bytes) */
-/* function fn_08014340 (352 bytes) */
-/* function fn_0801A37C (28 bytes) */
-/* function fn_08025610 (12 bytes) */
-/* function fn_08025640 (8 bytes) */
-/* function fn_0802568C (12 bytes) */
+/* function fn_0801428C (352 bytes) */
+/* function fn_0801A2C8 (28 bytes) */
+/* function fn_08025560 (12 bytes) */
+/* function fn_08025590 (8 bytes) */
+/* function fn_080255DC (12 bytes) */

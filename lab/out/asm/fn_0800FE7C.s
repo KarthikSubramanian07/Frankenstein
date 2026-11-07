@@ -28,24 +28,24 @@ fn_0800FE7C:
  800feb0:	0029      	movs	r1, r5
  800feb2:	1b90      	subs	r0, r2, r6
  800feb4:	9301      	str	r3, [sp, #4]
- 800feb6:	f015 fbe9 	bl	802568c <fn_0802568C>
+ 800feb6:	f015 fb91 	bl	80255dc <fn_080255DC>
  800feba:	8824      	ldrh	r4, [r4, #0]
  800febc:	4681      	mov	r9, r0
  800febe:	9802      	ldr	r0, [sp, #8]
  800fec0:	0424      	lsls	r4, r4, #16
  800fec2:	1b01      	subs	r1, r0, r4
  800fec4:	0038      	movs	r0, r7
- 800fec6:	f015 fbe1 	bl	802568c <fn_0802568C>
+ 800fec6:	f015 fb89 	bl	80255dc <fn_080255DC>
  800feca:	4653      	mov	r3, sl
  800fecc:	0029      	movs	r1, r5
  800fece:	4680      	mov	r8, r0
  800fed0:	1b98      	subs	r0, r3, r6
- 800fed2:	f015 fbdb 	bl	802568c <fn_0802568C>
+ 800fed2:	f015 fb83 	bl	80255dc <fn_080255DC>
  800fed6:	9903      	ldr	r1, [sp, #12]
  800fed8:	0005      	movs	r5, r0
  800feda:	1b09      	subs	r1, r1, r4
  800fedc:	0038      	movs	r0, r7
- 800fede:	f015 fbd5 	bl	802568c <fn_0802568C>
+ 800fede:	f015 fb7d 	bl	80255dc <fn_080255DC>
  800fee2:	9a01      	ldr	r2, [sp, #4]
  800fee4:	0003      	movs	r3, r0
  800fee6:	2a00      	cmp	r2, #0

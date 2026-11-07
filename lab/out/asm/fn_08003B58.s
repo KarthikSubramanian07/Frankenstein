@@ -68,7 +68,7 @@ fn_08003B58:
  8003be0:	23d4      	movs	r3, #212	@ 0xd4
  8003be2:	6832      	ldr	r2, [r6, #0]
  8003be4:	54d4      	strb	r4, [r2, r3]
- 8003be6:	f017 ff23 	bl	801ba30 <fn_0801BA30>
+ 8003be6:	f017 fecb 	bl	801b980 <fn_0801B980>
  8003bea:	bc80      	pop	{r7}
  8003bec:	46b8      	mov	r8, r7
  8003bee:	bcf0      	pop	{r4, r5, r6, r7}

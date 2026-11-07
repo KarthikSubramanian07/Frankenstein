@@ -11,4 +11,4 @@
 /* function fn_0800CFCC (276 bytes) */
 /* function fn_080110B8 (68 bytes) */
 /* function fn_08012234 (28 bytes) */
-/* function fn_0801A37C (28 bytes) */
+/* function fn_0801A2C8 (28 bytes) */

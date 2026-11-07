@@ -24,7 +24,7 @@ fn_08001ABC:
  8001aec:	2800      	cmp	r0, #0
  8001aee:	d1ee      	bne.n	8001ace <fn_08001ABC+0x12>
  8001af0:	0028      	movs	r0, r5
- 8001af2:	f019 fe6f 	bl	801b7d4 <fn_0801B7D4>
+ 8001af2:	f019 fe17 	bl	801b724 <fn_0801B724>
  8001af6:	2800      	cmp	r0, #0
  8001af8:	d1e9      	bne.n	8001ace <fn_08001ABC+0x12>
  8001afa:	0028      	movs	r0, r5

@@ -12,7 +12,7 @@ fn_0800A458:
  800a46c:	3101      	adds	r1, #1
  800a46e:	3332      	adds	r3, #50	@ 0x32
  800a470:	da04      	bge.n	800a47c <fn_0800A458+0x24>
- 800a472:	f00f ff83 	bl	801a37c <fn_0801A37C>
+ 800a472:	f00f ff29 	bl	801a2c8 <fn_0801A2C8>
  800a476:	bc10      	pop	{r4}
  800a478:	bc01      	pop	{r0}
  800a47a:	4700      	bx	r0

@@ -88,7 +88,7 @@ fn_08011F54:
  8012008:	2900      	cmp	r1, #0
  801200a:	d0c6      	beq.n	8011f9a <fn_08011F54+0x46>
  801200c:	0020      	movs	r0, r4
- 801200e:	f008 f9b5 	bl	801a37c <fn_0801A37C>
+ 801200e:	f008 f95b 	bl	801a2c8 <fn_0801A2C8>
  8012012:	e7c2      	b.n	8011f9a <fn_08011F54+0x46>
  8012014:	030064c4 	.word	0x030064c4
  8012018:	fffeffff 	.word	0xfffeffff

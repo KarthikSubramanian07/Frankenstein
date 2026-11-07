@@ -46,7 +46,7 @@ fn_08006A1C:
  8006a74:	0028      	movs	r0, r5
  8006a76:	4649      	mov	r1, r9
  8006a78:	9301      	str	r3, [sp, #4]
- 8006a7a:	f01e fdad 	bl	80255d8 <fn_080255D8>
+ 8006a7a:	f01e fd55 	bl	8025528 <fn_08025528>
  8006a7e:	9b01      	ldr	r3, [sp, #4]
  8006a80:	18ed      	adds	r5, r5, r3
  8006a82:	7823      	ldrb	r3, [r4, #0]
@@ -67,4 +67,4 @@ fn_08006A1C:
  8006aa0:	4655      	mov	r5, sl
  8006aa2:	e7cf      	b.n	8006a44 <fn_08006A1C+0x28>
  8006aa4:	030064c4 	.word	0x030064c4
- 8006aa8:	0814b48d 	.word	0x0814b48d
+ 8006aa8:	0814b3b9 	.word	0x0814b3b9

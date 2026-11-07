@@ -28,6 +28,8 @@ ARM_FLAGS = THUMB_FLAGS.replace("-fno-inline-functions-called-once", "") + " -fn
 INSN_RE = re.compile(r"^\s*([0-9a-f]+):\t([0-9a-f ]+?)\s*\t(.*)$")
 RELOC_RE = re.compile(r"^\s*([0-9a-f]+): (R_ARM_\w+)\t(\S+)$")
 HEAD_RE = re.compile(r"^([0-9a-f]{8}) <(.+)>:$")
+LOCAL_CALL_RE = re.compile(r"^blx?\s+[0-9a-f]+ <([^<>+]+)>$")
+CALL_RELOCS = {"R_ARM_THM_CALL", "R_ARM_CALL", "R_ARM_PC24", "R_ARM_THM_JUMP24", "R_ARM_JUMP24"}
 SYMTAB_RE = re.compile(r"^([0-9a-f]{8}) (.{7}) (\S+)\t([0-9a-f]{8}) (.+)$")
 
 
@@ -35,8 +37,10 @@ class Referee:
     def __init__(self) -> None:
         manifest = json.loads((OUT / "manifest.json").read_text())
         self.functions = {f["id"]: f for f in manifest["functions"]}
-        self.names = json.loads((SECRETS / "names.json").read_text())
-        self.ids = _elf_ids()
+        # The answer key exists only on Lane A's machine. Everyone else judges against lab/out/target/*.json.
+        names_path = SECRETS / "names.json"
+        self.names = json.loads(names_path.read_text()) if names_path.exists() else {}
+        self.ids = _elf_ids() if (SECRETS / "dump" / "elf_nm.txt").exists() else {}
         self._targets: dict[str, list[dict]] = {}
         self._symtabs: dict[str, list[tuple[str, int, int, str]]] = {}
 
@@ -104,6 +108,10 @@ class Referee:
 
     # ---------- target ----------
     def _target(self, fn: str) -> list[dict]:
+        exported = OUT / "target" / f"{fn}.json"
+        if fn not in self._targets and exported.exists() and not self.names:
+            items = json.loads(exported.read_text())["items"]
+            self._targets[fn] = [{**i, "key": tuple(i["key"]) if i["key"] else None, "reloc": None} for i in items]
         if fn not in self._targets:
             name, obj = self.names[fn]["name"], self.names[fn]["object"]
             cache = SECRETS / "dump" / "obj"
@@ -125,8 +133,17 @@ class Referee:
         """Turn a relocation into a comparable key: anonymous id plus offset, or a section class."""
         reloc = item.get("reloc")
         if not reloc:
+            # A bl to a function in the same object is resolved by the assembler with no relocation, so its bytes
+            # depend on layout. Compare it as "calls <id>", the same key a relocated call gets below.
+            call = LOCAL_CALL_RE.match(item["text"])
+            if call:
+                ident = call.group(1) if own_ids else self.ids.get(call.group(1), call.group(1))
+                return {**item, "key": ("call", ident, None)}
             return item
         rtype, sym = reloc
+        if rtype in CALL_RELOCS:
+            base = sym.partition("+")[0]
+            return {**item, "key": ("call", base if own_ids else self.ids.get(base, base), None)}
         base, _, addend = sym.partition("+")
         offset = int(addend, 16) if addend else 0
         if rtype == "R_ARM_ABS32" and item["bytes"]:
@@ -137,7 +154,7 @@ class Referee:
                 base, offset = resolved
             else:
                 return {**item, "key": (rtype, "section:" + base.split(".")[1], None)}
-        ident = base if own_ids else self.ids.get(base, "local:" + base)
+        ident = base if own_ids else self.ids.get(base, base)
         return {**item, "key": (rtype, ident, offset if rtype == "R_ARM_ABS32" else None)}
 
     # ---------- compare ----------
@@ -204,12 +221,19 @@ def _resolve(symtab: list, section: str, offset: int) -> tuple[str, int] | None:
 
 
 def _elf_ids() -> dict[str, str]:
+    """Every named ELF symbol -> fn_/data_ id, including sizeless ones from assembly and the linker script.
+    Compiler runtime helpers (__aeabi_idiv and friends) keep their names: candidates call them by name too."""
     ids = {}
     for line in (SECRETS / "dump" / "elf_nm.txt").read_text().splitlines():
         parts = line.split()
-        if len(parts) == 4 and not parts[3].startswith("$"):
-            prefix = "fn" if parts[2] in "tT" else "data"
-            ids.setdefault(parts[3], f"{prefix}_{int(parts[0], 16):08X}")
+        if len(parts) not in (3, 4) or parts[-1].startswith("$"):
+            continue
+        name, kind = parts[-1], parts[-2]
+        if name.startswith("__"):
+            ids.setdefault(name, name)
+            continue
+        prefix = "fn" if kind in "tT" else "data"
+        ids.setdefault(name, f"{prefix}_{int(parts[0], 16):08X}")
     return ids
 
 

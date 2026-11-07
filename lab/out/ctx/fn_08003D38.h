@@ -9,8 +9,8 @@
 /* function fn_080005A8 (96 bytes) */
 /* function fn_08003064 (288 bytes) */
 /* function fn_08006B44 (28 bytes) */
-/* function fn_0801D3D8 (268 bytes) */
-/* function fn_0801D530 (96 bytes) */
-/* function fn_0801D5E4 (52 bytes) */
-/* function fn_0801D618 (32 bytes) */
-/* function fn_08025604 (12 bytes) */
+/* function fn_0801D328 (268 bytes) */
+/* function fn_0801D480 (96 bytes) */
+/* function fn_0801D534 (52 bytes) */
+/* function fn_0801D568 (32 bytes) */
+/* function fn_08025554 (12 bytes) */

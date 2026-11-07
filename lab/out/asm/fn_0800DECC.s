@@ -8,13 +8,13 @@ fn_0800DECC:
  800ded8:	2200      	movs	r2, #0
  800deda:	2103      	movs	r1, #3
  800dedc:	2024      	movs	r0, #36	@ 0x24
- 800dede:	f00f fc25 	bl	801d72c <fn_0801D72C>
+ 800dede:	f00f fbcd 	bl	801d67c <fn_0801D67C>
  800dee2:	0004      	movs	r4, r0
  800dee4:	2224      	movs	r2, #36	@ 0x24
  800dee6:	2100      	movs	r1, #0
- 800dee8:	f012 fdaa 	bl	8020a40 <fn_08020A40>
+ 800dee8:	f012 fd52 	bl	8020990 <fn_08020990>
  800deec:	0020      	movs	r0, r4
- 800deee:	f00a fb6f 	bl	80185d0 <fn_080185D0>
+ 800deee:	f00a fb15 	bl	801851c <fn_0801851C>
  800def2:	4b0b      	ldr	r3, [pc, #44]	@ (800df20 <fn_0800DECC+0x54>)
  800def4:	60a3      	str	r3, [r4, #8]
  800def6:	2326      	movs	r3, #38	@ 0x26
@@ -22,7 +22,7 @@ fn_0800DECC:
  800defa:	5ce9      	ldrb	r1, [r5, r3]
  800defc:	0028      	movs	r0, r5
  800defe:	6161      	str	r1, [r4, #20]
- 800df00:	f007 f968 	bl	80151d4 <fn_080151D4>
+ 800df00:	f007 f90e 	bl	8015120 <fn_08015120>
  800df04:	2340      	movs	r3, #64	@ 0x40
  800df06:	61e3      	str	r3, [r4, #28]
  800df08:	3b39      	subs	r3, #57	@ 0x39

@@ -56,10 +56,10 @@ fn_0800A81C:
  800a88c:	0020      	movs	r0, r4
  800a88e:	611a      	str	r2, [r3, #16]
  800a890:	615a      	str	r2, [r3, #20]
- 800a892:	f00d fead 	bl	80185f0 <fn_080185F0>
+ 800a892:	f00d fe53 	bl	801853c <fn_0801853C>
  800a896:	2113      	movs	r1, #19
  800a898:	6920      	ldr	r0, [r4, #16]
- 800a89a:	f00a fe61 	bl	8015560 <fn_08015560>
+ 800a89a:	f00a fe07 	bl	80154ac <fn_080154AC>
  800a89e:	b003      	add	sp, #12
  800a8a0:	bcf0      	pop	{r4, r5, r6, r7}
  800a8a2:	bc01      	pop	{r0}
@@ -110,13 +110,13 @@ fn_0800A81C:
  800a902:	d1cc      	bne.n	800a89e <fn_0800A81C+0x82>
  800a904:	2116      	movs	r1, #22
  800a906:	6920      	ldr	r0, [r4, #16]
- 800a908:	f00a fe2a 	bl	8015560 <fn_08015560>
+ 800a908:	f00a fdd0 	bl	80154ac <fn_080154AC>
  800a90c:	e7c7      	b.n	800a89e <fn_0800A81C+0x82>
  800a90e:	606f      	str	r7, [r5, #4]
  800a910:	e7ef      	b.n	800a8f2 <fn_0800A81C+0xd6>
  800a912:	2116      	movs	r1, #22
  800a914:	6920      	ldr	r0, [r4, #16]
- 800a916:	f00a fe23 	bl	8015560 <fn_08015560>
+ 800a916:	f00a fdc9 	bl	80154ac <fn_080154AC>
  800a91a:	e7b3      	b.n	800a884 <fn_0800A81C+0x68>
  800a91c:	2100      	movs	r1, #0
  800a91e:	0028      	movs	r0, r5

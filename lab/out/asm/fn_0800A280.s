@@ -48,7 +48,7 @@ fn_0800A280:
  800a2e6:	dad5      	bge.n	800a294 <fn_0800A280+0x14>
  800a2e8:	2162      	movs	r1, #98	@ 0x62
  800a2ea:	2000      	movs	r0, #0
- 800a2ec:	f010 f846 	bl	801a37c <fn_0801A37C>
+ 800a2ec:	f00f ffec 	bl	801a2c8 <fn_0801A2C8>
  800a2f0:	bc80      	pop	{r7}
  800a2f2:	46b8      	mov	r8, r7
  800a2f4:	bcf0      	pop	{r4, r5, r6, r7}

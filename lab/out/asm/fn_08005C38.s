@@ -22,5 +22,5 @@ fn_08005C38:
  8005c62:	46c0      	nop			@ (mov r8, r8)
  8005c64:	030064c4 	.word	0x030064c4
  8005c68:	0000076c 	.word	0x0000076c
- 8005c6c:	08149ec0 	.word	0x08149ec0
- 8005c70:	08149eb0 	.word	0x08149eb0
+ 8005c6c:	08149dec 	.word	0x08149dec
+ 8005c70:	08149ddc 	.word	0x08149ddc

@@ -33,11 +33,11 @@ fn_0800FE1C:
  800fe5a:	e7f1      	b.n	800fe40 <fn_0800FE1C+0x24>
  800fe5c:	1a88      	subs	r0, r1, r2
  800fe5e:	0019      	movs	r1, r3
- 800fe60:	f015 fc14 	bl	802568c <fn_0802568C>
+ 800fe60:	f015 fbbc 	bl	80255dc <fn_080255DC>
  800fe64:	1bb9      	subs	r1, r7, r6
  800fe66:	0005      	movs	r5, r0
  800fe68:	0020      	movs	r0, r4
- 800fe6a:	f015 fc0f 	bl	802568c <fn_0802568C>
+ 800fe6a:	f015 fbb7 	bl	80255dc <fn_080255DC>
  800fe6e:	0003      	movs	r3, r0
  800fe70:	17e8      	asrs	r0, r5, #31
  800fe72:	0fda      	lsrs	r2, r3, #31

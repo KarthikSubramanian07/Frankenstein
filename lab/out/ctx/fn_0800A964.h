@@ -6,16 +6,16 @@
 
 /* Every function and global this code touches, by anonymous id. Declare their types yourself in
    your candidate; the referee matches calls and loads by these ids. */
-/* function fn_080145B8 (96 bytes) */
-/* function fn_08014618 (60 bytes) */
-/* function fn_080146C0 (160 bytes) */
-/* function fn_08014760 (168 bytes) */
-/* function fn_08014808 (288 bytes) */
-/* function fn_08014928 (288 bytes) */
-/* function fn_08014C88 (168 bytes) */
-/* function fn_08014FA0 (204 bytes) */
-/* function fn_08015138 (80 bytes) */
-/* function fn_08015474 (36 bytes) */
-/* function fn_080185D0 (32 bytes) */
-/* function fn_0801D72C (260 bytes) */
-/* function fn_08020A40 (140 bytes) */
+/* function fn_08014504 (96 bytes) */
+/* function fn_08014564 (60 bytes) */
+/* function fn_0801460C (160 bytes) */
+/* function fn_080146AC (168 bytes) */
+/* function fn_08014754 (288 bytes) */
+/* function fn_08014874 (288 bytes) */
+/* function fn_08014BD4 (168 bytes) */
+/* function fn_08014EEC (204 bytes) */
+/* function fn_08015084 (80 bytes) */
+/* function fn_080153C0 (36 bytes) */
+/* function fn_0801851C (32 bytes) */
+/* function fn_0801D67C (260 bytes) */
+/* function fn_08020990 (140 bytes) */

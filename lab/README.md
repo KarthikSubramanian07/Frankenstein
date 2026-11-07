@@ -16,11 +16,11 @@ Commit only inside `lab/`. Build against `contracts/fixtures/` until the real th
 ## Running the referee (live since 11:24)
 
 ```
-lab/setup_referee.sh                              # once: rebuild target from GitHub, verify, start container (Docker)
+lab/setup_referee.sh                              # once: start the devkitARM container (Docker); no GBADoom needed
 python3 -m lab.referee serve                      # real referee on 127.0.0.1:7101
 python3 -m lab.referee mock serve --port 7101     # fixtures; works anywhere
 python3 -m lab.referee check --fn fn_0801B7D4 --src cand.c
-python3 -m pytest -q lab/tests                    # T2, T3 (needs lab/secrets)
+python3 -m pytest -q lab/tests                    # T2, T3, parity (needs lab/secrets: Lane A only)
 ```
 
 Candidates define the function under its exact id (non-static), for example `int fn_0801B7D4(const void *e)`, and declare any callees and globals they use by their ids. The ctx header in `lab/out/ctx/<id>.h` is force-included. Matching compares every instruction; at relocation sites (calls, literal-pool addresses) both sides must point at the same `fn_`/`data_` id and offset. A check takes about 0.1 to 0.2 s.

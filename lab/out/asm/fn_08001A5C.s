@@ -2,7 +2,7 @@ fn_08001A5C:
  8001a5c:	4b04      	ldr	r3, [pc, #16]	@ (8001a70 <fn_08001A5C+0x14>)
  8001a5e:	b510      	push	{r4, lr}
  8001a60:	681c      	ldr	r4, [r3, #0]
- 8001a62:	f01b fd65 	bl	801d530 <fn_0801D530>
+ 8001a62:	f01b fd0d 	bl	801d480 <fn_0801D480>
  8001a66:	67e0      	str	r0, [r4, #124]	@ 0x7c
  8001a68:	bc10      	pop	{r4}
  8001a6a:	bc01      	pop	{r0}

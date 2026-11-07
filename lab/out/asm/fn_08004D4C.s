@@ -20,14 +20,14 @@ fn_08004D4C:
  8004d70:	5e80      	ldrsh	r0, [r0, r2]
  8004d72:	2800      	cmp	r0, #0
  8004d74:	db10      	blt.n	8004d98 <fn_08004D4C+0x4c>
- 8004d76:	f018 fc4f 	bl	801d618 <fn_0801D618>
+ 8004d76:	f018 fbf7 	bl	801d568 <fn_0801D568>
  8004d7a:	4e0a      	ldr	r6, [pc, #40]	@ (8004da4 <fn_08004D4C+0x58>)
  8004d7c:	0001      	movs	r1, r0
  8004d7e:	8837      	ldrh	r7, [r6, #0]
  8004d80:	0020      	movs	r0, r4
  8004d82:	4642      	mov	r2, r8
  8004d84:	8035      	strh	r5, [r6, #0]
- 8004d86:	f014 fef3 	bl	8019b70 <fn_08019B70>
+ 8004d86:	f014 fe99 	bl	8019abc <fn_08019ABC>
  8004d8a:	0020      	movs	r0, r4
  8004d8c:	8037      	strh	r7, [r6, #0]
  8004d8e:	bc80      	pop	{r7}

@@ -52,10 +52,10 @@ fn_08002A4C:
  8002ab0:	2000      	movs	r0, #0
  8002ab2:	e7fa      	b.n	8002aaa <fn_08002A4C+0x5e>
  8002ab4:	2000      	movs	r0, #0
- 8002ab6:	f017 fc61 	bl	801a37c <fn_0801A37C>
+ 8002ab6:	f017 fc07 	bl	801a2c8 <fn_0801A2C8>
  8002aba:	2001      	movs	r0, #1
  8002abc:	e7f5      	b.n	8002aaa <fn_08002A4C+0x5e>
  8002abe:	46c0      	nop			@ (mov r8, r8)
  8002ac0:	030064c4 	.word	0x030064c4
- 8002ac4:	08025910 	.word	0x08025910
+ 8002ac4:	08025860 	.word	0x08025860
  8002ac8:	0000074c 	.word	0x0000074c

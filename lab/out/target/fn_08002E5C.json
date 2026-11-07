@@ -1,0 +1,1 @@
+{"v": 1, "fn": "fn_08002E5C", "items": [{"off": 4, "bytes": "2000", "text": "movs\tr0, #0", "key": null}, {"off": 6, "bytes": "4770", "text": "bx\tlr", "key": null}]}

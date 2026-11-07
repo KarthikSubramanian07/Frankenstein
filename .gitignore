@@ -9,6 +9,7 @@ lab/out/*
 !lab/out/NOTICE.md
 !lab/out/asm/
 !lab/out/ctx/
+!lab/out/target/
 runs/*
 !runs/.gitkeep
 node_modules/

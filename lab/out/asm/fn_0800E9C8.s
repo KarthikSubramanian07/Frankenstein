@@ -160,7 +160,7 @@ fn_0800E9C8:
  800eb10:	6858      	ldr	r0, [r3, #4]
  800eb12:	0031      	movs	r1, r6
  800eb14:	0022      	movs	r2, r4
- 800eb16:	f006 fd55 	bl	80155c4 <fn_080155C4>
+ 800eb16:	f006 fcfb 	bl	8015510 <fn_08015510>
  800eb1a:	4643      	mov	r3, r8
  800eb1c:	6819      	ldr	r1, [r3, #0]
  800eb1e:	594b      	ldr	r3, [r1, r5]

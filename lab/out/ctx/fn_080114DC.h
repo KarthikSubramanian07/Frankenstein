@@ -11,8 +11,8 @@
 /* function fn_0800F808 (688 bytes) */
 /* function fn_080100E4 (40 bytes) */
 /* function fn_0801120C (560 bytes) */
-/* function fn_0801860C (48 bytes) */
-/* function fn_08018664 (4 bytes) */
-/* function fn_0801A37C (28 bytes) */
-/* function fn_0801A800 (260 bytes) */
-/* function fn_0802568C (12 bytes) */
+/* function fn_08018558 (48 bytes) */
+/* function fn_080185B0 (4 bytes) */
+/* function fn_0801A2C8 (28 bytes) */
+/* function fn_0801A74C (260 bytes) */
+/* function fn_080255DC (12 bytes) */

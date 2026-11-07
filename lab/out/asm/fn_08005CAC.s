@@ -9,7 +9,7 @@ fn_08005CAC:
  8005cbc:	6822      	ldr	r2, [r4, #0]
  8005cbe:	4b0c      	ldr	r3, [pc, #48]	@ (8005cf0 <fn_08005CAC+0x44>)
  8005cc0:	58d0      	ldr	r0, [r2, r3]
- 8005cc2:	f014 fec5 	bl	801aa50 <fn_0801AA50>
+ 8005cc2:	f014 fe6b 	bl	801a99c <fn_0801A99C>
  8005cc6:	bc10      	pop	{r4}
  8005cc8:	bc01      	pop	{r0}
  8005cca:	4700      	bx	r0

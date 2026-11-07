@@ -36,14 +36,14 @@ def parse_nm(path):
 
 
 def object_of():
-    """Map symbol name -> object file basename, from the per-object nm dump."""
+    """Map symbol name -> (object file basename, nm type in that object), from the per-object nm dump."""
     owner, current = {}, None
     for line in (DUMP / "obj_nm.txt").read_text().splitlines():
         if line.startswith("== "):
             current = line[3:]
         elif line.strip():
-            name = line.split()[-1]
-            owner.setdefault(name, current)
+            parts = line.split()
+            owner.setdefault(parts[-1], (current, parts[-2]))
     return owner
 
 
@@ -90,7 +90,12 @@ def main():
     data = {n: (a, s) for a, s, t, n in syms if t in "dDbBrR" and not n.startswith("$")}
     ids = {n: f"fn_{a:08X}" for n, (a, _) in funcs.items()}
     ids.update({n: f"data_{a:08X}" for n, (a, _) in data.items()})
-    owner = object_of()
+    owner_typed = object_of()
+    owner = {n: o for n, (o, _) in owner_typed.items()}
+    # IWRAM data sits in an executable section, so the ELF calls it "t"; the object file knows it is data.
+    for n in [n for n in funcs if n in owner_typed and owner_typed[n][1] not in "tT"]:
+        data[n] = funcs.pop(n)
+        ids[n] = f"data_{data[n][0]:08X}"
 
     def mode(addr):
         kind = "$t"

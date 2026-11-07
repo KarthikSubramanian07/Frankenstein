@@ -8,7 +8,7 @@ fn_08007D00:
  8007d0c:	68e0      	ldr	r0, [r4, #12]
  8007d0e:	f009 f86d 	bl	8010dec <fn_08010DEC>
  8007d12:	2123      	movs	r1, #35	@ 0x23
- 8007d14:	f012 fb32 	bl	801a37c <fn_0801A37C>
+ 8007d14:	f012 fad8 	bl	801a2c8 <fn_0801A2C8>
  8007d18:	f7fe fef2 	bl	8006b00 <fn_08006B00>
  8007d1c:	230b      	movs	r3, #11
  8007d1e:	2831      	cmp	r0, #49	@ 0x31

@@ -48,17 +48,17 @@ fn_08003A60:
  8003abc:	d811      	bhi.n	8003ae2 <fn_08003A60+0x82>
  8003abe:	4915      	ldr	r1, [pc, #84]	@ (8003b14 <fn_08003A60+0xb4>)
  8003ac0:	505a      	str	r2, [r3, r1]
- 8003ac2:	f018 fc13 	bl	801c2ec <fn_0801C2EC>
+ 8003ac2:	f018 fbbb 	bl	801c23c <fn_0801C23C>
  8003ac6:	2000      	movs	r0, #0
- 8003ac8:	f018 fc0a 	bl	801c2e0 <fn_0801C2E0>
+ 8003ac8:	f018 fbb2 	bl	801c230 <fn_0801C230>
  8003acc:	6822      	ldr	r2, [r4, #0]
  8003ace:	4b10      	ldr	r3, [pc, #64]	@ (8003b10 <fn_08003A60+0xb0>)
  8003ad0:	58d0      	ldr	r0, [r2, r3]
- 8003ad2:	f016 ffbd 	bl	801aa50 <fn_0801AA50>
+ 8003ad2:	f016 ff63 	bl	801a99c <fn_0801A99C>
  8003ad6:	6822      	ldr	r2, [r4, #0]
  8003ad8:	4b0e      	ldr	r3, [pc, #56]	@ (8003b14 <fn_08003A60+0xb4>)
  8003ada:	58d0      	ldr	r0, [r2, r3]
- 8003adc:	f016 ff98 	bl	801aa10 <fn_0801AA10>
+ 8003adc:	f016 ff3e 	bl	801a95c <fn_0801A95C>
  8003ae0:	e7ce      	b.n	8003a80 <fn_08003A60+0x20>
  8003ae2:	220f      	movs	r2, #15
  8003ae4:	e7eb      	b.n	8003abe <fn_08003A60+0x5e>

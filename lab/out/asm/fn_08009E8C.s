@@ -12,7 +12,7 @@ fn_08009E8C:
  8009ea0:	6901      	ldr	r1, [r0, #16]
  8009ea2:	ca0c      	ldmia	r2, {r2, r3}
  8009ea4:	68c0      	ldr	r0, [r0, #12]
- 8009ea6:	f01b fbb3 	bl	8025610 <fn_08025610>
+ 8009ea6:	f01b fb5b 	bl	8025560 <fn_08025560>
  8009eaa:	6d23      	ldr	r3, [r4, #80]	@ 0x50
  8009eac:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
  8009eae:	0001      	movs	r1, r0

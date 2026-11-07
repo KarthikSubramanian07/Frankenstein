@@ -12,7 +12,7 @@ fn_08009B20:
  8009b34:	6901      	ldr	r1, [r0, #16]
  8009b36:	ca0c      	ldmia	r2, {r2, r3}
  8009b38:	68c0      	ldr	r0, [r0, #12]
- 8009b3a:	f01b fd69 	bl	8025610 <fn_08025610>
+ 8009b3a:	f01b fd11 	bl	8025560 <fn_08025560>
  8009b3e:	6d21      	ldr	r1, [r4, #80]	@ 0x50
  8009b40:	6ccb      	ldr	r3, [r1, #76]	@ 0x4c
  8009b42:	6220      	str	r0, [r4, #32]
@@ -55,12 +55,12 @@ fn_08009B20:
  8009b90:	0005      	movs	r5, r0
  8009b92:	0010      	movs	r0, r2
  8009b94:	0017      	movs	r7, r2
- 8009b96:	f01b fd79 	bl	802568c <fn_0802568C>
+ 8009b96:	f01b fd21 	bl	80255dc <fn_080255DC>
  8009b9a:	00a4      	lsls	r4, r4, #2
  8009b9c:	63e8      	str	r0, [r5, #60]	@ 0x3c
  8009b9e:	59a1      	ldr	r1, [r4, r6]
  8009ba0:	0038      	movs	r0, r7
- 8009ba2:	f01b fd73 	bl	802568c <fn_0802568C>
+ 8009ba2:	f01b fd1b 	bl	80255dc <fn_080255DC>
  8009ba6:	6428      	str	r0, [r5, #64]	@ 0x40
  8009ba8:	bcf8      	pop	{r3, r4, r5, r6, r7}
  8009baa:	bc01      	pop	{r0}
@@ -75,4 +75,4 @@ fn_08009B20:
  8009bc0:	18c0      	adds	r0, r0, r3
  8009bc2:	e7c1      	b.n	8009b48 <fn_08009B20+0x28>
  8009bc4:	030064c4 	.word	0x030064c4
- 8009bc8:	081398a0 	.word	0x081398a0
+ 8009bc8:	081397cc 	.word	0x081397cc

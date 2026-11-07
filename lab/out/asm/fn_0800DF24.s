@@ -6,13 +6,13 @@ fn_0800DF24:
  800df2c:	2103      	movs	r1, #3
  800df2e:	2200      	movs	r2, #0
  800df30:	2024      	movs	r0, #36	@ 0x24
- 800df32:	f00f fbfb 	bl	801d72c <fn_0801D72C>
+ 800df32:	f00f fba3 	bl	801d67c <fn_0801D67C>
  800df36:	0004      	movs	r4, r0
  800df38:	2224      	movs	r2, #36	@ 0x24
  800df3a:	2100      	movs	r1, #0
- 800df3c:	f012 fd80 	bl	8020a40 <fn_08020A40>
+ 800df3c:	f012 fd28 	bl	8020990 <fn_08020990>
  800df40:	0020      	movs	r0, r4
- 800df42:	f00a fb45 	bl	80185d0 <fn_080185D0>
+ 800df42:	f00a faeb 	bl	801851c <fn_0801851C>
  800df46:	2305      	movs	r3, #5
  800df48:	6223      	str	r3, [r4, #32]
  800df4a:	4b11      	ldr	r3, [pc, #68]	@ (800df90 <fn_0800DF24+0x6c>)
@@ -23,7 +23,7 @@ fn_0800DF24:
  800df54:	5ce9      	ldrb	r1, [r5, r3]
  800df56:	0028      	movs	r0, r5
  800df58:	61a1      	str	r1, [r4, #24]
- 800df5a:	f007 f93b 	bl	80151d4 <fn_080151D4>
+ 800df5a:	f007 f8e1 	bl	8015120 <fn_08015120>
  800df5e:	69a3      	ldr	r3, [r4, #24]
  800df60:	1ac3      	subs	r3, r0, r3
  800df62:	1e5a      	subs	r2, r3, #1

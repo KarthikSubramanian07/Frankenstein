@@ -11,4 +11,4 @@
 /* function fn_08005008 (8 bytes) */
 /* function fn_080050D0 (12 bytes) */
 /* function fn_08005424 (52 bytes) */
-/* function fn_0801D638 (96 bytes) */
+/* function fn_0801D588 (96 bytes) */

@@ -41,7 +41,7 @@ fn_0800F190:
  800f1e0:	60d1      	str	r1, [r2, #12]
  800f1e2:	6093      	str	r3, [r2, #8]
  800f1e4:	0021      	movs	r1, r4
- 800f1e6:	f016 fa45 	bl	8025674 <fn_08025674>
+ 800f1e6:	f016 f9ed 	bl	80255c4 <fn_080255C4>
  800f1ea:	2100      	movs	r1, #0
  800f1ec:	6833      	ldr	r3, [r6, #0]
  800f1ee:	46b3      	mov	fp, r6

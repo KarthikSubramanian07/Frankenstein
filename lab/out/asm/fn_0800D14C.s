@@ -69,7 +69,7 @@ fn_0800D14C:
  800d1d8:	d1cd      	bne.n	800d176 <fn_0800D14C+0x2a>
  800d1da:	0039      	movs	r1, r7
  800d1dc:	6830      	ldr	r0, [r6, #0]
- 800d1de:	f00d f8cd 	bl	801a37c <fn_0801A37C>
+ 800d1de:	f00d f873 	bl	801a2c8 <fn_0801A2C8>
  800d1e2:	e7c8      	b.n	800d176 <fn_0800D14C+0x2a>
  800d1e4:	23eb      	movs	r3, #235	@ 0xeb
  800d1e6:	4ca3      	ldr	r4, [pc, #652]	@ (800d474 <fn_0800D14C+0x328>)
@@ -394,8 +394,8 @@ fn_0800D14C:
  800d464:	e6a7      	b.n	800d1b6 <fn_0800D14C+0x6a>
  800d466:	46c0      	nop			@ (mov r8, r8)
  800d468:	fff80000 	.word	0xfff80000
- 800d46c:	0812e690 	.word	0x0812e690
- 800d470:	08149fb0 	.word	0x08149fb0
+ 800d46c:	0812e5e0 	.word	0x0812e5e0
+ 800d470:	08149edc 	.word	0x08149edc
  800d474:	030064c4 	.word	0x030064c4
  800d478:	00008020 	.word	0x00008020
  800d47c:	0000075c 	.word	0x0000075c

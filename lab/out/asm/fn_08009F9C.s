@@ -16,6 +16,6 @@ fn_08009F9C:
  8009fb8:	bc10      	pop	{r4}
  8009fba:	bc01      	pop	{r0}
  8009fbc:	4700      	bx	r0
- 8009fbe:	f010 f9dd 	bl	801a37c <fn_0801A37C>
+ 8009fbe:	f010 f983 	bl	801a2c8 <fn_0801A2C8>
  8009fc2:	e7f9      	b.n	8009fb8 <fn_08009F9C+0x1c>
  8009fc4:	030064c4 	.word	0x030064c4

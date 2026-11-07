@@ -66,7 +66,7 @@ fn_08007ACC:
  8007b4e:	6859      	ldr	r1, [r3, #4]
  8007b50:	2200      	movs	r2, #0
  8007b52:	0020      	movs	r0, r4
- 8007b54:	f00f fb16 	bl	8017184 <fn_08017184>
+ 8007b54:	f00f fabc 	bl	80170d0 <fn_080170D0>
  8007b58:	683a      	ldr	r2, [r7, #0]
  8007b5a:	5991      	ldr	r1, [r2, r6]
  8007b5c:	2800      	cmp	r0, #0
@@ -151,7 +151,7 @@ fn_08007ACC:
  8007bfc:	e7f6      	b.n	8007bec <fn_08007ACC+0x120>
  8007bfe:	46c0      	nop			@ (mov r8, r8)
  8007c00:	030064c4 	.word	0x030064c4
- 8007c04:	0812e5cc 	.word	0x0812e5cc
+ 8007c04:	0812e51c 	.word	0x0812e51c
  8007c08:	000008dc 	.word	0x000008dc
  8007c0c:	00000232 	.word	0x00000232
  8007c10:	ffdfffff 	.word	0xffdfffff

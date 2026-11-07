@@ -21,17 +21,17 @@ fn_08010F6C:
  8010f94:	2327      	movs	r3, #39	@ 0x27
  8010f96:	f7ff ff29 	bl	8010dec <fn_08010DEC>
  8010f9a:	2123      	movs	r1, #35	@ 0x23
- 8010f9c:	f009 f9ee 	bl	801a37c <fn_0801A37C>
+ 8010f9c:	f009 f994 	bl	801a2c8 <fn_0801A2C8>
  8010fa0:	0031      	movs	r1, r6
  8010fa2:	0028      	movs	r0, r5
- 8010fa4:	f014 fb66 	bl	8025674 <fn_08025674>
+ 8010fa4:	f014 fb0e 	bl	80255c4 <fn_080255C4>
  8010fa8:	2327      	movs	r3, #39	@ 0x27
  8010faa:	6802      	ldr	r2, [r0, #0]
  8010fac:	0031      	movs	r1, r6
  8010fae:	0028      	movs	r0, r5
  8010fb0:	f7ff ff1c 	bl	8010dec <fn_08010DEC>
  8010fb4:	2123      	movs	r1, #35	@ 0x23
- 8010fb6:	f009 f9e1 	bl	801a37c <fn_0801A37C>
+ 8010fb6:	f009 f987 	bl	801a2c8 <fn_0801A2C8>
  8010fba:	22ea      	movs	r2, #234	@ 0xea
  8010fbc:	4f19      	ldr	r7, [pc, #100]	@ (8011024 <fn_08010F6C+0xb8>)
  8010fbe:	235a      	movs	r3, #90	@ 0x5a
@@ -60,23 +60,23 @@ fn_08010F6C:
  8010fee:	0020      	movs	r0, r4
  8010ff0:	f7ff f878 	bl	80100e4 <fn_080100E4>
  8010ff4:	0020      	movs	r0, r4
- 8010ff6:	f009 fc03 	bl	801a800 <fn_0801A800>
+ 8010ff6:	f009 fba9 	bl	801a74c <fn_0801A74C>
  8010ffa:	683a      	ldr	r2, [r7, #0]
  8010ffc:	4b0a      	ldr	r3, [pc, #40]	@ (8011028 <fn_08010F6C+0xbc>)
  8010ffe:	5cd3      	ldrb	r3, [r2, r3]
  8011000:	2b00      	cmp	r3, #0
  8011002:	d003      	beq.n	801100c <fn_08010F6C+0xa0>
  8011004:	0020      	movs	r0, r4
- 8011006:	f007 fb01 	bl	801860c <fn_0801860C>
+ 8011006:	f007 faa7 	bl	8018558 <fn_08018558>
  801100a:	e7b6      	b.n	8010f7a <fn_08010F6C+0xe>
  801100c:	0020      	movs	r0, r4
  801100e:	2100      	movs	r1, #0
  8011010:	3050      	adds	r0, #80	@ 0x50
- 8011012:	f007 fb27 	bl	8018664 <fn_08018664>
+ 8011012:	f007 facd 	bl	80185b0 <fn_080185B0>
  8011016:	0020      	movs	r0, r4
  8011018:	2100      	movs	r1, #0
  801101a:	3060      	adds	r0, #96	@ 0x60
- 801101c:	f007 fb22 	bl	8018664 <fn_08018664>
+ 801101c:	f007 fac8 	bl	80185b0 <fn_080185B0>
  8011020:	e7f0      	b.n	8011004 <fn_08010F6C+0x98>
  8011022:	46c0      	nop			@ (mov r8, r8)
  8011024:	030064c4 	.word	0x030064c4

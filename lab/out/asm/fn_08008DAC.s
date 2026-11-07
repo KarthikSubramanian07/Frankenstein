@@ -6,7 +6,7 @@ fn_08008DAC:
  8008db4:	2b00      	cmp	r3, #0
  8008db6:	d034      	beq.n	8008e22 <fn_08008DAC+0x76>
  8008db8:	2102      	movs	r1, #2
- 8008dba:	f011 fadf 	bl	801a37c <fn_0801A37C>
+ 8008dba:	f011 fa85 	bl	801a2c8 <fn_0801A2C8>
  8008dbe:	6d22      	ldr	r2, [r4, #80]	@ 0x50
  8008dc0:	2a00      	cmp	r2, #0
  8008dc2:	d032      	beq.n	8008e2a <fn_08008DAC+0x7e>
@@ -18,7 +18,7 @@ fn_08008DAC:
  8008dce:	6921      	ldr	r1, [r4, #16]
  8008dd0:	ca0c      	ldmia	r2, {r2, r3}
  8008dd2:	68e0      	ldr	r0, [r4, #12]
- 8008dd4:	f01c fc1c 	bl	8025610 <fn_08025610>
+ 8008dd4:	f01c fbc4 	bl	8025560 <fn_08025560>
  8008dd8:	6d23      	ldr	r3, [r4, #80]	@ 0x50
  8008dda:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
  8008ddc:	0005      	movs	r5, r0
@@ -39,7 +39,7 @@ fn_08008DAC:
  8008e00:	195d      	adds	r5, r3, r5
  8008e02:	f7fd fe7d 	bl	8006b00 <fn_08006B00>
  8008e06:	2105      	movs	r1, #5
- 8008e08:	f01c fbc6 	bl	8025598 <fn_08025598>
+ 8008e08:	f01c fb6e 	bl	80254e8 <fn_080254E8>
  8008e0c:	2280      	movs	r2, #128	@ 0x80
  8008e0e:	3101      	adds	r1, #1
  8008e10:	004b      	lsls	r3, r1, #1

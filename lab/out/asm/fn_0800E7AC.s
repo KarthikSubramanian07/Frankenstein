@@ -144,7 +144,7 @@ fn_0800E7AC:
  800e8d2:	68eb      	ldr	r3, [r5, #12]
  800e8d4:	0409      	lsls	r1, r1, #16
  800e8d6:	1ac0      	subs	r0, r0, r3
- 800e8d8:	f016 fed8 	bl	802568c <fn_0802568C>
+ 800e8d8:	f016 fe80 	bl	80255dc <fn_080255DC>
  800e8dc:	4b15      	ldr	r3, [pc, #84]	@ (800e934 <fn_0800E7AC+0x188>)
  800e8de:	0007      	movs	r7, r0
  800e8e0:	8921      	ldrh	r1, [r4, #8]
@@ -152,7 +152,7 @@ fn_0800E7AC:
  800e8e4:	692b      	ldr	r3, [r5, #16]
  800e8e6:	0409      	lsls	r1, r1, #16
  800e8e8:	1ac0      	subs	r0, r0, r3
- 800e8ea:	f016 fecf 	bl	802568c <fn_0802568C>
+ 800e8ea:	f016 fe77 	bl	80255dc <fn_080255DC>
  800e8ee:	2301      	movs	r3, #1
  800e8f0:	4287      	cmp	r7, r0
  800e8f2:	dc00      	bgt.n	800e8f6 <fn_0800E7AC+0x14a>

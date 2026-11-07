@@ -9,9 +9,9 @@ fn_08005D3C:
  8005d4a:	2801      	cmp	r0, #1
  8005d4c:	d00a      	beq.n	8005d64 <fn_08005D3C+0x28>
  8005d4e:	0018      	movs	r0, r3
- 8005d50:	f016 facc 	bl	801c2ec <fn_0801C2EC>
+ 8005d50:	f016 fa74 	bl	801c23c <fn_0801C23C>
  8005d54:	2000      	movs	r0, #0
- 8005d56:	f016 fac3 	bl	801c2e0 <fn_0801C2E0>
+ 8005d56:	f016 fa6b 	bl	801c230 <fn_0801C230>
  8005d5a:	f7fd fe4d 	bl	80039f8 <fn_080039F8>
  8005d5e:	bc10      	pop	{r4}
  8005d60:	bc01      	pop	{r0}

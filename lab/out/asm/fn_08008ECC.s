@@ -12,7 +12,7 @@ fn_08008ECC:
  8008ee0:	6901      	ldr	r1, [r0, #16]
  8008ee2:	ca0c      	ldmia	r2, {r2, r3}
  8008ee4:	68c0      	ldr	r0, [r0, #12]
- 8008ee6:	f01c fb93 	bl	8025610 <fn_08025610>
+ 8008ee6:	f01c fb3b 	bl	8025560 <fn_08025560>
  8008eea:	6d23      	ldr	r3, [r4, #80]	@ 0x50
  8008eec:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
  8008eee:	6220      	str	r0, [r4, #32]
@@ -54,7 +54,7 @@ fn_08008ECC:
  8008f3e:	6223      	str	r3, [r4, #32]
  8008f40:	e7d8      	b.n	8008ef4 <fn_08008ECC+0x28>
  8008f42:	0020      	movs	r0, r4
- 8008f44:	f00b f9fc 	bl	8014340 <fn_08014340>
+ 8008f44:	f00b f9a2 	bl	801428c <fn_0801428C>
  8008f48:	2800      	cmp	r0, #0
  8008f4a:	d0de      	beq.n	8008f0a <fn_08008ECC+0x3e>
  8008f4c:	e7eb      	b.n	8008f26 <fn_08008ECC+0x5a>

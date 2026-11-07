@@ -10,4 +10,4 @@
 /* function fn_0800FE7C (320 bytes) */
 /* function fn_08010030 (180 bytes) */
 /* function fn_08012234 (28 bytes) */
-/* function fn_0802568C (12 bytes) */
+/* function fn_080255DC (12 bytes) */

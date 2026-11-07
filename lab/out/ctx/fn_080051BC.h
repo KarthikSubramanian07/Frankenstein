@@ -6,6 +6,6 @@
 
 /* Every function and global this code touches, by anonymous id. Declare their types yourself in
    your candidate; the referee matches calls and loads by these ids. */
-/* function fn_08021554 (28 bytes) */
-/* function fn_08025648 (8 bytes) */
-/* function fn_080256C4 (8 bytes) */
+/* function fn_080214A4 (28 bytes) */
+/* function fn_08025598 (8 bytes) */
+/* function fn_08025614 (8 bytes) */

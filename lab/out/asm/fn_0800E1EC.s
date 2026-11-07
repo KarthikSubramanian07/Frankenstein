@@ -21,7 +21,7 @@ fn_0800E1EC:
  800e212:	4659      	mov	r1, fp
  800e214:	9801      	ldr	r0, [sp, #4]
  800e216:	469a      	mov	sl, r3
- 800e218:	f006 ff8e 	bl	8015138 <fn_08015138>
+ 800e218:	f006 ff34 	bl	8015084 <fn_08015084>
  800e21c:	4683      	mov	fp, r0
  800e21e:	2800      	cmp	r0, #0
  800e220:	db43      	blt.n	800e2aa <fn_0800E1EC+0xbe>
@@ -57,7 +57,7 @@ fn_0800E1EC:
  800e25c:	015b      	lsls	r3, r3, #5
  800e25e:	0029      	movs	r1, r5
  800e260:	18c0      	adds	r0, r0, r3
- 800e262:	f006 f9f7 	bl	8014654 <fn_08014654>
+ 800e262:	f006 f99d 	bl	80145a0 <fn_080145A0>
  800e266:	2800      	cmp	r0, #0
  800e268:	d007      	beq.n	800e27a <fn_0800E1EC+0x8e>
  800e26a:	4653      	mov	r3, sl
@@ -87,7 +87,7 @@ fn_0800E1EC:
  800e29a:	4659      	mov	r1, fp
  800e29c:	54ee      	strb	r6, [r5, r3]
  800e29e:	9801      	ldr	r0, [sp, #4]
- 800e2a0:	f006 ff4a 	bl	8015138 <fn_08015138>
+ 800e2a0:	f006 fef0 	bl	8015084 <fn_08015084>
  800e2a4:	4683      	mov	fp, r0
  800e2a6:	2800      	cmp	r0, #0
  800e2a8:	dabb      	bge.n	800e222 <fn_0800E1EC+0x36>

@@ -30,7 +30,7 @@ fn_08004B58:
  8004b90:	011b      	lsls	r3, r3, #4
  8004b92:	4443      	add	r3, r8
  8004b94:	18c0      	adds	r0, r0, r3
- 8004b96:	f014 ff83 	bl	8019aa0 <fn_08019AA0>
+ 8004b96:	f014 ff29 	bl	80199ec <fn_080199EC>
  8004b9a:	bc20      	pop	{r5}
  8004b9c:	46a8      	mov	r8, r5
  8004b9e:	bc30      	pop	{r4, r5}

@@ -10,7 +10,7 @@ fn_08010D9C:
  8010dac:	18c0      	adds	r0, r0, r3
  8010dae:	2358      	movs	r3, #88	@ 0x58
  8010db0:	5ee1      	ldrsh	r1, [r4, r3]
- 8010db2:	f014 fbf1 	bl	8025598 <fn_08025598>
+ 8010db2:	f014 fb99 	bl	80254e8 <fn_080254E8>
  8010db6:	6ca0      	ldr	r0, [r4, #72]	@ 0x48
  8010db8:	2204      	movs	r2, #4
  8010dba:	5e83      	ldrsh	r3, [r0, r2]

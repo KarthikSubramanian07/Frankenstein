@@ -60,9 +60,9 @@ fn_0800FBFC:
  800fc74:	0112      	lsls	r2, r2, #4
  800fc76:	2151      	movs	r1, #81	@ 0x51
  800fc78:	5898      	ldr	r0, [r3, r2]
- 800fc7a:	f00a fb7f 	bl	801a37c <fn_0801A37C>
+ 800fc7a:	f00a fb25 	bl	801a2c8 <fn_0801A2C8>
  800fc7e:	e7e5      	b.n	800fc4c <fn_0800FBFC+0x50>
  800fc80:	030064c4 	.word	0x030064c4
- 800fc84:	081398a0 	.word	0x081398a0
+ 800fc84:	081397cc 	.word	0x081397cc
  800fc88:	0800e729 	.word	0x0800e729
  800fc8c:	0800e5f9 	.word	0x0800e5f9

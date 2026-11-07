@@ -17,13 +17,13 @@ fn_08004DB4:
  8004dd2:	a801      	add	r0, sp, #4
  8004dd4:	f000 fb40 	bl	8005458 <fn_08005458>
  8004dd8:	a801      	add	r0, sp, #4
- 8004dda:	f018 fb83 	bl	801d4e4 <fn_0801D4E4>
+ 8004dda:	f018 fb2b 	bl	801d434 <fn_0801D434>
  8004dde:	1e04      	subs	r4, r0, #0
  8004de0:	dbee      	blt.n	8004dc0 <fn_08004DB4+0xc>
- 8004de2:	f018 fc19 	bl	801d618 <fn_0801D618>
+ 8004de2:	f018 fbc1 	bl	801d568 <fn_0801D568>
  8004de6:	0007      	movs	r7, r0
  8004de8:	0020      	movs	r0, r4
- 8004dea:	f018 fbfb 	bl	801d5e4 <fn_0801D5E4>
+ 8004dea:	f018 fba3 	bl	801d534 <fn_0801D534>
  8004dee:	4b08      	ldr	r3, [pc, #32]	@ (8004e10 <fn_08004DB4+0x5c>)
  8004df0:	001a      	movs	r2, r3
  8004df2:	881d      	ldrh	r5, [r3, #0]
@@ -33,9 +33,9 @@ fn_08004DB4:
  8004dfa:	8013      	strh	r3, [r2, #0]
  8004dfc:	0038      	movs	r0, r7
  8004dfe:	0032      	movs	r2, r6
- 8004e00:	f014 ff0a 	bl	8019c18 <fn_08019C18>
+ 8004e00:	f014 feb0 	bl	8019b64 <fn_08019B64>
  8004e04:	8025      	strh	r5, [r4, #0]
  8004e06:	e7db      	b.n	8004dc0 <fn_08004DB4+0xc>
- 8004e08:	08025b38 	.word	0x08025b38
- 8004e0c:	08149500 	.word	0x08149500
+ 8004e08:	08025a88 	.word	0x08025a88
+ 8004e0c:	0814942c 	.word	0x0814942c
  8004e10:	04000208 	.word	0x04000208

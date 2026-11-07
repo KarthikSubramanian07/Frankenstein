@@ -2,7 +2,7 @@ fn_0800A418:
  800a418:	b510      	push	{r4, lr}
  800a41a:	215f      	movs	r1, #95	@ 0x5f
  800a41c:	0004      	movs	r4, r0
- 800a41e:	f00f ffad 	bl	801a37c <fn_0801A37C>
+ 800a41e:	f00f ff53 	bl	801a2c8 <fn_0801A2C8>
  800a422:	225c      	movs	r2, #92	@ 0x5c
  800a424:	5ca3      	ldrb	r3, [r4, r2]
  800a426:	3b01      	subs	r3, #1

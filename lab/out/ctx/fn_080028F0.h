@@ -7,12 +7,12 @@
 /* Every function and global this code touches, by anonymous id. Declare their types yourself in
    your candidate; the referee matches calls and loads by these ids. */
 /* function fn_08002598 (856 bytes) */
-/* function fn_0801AA88 (120 bytes) */
-/* function fn_0801AB00 (128 bytes) */
-/* function fn_0801D06C (124 bytes) */
-/* function fn_080208A4 (96 bytes) */
-/* function fn_080255A0 (8 bytes) */
-/* function fn_080255A8 (8 bytes) */
-/* function fn_080255B0 (8 bytes) */
-/* function fn_080255FC (8 bytes) */
-/* function fn_080256CC (8 bytes) */
+/* function fn_0801A9D4 (120 bytes) */
+/* function fn_0801AA4C (128 bytes) */
+/* function fn_0801CFBC (124 bytes) */
+/* function fn_080207F4 (96 bytes) */
+/* function fn_080254F0 (8 bytes) */
+/* function fn_080254F8 (8 bytes) */
+/* function fn_08025500 (8 bytes) */
+/* function fn_0802554C (8 bytes) */
+/* function fn_0802561C (8 bytes) */

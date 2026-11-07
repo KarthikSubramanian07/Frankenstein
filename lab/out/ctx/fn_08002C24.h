@@ -8,15 +8,15 @@
    your candidate; the referee matches calls and loads by these ids. */
 /* function fn_08002ACC (344 bytes) */
 /* function fn_08005458 (46 bytes) */
-/* function fn_0801A37C (28 bytes) */
-/* function fn_0801BFE4 (160 bytes) */
-/* function fn_0801C1E0 (32 bytes) */
-/* function fn_0801C200 (116 bytes) */
-/* function fn_0801C274 (108 bytes) */
-/* function fn_0801D530 (96 bytes) */
-/* function fn_0801D618 (32 bytes) */
-/* function fn_080255D8 (12 bytes) */
-/* function fn_080255FC (8 bytes) */
-/* function fn_08025640 (8 bytes) */
-/* function fn_08025650 (8 bytes) */
-/* function fn_080256A4 (8 bytes) */
+/* function fn_0801A2C8 (28 bytes) */
+/* function fn_0801BF34 (160 bytes) */
+/* function fn_0801C130 (32 bytes) */
+/* function fn_0801C150 (116 bytes) */
+/* function fn_0801C1C4 (108 bytes) */
+/* function fn_0801D480 (96 bytes) */
+/* function fn_0801D568 (32 bytes) */
+/* function fn_08025528 (12 bytes) */
+/* function fn_0802554C (8 bytes) */
+/* function fn_08025590 (8 bytes) */
+/* function fn_080255A0 (8 bytes) */
+/* function fn_080255F4 (8 bytes) */

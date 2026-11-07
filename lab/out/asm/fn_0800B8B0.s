@@ -25,7 +25,7 @@ fn_0800B8B0:
  800b8de:	9301      	str	r3, [sp, #4]
  800b8e0:	0021      	movs	r1, r4
  800b8e2:	0028      	movs	r0, r5
- 800b8e4:	f009 fc28 	bl	8015138 <fn_08015138>
+ 800b8e4:	f009 fbce 	bl	8015084 <fn_08015084>
  800b8e8:	1e04      	subs	r4, r0, #0
  800b8ea:	db4b      	blt.n	800b984 <fn_0800B8B0+0xd4>
  800b8ec:	4641      	mov	r1, r8
@@ -44,13 +44,13 @@ fn_0800B8B0:
  800b906:	2200      	movs	r2, #0
  800b908:	2103      	movs	r1, #3
  800b90a:	2024      	movs	r0, #36	@ 0x24
- 800b90c:	f011 ff0e 	bl	801d72c <fn_0801D72C>
+ 800b90c:	f011 feb6 	bl	801d67c <fn_0801D67C>
  800b910:	4681      	mov	r9, r0
  800b912:	2224      	movs	r2, #36	@ 0x24
  800b914:	2100      	movs	r1, #0
- 800b916:	f015 f893 	bl	8020a40 <fn_08020A40>
+ 800b916:	f015 f83b 	bl	8020990 <fn_08020990>
  800b91a:	4648      	mov	r0, r9
- 800b91c:	f00c fe58 	bl	80185d0 <fn_080185D0>
+ 800b91c:	f00c fdfe 	bl	801851c <fn_0801851C>
  800b920:	464b      	mov	r3, r9
  800b922:	9a01      	ldr	r2, [sp, #4]
  800b924:	6133      	str	r3, [r6, #16]
@@ -97,7 +97,7 @@ fn_0800B8B0:
  800b976:	0021      	movs	r1, r4
  800b978:	0028      	movs	r0, r5
  800b97a:	469a      	mov	sl, r3
- 800b97c:	f009 fbdc 	bl	8015138 <fn_08015138>
+ 800b97c:	f009 fb82 	bl	8015084 <fn_08015084>
  800b980:	1e04      	subs	r4, r0, #0
  800b982:	dab3      	bge.n	800b8ec <fn_0800B8B0+0x3c>
  800b984:	4650      	mov	r0, sl
@@ -118,7 +118,7 @@ fn_0800B8B0:
  800b9a2:	4264      	negs	r4, r4
  800b9a4:	0021      	movs	r1, r4
  800b9a6:	0028      	movs	r0, r5
- 800b9a8:	f009 fbc6 	bl	8015138 <fn_08015138>
+ 800b9a8:	f009 fb6c 	bl	8015084 <fn_08015084>
  800b9ac:	1e04      	subs	r4, r0, #0
  800b9ae:	dbe9      	blt.n	800b984 <fn_0800B8B0+0xd4>
  800b9b0:	21df      	movs	r1, #223	@ 0xdf
@@ -139,13 +139,13 @@ fn_0800B8B0:
  800b9ce:	2200      	movs	r2, #0
  800b9d0:	2103      	movs	r1, #3
  800b9d2:	2024      	movs	r0, #36	@ 0x24
- 800b9d4:	f011 feaa 	bl	801d72c <fn_0801D72C>
+ 800b9d4:	f011 fe52 	bl	801d67c <fn_0801D67C>
  800b9d8:	4680      	mov	r8, r0
  800b9da:	2224      	movs	r2, #36	@ 0x24
  800b9dc:	2100      	movs	r1, #0
- 800b9de:	f015 f82f 	bl	8020a40 <fn_08020A40>
+ 800b9de:	f014 ffd7 	bl	8020990 <fn_08020990>
  800b9e2:	4640      	mov	r0, r8
- 800b9e4:	f00c fdf4 	bl	80185d0 <fn_080185D0>
+ 800b9e4:	f00c fd9a 	bl	801851c <fn_0801851C>
  800b9e8:	4643      	mov	r3, r8
  800b9ea:	465a      	mov	r2, fp
  800b9ec:	6133      	str	r3, [r6, #16]
@@ -162,7 +162,7 @@ fn_0800B8B0:
  800ba02:	0030      	movs	r0, r6
  800ba04:	6116      	str	r6, [r2, #16]
  800ba06:	6831      	ldr	r1, [r6, #0]
- 800ba08:	f008 fefe 	bl	8014808 <fn_08014808>
+ 800ba08:	f008 fea4 	bl	8014754 <fn_08014754>
  800ba0c:	4643      	mov	r3, r8
  800ba0e:	6198      	str	r0, [r3, #24]
  800ba10:	6873      	ldr	r3, [r6, #4]
@@ -178,7 +178,7 @@ fn_0800B8B0:
  800ba24:	4699      	mov	r9, r3
  800ba26:	0021      	movs	r1, r4
  800ba28:	0028      	movs	r0, r5
- 800ba2a:	f009 fb85 	bl	8015138 <fn_08015138>
+ 800ba2a:	f009 fb2b 	bl	8015084 <fn_08015084>
  800ba2e:	1e04      	subs	r4, r0, #0
  800ba30:	dba8      	blt.n	800b984 <fn_0800B8B0+0xd4>
  800ba32:	21df      	movs	r1, #223	@ 0xdf
@@ -198,13 +198,13 @@ fn_0800B8B0:
  800ba4e:	2200      	movs	r2, #0
  800ba50:	2103      	movs	r1, #3
  800ba52:	2024      	movs	r0, #36	@ 0x24
- 800ba54:	f011 fe6a 	bl	801d72c <fn_0801D72C>
+ 800ba54:	f011 fe12 	bl	801d67c <fn_0801D67C>
  800ba58:	4680      	mov	r8, r0
  800ba5a:	2224      	movs	r2, #36	@ 0x24
  800ba5c:	2100      	movs	r1, #0
- 800ba5e:	f014 ffef 	bl	8020a40 <fn_08020A40>
+ 800ba5e:	f014 ff97 	bl	8020990 <fn_08020990>
  800ba62:	4640      	mov	r0, r8
- 800ba64:	f00c fdb4 	bl	80185d0 <fn_080185D0>
+ 800ba64:	f00c fd5a 	bl	801851c <fn_0801851C>
  800ba68:	4643      	mov	r3, r8
  800ba6a:	464a      	mov	r2, r9
  800ba6c:	6133      	str	r3, [r6, #16]
@@ -221,7 +221,7 @@ fn_0800B8B0:
  800ba82:	0030      	movs	r0, r6
  800ba84:	6116      	str	r6, [r2, #16]
  800ba86:	6831      	ldr	r1, [r6, #0]
- 800ba88:	f008 ff4e 	bl	8014928 <fn_08014928>
+ 800ba88:	f008 fef4 	bl	8014874 <fn_08014874>
  800ba8c:	4643      	mov	r3, r8
  800ba8e:	6198      	str	r0, [r3, #24]
  800ba90:	6873      	ldr	r3, [r6, #4]

@@ -70,7 +70,7 @@ fn_0800FAB8:
  800fb42:	46c0      	nop			@ (mov r8, r8)
  800fb44:	030064c4 	.word	0x030064c4
  800fb48:	000008f8 	.word	0x000008f8
- 800fb4c:	081398a0 	.word	0x081398a0
+ 800fb4c:	081397cc 	.word	0x081397cc
  800fb50:	000008fc 	.word	0x000008fc
  800fb54:	0000090c 	.word	0x0000090c
  800fb58:	ffff6000 	.word	0xffff6000

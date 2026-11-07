@@ -7,9 +7,9 @@
 /* Every function and global this code touches, by anonymous id. Declare their types yourself in
    your candidate; the referee matches calls and loads by these ids. */
 /* function fn_08006AAC (80 bytes) */
-/* function fn_0801C1E0 (32 bytes) */
-/* function fn_0801D530 (96 bytes) */
-/* function fn_0801D698 (148 bytes) */
-/* function fn_0801D854 (42 bytes) */
-/* function fn_080208A4 (96 bytes) */
-/* function fn_080255D8 (12 bytes) */
+/* function fn_0801C130 (32 bytes) */
+/* function fn_0801D480 (96 bytes) */
+/* function fn_0801D5E8 (148 bytes) */
+/* function fn_0801D7A4 (42 bytes) */
+/* function fn_080207F4 (96 bytes) */
+/* function fn_08025528 (12 bytes) */

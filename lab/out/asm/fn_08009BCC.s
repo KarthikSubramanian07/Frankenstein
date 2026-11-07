@@ -15,7 +15,7 @@ fn_08009BCC:
  8009be6:	6901      	ldr	r1, [r0, #16]
  8009be8:	ca0c      	ldmia	r2, {r2, r3}
  8009bea:	68c0      	ldr	r0, [r0, #12]
- 8009bec:	f01b fd10 	bl	8025610 <fn_08025610>
+ 8009bec:	f01b fcb8 	bl	8025560 <fn_08025560>
  8009bf0:	6d21      	ldr	r1, [r4, #80]	@ 0x50
  8009bf2:	6ccb      	ldr	r3, [r1, #76]	@ 0x4c
  8009bf4:	6220      	str	r0, [r4, #32]
@@ -51,12 +51,12 @@ fn_08009BCC:
  8009c32:	58f9      	ldr	r1, [r7, r3]
  8009c34:	0010      	movs	r0, r2
  8009c36:	4690      	mov	r8, r2
- 8009c38:	f01b fd28 	bl	802568c <fn_0802568C>
+ 8009c38:	f01b fcd0 	bl	80255dc <fn_080255DC>
  8009c3c:	00ad      	lsls	r5, r5, #2
  8009c3e:	59e9      	ldr	r1, [r5, r7]
  8009c40:	63f0      	str	r0, [r6, #60]	@ 0x3c
  8009c42:	4640      	mov	r0, r8
- 8009c44:	f01b fd22 	bl	802568c <fn_0802568C>
+ 8009c44:	f01b fcca 	bl	80255dc <fn_080255DC>
  8009c48:	6d21      	ldr	r1, [r4, #80]	@ 0x50
  8009c4a:	6430      	str	r0, [r6, #64]	@ 0x40
  8009c4c:	2209      	movs	r2, #9
@@ -86,12 +86,12 @@ fn_08009BCC:
  8009c7e:	009b      	lsls	r3, r3, #2
  8009c80:	58f9      	ldr	r1, [r7, r3]
  8009c82:	0030      	movs	r0, r6
- 8009c84:	f01b fd02 	bl	802568c <fn_0802568C>
+ 8009c84:	f01b fcaa 	bl	80255dc <fn_080255DC>
  8009c88:	00a4      	lsls	r4, r4, #2
  8009c8a:	63e8      	str	r0, [r5, #60]	@ 0x3c
  8009c8c:	59e1      	ldr	r1, [r4, r7]
  8009c8e:	0030      	movs	r0, r6
- 8009c90:	f01b fcfc 	bl	802568c <fn_0802568C>
+ 8009c90:	f01b fca4 	bl	80255dc <fn_080255DC>
  8009c94:	6428      	str	r0, [r5, #64]	@ 0x40
  8009c96:	b002      	add	sp, #8
  8009c98:	bc80      	pop	{r7}
@@ -111,4 +111,4 @@ fn_08009BCC:
  8009cb8:	e79f      	b.n	8009bfa <fn_08009BCC+0x2e>
  8009cba:	46c0      	nop			@ (mov r8, r8)
  8009cbc:	030064c4 	.word	0x030064c4
- 8009cc0:	081398a0 	.word	0x081398a0
+ 8009cc0:	081397cc 	.word	0x081397cc

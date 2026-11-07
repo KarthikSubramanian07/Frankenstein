@@ -198,10 +198,10 @@ fn_030048A4:
  3004bb4:	e8bd4ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
  3004bb8:	eafff847 	b	3002cdc <fn_03002CDC>
  3004bbc:	030064cc 	.word	0x030064cc
- 3004bc0:	0812f7e8 	.word	0x0812f7e8
+ 3004bc0:	0812f714 	.word	0x0812f714
  3004bc4:	dff80001 	.word	0xdff80001
  3004bc8:	2007ffff 	.word	0x2007ffff
  3004bcc:	000003ff 	.word	0x000003ff
- 3004bd0:	0813389c 	.word	0x0813389c
+ 3004bd0:	081337c8 	.word	0x081337c8
  3004bd4:	03006600 	.word	0x03006600
  3004bd8:	00000c01 	.word	0x00000c01

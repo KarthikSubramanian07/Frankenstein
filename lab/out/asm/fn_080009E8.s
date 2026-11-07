@@ -132,11 +132,11 @@ fn_080009E8:
  8000aec:	dddc      	ble.n	8000aa8 <fn_080009E8+0xc0>
  8000aee:	4659      	mov	r1, fp
  8000af0:	0028      	movs	r0, r5
- 8000af2:	f024 fdcb 	bl	802568c <fn_0802568C>
+ 8000af2:	f024 fd73 	bl	80255dc <fn_080255DC>
  8000af6:	4649      	mov	r1, r9
  8000af8:	9014      	str	r0, [sp, #80]	@ 0x50
  8000afa:	0028      	movs	r0, r5
- 8000afc:	f024 fdc6 	bl	802568c <fn_0802568C>
+ 8000afc:	f024 fd6e 	bl	80255dc <fn_080255DC>
  8000b00:	9b08      	ldr	r3, [sp, #32]
  8000b02:	141b      	asrs	r3, r3, #16
  8000b04:	9312      	str	r3, [sp, #72]	@ 0x48
@@ -152,13 +152,13 @@ fn_080009E8:
  8000b18:	0018      	movs	r0, r3
  8000b1a:	9308      	str	r3, [sp, #32]
  8000b1c:	0517      	lsls	r7, r2, #20
- 8000b1e:	f024 fdb5 	bl	802568c <fn_0802568C>
+ 8000b1e:	f024 fd5d 	bl	80255dc <fn_080255DC>
  8000b22:	0d3f      	lsrs	r7, r7, #20
  8000b24:	427f      	negs	r7, r7
  8000b26:	4649      	mov	r1, r9
  8000b28:	9011      	str	r0, [sp, #68]	@ 0x44
  8000b2a:	0038      	movs	r0, r7
- 8000b2c:	f024 fdae 	bl	802568c <fn_0802568C>
+ 8000b2c:	f024 fd56 	bl	80255dc <fn_080255DC>
  8000b30:	9a11      	ldr	r2, [sp, #68]	@ 0x44
  8000b32:	1a10      	subs	r0, r2, r0
  8000b34:	9a0e      	ldr	r2, [sp, #56]	@ 0x38
@@ -167,11 +167,11 @@ fn_080009E8:
  8000b3a:	4649      	mov	r1, r9
  8000b3c:	9808      	ldr	r0, [sp, #32]
  8000b3e:	4690      	mov	r8, r2
- 8000b40:	f024 fda4 	bl	802568c <fn_0802568C>
+ 8000b40:	f024 fd4c 	bl	80255dc <fn_080255DC>
  8000b44:	4659      	mov	r1, fp
  8000b46:	4681      	mov	r9, r0
  8000b48:	0038      	movs	r0, r7
- 8000b4a:	f024 fd9f 	bl	802568c <fn_0802568C>
+ 8000b4a:	f024 fd47 	bl	80255dc <fn_080255DC>
  8000b4e:	4448      	add	r0, r9
  8000b50:	0007      	movs	r7, r0
  8000b52:	9b09      	ldr	r3, [sp, #36]	@ 0x24
@@ -179,12 +179,12 @@ fn_080009E8:
  8000b56:	4640      	mov	r0, r8
  8000b58:	4457      	add	r7, sl
  8000b5a:	1aff      	subs	r7, r7, r3
- 8000b5c:	f024 fd96 	bl	802568c <fn_0802568C>
+ 8000b5c:	f024 fd3e 	bl	80255dc <fn_080255DC>
  8000b60:	0029      	movs	r1, r5
  8000b62:	0103      	lsls	r3, r0, #4
  8000b64:	0038      	movs	r0, r7
  8000b66:	930e      	str	r3, [sp, #56]	@ 0x38
- 8000b68:	f024 fd90 	bl	802568c <fn_0802568C>
+ 8000b68:	f024 fd38 	bl	80255dc <fn_080255DC>
  8000b6c:	0103      	lsls	r3, r0, #4
  8000b6e:	9311      	str	r3, [sp, #68]	@ 0x44
  8000b70:	9b0a      	ldr	r3, [sp, #40]	@ 0x28
@@ -320,7 +320,7 @@ fn_080009E8:
  8000c74:	e0a6      	b.n	8000dc4 <fn_080009E8+0x3dc>
  8000c76:	2103      	movs	r1, #3
  8000c78:	3801      	subs	r0, #1
- 8000c7a:	f024 fc8d 	bl	8025598 <fn_08025598>
+ 8000c7a:	f024 fc35 	bl	80254e8 <fn_080254E8>
  8000c7e:	2901      	cmp	r1, #1
  8000c80:	d100      	bne.n	8000c84 <fn_080009E8+0x29c>
  8000c82:	e0df      	b.n	8000e44 <fn_080009E8+0x45c>
@@ -378,12 +378,12 @@ fn_080009E8:
  8000cec:	429a      	cmp	r2, r3
  8000cee:	d069      	beq.n	8000dc4 <fn_080009E8+0x3dc>
  8000cf0:	0030      	movs	r0, r6
- 8000cf2:	f014 fc61 	bl	80155b8 <fn_080155B8>
+ 8000cf2:	f014 fc07 	bl	8015504 <fn_08015504>
  8000cf6:	2800      	cmp	r0, #0
  8000cf8:	d000      	beq.n	8000cfc <fn_080009E8+0x314>
  8000cfa:	e0af      	b.n	8000e5c <fn_080009E8+0x474>
  8000cfc:	0020      	movs	r0, r4
- 8000cfe:	f014 fc5b 	bl	80155b8 <fn_080155B8>
+ 8000cfe:	f014 fc01 	bl	8015504 <fn_08015504>
  8000d02:	2800      	cmp	r0, #0
  8000d04:	d000      	beq.n	8000d08 <fn_080009E8+0x320>
  8000d06:	e0a9      	b.n	8000e5c <fn_080009E8+0x474>
@@ -417,7 +417,7 @@ fn_080009E8:
  8000d3e:	e7f2      	b.n	8000d26 <fn_080009E8+0x33e>
  8000d40:	030064c4 	.word	0x030064c4
  8000d44:	00003fff 	.word	0x00003fff
- 8000d48:	081398a0 	.word	0x081398a0
+ 8000d48:	081397cc 	.word	0x081397cc
  8000d4c:	00000dfc 	.word	0x00000dfc
  8000d50:	00000e04 	.word	0x00000e04
  8000d54:	00000e0c 	.word	0x00000e0c
@@ -487,7 +487,7 @@ fn_080009E8:
  8000ddc:	9310      	str	r3, [sp, #64]	@ 0x40
  8000dde:	e61b      	b.n	8000a18 <fn_080009E8+0x30>
  8000de0:	0030      	movs	r0, r6
- 8000de2:	f014 fbe9 	bl	80155b8 <fn_080155B8>
+ 8000de2:	f014 fb8f 	bl	8015504 <fn_08015504>
  8000de6:	2300      	movs	r3, #0
  8000de8:	5eec      	ldrsh	r4, [r5, r3]
  8000dea:	2302      	movs	r3, #2

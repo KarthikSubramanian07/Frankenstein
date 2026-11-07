@@ -9,6 +9,6 @@
 /* function fn_0800FAB8 (180 bytes) */
 /* function fn_08010DEC (384 bytes) */
 /* function fn_08011F54 (200 bytes) */
-/* function fn_08018664 (4 bytes) */
-/* function fn_0801A37C (28 bytes) */
-/* function fn_0802568C (12 bytes) */
+/* function fn_080185B0 (4 bytes) */
+/* function fn_0801A2C8 (28 bytes) */
+/* function fn_080255DC (12 bytes) */

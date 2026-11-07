@@ -32,7 +32,7 @@ fn_08010DEC:
  8010e28:	2100      	movs	r1, #0
  8010e2a:	3a25      	subs	r2, #37	@ 0x25
  8010e2c:	0004      	movs	r4, r0
- 8010e2e:	f00f fe07 	bl	8020a40 <fn_08020A40>
+ 8010e2e:	f00f fdaf 	bl	8020990 <fn_08020990>
  8010e32:	2380      	movs	r3, #128	@ 0x80
  8010e34:	055b      	lsls	r3, r3, #21
  8010e36:	469c      	mov	ip, r3
@@ -41,11 +41,11 @@ fn_08010DEC:
  8010e3c:	2200      	movs	r2, #0
  8010e3e:	2102      	movs	r1, #2
  8010e40:	2064      	movs	r0, #100	@ 0x64
- 8010e42:	f00c fc73 	bl	801d72c <fn_0801D72C>
+ 8010e42:	f00c fc1b 	bl	801d67c <fn_0801D67C>
  8010e46:	2264      	movs	r2, #100	@ 0x64
  8010e48:	2100      	movs	r1, #0
  8010e4a:	0004      	movs	r4, r0
- 8010e4c:	f00f fdf8 	bl	8020a40 <fn_08020A40>
+ 8010e4c:	f00f fda0 	bl	8020990 <fn_08020990>
  8010e50:	2300      	movs	r3, #0
  8010e52:	469c      	mov	ip, r3
  8010e54:	235c      	movs	r3, #92	@ 0x5c
@@ -148,7 +148,7 @@ fn_08010DEC:
  8010f18:	0020      	movs	r0, r4
  8010f1a:	6623      	str	r3, [r4, #96]	@ 0x60
  8010f1c:	6523      	str	r3, [r4, #80]	@ 0x50
- 8010f1e:	f007 fb57 	bl	80185d0 <fn_080185D0>
+ 8010f1e:	f007 fafd 	bl	801851c <fn_0801851C>
  8010f22:	0020      	movs	r0, r4
  8010f24:	bcf0      	pop	{r4, r5, r6, r7}
  8010f26:	46bb      	mov	fp, r7

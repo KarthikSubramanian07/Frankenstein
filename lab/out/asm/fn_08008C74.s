@@ -13,7 +13,7 @@ fn_08008C74:
  8008c8a:	6901      	ldr	r1, [r0, #16]
  8008c8c:	ca0c      	ldmia	r2, {r2, r3}
  8008c8e:	68c0      	ldr	r0, [r0, #12]
- 8008c90:	f01c fcbe 	bl	8025610 <fn_08025610>
+ 8008c90:	f01c fc66 	bl	8025560 <fn_08025560>
  8008c94:	6d23      	ldr	r3, [r4, #80]	@ 0x50
  8008c96:	6cdb      	ldr	r3, [r3, #76]	@ 0x4c
  8008c98:	0005      	movs	r5, r0
@@ -28,7 +28,7 @@ fn_08008C74:
  8008cac:	2101      	movs	r1, #1
  8008cae:	0007      	movs	r7, r0
  8008cb0:	0020      	movs	r0, r4
- 8008cb2:	f011 fb63 	bl	801a37c <fn_0801A37C>
+ 8008cb2:	f011 fb09 	bl	801a2c8 <fn_0801A2C8>
  8008cb6:	f7fd ff23 	bl	8006b00 <fn_08006B00>
  8008cba:	0006      	movs	r6, r0
  8008cbc:	f7fd ff20 	bl	8006b00 <fn_08006B00>
@@ -37,7 +37,7 @@ fn_08008C74:
  8008cc4:	195d      	adds	r5, r3, r5
  8008cc6:	f7fd ff1b 	bl	8006b00 <fn_08006B00>
  8008cca:	2105      	movs	r1, #5
- 8008ccc:	f01c fc64 	bl	8025598 <fn_08025598>
+ 8008ccc:	f01c fc0c 	bl	80254e8 <fn_080254E8>
  8008cd0:	2280      	movs	r2, #128	@ 0x80
  8008cd2:	3101      	adds	r1, #1
  8008cd4:	004b      	lsls	r3, r1, #1

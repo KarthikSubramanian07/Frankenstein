@@ -47,7 +47,7 @@ fn_0800A1A0:
  800a1fa:	50ea      	str	r2, [r5, r3]
  800a1fc:	2300      	movs	r3, #0
  800a1fe:	2201      	movs	r2, #1
- 800a200:	f013 fb3e 	bl	801d880 <fn_0801D880>
+ 800a200:	f013 fae6 	bl	801d7d0 <fn_0801D7D0>
  800a204:	4b15      	ldr	r3, [pc, #84]	@ (800a25c <fn_0800A1A0+0xbc>)
  800a206:	50e8      	str	r0, [r5, r3]
  800a208:	683d      	ldr	r5, [r7, #0]

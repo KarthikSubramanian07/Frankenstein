@@ -9,4 +9,4 @@
 /* function fn_0800FC90 (152 bytes) */
 /* function fn_0800FDFC (30 bytes) */
 /* function fn_0801201C (252 bytes) */
-/* function fn_080207F8 (170 bytes) */
+/* function fn_08020748 (170 bytes) */

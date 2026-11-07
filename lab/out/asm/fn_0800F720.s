@@ -35,7 +35,7 @@ fn_0800F720:
  800f764:	2000      	movs	r0, #0
  800f766:	041b      	lsls	r3, r3, #16
  800f768:	0412      	lsls	r2, r2, #16
- 800f76a:	f015 ff51 	bl	8025610 <fn_08025610>
+ 800f76a:	f015 fef9 	bl	8025560 <fn_08025560>
  800f76e:	4680      	mov	r8, r0
  800f770:	2e01      	cmp	r6, #1
  800f772:	d103      	bne.n	800f77c <fn_0800F720+0x5c>
@@ -51,7 +51,7 @@ fn_0800F720:
  800f786:	2000      	movs	r0, #0
  800f788:	5852      	ldr	r2, [r2, r1]
  800f78a:	2100      	movs	r1, #0
- 800f78c:	f015 ff40 	bl	8025610 <fn_08025610>
+ 800f78c:	f015 fee8 	bl	8025560 <fn_08025560>
  800f790:	4642      	mov	r2, r8
  800f792:	4b1a      	ldr	r3, [pc, #104]	@ (800f7fc <fn_0800F720+0xdc>)
  800f794:	682c      	ldr	r4, [r5, #0]
@@ -77,20 +77,20 @@ fn_0800F720:
  800f7be:	4d11      	ldr	r5, [pc, #68]	@ (800f804 <fn_0800F720+0xe4>)
  800f7c0:	009b      	lsls	r3, r3, #2
  800f7c2:	58e9      	ldr	r1, [r5, r3]
- 800f7c4:	f015 ff62 	bl	802568c <fn_0802568C>
+ 800f7c4:	f015 ff0a 	bl	80255dc <fn_080255DC>
  800f7c8:	2380      	movs	r3, #128	@ 0x80
  800f7ca:	011b      	lsls	r3, r3, #4
  800f7cc:	199b      	adds	r3, r3, r6
  800f7ce:	009b      	lsls	r3, r3, #2
  800f7d0:	58e9      	ldr	r1, [r5, r3]
  800f7d2:	0007      	movs	r7, r0
- 800f7d4:	f015 ff5a 	bl	802568c <fn_0802568C>
+ 800f7d4:	f015 ff02 	bl	80255dc <fn_080255DC>
  800f7d8:	4b08      	ldr	r3, [pc, #32]	@ (800f7fc <fn_0800F720+0xdc>)
  800f7da:	50e0      	str	r0, [r4, r3]
  800f7dc:	00b0      	lsls	r0, r6, #2
  800f7de:	5941      	ldr	r1, [r0, r5]
  800f7e0:	0038      	movs	r0, r7
- 800f7e2:	f015 ff53 	bl	802568c <fn_0802568C>
+ 800f7e2:	f015 fefb 	bl	80255dc <fn_080255DC>
  800f7e6:	238f      	movs	r3, #143	@ 0x8f
  800f7e8:	011b      	lsls	r3, r3, #4
  800f7ea:	50e0      	str	r0, [r4, r3]
@@ -103,4 +103,4 @@ fn_0800F720:
  800f7f8:	030064c4 	.word	0x030064c4
  800f7fc:	000008ec 	.word	0x000008ec
  800f800:	000008e8 	.word	0x000008e8
- 800f804:	081398a0 	.word	0x081398a0
+ 800f804:	081397cc 	.word	0x081397cc

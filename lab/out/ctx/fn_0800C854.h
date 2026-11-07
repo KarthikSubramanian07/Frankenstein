@@ -8,8 +8,8 @@
    your candidate; the referee matches calls and loads by these ids. */
 /* function fn_08006F18 (88 bytes) */
 /* function fn_08006FC0 (52 bytes) */
-/* function fn_08015138 (80 bytes) */
-/* function fn_08015474 (36 bytes) */
-/* function fn_080185D0 (32 bytes) */
-/* function fn_0801D72C (260 bytes) */
-/* function fn_08020A40 (140 bytes) */
+/* function fn_08015084 (80 bytes) */
+/* function fn_080153C0 (36 bytes) */
+/* function fn_0801851C (32 bytes) */
+/* function fn_0801D67C (260 bytes) */
+/* function fn_08020990 (140 bytes) */

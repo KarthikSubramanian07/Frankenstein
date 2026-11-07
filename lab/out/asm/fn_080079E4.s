@@ -56,7 +56,7 @@ fn_080079E4:
  8007a52:	464a      	mov	r2, r9
  8007a54:	4650      	mov	r0, sl
  8007a56:	9900      	ldr	r1, [sp, #0]
- 8007a58:	f01d fdda 	bl	8025610 <fn_08025610>
+ 8007a58:	f01d fd82 	bl	8025560 <fn_08025560>
  8007a5c:	003a      	movs	r2, r7
  8007a5e:	6a33      	ldr	r3, [r6, #32]
  8007a60:	1ac0      	subs	r0, r0, r3
@@ -77,7 +77,7 @@ fn_080079E4:
  8007a7e:	d10f      	bne.n	8007aa0 <fn_080079E4+0xbc>
  8007a80:	4641      	mov	r1, r8
  8007a82:	0030      	movs	r0, r6
- 8007a84:	f00c fc5c 	bl	8014340 <fn_08014340>
+ 8007a84:	f00c fc02 	bl	801428c <fn_0801428C>
  8007a88:	1e04      	subs	r4, r0, #0
  8007a8a:	d10b      	bne.n	8007aa4 <fn_080079E4+0xc0>
  8007a8c:	0020      	movs	r0, r4
@@ -96,7 +96,7 @@ fn_080079E4:
  8007aa6:	0030      	movs	r0, r6
  8007aa8:	58e9      	ldr	r1, [r5, r3]
  8007aaa:	3050      	adds	r0, #80	@ 0x50
- 8007aac:	f010 fdda 	bl	8018664 <fn_08018664>
+ 8007aac:	f010 fd80 	bl	80185b0 <fn_080185B0>
  8007ab0:	235d      	movs	r3, #93	@ 0x5d
  8007ab2:	223c      	movs	r2, #60	@ 0x3c
  8007ab4:	54f2      	strb	r2, [r6, r3]

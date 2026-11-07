@@ -39,7 +39,7 @@ fn_0800EBA8:
  800ebf2:	4b6e      	ldr	r3, [pc, #440]	@ (800edac <fn_0800EBA8+0x204>)
  800ebf4:	6801      	ldr	r1, [r0, #0]
  800ebf6:	58f0      	ldr	r0, [r6, r3]
- 800ebf8:	f016 fd48 	bl	802568c <fn_0802568C>
+ 800ebf8:	f016 fcf0 	bl	80255dc <fn_080255DC>
  800ebfc:	0002      	movs	r2, r0
  800ebfe:	4b6c      	ldr	r3, [pc, #432]	@ (800edb0 <fn_0800EBA8+0x208>)
  800ec00:	6969      	ldr	r1, [r5, #20]
@@ -62,7 +62,7 @@ fn_0800EBA8:
  800ec22:	0401      	lsls	r1, r0, #16
  800ec24:	1400      	asrs	r0, r0, #16
  800ec26:	4692      	mov	sl, r2
- 800ec28:	f016 fcfe 	bl	8025628 <fn_08025628>
+ 800ec28:	f016 fca6 	bl	8025578 <fn_08025578>
  800ec2c:	9b00      	ldr	r3, [sp, #0]
  800ec2e:	0007      	movs	r7, r0
  800ec30:	2b00      	cmp	r3, #0
@@ -87,7 +87,7 @@ fn_0800EBA8:
  800ec56:	0401      	lsls	r1, r0, #16
  800ec58:	4652      	mov	r2, sl
  800ec5a:	1400      	asrs	r0, r0, #16
- 800ec5c:	f016 fce4 	bl	8025628 <fn_08025628>
+ 800ec5c:	f016 fc8c 	bl	8025578 <fn_08025578>
  800ec60:	9b01      	ldr	r3, [sp, #4]
  800ec62:	2b00      	cmp	r3, #0
  800ec64:	da00      	bge.n	800ec68 <fn_0800EBA8+0xc0>
@@ -130,7 +130,7 @@ fn_0800EBA8:
  800ecb0:	4b3e      	ldr	r3, [pc, #248]	@ (800edac <fn_0800EBA8+0x204>)
  800ecb2:	6839      	ldr	r1, [r7, #0]
  800ecb4:	58f0      	ldr	r0, [r6, r3]
- 800ecb6:	f016 fce9 	bl	802568c <fn_0802568C>
+ 800ecb6:	f016 fc91 	bl	80255dc <fn_080255DC>
  800ecba:	23df      	movs	r3, #223	@ 0xdf
  800ecbc:	011b      	lsls	r3, r3, #4
  800ecbe:	58f1      	ldr	r1, [r6, r3]
@@ -179,7 +179,7 @@ fn_0800EBA8:
  800ed14:	405a      	eors	r2, r3
  800ed16:	0401      	lsls	r1, r0, #16
  800ed18:	1400      	asrs	r0, r0, #16
- 800ed1a:	f016 fc85 	bl	8025628 <fn_08025628>
+ 800ed1a:	f016 fc2d 	bl	8025578 <fn_08025578>
  800ed1e:	9b00      	ldr	r3, [sp, #0]
  800ed20:	2b00      	cmp	r3, #0
  800ed22:	da00      	bge.n	800ed26 <fn_0800EBA8+0x17e>
@@ -208,7 +208,7 @@ fn_0800EBA8:
  800ed50:	405a      	eors	r2, r3
  800ed52:	1400      	asrs	r0, r0, #16
  800ed54:	407c      	eors	r4, r7
- 800ed56:	f016 fc67 	bl	8025628 <fn_08025628>
+ 800ed56:	f016 fc0f 	bl	8025578 <fn_08025578>
  800ed5a:	2c00      	cmp	r4, #0
  800ed5c:	da00      	bge.n	800ed60 <fn_0800EBA8+0x1b8>
  800ed5e:	4240      	negs	r0, r0
