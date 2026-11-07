@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Same code, any device</title>
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0b0b10;color:#eee;font:18px/1.4 system-ui,sans-serif;text-align:center}
+main{max-width:34rem;padding:1.5rem}h1{font-size:1.6rem;margin:0 0 .5rem}.n{font:700 3rem/1.1 ui-monospace,monospace;color:#5f5}
+.bad{color:#f55}table{margin:1rem auto;border-collapse:collapse;font-size:.95rem}td{padding:.25rem .6rem;text-align:left}
+small{color:#999;display:block;margin-top:1rem}
+</style></head><body><main>
+<h1>Doom code our agents recovered, running on this device</h1>
+<p>The agents' C, compiled to WebAssembly, against what the original Game Boy Advance machine code returned for the same inputs.</p>
+<div class="n" id="total">…</div>
+<table id="rows"></table>
+<small>Observed: outputs compared one by one in this browser. Inferred: the names in brackets are our guess. Not a port of the game: these are 4 small functions out of 568.</small>
+</main><script type="module">
+const [wasm, v] = await Promise.all([
+  WebAssembly.instantiateStreaming(fetch('agents.wasm')).then(r => r.instance.exports),
+  fetch('vectors.json').then(r => r.json())]);
+const rows = [], add = (name, ok, n) => rows.push([name, ok, n]);
+v.table.forEach((t, i) => wasm.set_table(i, t));
+for (const [fn, name] of [['fn_03002660', 'fixed-point multiply ?'], ['fn_0800FDFC', 'approximate distance ?']]) {
+  const { args, gba } = v[fn]; let ok = 0;
+  args.forEach((a, i) => { if ((wasm[fn](a[0], a[1]) | 0) === gba[i]) ok++; });
+  add(`${fn} (${name})`, ok, args.length);
+}
+{ const { args, gba } = v.fn_0800549C, p = wasm.box_ptr(); let ok = 0;
+  args.forEach((b, i) => { for (let k = 0; k < 4; k++) wasm.set_box(k, b[k] >>> 0); wasm.fn_0800549C(p, b[4], b[5]);
+    if ([0, 1, 2, 3].every(k => (wasm.get_box(k) | 0) === gba[i][k])) ok++; });
+  add('fn_0800549C (bounding box ?)', ok, args.length); }
+{ const { slot, start, gba } = v.fn_08006B00; wasm.set_state(slot, start); let ok = 0;
+  gba.forEach(x => { if ((wasm.fn_08006B00() >>> 0) === x) ok++; });
+  add('fn_08006B00 (random numbers ?)', ok, gba.length); }
+const ok = rows.reduce((s, r) => s + r[1], 0), n = rows.reduce((s, r) => s + r[2], 0);
+const el = document.getElementById('total');
+el.textContent = `${ok.toLocaleString()} of ${n.toLocaleString()} identical`; if (ok !== n) el.classList.add('bad');
+document.getElementById('rows').innerHTML = rows.map(([f, o, k]) => `<tr><td>${f}</td><td>${o}/${k}</td></tr>`).join('');
+</script></body></html>

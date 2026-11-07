@@ -1,0 +1,92 @@
+{
+ "v": 1,
+ "seed": 20261107,
+ "host_flags": [
+  "-O2"
+ ],
+ "n": 1000000,
+ "rom_sha1_engine": "d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2",
+ "functions": {
+  "fn_03002660": {
+   "what": "pure function of its arguments",
+   "inputs": 1000100,
+   "mismatches": 0,
+   "first_mismatch": null,
+   "platforms": [
+    "GBA machine code (Unicorn, ARM7TDMI ISA)",
+    "arm64 macOS (clang -O2)",
+    "wasm32 (zig cc -O2, Node)"
+   ],
+   "seconds": 5.4
+  },
+  "fn_0800FDFC": {
+   "what": "pure function of its arguments",
+   "inputs": 1000100,
+   "mismatches": 19,
+   "first_mismatch": [
+    [
+     0,
+     -2147483648
+    ],
+    -1073741824,
+    -2147483648,
+    -2147483648
+   ],
+   "platforms": [
+    "GBA machine code (Unicorn, ARM7TDMI ISA)",
+    "arm64 macOS (clang -O2)",
+    "wasm32 (zig cc -O2, Node)"
+   ],
+   "seconds": 5.9
+  },
+  "fn_03000D94": {
+   "what": "pure function of its arguments",
+   "inputs": 1000010,
+   "mismatches": 0,
+   "first_mismatch": null,
+   "platforms": [
+    "GBA machine code (Unicorn, ARM7TDMI ISA)",
+    "arm64 macOS (clang -O2)",
+    "wasm32 (zig cc -O2, Node)"
+   ],
+   "seconds": 4.8
+  },
+  "fn_0800549C": {
+   "what": "updates a 4-int box in memory",
+   "inputs": 1000000,
+   "mismatches": 0,
+   "first_mismatch": null,
+   "platforms": [
+    "GBA machine code (Unicorn, ARM7TDMI ISA)",
+    "arm64 macOS (clang -O2)",
+    "wasm32 (zig cc -O2, Node)"
+   ],
+   "seconds": 11.9
+  },
+  "fn_08006B00": {
+   "what": "random draws from the ROM's table, every start index, 3906 draws each",
+   "inputs": 999936,
+   "mismatches": 0,
+   "first_mismatch": null,
+   "platforms": [
+    "GBA machine code (Unicorn, ARM7TDMI ISA)",
+    "arm64 macOS (clang -O2)",
+    "wasm32 (zig cc -O2, Node)"
+   ],
+   "seconds": 3.4
+  },
+  "fn_08006B20": {
+   "what": "random draws from the ROM's table, every start index, 3906 draws each",
+   "inputs": 999936,
+   "mismatches": 0,
+   "first_mismatch": null,
+   "platforms": [
+    "GBA machine code (Unicorn, ARM7TDMI ISA)",
+    "arm64 macOS (clang -O2)",
+    "wasm32 (zig cc -O2, Node)"
+   ],
+   "seconds": 3.6
+  }
+ },
+ "all_identical": false
+}
