@@ -66,7 +66,7 @@ export class VersusScene implements Scene {
     const d = c.first_diff;
     if (d) {
       const ins = diffIns(d.expected_ins, d.got_ins);
-      q('evidence').innerHTML = `<div class="where">${esc(c.fn)} · FIRST DIFFERENCE AT BYTE +0x${d.offset.toString(16).toUpperCase()} · ${esc(d.expected)} ≠ ${esc(d.got)}</div>
+      q('evidence').innerHTML = `<div class="where">${esc(c.fn)} · FIRST WRONG BYTE AT +0x${d.offset.toString(16).toUpperCase()}</div>
         <div><span class="lbl">EXPECTED</span><span class="exp">${esc(d.expected_ins)}</span></div>
         <div><span class="lbl">GOT</span>${ins.got}</div>`;
     } else {

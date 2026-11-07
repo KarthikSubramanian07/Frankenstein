@@ -41,7 +41,7 @@ export class TitleScene implements Scene {
         <div class="f new"><span></span><span>FILE 2</span><span>NEW GAME</span><span></span></div>
       </div>
       <div class="press${reduced ? '' : ' blink'}">PRESS START</div>
-      <div class="credit">SPACE = START · 0-2 = SCENES · M = MUTE</div>`;
+`;
     drawStars(this.el.querySelector('canvas')!);
   }
 
