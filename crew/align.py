@@ -30,9 +30,23 @@ def _shape(text: str) -> str:
     return REG.sub("R", _clean(text))
 
 
+BRANCH = re.compile(r"^(b(?:eq|ne|cs|cc|mi|pl|vs|vc|hi|ls|ge|lt|gt|le|al|hs|lo)?(?:\.[nw])?|cbn?z)(\s+(?:r\d+,\s*)?)([0-9a-f]+)\b")
+
+
+def _relative(items: list[dict]) -> list[str]:
+    """Branch destinations relative to the function start. objdump prints them as offsets in each object, so the
+    target's `bne.n 550` and the candidate's `bne.n 24` can be the same branch; compared raw they never align."""
+    base = items[0]["off"] if items else 0
+    out = []
+    for i in items:
+        m = BRANCH.match(i["text"])
+        out.append(f"{m.group(1)}{m.group(2)}+0x{int(m.group(3), 16) - base:x}" + i["text"][m.end():] if m else i["text"])
+    return out
+
+
 def align(target: list[dict], got: list[dict], *, max_lines: int = 40) -> dict:
-    t_txt = [_clean(i["text"]) for i in target]
-    g_txt = [_clean(i["text"]) for i in got]
+    t_txt = [_clean(x) for x in _relative(target)]
+    g_txt = [_clean(x) for x in _relative(got)]
     t_shape = [_shape(x) for x in t_txt]
     g_shape = [_shape(x) for x in g_txt]
     sm = difflib.SequenceMatcher(None, t_shape, g_shape, autojunk=False)
