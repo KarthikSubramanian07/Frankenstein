@@ -1,5 +1,9 @@
 # Lane D handoffs
 
+## Active assignment from Enzo: implement Pokémon player/adapter support
+
+Read [docs/POKEMON_IMPLEMENTATION.md](../docs/POKEMON_IMPLEMENTATION.md). Next checkpoint: game/core registry and selection, confirmed Game Boy loading support, editable input-profile path and real transition telemetry contract. Preserve working Doom. Report STARTED / QUEUED AFTER DOOM (specific gate) / BLOCKED (exact input). Source/behavior recovery stays distinct from original-code playback.
+
 ## Play anywhere: the phone page became the universal player (for Enzo, 2026-11-07)
 
 `creature/phone/` now plays on a phone (an on-screen touch overlay, landscape-first), a laptop (keyboard with a legend), a TV, an Xbox or PlayStation browser, or a Steam Deck (Gamepad API, controller-only menus). It installs as a PWA (fullscreen, landscape) and plays offline after the first load while keeping COOP/COEP. The servers add gzip and ETag revalidation, plus a `/status.json` endpoint. Details, mappings and verification are in [phone/README.md](phone/README.md).
