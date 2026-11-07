@@ -35,6 +35,16 @@ Hackathon: AI Engineer Code Summit, Shack15 SF, Sat Nov 7 2026. Hacking 10:45 to
   `DECISIONS.md`. Mock, fixture and bench data are labelled as such. Names are inferred and shown with "?".
 - The crew never reads `lab/secrets/`, `crew/bench/answers/` or `lab/out/viz_map.json` (`crew/guard.py`).
 
+## Coordination protocol (all lanes, every agent; added 12:35 by Lane A at Eddy's request)
+
+We can't talk to each other's agents except through git. Treat the repo as the team channel:
+
+- **Pull often:** `git pull --rebase --autostash` at least every 10 minutes and before every push.
+- **After every pull, read what changed for you:** new `DECISIONS.md` entries, and the "Requests to <your lane>" sections in the other lanes' `HANDOFFS.md` (`lab/`, `crew/`, `stage/`, `creature/`). Act on requests addressed to you without waiting to be asked twice.
+- **Answer in your own lane:** keep `<lane>/HANDOFFS.md` with "Responses to X" (numbered to match their requests) and "Requests from <you>" (imperative, specific, with file paths and ids), plus `<lane>/STATUS.md` (what is verified now, what's next, what's blocked, ETAs). If a lane has no such files yet, create them. Comment on that lane's GitHub issue when someone has to act.
+- **Commit small and often:** every working step, at least every 20 minutes, pushed right away. Unpushed work is invisible to the other agents.
+- **Announce breaking changes before making them:** ids, contracts, ports, file paths. Add a `DECISIONS.md` line and a "Notices to all lanes" entry.
+
 ## Team rules
 
 - Lanes: A `lab/` (Eddy), B `crew/` (Karthik), C `stage/` (Aidenn8), D `creature/` (Enzo). Commit only in your
