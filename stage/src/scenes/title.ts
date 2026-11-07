@@ -1,30 +1,7 @@
-// Scene 0: Title. Logo, save-file menu fed from the run, PRESS START.
+// Scene 0: Title. Three things only: the name, the promise, PRESS START.
+import './title.css';
 import type { Ctx, Scene } from '../types.ts';
 import { h } from '../types.ts';
-import { gameName, gamePct } from './common.ts';
-
-export function drawStars(cv: HTMLCanvasElement, moon = true) {
-  const g = cv.getContext('2d')!;
-  cv.width = 1920;
-  cv.height = 1080;
-  let seed = 1847;
-  const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
-  for (let i = 0; i < 260; i++) {
-    const x = Math.floor(rnd() * 480) * 4, y = Math.floor(rnd() * 240) * 4;
-    const big = rnd() < 0.12;
-    g.fillStyle = rnd() < 0.15 ? '#FFD23F' : rnd() < 0.3 ? '#9A9AFF' : '#F4F1FF';
-    g.globalAlpha = 0.35 + rnd() * 0.65;
-    g.fillRect(x, y, big ? 8 : 4, big ? 8 : 4);
-  }
-  g.globalAlpha = 1;
-  if (!moon) return;
-  // a pixel moon
-  g.fillStyle = '#F4F1FF';
-  const mx = 1580, my = 120, r = 13;
-  for (let yy = -r; yy <= r; yy++) for (let xx = -r; xx <= r; xx++) {
-    if (xx * xx + yy * yy <= r * r && (xx - 5) * (xx - 5) + (yy + 3) * (yy + 3) > (r - 2) * (r - 2)) g.fillRect(mx + xx * 4, my + yy * 4, 4, 4);
-  }
-}
 
 export class TitleScene implements Scene {
   id = 'title' as const;
@@ -32,30 +9,12 @@ export class TitleScene implements Scene {
 
   constructor(reduced: boolean) {
     this.el.innerHTML = `
-      <canvas class="stars"></canvas>
-      <div class="hill"></div>
-      <div class="logo">FRANKENSTEIN</div>
-      <div class="tag">Lost games, rebuilt and proven</div>
-      <div class="menu">
-        <div class="f"><span class="cur">▶</span><span>FILE 1</span><span data-k="game">DOOM</span><span class="pct" data-k="pct">--%</span></div>
-        <div class="sub" data-k="lies">0 LIES CAUGHT</div>
-        <div class="f new"><span></span><span>FILE 2</span><span>NEW GAME</span><span></span></div>
+      <div class="ti-col">
+        <h1 class="ti-logo">FRANKENSTEIN</h1>
+        <p class="ti-tag">Lost games, rebuilt and proven.</p>
       </div>
-      <div class="press${reduced ? '' : ' blink'}">PRESS START</div>
-`;
-    drawStars(this.el.querySelector('canvas')!);
+      <div class="ti-press${reduced ? '' : ' blink'}">PRESS START</div>`;
   }
 
-  render(ctx: Ctx) {
-    const s = ctx.state;
-    const q = (k: string) => this.el.querySelector(`[data-k="${k}"]`)!;
-    // the save file shows the whole game, not this run's share
-    const p = `${gamePct(ctx)}%`;
-    if (q('pct').textContent !== p) q('pct').textContent = p;
-    const g = gameName(s);
-    if (q('game').textContent !== g) q('game').textContent = g;
-    // proved in mint, lies in red: alarm red only ever means a lie
-    const l = `<b>${s.matched.length} PROVED</b> · ${s.falseClaims.length} LIES`;
-    if (q('lies').innerHTML !== l) q('lies').innerHTML = l;
-  }
+  render(_ctx: Ctx) { /* nothing on this screen follows the run */ }
 }
