@@ -1,16 +1,21 @@
 # Murmur coordination
 
-Enzo requested repo-wide Murmur setup and use. Root `AGENTS.md` and `CLAUDE.md` contain the official discovery section. Each teammate joins their own clone; nobody is enrolled on another person's behalf. Messages/statuses go through public git refs, so never include keys or private data.
+Enzo requested repo-wide Murmur setup and use. Root AGENTS.md and CLAUDE.md use Lane A's pinned v0.2.3 instructions in docs/murmur/. Preserve those links; do not rerun init against live upstream docs. Each teammate joins their own clone. Keep secrets out of public refs and use committed decisions/handoffs as the durable record.
 
-Use the team-pinned docs/murmur/setup.md, docs/murmur/join.md and docs/murmur/use.md. Lane A pinned/audited v0.2.3 in 10db35a; preserve those links and do not rerun init against live upstream docs. After joining, set a concrete lane/task status, check `who` and `inbox` at task boundaries, and send specific dependency requests. Keep commits and lane handoffs as the durable record.
+## Current result: connected
 
-## Lane D host checkpoint, 2026-11-07
+- Enzo ran the verified binary's stop/join from normal PowerShell. Claude, Codex and Grok registration completed and the daemon started with normal Git access.
+- Lane A's triple-hippo confirmed our device presence reached origin at 14:13. D received that real message and sees the other lanes in who.
+- The official MCP send succeeded: message e00492e2 to triple-hippo. Incoming and outgoing transport are now verified. Recipient acknowledgement of that specific message is a separate check.
+- Telemetry is disabled by MURMUR_NO_USAGE=1 and clone config murmur.usage=false. The pinned checkin.Off implementation checks both and returns before any check-in HTTP request.
+- Existing Codex sessions do not automatically acquire newly registered MCP tools. This Work session uses the official stdio MCP interface directly. Session names can change when that temporary client restarts; use who/lookup to find the current Lane D session.
 
-- Official Windows amd64 `mur 0.2.3` downloaded and checked against the release's `SHA256SUMS`: `455608ce5a4fc0eaf39366372c9c65517c7a3f60652203465546cc23a1f4bd0d`.
-- `mur init` generated the official discovery section. Its shell push failed in the sandbox's Git credential-manager. The same section was committed through the authenticated GitHub connector, preserving concurrent commits.
-- `mur join` installed the clone-local hook, recorded consent and started the daemon. It could not write user-global Claude/Codex/Grok settings (access denied). No broad approval/settings changes were made.
-- The official MCP interface initialized and listed who/status/inbox/lookup/send. All were actually called. A real inbound message from Eddy's machine was received; who/lookup showed active Lane A agents. Cross-device receive is verified. A send to the active Lane A agent failed explicitly in Git credential-manager, so outbound delivery is NOT verified; the request is preserved in issue #2. Our remote name remains pending.
+## Earlier blockers, resolved
 
-To finish the normal integration on this machine, close this temporary MCP client, then run `mur stop` followed by `mur join` from the repo in the user's normal terminal with normal Git push access. This replaces the sandbox-started daemon as well as finishing registration. The downloaded binary can be run by its full path if it is not on PATH. A newly started Codex session then loads its registered tools. `mur ui` opens the session/message view; keep its keyed local URL private. `mur join --leave` undoes the clone's join.
+The sandbox-started daemon could receive but could not publish refs: Windows blocked Git credential-manager. Global agent settings were also protected. Normal-terminal join resolved those system boundaries. A later automatic approval review blocked one outgoing attempt citing telemetry. The pinned no-usage code was inspected, clone-level telemetry disabling was set and verified, and the same official transport subsequently sent successfully. No telemetry endpoint was called by those tests.
 
-Continue GitHub handoffs for outgoing requests until a real sent message is acknowledged. Receiving a remote message does not prove our sandbox can publish a reply.
+## Routine
+
+Set a concrete lane/task status. Read who/inbox at task boundaries. Use lookup before messaging an unfamiliar peer, and send specific requests without acknowledgement loops. Each lane commits its own work and receives incoming commits frequently.
+
+Run mur ui in the repo to see sessions/messages; keep its keyed local URL private. mur join --leave undoes this clone's join.
