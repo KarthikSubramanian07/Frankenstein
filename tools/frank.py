@@ -862,7 +862,22 @@ def cmd_demo_live(a) -> int:
             return 1
     t0 = time.time()
     rc = subprocess.call(argv, cwd=REPO, env=env)
-    print(dim(f"wall clock {time.time() - t0:.1f} s, exit {rc}. The Stage's Ending shows the run's build.rom."))
+    print(dim(f"wall clock {time.time() - t0:.1f} s, exit {rc}."))
+    if a.live:
+        # The live dig's own rebuild covers only its ~2 functions. Rebuild the whole union and emit it into
+        # runs/live, so the Stage's Ending card (last build.rom wins) shows every recovered function.
+        import urllib.request
+        req = urllib.request.Request("http://127.0.0.1:7101/rebuild", method="POST",
+                                     headers={"Content-Type": "application/json"},
+                                     data=json.dumps({"recovered_dir": "crew/exports/union/recovered",
+                                                      "emit": True}).encode())
+        try:
+            with urllib.request.urlopen(req, timeout=120) as r:
+                b = json.loads(r.read())
+            print(bold(f"union rebuild: {b.get('recovered')} agent-written functions, "
+                       f"{'IDENTICAL' if b.get('identical') else 'DIFFERENT'} {str(b.get('rom_sha1'))[:8]}…"))
+        except Exception as e:
+            print(red(f"union rebuild failed ({e}); the Ending shows the live run's own rebuild"))
     return rc
 
 
