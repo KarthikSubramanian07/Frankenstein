@@ -17,9 +17,15 @@ const Hook: React.FC<{len: number}> = ({len}) => (
   <Scene len={len}>
     <Caption size={62} lines={[{t: "Doom, rebuilt by AI from machine code. Then changed.", at: 0}]} />
     <Lcd x={120} y={270} w={1680} h={602}>
-      <Clip name="clips/side_by_side.mp4" />
+      {/* Start 2.6 s in: the cheat has fired, so 100% vs 200% shows from the first second; the real last frame holds after. */}
+      {has('clips/side_by_side_end.png') ? <Img src={staticFile('clips/side_by_side_end.png')} style={{position: 'absolute', width: '100%', height: '100%', objectFit: 'cover'}} /> : null}
+      <Sequence durationInFrames={125} layout="none">
+        <div style={{position: 'absolute', inset: 0}}>
+          <Clip name="clips/side_by_side.mp4" from={78} />
+        </div>
+      </Sequence>
     </Lcd>
-    <Readout at={70} />
+    <Readout at={12} />
     <Expert text="GBADoom · god-mode function fn_080054C8 recovered by the agents, one line edited, rebuilt" at={30} />
   </Scene>
 );
@@ -29,13 +35,19 @@ const Readout: React.FC<{at: number}> = ({at}) => {
   const f = useCurrentFrame();
   const {fps} = useVideoConfig();
   const p = spring({frame: f - at, fps, config: SPRING.pop});
-  const item = (x: number, v: string, col: string) => (
-    <div style={{position: 'absolute', left: x, top: 900, width: 840, textAlign: 'center', opacity: clamp01(p * 1.5), transform: `scale(${0.8 + 0.2 * p})`, fontFamily: HEAD, fontWeight: 800, fontSize: 64, color: col}}>{v}</div>
+  // One flash on the 200% side: a pulse and an underline drawn under it, so the eye finds the difference.
+  const pulse = 1 + 0.18 * Math.exp(-Math.max(0, f - at - 10) / 6) * (f >= at + 10 ? 1 : 0);
+  const line = interpolate(f, [at + 10, at + 22], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const flash = interpolate(f, [at + 10, at + 14, at + 28], [0, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const item = (x: number, v: string, col: string, s: number) => (
+    <div style={{position: 'absolute', left: x, top: 900, width: 840, textAlign: 'center', opacity: clamp01(p * 1.5), transform: `scale(${(0.8 + 0.2 * p) * s})`, fontFamily: HEAD, fontWeight: 800, fontSize: 64, color: col}}>{v}</div>
   );
   return (
     <>
-      {item(120, 'health 100%', C.gray)}
-      {item(960, 'health 200%', C.coral)}
+      <div style={{position: 'absolute', left: 960, top: 292, width: 818, height: 558, border: `10px solid ${C.coral}`, borderRadius: 12, opacity: flash, boxSizing: 'border-box'}} />
+      {item(120, 'health 100%', C.gray, 1)}
+      {item(960, 'health 200%', C.coral, pulse)}
+      <div style={{position: 'absolute', left: 1380 - 190 * line, top: 985, width: 380 * line, height: 10, borderRadius: 5, background: C.coral}} />
     </>
   );
 };
