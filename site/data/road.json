@@ -1,15 +1,15 @@
 {
  "v": 1,
- "generated_at": "2026-11-07T22:40:15.615Z",
+ "generated_at": "2026-11-07T22:56:07.302Z",
  "day_start": "2026-11-07T18:45:00.000Z",
  "tz": "America/Los_Angeles",
  "union": {
-  "functions": 166,
+  "functions": 170,
   "of": 568,
-  "pct_functions": 29.2,
-  "bytes": 6546,
+  "pct_functions": 29.9,
+  "bytes": 6774,
   "of_bytes": 141774,
-  "pct_bytes": 4.62,
+  "pct_bytes": 4.78,
   "reverified_by_referee": true,
   "rejected_on_reverify": 0,
   "target_rom_sha1": "d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2",
@@ -44,7 +44,10 @@
    "fn_0800478C",
    "fn_08004798",
    "fn_08004AC4",
+   "fn_08004D4C",
    "fn_08004DA8",
+   "fn_08004E14",
+   "fn_08004E30",
    "fn_08004E4C",
    "fn_08004E68",
    "fn_08005008",
@@ -165,6 +168,7 @@
    "fn_0801A2C8",
    "fn_0801ABC0",
    "fn_0801AC0C",
+   "fn_0801B1F8",
    "fn_0801B724",
    "fn_0801C130",
    "fn_0801C230",
@@ -2459,9 +2463,6 @@
  "close": {
   "fns": [
    "fn_0800060C",
-   "fn_08004D4C",
-   "fn_08004E14",
-   "fn_08004E30",
    "fn_08004E84",
    "fn_08005424",
    "fn_0800591C",
@@ -2477,8 +2478,7 @@
    "fn_08012A90",
    "fn_08012AE4",
    "fn_080145A0",
-   "fn_08018E08",
-   "fn_0801B1F8"
+   "fn_08018E08"
   ],
   "threshold_pct": 90,
   "source": "crew/exports/union/CLOSE.json",
@@ -3314,6 +3314,26 @@
    "fn": "fn_0800A1A0",
    "ts": "2026-11-07T22:32:50.930Z",
    "run": "permute01"
+  },
+  {
+   "fn": "fn_08004D4C",
+   "ts": "2026-11-07T22:51:19.712Z",
+   "run": "salvage04"
+  },
+  {
+   "fn": "fn_08004E14",
+   "ts": "2026-11-07T22:51:19.947Z",
+   "run": "salvage04"
+  },
+  {
+   "fn": "fn_08004E30",
+   "ts": "2026-11-07T22:51:20.117Z",
+   "run": "salvage04"
+  },
+  {
+   "fn": "fn_0801B1F8",
+   "ts": "2026-11-07T22:51:20.308Z",
+   "run": "salvage04"
   }
  ],
  "unclocked": 0,
@@ -3552,16 +3572,72 @@
   {
    "id": "permute03",
    "start": "2026-11-07T22:39:39.032Z",
-   "end": "2026-11-07T22:39:40.297Z",
+   "end": "2026-11-07T22:43:25.593Z",
+   "matched": 0,
+   "cost_usd": 0
+  },
+  {
+   "id": "salvage02",
+   "start": "2026-11-07T22:41:41.260Z",
+   "end": "2026-11-07T22:41:59.159Z",
+   "matched": 7,
+   "cost_usd": 0
+  },
+  {
+   "id": "permute04",
+   "start": "2026-11-07T22:42:16.339Z",
+   "end": "2026-11-07T22:48:28.128Z",
+   "matched": 0,
+   "cost_usd": 0
+  },
+  {
+   "id": "salvage03",
+   "start": "2026-11-07T22:45:59.405Z",
+   "end": "2026-11-07T22:46:45.782Z",
+   "matched": 7,
+   "cost_usd": 0
+  },
+  {
+   "id": "repair01",
+   "start": "2026-11-07T22:46:56.323Z",
+   "end": "2026-11-07T22:46:57.293Z",
+   "matched": 0,
+   "cost_usd": 0
+  },
+  {
+   "id": "repair02",
+   "start": "2026-11-07T22:47:31.815Z",
+   "end": "2026-11-07T22:49:20.862Z",
+   "matched": 50,
+   "cost_usd": 0
+  },
+  {
+   "id": "repair03",
+   "start": "2026-11-07T22:50:24.912Z",
+   "end": "2026-11-07T22:50:27.517Z",
+   "matched": 0,
+   "cost_usd": 0
+  },
+  {
+   "id": "salvage04",
+   "start": "2026-11-07T22:51:19.286Z",
+   "end": "2026-11-07T22:51:20.308Z",
+   "matched": 4,
+   "cost_usd": 0
+  },
+  {
+   "id": "permute05",
+   "start": "2026-11-07T22:53:20.146Z",
+   "end": "2026-11-07T22:53:20.146Z",
    "matched": 0,
    "cost_usd": 0
   }
  ],
  "totals": {
-  "runs": 34,
+  "runs": 42,
   "cost_usd": 58.77,
   "lies_caught": 24,
-  "fakes_rejected": 22,
+  "fakes_rejected": 30,
   "fakes_accepted": 0,
   "first_run_start": "2026-11-07T20:01:22.805Z"
  }

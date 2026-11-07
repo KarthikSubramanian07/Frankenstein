@@ -299,3 +299,4 @@ details.proof > summary .hand{font-size:1.35rem}
 details.proof[open] > summary .hand::after{content:" (hide)";font-size:.85em;opacity:.7}
 details.proof > *:not(summary){margin-bottom:14px}
 .legend-row{gap:10px 18px}
+.tally{margin:0;display:flex;flex-wrap:wrap;gap:8px}

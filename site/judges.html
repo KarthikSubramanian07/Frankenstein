@@ -31,7 +31,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Schibsted+Grotesk:wght@500;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&family=Press+Start+2P&display=swap">
 <link rel="stylesheet" href="/assets/site.css?v=24">
 <link rel="stylesheet" href="/assets/road.css?v=2">
-<link rel="stylesheet" href="/assets/judges.css?v=6">
+<link rel="stylesheet" href="/assets/judges.css?v=7">
 
 <script type="application/ld+json">
 {
@@ -87,7 +87,7 @@
         <dl>
           <div><dt>What it is</dt><dd><b>AI agents rebuild a lost game's source code from the cartridge.</b> It's for game preservation groups and rights holders, because 87% of classic US games are critically endangered and their code is gone.</dd></div>
           <div><dt>What's proven</dt><dd><b>A piece only counts if it's byte-identical:</b> the compiler turns the agents' C into the original's exact bytes. Put back into Doom, the rebuilt game has the same checksum.</dd></div>
-          <div><dt>The numbers</dt><dd><b>166 of Doom's 568 game functions are back, proven exact.</b> That's 4.62% of the code by size, because the crew starts with the small ones.</dd></div>
+          <div><dt>The numbers</dt><dd><b>170 of Doom's 568 game functions are back, proven byte-identical.</b> That's 4.78% of the code by size, because the crew starts with the small ones.</dd></div>
           <div><dt>Try it</dt><dd><b>Press Enter at our table</b> and watch two agents recover a function live. Then play Doom on the controller, or scan the QR code to play it on your phone.</dd></div>
           <div><dt>Not done yet</dt><dd><b>Doomguy's face (1,164 bytes) isn't recovered,</b> and the habit library hasn't beaten noise on unseen code. Both are said plainly below.</dd></div>
         </dl>
@@ -136,8 +136,7 @@
       <li><a href="#meta"><img src="/assets/logos/meta.svg" alt="" width="16" height="16">Meta Model API</a></li>
       <li><a href="#subquadratic"><img src="/assets/logos/subquadratic.svg" alt="" width="16" height="16" class="sq">Subquadratic</a></li>
       <li><a href="#fetchai"><img src="/assets/logos/asi-one.webp" alt="" width="16" height="16">Fetch.ai</a></li>
-      <li><a href="#mongodb"><img src="/assets/logos/mongodb.svg" alt="" width="16" height="16">MongoDB</a></li>
-      <li><a href="#gemini"><img src="/assets/logos/gemini.svg" alt="" width="16" height="16">Google Gemini</a></li>
+      <li><a href="#mongodb"><img src="/assets/logos/mongodb.svg" alt="" width="16" height="16">MongoDB and Gemini</a></li>
     </ol>
   </nav>
 
@@ -166,7 +165,7 @@
         <div><dt>Implementation Difficulty <span class="pct">30%</span></dt><dd>Agents must write C that compiles to Doom's exact bytes at <code>-O3</code>, past a referee, a fake detector and a full ROM rebuild we built today. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/tree/main/lab">lab/</a></dd></div>
         <div><dt>Impact Potential <span class="pct">20%</span></dt><dd>87% of classic US games are critically endangered, and source code is what lets a game be fixed and ported again. <span class="src">VGHF and SPN, 2023</span></dd></div>
         <div><dt>Creativity <span class="pct">15%</span></dt><dd>A lab where agents lie and the referee can't be fooled; play the game, and Snap rebuilds what's on your screen first. <a class="src" href="#subquadratic">Play to recover</a></dd></div>
-        <div><dt>Progress so far</dt><dd>166 of 568 game functions are back (4.62% of the code bytes), every one proved by the compiler, and the rebuilt game keeps its checksum. <a class="src" href="#progress">see the meter</a></dd></div>
+        <div><dt>Progress so far</dt><dd>170 of 568 game functions are back (4.78% of the code bytes), every one proved by the compiler, and the rebuilt game keeps its checksum. <a class="src" href="#progress">see the meter</a></dd></div>
       </dl>
       <details class="proof">
         <summary><span class="hand">show proof</span></summary>
@@ -176,10 +175,10 @@
             <p><span class="lbl">original</span><code>d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2</code></p>
             <p><span class="lbl">rebuilt</span><code class="sha-new">d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2</code></p>
           </div>
-          <p class="split-line"><b>6</b> functions from the agents' own compiled C &middot; <b>562</b> from the original build &middot; method <code>object-splice</code></p>
+          <p class="split-line"><b>169</b> functions from the agents' own compiled C &middot; <b>399</b> from the original build &middot; <b>4.74%</b> agent-written code &middot; verified on two machines</p>
           <span class="stamp stamp-mint" aria-hidden="true">IDENTICAL</span>
           <p class="hand note note-sha"><svg class="arr" aria-hidden="true"><use href="#arrow-down"/></svg>same 40 characters: not similar, identical</p>
-          <figcaption>From the <code>build.rom</code> event in <code>crew/exports/doom_r12</code>, 13:36.</figcaption>
+          <figcaption>The union rebuild at 14:55, from <code>crew/exports/union</code> (DECISIONS 14:52). The one function left out runs from fast RAM, which the ROM splice doesn't cover.</figcaption>
         </figure>
       </details>
     </article>
@@ -245,9 +244,9 @@
       </div>
       <dl class="claims">
         <div><dt>A claim is only a claim</dt><dd>Each agent stakes its claim before it sees the verdict, and the Checker re-runs the referee on every one. <a class="src" href="#lie-proof">see a caught lie</a></dd></div>
-        <div><dt>Lies caught</dt><dd>In round two the Checker caught 5 real false claims, and the referee refused every one. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/DECISIONS.md">DECISIONS 13:58</a></dd></div>
-        <div><dt>Fakes thrown out</dt><dd>A fake is C that matches by tricking the compiler, like a stray <code>volatile</code>; the easy held-out runs rejected 3 to 5 each, and none got through. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/EXPERIMENTS.md">crew/EXPERIMENTS.md</a></dd></div>
-        <div><dt>Two labs check what bytes can't</dt><dd>SubQ Snap and Gemini score every match for fakes and recited source, in parallel. <a class="src" href="#gemini">see both labs</a></dd></div>
+        <div><dt>Lies caught</dt><dd>Across 33 finished runs the Checker caught 24 lies, and the referee refused every one. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/tools/counts.py">tools/counts.py</a></dd></div>
+        <div><dt>Fakes thrown out</dt><dd>A fake is C that matches by tricking the compiler; the Checker rejected 30 and accepted 0. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/DECISIONS.md">DECISIONS 14:52</a></dd></div>
+        <div><dt>Two labs check what bytes can't</dt><dd>SubQ Snap and Gemini score every match for fakes and recited source, in parallel. <a class="src" href="#mongodb">see both labs</a></dd></div>
         <div><dt>Hard to talk into anything</dt><dd>Pasted C compiles with no network and no keys, after we fixed an include trick that could have leaked them. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/SECURITY.md">SECURITY.md</a></dd></div>
       </dl>
       <details class="proof">
@@ -262,11 +261,8 @@
           </div>
           <span class="stamp stamp-coral" aria-hidden="true">REJECTED</span>
           <p class="hand note note-diff"><svg class="arr" aria-hidden="true"><use href="#arrow-down-left"/></svg>one instruction gave it away</p>
-          <div class="fake-row">
-            <span class="ev ev-lie">FAKE</span>
-            <p><code>fn_0801B1F8</code> matched the bytes, but the Checker refused it: <b>"volatile used to coax codegen"</b>. <span class="src-inline">doom_hud01</span></p>
-          </div>
-          <figcaption>From <code>claim.made</code>, <code>verdict</code> and <code>fakematch.rejected</code> events in <code>crew/exports</code>.</figcaption>
+          <p class="tally"><span class="ev ev-lie">24 LIES CAUGHT</span><span class="ev ev-lie">30 FAKES REJECTED</span><span class="ev ev-proved">0 FAKES ACCEPTED</span></p>
+          <figcaption>The claim and verdict are events in <code>crew/exports/doom_r12</code>; the tallies are from <code>tools/counts.py</code>.</figcaption>
         </figure>
       </details>
     </article>
@@ -287,6 +283,7 @@
         <div><dt>Habits, never answers</dt><dd>After each match the crew keeps a general lesson, never the code, and drops any habit that copies 3 lines of the answer. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/README.md">crew/README.md</a></dd></div>
         <div><dt>Kept only on evidence</dt><dd>A habit is adopted after 3 good uses and retired after 4 bad ones; one training run adopted 3 and retired 4. <a class="src" href="#mongodb">see the habits</a></dd></div>
         <div><dt>Tested on unseen code</dt><dd>170 of 568 game functions are held out (never trained on), and the library is frozen while they're tested. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/EXPERIMENTS.md">crew/EXPERIMENTS.md</a></dd></div>
+        <div><dt>Run over run</dt><dd>Warm starts, salvage and the permuter turned near-misses into matches. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/DECISIONS.md">DECISIONS 14:52</a></dd></div>
         <div class="limits"><dt>Honest result</dt><dd>Held out, the library hasn't beaten noise: 29 vs 29 of 40 on easy code, 6 vs 6 of 20 on hard code, so we don't claim it helped. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/DECISIONS.md">DECISIONS 14:06</a></dd></div>
       </dl>
       <details class="proof">
@@ -439,85 +436,18 @@
       </details>
     </article>
 
-    <!-- 8 · MONGODB -->
-    <article class="track t-mongo" id="mongodb" aria-labelledby="mongo-h">
+    <!-- 8 · ALSO IN THE STACK -->
+    <article class="track t-mongo" id="mongodb" aria-labelledby="also-h">
       <div class="t-side">
-        <div class="t-logo"><img src="/assets/logos/mongodb.svg" alt="MongoDB logo" width="28" height="28"><b>MongoDB Atlas</b></div>
-        <p class="sticker">MongoDB</p>
-        <h3 id="mongo-h">MongoDB is the <span class="hl">memory.</span></h3>
-        <div class="crit">
-          <p class="hand crit-h">judged on</p>
-          <ul><li>Atlas is a real component, not a logo</li></ul>
-          <p class="crit-src">Source: our reading; no written criteria were published that we could find.</p>
-        </div>
+        <div class="t-logo"><img src="/assets/logos/mongodb.svg" alt="MongoDB logo" width="28" height="28"><img src="/assets/logos/gemini.svg" alt="Google Gemini logo" width="28" height="28"></div>
+        <p class="sticker">No separate prize</p>
+        <h3 id="also-h">Also in the <span class="hl">stack.</span></h3>
+        <p class="crit-src">MongoDB and Gemini credits are part of the Overall prizes (docs/EVENT_GUIDE.md).</p>
       </div>
       <dl class="claims">
-        <div><dt>One collection per habit library</dt><dd>Each library is its own Atlas collection, so a frozen test library can never learn from its test. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/library.py">crew/library.py</a></dd></div>
-        <div><dt>The run record</dt><dd>Every run's events and metrics are mirrored to Atlas, so runs compare with one query. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/memory.py">crew/memory.py</a></dd></div>
-        <div><dt>Held-out runs read from Atlas</dt><dd>Round two's test runs loaded their frozen library straight from Atlas, and each run's metrics say so. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/EXPERIMENTS.md">crew/EXPERIMENTS.md</a></dd></div>
-        <div class="without"><dt>Without it</dt><dd>Every run starts from zero, and nothing remembers why.</dd></div>
-        <div class="limits"><dt>Honest limit</dt><dd>Atlas went live at 13:05, after the first run, and better memory hasn't yet meant more held-out matches. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/DECISIONS.md">DECISIONS 13:05</a></dd></div>
+        <div id="gemini"><dt>MongoDB is the memory</dt><dd>Each habit library is its own Atlas collection, and every run's events and metrics are mirrored there. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/library.py">crew/library.py</a></dd></div>
+        <div><dt>Gemini is the second opinion</dt><dd>On every byte match, Gemini checks the C for fakes next to Snap, in parallel. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/gemini.py">crew/gemini.py</a></dd></div>
       </dl>
-      <details class="proof">
-        <summary><span class="hand">show proof</span></summary>
-        <figure class="pc habits">
-          <p class="pc-k"><span class="ev ev-proved">ATLAS</span> habits judged in training run doom_r11</p>
-          <div class="habit-cols">
-            <div>
-              <p class="hc-h">adopted</p>
-              <ul>
-                <li>global byte-pointer base with literal-pool offsets</li>
-                <li>args parked in r4-r5-ip with pop-bx epilogue</li>
-                <li>guarded clear emits cmp-beq guard</li>
-              </ul>
-            </div>
-            <div>
-              <p class="hc-h out">retired</p>
-              <ul class="retired">
-                <li>large offset via movs plus lsls</li>
-                <li>large aligned offset built with movs plus lsls</li>
-                <li>if-else with shared tail</li>
-                <li>park struct pointer in r4 across call</li>
-              </ul>
-            </div>
-          </div>
-          <p class="hand note">kept: 1 quick match in 3 uses. retired: 0 in 4.</p>
-          <figcaption>From <code>crew/EXPERIMENTS.md</code>, round two.</figcaption>
-        </figure>
-      </details>
-    </article>
-
-    <!-- 9 · GEMINI -->
-    <article class="track t-gemini" id="gemini" aria-labelledby="gemini-h">
-      <div class="t-side">
-        <div class="t-logo"><img src="/assets/logos/gemini.svg" alt="Google Gemini logo" width="28" height="28"><b>Google Gemini</b></div>
-        <p class="sticker">Google Gemini</p>
-        <h3 id="gemini-h">Gemini is the <span class="hl">second opinion.</span></h3>
-        <div class="crit">
-          <p class="hand crit-h">judged on</p>
-          <ul><li>Gemini is used meaningfully</li></ul>
-          <p class="crit-src">Source: our reading; no written criteria were published that we could find.</p>
-        </div>
-      </div>
-      <dl class="claims">
-        <div><dt>A different lab, on every match</dt><dd>When the bytes match, Gemini checks the C for fakes next to Snap, in parallel, so it adds no wait. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/gemini.py">crew/gemini.py</a></dd></div>
-        <div><dt>A vote that counts</dt><dd>A match is rejected if Gemini is near-certain it's a fake, or if both labs flag it. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/README.md">crew/README.md</a></dd></div>
-        <div><dt>It drew the lab</dt><dd>Every illustration on our home page was generated today with Gemini. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/site/tools/generate_art.py">generate_art.py</a></dd></div>
-        <div class="without"><dt>Without it</dt><dd>One lab's opinion on fakes, and a site with no pictures.</dd></div>
-        <div class="limits"><dt>Honest limit</dt><dd>Gemini is advisory, and we haven't run Gemini on against off, so its effect isn't measured yet.</dd></div>
-      </dl>
-      <details class="proof">
-        <summary><span class="hand">show proof</span></summary>
-        <figure class="pc labs">
-          <p class="pc-k"><span class="ev ev-proved">2 LABS</span> one match, <code>fn_08013CA4</code>, doom_r12</p>
-          <div class="lab-cols">
-            <div class="lab"><p class="lab-n">SubQ Snap</p><p class="lab-v"><span>fake odds</span><b>0.33</b></p><p class="lab-v"><span>recital odds</span><b>0.00</b></p><p class="lab-t">351 ms</p></div>
-            <div class="lab"><p class="lab-n">Gemini</p><p class="lab-v"><span>fake odds</span><b>0.00</b></p><p class="lab-v"><span>recital odds</span><b>0.00</b></p><p class="lab-t">5.75 s</p></div>
-          </div>
-          <p class="verdict-line"><span class="ev ev-proved">ACCEPTED</span> both under their reject lines, so the match stands</p>
-          <figcaption>From the two <code>snap.decision</code> review events before <code>fn.matched</code> at 13:23:39.</figcaption>
-        </figure>
-      </details>
     </article>
   </div>
 </div>
