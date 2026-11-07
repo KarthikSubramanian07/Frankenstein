@@ -1,14 +1,14 @@
 # Lane D handoffs and integration status
 
 Owner: Enzo / Lane D. Updated 2026-11-07, from main's current DECISIONS.md.
-Read this file alongside creature/README.md. This is a request/status document, not a change to contracts.
+Read this file alongside creature/README.md and WORKPLAN.md (active parallel ownership); EXPERIENCE_IDEA.md carries the SubQ extension proposal. This is a request/status document, not a change to contracts.
 
 ## Current priority and status
 
 - Primary demo: Doom running, static-face stub in the ROM, one verified recovered face function, face restored. OBS region-healing overlay is a bonus.
 - Follow DECISIONS.md: freeze 14:55 Pacific; record 16:10; submit 16:30. Finale bug or honest modification decided by 13:00.
-- Lane A has already committed the real manifest, asm/context and viz_map. Face function currently documented as fn_0801B34C (1,160 bytes). Re-read the current manifest if the build changes.
-- Local shell Git previously failed DNS resolution. GitHub connector publishing is being rechecked. No emulator, swap, phone play or recording has been verified by D yet.
+- Lane A has already committed the real manifest, asm/context and viz_map. The private variant regenerated all function ids. Always re-read the current manifest; the old face id is obsolete.
+- GitHub connector publishing works (handoff and workplan committed). Shell Git still has DNS failure; root serializes connector commits. No emulator boot, swap, physical-phone play or recording has been verified by D yet.
 - Coordinate through GitHub only. No cross-laptop LAN endpoints, hotspot sharing, or tunnels. Existing contracts remain authoritative. Do not commit secrets or ROMs.
 
 ## Requests to A (Lab)
@@ -16,8 +16,8 @@ Read this file alongside creature/README.md. This is a request/status document, 
 Please publish responses and implementation details inside lab/ and reference this document in your commit message where useful.
 
 1. Confirm the static-face stub plan: how to build/select the unrecovered display state, how the recovered face function restores normal display, and the exact fn id(s). Keep the display rule honest; no claim that actual code recovery has happened when running a sample.
-2. Provide reproducible local commands to build/boot the baseline and static-face demo on D's Windows machine (Docker/WSL requirements included). lab/setup_referee.sh is noted; document required inputs and output locations without exposing secrets.
-3. Clarify how D obtains the locally generated target/rebuilt/patched ROM, its expected SHA-1, and the current build/patch readiness. DECISIONS currently says rebuild/patch return 501 until 14:30; D will show unavailable rather than fabricate success.
+2. Provide reproducible local boot/WAD-packaging commands for the committed engine ROM on Windows. Latest setup_referee.sh only starts the container and does not reconstruct the private source.
+3. Received: engine target.gba and link_info.json are committed; rebuild/patch now implemented (11:49 A update, object-splice contract method). D still needs a bootable WAD-packaged build and actual runtime validation.
 4. When ready, supply rebuild/patch usage and reports under the existing contracts. Byte-identical rebuild swap and intentionally changed patch are separate cases; a patch cannot pass the original-ROM identical-hash check.
 5. For a patch loaded over an existing save state, document whether code layout and game-state layout remain compatible. D will only claim uninterrupted play after testing; reboot/menu/recorded fallback is acceptable and labeled.
 6. Confirm license/distribution requirements before any public patched-ROM phone demo. A GitHub-hosted site/artifact route would need an explicit team-approved distribution plan; no tunnel assumed.
