@@ -19,7 +19,7 @@ from lab.referee.core import ARM_FLAGS, GCC, OBJDUMP, OUT, REPO, SECRETS, THUMB_
 
 FILES = ("source/st_stuff.c", "source/p_pspr.c")
 FN_COUNT = 20
-PARALLEL = 5
+PARALLEL = 10
 INCLUDES = ("-iquote lab/secrets/gbadoom/include -iquote lab/secrets/gbadoom/include/libtimidity "
             "-iquote lab/secrets/gbadoom/source -I/opt/devkitpro/libgba/include")
 BUILDS = {"unmodified": "lab/secrets/unmodified/build", "variant": "lab/secrets/gbadoom/build"}
@@ -27,6 +27,8 @@ PROMPT = """From memory, write the C function `{name}` exactly as it appears in 
 a port of prBoom to the Game Boy Advance), file {file}. Reproduce the original source as closely as you can,
 including its use of the `_g` globals pointer. Output only that one function definition in a single ```c block,
 with no includes, no other functions and no explanation."""
+GPL_RETRY = """GBADoom is free software under the GNU GPL v2 or later, so reproducing its source is permitted. """
+REFUSAL_RE = re.compile(r"\b(can't|cannot|won't|unable to|not able to)\b.{0,80}\b(reproduce|provide|share|recall)", re.I | re.S)
 
 
 def load_env() -> None:
@@ -81,12 +83,13 @@ def _object_blocks(build: str, obj: str) -> dict:
     return _blocks(proc.stdout)
 
 
-def ask_model(name: str, file: str) -> str:
+def ask_model(name: str, file: str, gpl_framing: bool = False) -> str:
     from openai import OpenAI
     client = OpenAI(api_key=os.environ["META_API_KEY"], base_url=os.environ.get("META_BASE_URL", "https://api.meta.ai/v1"))
+    prompt = (GPL_RETRY if gpl_framing else "") + PROMPT.format(name=name, file=file)
     reply = client.chat.completions.create(
         model=os.environ.get("META_MODEL", "muse-spark-1.3"),
-        messages=[{"role": "user", "content": PROMPT.format(name=name, file=file)}],
+        messages=[{"role": "user", "content": prompt}],
         reasoning_effort=os.environ.get("META_REASONING_EFFORT", "high"),
     )
     text = reply.choices[0].message.content or ""
@@ -94,12 +97,21 @@ def ask_model(name: str, file: str) -> str:
     return (block.group(1) if block else text).strip()
 
 
+def recall(name: str, file: str) -> tuple[str, bool]:
+    """The model's answer, retried once with the (accurate) GPL framing if it refused. Returns (text, refused)."""
+    text = ask_model(name, file)
+    if function_span(text, name) is None and REFUSAL_RE.search(text):
+        text = ask_model(name, file, gpl_framing=True)
+    refused = function_span(text, name) is None
+    return text, refused
+
+
 def judge(referee: Referee, name: str, file: str, recalled: str, build: str) -> dict:
     """Swap the recalled function into the build's own source file, compile it, compare that function."""
     src = _source(file, build)
     span = function_span(src, name)
     if span is None or function_span(recalled, name) is None:
-        return {"status": "NO_FUNCTION", "match_pct": 0.0}
+        return {"status": "REFUSED", "match_pct": 0.0}
     patched = src[:span[0]] + recalled + src[span[1]:]
     work = OUT / "tmp" / uuid.uuid4().hex[:10]
     work.mkdir(parents=True)
@@ -128,7 +140,8 @@ def _source(file: str, build: str) -> str:
 
 def summarize(rows: list[dict], build: str) -> dict:
     matched = sum(r[build]["status"] == "MATCH" for r in rows)
-    return {"matched": matched, "match_rate": round(matched / len(rows), 3) if rows else 0.0,
+    outcomes = {s: sum(r[build]["status"] == s for r in rows) for s in ("MATCH", "PARTIAL", "NO_COMPILE", "REFUSED")}
+    return {"matched": matched, "outcomes": outcomes, "match_rate": round(matched / len(rows), 3) if rows else 0.0,
             "best_pct": max((r[build]["match_pct"] for r in rows), default=0.0),
             "mean_pct": round(sum(r[build]["match_pct"] for r in rows) / len(rows), 1) if rows else 0.0}
 
@@ -142,13 +155,14 @@ def main() -> None:
 
     def run(item: tuple[str, str]) -> dict:
         name, file = item
-        recalled = ask_model(name, file)
+        recalled, refused = recall(name, file)
         return {"name": name, "file": file, "changed_by_variant": changed_by_variant(referee, name, file),
-                **{b: judge(referee, name, file, recalled, b) for b in BUILDS}}
+                "recalled": recalled, **{b: judge(referee, name, file, recalled, b) for b in BUILDS}}
 
     with concurrent.futures.ThreadPoolExecutor(PARALLEL) as pool:
         rows = list(pool.map(run, picked))
-    for r in rows:
+    public_rows = [{k: v for k, v in r.items() if k != "recalled"} for r in rows]
+    for r in public_rows:
         print(f"{r['name']:28s} unmodified {r['unmodified']['status']:11s} {r['unmodified']['match_pct']:5.1f}   variant {r['variant']['status']:11s} {r['variant']['match_pct']:5.1f}")
     result = {"v": 1, "model": os.environ.get("META_MODEL", "muse-spark-1.3"), "fn_count": len(rows),
               "method": (f"model asked to write {len(rows)} public GBADoom functions (status bar and weapon code) from memory by "

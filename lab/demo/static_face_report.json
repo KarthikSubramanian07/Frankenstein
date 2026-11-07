@@ -1,0 +1,13 @@
+{
+ "v": 1,
+ "rom_path": "lab/out/static_face.gba",
+ "rom_sha1": "752c61e50fc1255e301e8efa4011082bf380c3e2",
+ "changed_functions": [
+  "fn_0801B298"
+ ],
+ "unchanged": 567,
+ "patched_bytes": 44,
+ "original_bytes": 1164,
+ "fn": "fn_0801B298",
+ "display_rule": "code we haven't recovered yet shows as static"
+}

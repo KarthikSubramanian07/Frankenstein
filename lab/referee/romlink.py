@@ -81,10 +81,13 @@ class RomLinker:
         total = sum(m["size"] for m in self.game.values())
         result = {"v": 1, "rom_sha1": sha1, "original_sha1": original_sha1, "identical": sha1 == original_sha1,
                   "recovered": len(recovered), "from_original": len(self.game) - len(recovered), "method": "object-splice",
+                  # pct_agent_code is a percent (0-100) of the game's code bytes
                   "pct_agent_code": round(100.0 * agent_bytes / total, 2), "rom_path": str(out.relative_to(REPO)),
                   "rejected": rejected}
+        result["rejected_count"] = len(rejected)
         if emit:
-            append_event("build.rom", {k: result[k] for k in ("rom_sha1", "identical", "recovered", "from_original", "pct_agent_code", "rom_path")})
+            payload = {k: result[k] for k in ("rom_sha1", "identical", "recovered", "from_original", "pct_agent_code", "rom_path", "rejected_count")}
+            result["event_written"] = append_event("build.rom", payload)
         return result
 
     # ---------- patch ----------
@@ -178,13 +181,17 @@ def _insn_bytes(hexstr: str, text: str, mode: str) -> bytes:
     return b"".join(bytes.fromhex(hexstr[i:i + unit])[::-1] for i in range(0, len(hexstr), unit))
 
 
-def append_event(kind: str, payload: dict, actor: str = "lab") -> None:
+def append_event(kind: str, payload: dict, actor: str = "lab") -> bool:
+    """Append to runs/live/events.jsonl. Returns False (and says so on stderr) when there is no live run."""
     live = REPO / "runs" / "live"
     if not live.exists():
-        return
+        import sys
+        print(f"warning: runs/live does not exist, so the {kind} event was not written", file=sys.stderr)
+        return False
     path = live / "events.jsonl"
     seq = sum(1 for _ in path.open()) if path.exists() else 0
     event = {"v": 1, "ts": datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z"),
              "run_id": live.resolve().name, "seq": seq + 1, "type": kind, "actor": actor, "fn": payload.get("fn"), "payload": payload}
     with path.open("a") as f:
         f.write(json.dumps(event) + "\n")
+    return True

@@ -1,0 +1,31 @@
+# Integration audit: Stage (Lane C) against Lab (Lane A)
+
+Audited 2026-11-07, about 14:35 PST. `stage/src/scenes/split.ts` was changing while I read it, so each line number below comes with the code it points at.
+
+How I checked: I read `stage/server/index.mjs`, `src/state.ts`, `src/data.ts` and every scene. I replayed `crew/exports/doom_r01/events.jsonl` through the real reducer (`src/state.ts`, run under node), then added the real rebuild's `build.rom` (`identical: true`, `recovered: 28`, `pct_agent_code: 0.25`) and a `rom.swapped`. Result: 28 matched, `fnTotal` 30, 0 false claims, 13 PARTIAL verdicts, and the badge renders `0.3%`. I did not start the Stage server. `stage/node_modules` is missing, so `ws` can't load, and `npm test` fails `test/server.test.mjs` with ERR_MODULE_NOT_FOUND (the other 8 tests pass). I left `stage/` untouched.
+
+## Requests to Lane C
+
+1. **Badge (most urgent).** In `stage/src/scenes/split.ts` lines 273 and 284-285 (`s.pctAgentCode.toFixed(1)` and `` `<b>${key}%</b><span>AGENT-WRITTEN CODE</span>` ``), stop using the byte percentage as the headline. The real rebuild gives `pct_agent_code` 0.25, so the screen reads "NOW RUNNING ON 0.3% AGENT-WRITTEN CODE". Use the function count as the headline: "NOW RUNNING ON / 28 AGENT-WRITTEN FUNCTIONS · ROM IDENTICAL". Take the count from `s.build.recovered` when a `build.rom` has arrived, otherwise from `s.matched.length`. Show the byte % only on a small second line, and promote it to the headline once it reaches 10 or more. `pct_agent_code` is already a percent from 0 to 100 (fixtures use 64.3), so don't multiply it by 100.
+2. In `stage/README.md` line 41, change "NOW RUNNING ON NN% AGENT-WRITTEN CODE" to describe the new badge from request 1.
+3. **Ending recovered count.** In `stage/src/scenes/ending.ts` lines 83-95 (the `const b = s.build` block), show the counts from `build.rom` under the checksums: `${b.recovered} FUNCTIONS REBUILT BY AGENTS · ${b.from_original} ORIGINAL`. The checksum comparison is correct as written. The real `manifest.game.rom_sha1` and the real rebuilt SHA-1 are both `d936259b…`, so the screen will read IDENTICAL.
+4. **Rejected functions.** In `stage/src/scenes/ending.ts`, in the same block, add one line when `b.rejected_count > 0`: `${b.rejected_count} REJECTED · ORIGINAL BYTES KEPT`. If the field is missing, show nothing. Lane A adds the field (see "Lane A changes" below). A rejected function never makes the ROM DIFFERENT, so the IDENTICAL logic stays as it is.
+5. **Memory test, variant_changed.** In `stage/src/scenes/timetrial.ts` line 144 (`… MATCH REAL DOOM, <em>${n0(p.variant.matched)}</em> MATCH OUR VARIANT`), use `p.variant_changed` when it exists: `… <em>X</em> MATCH REAL DOOM · <em>Y</em> OF <em>Z</em> FUNCTIONS WE CHANGED MATCH OUR VARIANT`. Here X = `unmodified.matched`, Y = `variant_changed.matched`, Z = `variant_changed.fn_count`. Plain `variant.matched` counts functions the variant never touched, so it reads the same as the unmodified score. Keep the current text as the fallback when `variant_changed` is absent.
+6. Before the demo, run `npm install` in `stage/` on the demo machine. `ws` isn't installed here, so `npm run server` and `test/server.test.mjs` both fail.
+
+## Works (no change needed)
+
+- **Field names and types.** `build.rom` (`rom_sha1`, `identical`) in `ending.ts` lines 83-90. `rom.swapped.pct_agent_code` (a number) in `state.ts` line 238. `patch.verified.changed_functions` (an array) in `ending.ts` lines 92-94. `manifest.game.rom_sha1`, `functions[].{id,addr,size,scope}` and `viz_map.subsystems[].{id,label,functions}` in `data.ts` lines 47-63. All of these match the real `lab/out` files. The real `viz_map` has no `region`, and `data.ts` line 53 falls back to the default regions for hud, weapons, enemies and world. All four ids exist in the real file.
+- **Missing memory probe.** For a real run, `server/index.mjs` `labFile` returns null, so the request gets a 404, `getJson` returns null, and the plate is hidden. A real run never gets the sample file, and a fixture run gets the sample. Both are correct.
+- **The memory test reads `unmodified` and `variant`** (`timetrial.ts` line 143) and hides a fixture probe from real runs.
+- **PARTIAL.** `split.ts` line 17 (`STATUS_TEXT`), line 203 ("NOT A MATCH · N% of bytes agree · rejected") and line 248 (the stamp) cover it, and so do Versus lines 82 and 105. All 13 PARTIAL verdicts in `doom_r01` take this path. NO_COMPILE and LINT_FAIL are covered too.
+- **No original names leak.** `data.ts` `displayName` (lines 84-87) always adds "?", and `common.ts` line 96 is the only place names are rendered. I searched `stage/src`, `stage/director` and `stage/server` for `ST_`/`P_`/`R_`-style identifiers and found none. The `doom_r01` names are all generic and `inferred: true` (`return_zero`, `do_nothing`, …), and its events contain no Doom identifiers.
+- **Fixture isolation and the Ending's honesty rules.** IDENTICAL appears only when the lab's flag and the hashes agree. The Ending shows "NOT REBUILT YET" when there is no `build.rom`.
+
+## Lane A changes (our side)
+
+1. **`lab/out/memory_probe.json` holds a failed run.** All 20 functions failed: 11 NO_FUNCTION and 9 NO_COMPILE, so every number is 0 and best_pct is 0.0. Time trial would show "0 MATCH REAL DOOM, 0 MATCH OUR VARIANT", which proves nothing. Fix `lab/memory_probe.py` and rerun it before the demo, or delete the file so the plate stays hidden.
+2. **`build.rom` never reaches the Stage.** `runs/live` does not exist, and `lab/referee/romlink.py` `append_event` (line 181) returns without a word when it's missing, so the 13:05 rebuild emitted nothing. `doom_r01/events.jsonl` has no `build.rom` either, which means the Director's replay Ending shows "NOT REBUILT YET". Make `append_event` print a warning to stderr. Once `runs/live` points at the demo run, rerun `rebuild --emit`.
+3. Add `rejected_count: len(rejected)` to the `build.rom` payload (`romlink.py` line 87), and add it to the `build.rom` row in `contracts/CONTRACTS.md` §5.
+4. Document `variant_changed` and `mean_pct` in `contracts/CONTRACTS.md` §6b and `contracts/schemas/memory_probe.schema.json`. The schema allows extra properties, but it doesn't list either one.
+5. State the unit in the CONTRACTS §5 table: "`pct_agent_code`: percent 0-100 of game-function bytes".

@@ -18,6 +18,7 @@ __pycache__/
 .pytest_cache/
 *.gba
 !lab/out/target.gba
+!lab/out/static_face.gba
 *.elf
 *.o
 *.wad
