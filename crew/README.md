@@ -1,144 +1,156 @@
-# crew/ · Lane B · The Crew
+# crew/ · The Crew
 
 `video-game-preservation` `multi-agent` `matching-decompilation` `muse-spark` `subq-snap` `fetch-ai` `mongodb-atlas`
 
-> **Lost games, rebuilt and proven.** 87% of classic US games are critically endangered (VGHF and SPN, 2023), and for most of them the source code is gone. Games don't have to die.
+**Lost games, rebuilt and proven.**
 
-The crew is the part of Frankenstein that rebuilds a game's lost source code from the only thing that survives, the compiled game. It takes one function at a time, as anonymized Thumb disassembly, and writes C until the referee (a real compiler with the game's exact flags) says the bytes are identical. Then it tries hard to prove itself wrong before anything is accepted. Once the source is back, the game can be fixed again. The crew learns generic compiler habits as it goes, so each run is faster than the last. It never sees original names, hidden source or the visual map. Doom is our first patient, chosen because it is famous and we can check every answer against hidden source. Victor Frankenstein never checked his work. Ours checks everything.
+87% of classic games are endangered, and most of their source code is gone. The crew rebuilds it from the cartridge, one function at a time. A compiler checks every byte.
 
-Deep dive: [`ARCHITECTURE.md`](ARCHITECTURE.md). Results: [`EXPERIMENTS.md`](EXPERIMENTS.md). Contracts: [`../contracts/CONTRACTS.md`](../contracts/CONTRACTS.md) sections 4b, 5 and 6.
+1. **Dig.** Agents read the compiled game and write C, one function at a time.
+2. **Check.** A compiler rebuilds every piece. Byte-identical or it's out. Lies get caught.
+3. **Learn.** Every match teaches the crew a habit, so the next game goes faster.
+
+Doom is our first patient: famous, hidden from the agents, and checkable byte for byte. Agents lie. The referee doesn't.
+
+Deep dive: [`ARCHITECTURE.md`](ARCHITECTURE.md). Results: [`EXPERIMENTS.md`](EXPERIMENTS.md). Contracts: [`CONTRACTS.md`](../contracts/CONTRACTS.md) sections 4b, 5 and 6.
 
 ## The cast
 
-| Role | Who | Personality |
+| Role | Runs on | Personality |
 |---|---|---|
-| **Digger** (N in parallel) | Muse Spark 1.3; Muse Wonder 1.0 when escalated | Eager grad student. "Got it. Pretty sure." Is sometimes wrong, always confident. |
-| **Checker** | the referee, re-run from scratch, plus SubQ Snap | Stern examiner. "Byte 14 is lying." Trusts nobody, least of all the Diggers. |
-| **Distiller** | Muse Spark, low effort, off the critical path | Quiet librarian. Files the lesson and throws away the answer. |
-| **Archivist** | templates, no model call on the hot path | Dry museum curator. "Somewhere, a 2004 programmer nods." |
-| **Cartographer** | SubQ `subq-preview` (pending early access) | Mapmaker. Reads the whole program at once and draws the structs. |
-| **Director** | SubQ Snap, watching live frames | Stage manager. Rebuilds whatever you're looking at first. |
+| **Digger** (6 in parallel) | Muse Spark 1.3, Muse Wonder 1.0 when stuck | Eager grad student. "Got it. Pretty sure." |
+| **Checker** | the referee, re-run fresh, plus Snap and Gemini | Stern examiner. "Byte 14 is lying." |
+| **Distiller** | Muse Spark, low effort, after the match | Quiet librarian. Keeps the lesson, throws away the answer. |
+| **Archivist** | templates, no model call | Dry museum curator. "Somewhere, a 2004 programmer nods." |
+| **Cartographer** | SubQ `subq-preview` (pending access) | Mapmaker. Reads the whole program and draws the structs. |
+| **Director** | SubQ Snap, watching live frames | Stage manager. Play it, and we rebuild it. |
 
-## Every sponsor is load-bearing
+## Sponsors are the organs, not the logos
 
-Take any one of these away and something specific stops working.
+| Partner | Role | One line |
+|---|---|---|
+| Meta Model API (Muse Spark, Muse Wonder) | The hands | Writes every line of recovered C. |
+| Subquadratic (SubQ Snap) | The judgment | Reads the whole game at once and decides where every attempt goes. |
+| Fetch.ai (ASI:One) | The front door | Ask for a recovery in a chat. Get proof back. |
+| MongoDB Atlas | The memory | Remembers every trick, so the next game is faster. |
+| Google Gemini | The second opinion | A different lab double-checks every match. |
 
-**Meta Muse Spark + Muse Wonder: the hands.** Every line of recovered C is written by Muse. Diggers run a tool-calling loop on Spark with the referee as a tool. Stubborn functions escalate to Wonder. Metrics carry a per-model `muse.by_model` block (calls and cost), and every `fn.matched` records which models wrote it. No Muse, no code.
+**Muse.** Diggers run a tool-calling loop on Spark, with the referee as a tool, and stubborn functions escalate to Wonder. `metrics.json` splits calls and cost per model in `muse.by_model`.
 
-**SubQ Snap 1.1: the judgment.** Snap is the only model here that reads the whole game at once and returns calibrated probabilities. It makes six kinds of decision:
-1. **Triage.** One whole-program pass scores every function's difficulty with its callees in view. That sets the work order and each function's attempt budget.
-2. **Keep, escalate or abandon.** After each failed attempt (from the second on), Snap decides whether to keep going on Spark, move to Wonder, or stop spending.
-3. **Fakematch gate.** Every byte MATCH also has to clear Snap's fakematch and recital probabilities (reject at 0.85 or higher) before the Checker accepts it.
-4. **Play-to-recover director.** It watches live frames and heartbeats and picks what to rebuild next, so the part of the screen you're looking at heals first.
-5. **Eyes.** A behavioural check: two frames, original and rebuilt, and the question "did it change the way we said it would, and nothing else?"
-6. **Router for ASI:One.** It turns plain words ("bring back Doomguy's face") into candidate functions, from the disassembly alone. Measured against the hidden map by a script outside the crew, its top 10 held 1 HUD function (random picks would hold 0.2) and 4 weapon functions (random: 0.55). That makes it a useful hint, 5 to 7 times better than random, labelled inferred and not precise. The referee still proves any recovery.
+**Snap makes six calls.**
+- **Triage:** one whole-program pass sets the work order and each function's attempt budget.
+- **Keep, escalate or abandon:** after each failed attempt from the second on.
+- **Fakematch gate:** every MATCH must also clear Snap's fakematch and recital checks (it rejects at 0.85).
+- **Director:** watches live frames and heartbeats, and heals what you're looking at first.
+- **Eyes:** compares original and rebuilt frames. Did it change as claimed, and nothing else?
+- **Router:** turns plain words into candidate functions for ASI:One. It is a useful hint, 5 to 7 times better than random, labelled inferred and not precise.
 
-**The Cartographer runs on `subq-preview`, which is pending early access.** Until Subquadratic grants that access, we do not claim it. `--provider meta` exists only to test the pipeline and is labelled `meta-fallback` everywhere.
+**Cartographer.** It needs `subq-preview` early access, and until Subquadratic grants it, we don't claim it. Its `--provider meta` mode is only for testing the pipeline, and it is labelled `meta-fallback`.
 
-**Fetch.ai ASI:One: the front door.** Anyone can verify or request a recovery from an ASI:One chat. The Frankenstein Referee agent on Agentverse calls the crew jobs API (`python -m crew.serve`, port 7111) and re-checks with the referee before it reports success. The API offers `POST /jobs` with `{"fn": "fn_…"}` or a plain-words `{"query": "…"}`, `POST /route`, `GET /jobs/{id}`, `GET /status` and `GET /names/{fn}`.
+**ASI:One.** The Frankenstein Referee agent on Agentverse calls the jobs API (`crew.serve`, port 7111) and re-checks with the referee before it answers. The endpoints are `POST /jobs` (with `fn` or a plain-words `query`), `POST /route`, `GET /jobs/{id}`, `GET /status` and `GET /names/{fn}`.
 
-**MongoDB Atlas: the memory.** Atlas holds the idiom library, which is what makes run N+1 faster, and it is meant to be the system of record. Today only the idiom library goes to Atlas; attempts and verdicts live in `events.jsonl`, and mirroring them to Atlas is not wired yet. **Until `MONGODB_URI` is set, the library falls back to a local JSON file**, and `metrics.json` says so in `library_backend`. Demo runs set the URI.
+**MongoDB.** Atlas holds the idiom library; attempts and verdicts still live in `events.jsonl`. Until `MONGODB_URI` is set, the library falls back to local JSON, and `library_backend` in `metrics.json` says so.
 
-**Gemini (credits only): a second opinion.** With `GEMINI_API_KEY` set, Gemini reviews every byte MATCH in parallel with Snap, so it adds no wait. It rejects on its own only at 0.95 or higher, or at 0.7 or higher when Snap also leans the same way. It is never on the critical path, and `--no-gemini` turns it off.
+**Gemini.** It runs in parallel with Snap on every MATCH, so it adds no wait. It rejects alone only at 0.95, or at 0.7 when Snap agrees, and `--no-gemini` turns it off.
 
 ## Quickstart
 
 ```bash
-python -m crew.doctor                       # pings Meta, SubQ, the referee and Atlas; says plainly what works
+python -m crew.doctor                        # what works, said plainly
 
-# Wiring run: real Muse calls, FAKE verdicts. Labelled "(mock referee)" and fixture: true.
+# Wiring: real Muse calls, FAKE verdicts, labelled "(mock referee)" and fixture: true
 REFEREE_URL=mock python -m crew.run --limit 3 --max-size 64 --label "wiring"
 
-# Real run against your local referee (lab/setup_referee.sh, then python3 -m lab.referee serve on :7101)
+# Real runs against your local referee on :7101 (lab/setup_referee.sh, then python3 -m lab.referee serve)
 python -m crew.run --split train --library learning --diggers 6 --live
-python -m crew.run --split heldout --library on  --label "heldout · library on"
+python -m crew.run --split heldout --library on --label "heldout · library on"
 
-# Bench: 20 original functions, real compiler, never Doom. Results are always labelled "bench".
+# Bench: 20 original functions, real compiler, never Doom, always labelled "bench"
 python -m crew.bench.referee serve --port 7121 &
 REFEREE_URL=http://127.0.0.1:7121 FRANK_MANIFEST=crew/bench/out/manifest.json \
   python -m crew.run --split train --label "bench · train · library learning"
 
-# Jobs API for ASI:One (add --mock for instant fixture answers)
+# Jobs API for ASI:One (--mock for instant fixture answers)
 python -m crew.serve --port 7111
 curl -s localhost:7111/jobs -d '{"query": "bring back the face"}'
 
-# On stage: three small functions, live, with a terminal timer
+# On stage: 3 small functions, live, with a timer
 python -m crew.demo --pick 3 --live
 
-# Play to recover: Lane D's tap posts heartbeats, Snap steers every 4 s
+# Play to recover: Lane D posts heartbeats, Snap steers every 4 s
 python -m crew.run --split train --director --live
 curl -s localhost:7112/heartbeat -d '{"running": ["fn_0801B34C"], "frame_png_b64": "…"}'
 
-# Cartographer: corpus stats with no API call, then the real pass, then feed the header to a run
+# Cartographer: dry run, real pass, then feed the header to a run
 python -m crew.cartographer --run-dir runs/r01 --dry-run
 python -m crew.cartographer --run-dir runs/r01 --emit
 python -m crew.run --split heldout --library on --cartographer runs/r01/types.h
 
-make test-crew                              # offline: scripted model, mock referee, no keys, no network
+make test-crew                               # offline: no keys, no network
 ```
 
-Keys go in `.env`: `META_API_KEY`, `SUBQ_API_KEY`, `MONGODB_URI`. Without `SUBQ_API_KEY` the crew still runs, but on a fixed rule (escalate after 3 failures, no triage, no gate), and `metrics.snap` is `null`.
+Keys go in `.env`: `META_API_KEY`, `SUBQ_API_KEY`, `MONGODB_URI` and `GEMINI_API_KEY`. Without SubQ the crew still runs on a fixed rule (escalate after 3 failures), and `metrics.snap` is `null`.
 
 ## Latency
 
-The crew is model-bound. Here is where the time goes:
+The models set the pace. Our code is glue.
 
 | Step | Time | Source |
 |---|---|---|
 | One Muse call (a Digger turn) | seconds | DECISIONS 11:40 |
 | Referee check | 0.1 to 0.2 s | DECISIONS 11:24 |
-| Snap keep / escalate / abandon, fakematch review | 0.4 to 1.2 s (review median 0.57 s, slowest seen 2.8 s) | `snap.decision` latency_ms |
-| Snap director (frame plus up to 40 functions) | about 2.4 s | `snap.decision` latency_ms |
-| Snap eyes (two frames) | about 0.7 s | `snap.decision` latency_ms |
-| Snap triage, whole program, 208 functions | about 3.4 s | `snap.decision` latency_ms |
-| Bench run, 14 functions, 6 Diggers | 80 s in total | `runs/bench_r01` |
+| Snap keep / escalate / abandon, fakematch review | 0.4 to 1.2 s (review median 0.57 s, slowest 2.8 s) | `snap.decision` events |
+| Snap director (frame plus up to 40 functions) | about 2.4 s | `snap.decision` events |
+| Snap eyes (two frames) | about 0.7 s | `snap.decision` events |
+| Snap triage, 208 functions | about 3.4 s | `snap.decision` events |
+| Bench run, 14 functions, 6 Diggers | 80 s | `runs/bench_r01` |
 
 What we do about it:
-- **Parallel Diggers.** N threads (default 6), each with its own referee calls.
-- **Cache-friendly prompts.** The system prompt and tool list are byte-stable across every call, so the provider's prompt cache hits. Everything specific to one function goes in the user message.
-- **Everything up front.** The first user message already holds the asm, the ctx header, the top idioms, already-recovered neighbours and the Cartographer's types, so most functions need no lookup round trips.
-- **Effort ladder.** Easy functions (difficulty under 0.35) start at medium reasoning effort. After 3 failures effort goes back to high, and Snap can escalate to Wonder.
-- **Verdict cache.** Verdicts are cached by SHA-1 of the source, so an identical resubmission costs nothing. A claim is still always re-checked fresh.
-- **Off the critical path.** The Distiller and naming run in a 2-thread pool after the match. Narration is template-based and makes no model call.
-- **Snap timeouts.** Keep / escalate / abandon and director calls are capped at 8 s (the review at 20 s). Every Snap failure has a safe fallback: keep going, boost the hottest running function, or let the referee and the hard rules decide alone.
-- **Atomic live switch.** `runs/live` is swapped with a symlink rename, so the Stage never reads a half-switched run.
+- **Parallel Diggers:** 6 threads by default.
+- **Cache-friendly prompts:** the system prompt and tools are byte-stable, so the prompt cache hits.
+- **Everything up front:** asm, ctx, idioms, neighbours and types go in the first message, so there are no lookup round trips.
+- **Effort ladder:** easy functions start at medium effort; after 3 failures it goes back to high, and Snap can call in Wonder.
+- **Verdict cache:** keyed by the source's SHA-1, so a resubmission is free. Claims are always re-checked fresh.
+- **Off the critical path:** the Distiller and naming run after the match, and narration is templates.
+- **Snap timeouts:** decide and director calls are capped at 8 s and the review at 20 s, and every failure has a safe fallback.
+- **Atomic live switch:** `runs/live` flips with a symlink rename.
 
-**Language note.** Python stays. A model call takes seconds and a referee check takes 0.1 to 0.2 s; our own code is microseconds of glue. Rewriting it in Rust, Go or Zig would cost hours and make nothing measurably faster.
+**Why Python.** A model call takes seconds and a referee check takes 0.1 to 0.2 s. Rust, Go or Zig would cost hours and save nothing you could measure.
 
 ## Honesty rules
 
-- **Never fake a verdict.** Only the referee's MATCH, re-checked by the Checker and passed by the fakematch review, counts as recovered. The Digger never marks its own work done.
-- **Mock and fixture runs are labelled.** Their label says `(mock referee)` or `(fixture target)` and `metrics.json` carries `fixture: true`. The mock jobs API marks its answers `fixture: true` too.
-- **The bench is labelled bench.** It is never presented as a Doom result.
-- **Names are inferred.** Every name in `names.json` and `/names/{fn}` has `inferred: true`. Only bytes, SHA-1s and match percentages are observed.
-- **The crew can't read the answers.** `crew/guard.py` blocks `lab/secrets/`, `crew/bench/answers/` and `lab/out/viz_map.json` for every file read in the crew process, and `crew/tests/test_guard.py` proves it.
-- **Idioms are generic.** An idiom whose example shares 3 or more consecutive lines with the accepted source is rejected, so the held-out runs stay honest.
-- **Results we don't like still ship.** If the library or the Cartographer doesn't help, `EXPERIMENTS.md` says so.
+- **Never fake a verdict.** Only a fresh referee MATCH that passes the fakematch review counts. The Digger never marks its own work done.
+- **Mock and fixture runs say so.** They are labelled `(mock referee)` or `(fixture target)`, with `fixture: true` in `metrics.json`.
+- **Bench is bench.** It is never presented as Doom.
+- **Names are guesses.** Every name carries `inferred: true`. Only bytes, SHA-1s and match percentages are observed.
+- **No peeking.** `crew/guard.py` blocks `lab/secrets/`, `crew/bench/answers/` and `lab/out/viz_map.json`, and `tests/test_guard.py` proves it.
+- **Idioms stay generic.** An idiom whose example shares 3 lines with the answer is rejected.
+- **Bad results ship too.** If something doesn't help, `EXPERIMENTS.md` says so.
 
-The same method works anywhere the only thing left is the compiled program, as long as you're allowed to rebuild it.
+Games don't have to die. Anywhere the only thing left is the compiled program, Frankenstein can bring the source back.
 
 ## Files
 
 | File | What it does |
 |---|---|
-| `run.py` | The run: scheduler, threads, acceptance, Distiller, director HTTP server, `metrics.json` and `names.json` |
-| `digger.py` | The Digger's tool-calling loop, attempt budget, effort ladder, escalation, claims |
-| `checker.py` | Verdicts (cached), fresh claim re-verification, fakematch rules, the Snap gate and the Gemini second opinion |
-| `gemini.py` | Gemini second-opinion review of a MATCH (advisory) |
-| `snap.py` | SubQ Snap Decisions API: triage, review, decide_next, route, usage stats |
-| `director.py` | Play to recover (heartbeats and frames, then Snap picks) and `eyes()` |
-| `cartographer.py` | Whole-program `types.h` pass on `subq-preview`, validated with a real compiler |
+| `run.py` | Scheduler, threads, acceptance, Distiller, director server, `metrics.json`, `names.json` |
+| `digger.py` | Tool-calling loop, attempt budget, effort ladder, escalation, claims |
+| `checker.py` | Cached verdicts, fresh claim checks, fakematch rules, Snap and Gemini gate |
+| `gemini.py` | Gemini second-opinion review (advisory) |
+| `snap.py` | SubQ Snap: triage, review, decide_next, route, usage stats |
+| `director.py` | Play to recover, and `eyes()` |
+| `cartographer.py` | Whole-program `types.h` on `subq-preview`, compile-checked |
 | `library.py` | Idiom library: Atlas or local JSON, leak check, dedupe |
-| `archivist.py` | Template narration and announcer lines, at most 90 characters each |
-| `prompts.py` | Byte-stable Digger system prompt and tools; Distiller prompt |
-| `llm.py` | Stdlib OpenAI-compatible client for the Meta API; the `muse` usage block |
-| `referee.py` | HTTP client for Lane A's referee, and the labelled mock |
-| `target.py` | The crew's only view of the game: manifest, asm, ctx, neighbours |
+| `archivist.py` | Narration and announcer lines, 90 characters max |
+| `prompts.py` | Byte-stable Digger prompt and tools; Distiller prompt |
+| `llm.py` | Stdlib Meta API client; the `muse` usage block |
+| `referee.py` | Lab referee client, plus the labelled mock |
+| `target.py` | The crew's only view of the game |
 | `events.py` | Append-only, thread-safe `events.jsonl` writer |
-| `guard.py` | Isolation: the paths the crew may never read |
-| `serve.py` | Crew jobs API on :7111 for ASI:One |
-| `demo.py` | On-stage live segment: picks 2 or 3 small unrecovered functions (or takes `--fns`), recovers them live with real model calls and real verdicts, and shows a terminal timer |
+| `guard.py` | Paths the crew may never read |
+| `serve.py` | Jobs API on :7111 for ASI:One |
+| `demo.py` | On-stage segment: 2 or 3 small functions, live calls, real verdicts, a timer |
 | `doctor.py` | Dependency check |
 | `config.py` | The one place that reads the environment |
-| `bench/` | Real-compiler bench: 20 original functions and a contract-compatible referee ([`TOOLCHAIN.md`](bench/TOOLCHAIN.md)) |
-| `tests/` | Offline tests: archivist, cartographer, checker, digger, guard, library, llm, run, serve, snap, two-lab review |
+| `bench/` | Real-compiler bench: 20 original functions and a referee ([`TOOLCHAIN.md`](bench/TOOLCHAIN.md)) |
+| `tests/` | Offline tests, including the two-lab review |
