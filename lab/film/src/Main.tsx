@@ -245,9 +245,9 @@ const Why: React.FC<{len: number}> = ({len}) => {
       </Card>
       <div style={{position: 'absolute', left: 1030, top: 720, width: 800, textAlign: 'center'}}>
         <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 80, color: C.lcd1}}>{fmt(n)} / {fmt(DATA.equivalence.total)}</div>
-        <div style={{fontFamily: BODY, fontWeight: 700, fontSize: 28, color: C.ink}}>identical: the agents' C in a browser vs the original Game Boy chip</div>
+        <div style={{fontFamily: BODY, fontWeight: 700, fontSize: 28, color: C.ink}}>identical: the agents' C in a browser vs the original Game Boy Advance machine code</div>
       </div>
-      <Expert text="6 recovered functions compiled to WebAssembly and arm64, compared with the GBA machine code" at={40} />
+      <Expert text="4 recovered functions, 20,000 recorded outputs, in WebAssembly; 6 checked natively on arm64 on about 1 M inputs each" at={40} />
     </Scene>
   );
 };
