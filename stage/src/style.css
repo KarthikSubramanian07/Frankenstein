@@ -432,3 +432,21 @@ body.obs .split .game-frame .ph { display: none; }
 .versus .evidence .c { font-size: 52px; }
 .versus .ko { top: 846px; }
 .versus .tally { left: 0; right: 0; margin: 0 auto; width: max-content; bottom: auto; top: 990px; text-align: center; font-size: 28px; text-shadow: 3px 3px 0 #000; }
+
+/* ---------- SPLIT v3 (evaluator round 2): legend under the map, quieter table, the tagline ---------- */
+.split > .legend { left: 20px; right: auto; width: 960px; top: 752px; justify-content: center; gap: 16px; }
+.split > .legend .sw.q { margin-left: 30px; }
+.split > .legend .sw.st { margin-left: 30px; background-color: #14122e; background-image: radial-gradient(#b8b8d0 2px, transparent 2.5px); background-size: 10px 10px; outline: 2px solid #3a3360; }
+.split .badge { top: 806px; height: 206px; gap: 14px; }
+.split .badge .l2 { gap: 16px; }
+.split .badge .l2 b { font-size: 100px; }
+.split .rows { height: 174px; }
+.split .chain { top: 500px; gap: 22px; }
+.split .tip { position: absolute; left: 36px; right: 28px; top: 836px; font: 40px/1.25 var(--code); color: #e6e3ff; letter-spacing: 1px; }
+
+/* ---------- VERSUS v3 ---------- */
+.versus .speech { top: 380px; }
+.versus .evidence { top: 540px; padding: 20px 40px; line-height: 1.42; }
+.versus .evidence .lbl { color: #ecebff; }
+.versus .evidence .where { color: #ecebff; }
+.versus .ko { top: 852px; }

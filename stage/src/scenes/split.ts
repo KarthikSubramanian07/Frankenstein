@@ -34,8 +34,8 @@ export function snapLine(d: SnapDecision, s: State): ChainLine {
   switch (d.op) {
     case 'review': {
       const gem = String(p.reviewer ?? 'snap') === 'gemini';
-      return { tag: gem ? 'GEMINI' : 'SNAP', big: gem ? 'SECOND OPINION' : 'CHECKED IT', cls: gem ? 'gem' : 'snap',
-        small: `fake odds ${pc(p.fakematch_p)} · copied odds ${pc(p.recital_p)}` };
+      return { tag: gem ? 'GEMINI' : 'SNAP', big: gem ? 'SECOND OPINION' : 'SCREENED FOR FAKES', cls: gem ? 'gem' : 'snap',
+        small: `${pc(p.fakematch_p)} chance it's faked · ${pc(p.recital_p)} copied` };
     }
     case 'decide_next': {
       const a = String(p.action ?? 'keep');
@@ -76,6 +76,7 @@ export class SplitScene implements Scene {
       <div class="hud">${hudHtml()}</div>
       <div class="game-frame"><div class="ph"></div></div>
       <div class="face-hero" data-k="faceHero"></div>
+      <div class="legend"><span class="sw ok"></span>PROVED<span class="sw q">?</span>OUR GUESS<span class="sw st"></span>NOT BACK YET</div>
       <div class="badge orig"><div class="l1">NOW RUNNING ON</div><div class="l2" data-k="badge">ORIGINAL CODE</div></div>
       <div class="divider"></div>
       <div class="panel">
@@ -91,7 +92,7 @@ export class SplitScene implements Scene {
           <div class="pl snap" data-k="lSnap"><b>SNAP</b><span class="big"></span><span class="small"></span></div>
           <div class="pl proof" data-k="lProof"><b>PROOF</b><span class="big"></span><span class="small"></span></div>
         </div>
-        <div class="legend"><span class="sw ok"></span>PROVED<span class="sw q">?</span>OUR GUESS</div>
+        <div class="tip">Muse writes it. Snap judges it. The compiler proves it.</div>
         <div class="pip"></div>
       </div>
       <div class="ticker">${tickerHtml()}</div>`;
@@ -107,7 +108,7 @@ export class SplitScene implements Scene {
   render(ctx: Ctx) {
     const s = ctx.state;
     renderHud(this.el, s);
-    renderRows(this.rowsEl, ctx, 4, this.memo, null, writer);
+    renderRows(this.rowsEl, ctx, 3, this.memo, null, writer);
     this.renderCode(ctx);
     this.renderProof(ctx);
     this.total = gameTotal(ctx);
