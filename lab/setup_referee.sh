@@ -9,5 +9,9 @@ IMAGE="$(grep -o 'devkitpro/devkitarm@sha256:[0-9a-f]*' lab/build_target.sh)"
 n=$(ls lab/out/target/*.json 2>/dev/null | wc -l | tr -d ' ')
 [ "$n" -gt 0 ] || { echo "no lab/out/target/*.json: git pull first" >&2; exit 1; }
 docker image inspect "$IMAGE" >/dev/null 2>&1 || docker pull -q "$IMAGE" >/dev/null
-docker ps --format '{{.Names}}' | grep -q '^frank-lab$' || docker run -d --name frank-lab -v "$REPO":/work -w /work "$IMAGE" sleep infinity >/dev/null
+# Candidate C from ASI:One users compiles in here, so the container gets no network and an empty file over .env:
+# even an include that slipped past lint could not print an API key. An older frank-lab container lacks this;
+# delete it (Docker Desktop, or docker's container removal command) and rerun this script, between demo runs.
+docker ps --format '{{.Names}}' | grep -q '^frank-lab$' || docker run -d --name frank-lab --network none \
+  -v "$REPO":/work -v "$REPO/lab/out/.gitkeep":/work/.env:ro -w /work "$IMAGE" sleep infinity >/dev/null
 echo "referee ready ($n targets): python3 -m lab.referee serve   (127.0.0.1:7101)"
