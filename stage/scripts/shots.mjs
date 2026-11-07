@@ -14,6 +14,7 @@ const only = process.argv.slice(2);
 
 const SHOTS = [
   { name: 'log', q: '?replay=' + RUN + '&speed=4&t=200', wait: 2600 },
+  { name: 'log-r12', q: '?replay=doom_r12&speed=8&t=420', wait: 2600 },
   { name: 'log-sample', q: '?replay=fx01&speed=1&t=40', wait: 2600 },
   { name: 'card', q: '?scene=card&replay=' + RUN + '&speed=20&t=999', wait: 1500 },
   { name: 'card-sample', q: '?scene=card', wait: 1500 },

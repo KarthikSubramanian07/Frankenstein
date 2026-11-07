@@ -1,6 +1,8 @@
 // Pure run state, rebuilt from the event stream. No DOM here so tests can run it under node.
 // Every number the scenes show comes from this state, which comes only from events.
 import { emptyJudge, judge } from './judgment.ts';
+import { rawLine } from './rawlog.ts';
+import type { RawLine } from './rawlog.ts';
 import type { Judge, Line } from './judgment.ts';
 
 export type Ev = {
@@ -80,6 +82,7 @@ export type State = {
   lastChecked: Checked | null; // newest claim the Checker re-ran
   fakes: FakeRejected[]; // fakematch.rejected: bytes matched but the Checker refused it (contract v1.1)
   modelsUsed: Record<string, number>; // attempts per Muse model
+  raw: RawLine[]; // the machine log: one line per real event (rawlog.ts), last 200
   judge: Judge; // the judgment rail: sponsor lines (judgment.ts)
 };
 
@@ -110,7 +113,7 @@ export function emptyState(): State {
     lintFails: 0, falseClaims: [], claims: new Map(), claimsMade: 0, lastAttempt: null, lastVerdict: null,
     narration: [], idiomsLearned: 0, pctAgentCode: null, swaps: 0, build: null, patch: null, phone: null,
     tick: null, finished: null, ended: false, events: 0,
-    snap: [], snapCount: 0, reviews: [], pendingReviews: [], lastChecked: null, fakes: [], modelsUsed: {},
+    snap: [], snapCount: 0, reviews: [], pendingReviews: [], lastChecked: null, fakes: [], modelsUsed: {}, raw: [],
     judge: emptyJudge(),
   };
 }
@@ -138,6 +141,8 @@ export function apply(s: State, e: Ev): Effect[] {
   if (e.type === 'stage.end') { s.ended = true; return fx; }
   if (e.type === 'fixture') { s.fixture = true; return fx; }
   s.events++;
+  const rl = rawLine(e);
+  if (rl) { s.raw.push(rl); if (s.raw.length > 200) s.raw.shift(); }
   if (t != null) {
     if (s.t0 == null) s.t0 = t;
     if (s.tNow == null || t > s.tNow) s.tNow = t;

@@ -83,3 +83,19 @@ body.obs .lg-game .ttl { display: none; }
 /* no bullets: name, then the verdict */
 .lg-log li { grid-template-columns: minmax(0, 1fr) auto; }
 .lg-log li.no .why { grid-column: 1 / 3; }
+
+/* ---- raw machine log: dense, newest at the bottom, oldest clipped at the top ---- */
+.lg-side { height: 800px; display: flex; flex-direction: column; }
+.lg-panel { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.lg-raw { list-style: none; flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding-top: 6px; }
+.lg-raw li { flex: none; font: 400 16px/22px var(--mono); color: #6f6f6f; white-space: nowrap; overflow: hidden; text-overflow: clip; }
+.lg-raw li span { margin-right: 10px; }
+.lg-raw li .t { color: #4d4d4d; }
+.lg-raw li .w { display: inline-block; width: 9ch; color: #7c7c7c; }
+.lg-raw li .f { color: #5c5c5c; }
+.lg-raw li.proved, .lg-raw li.proved .w, .lg-raw li.proved .f { color: #e8e8e8; }
+.lg-raw li.proved .x { color: #4fce8a; font-weight: 600; }
+.lg-raw li.rejected .x { color: #ee6e65; font-weight: 600; }
+.lg-raw li.rejected .w, .lg-raw li.rejected .f { color: #b5b5b5; }
+/* the counter line is one even run of text: no star, the number and the total look like the words */
+.lg-head .cnt, .lg-head .cnt b, .lg-head .cnt span { font-weight: 400; color: var(--ink); font-size: 26px; }
