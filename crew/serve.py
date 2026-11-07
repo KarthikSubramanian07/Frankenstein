@@ -100,7 +100,32 @@ class Jobs:
             job["false_claims"] = r.checker.false_claims
             if outs:
                 job["attempts"], job["best_pct"] = outs[0].attempts, outs[0].best_pct
-        return {k: v for k, v in job.items() if not k.startswith("_") and k != "started"}
+        out = {k: v for k, v in job.items() if not k.startswith("_") and k != "started"}
+        out["evidence"] = self._evidence(job)
+        return out
+
+    def _evidence(self, job: dict) -> dict:
+        """What an ASI:One answer should show: observed (referee) vs inferred (names) vs judgment (Snap, Gemini)."""
+        ev_path = self.cfg.runs_dir / job["run_id"] / "events.jsonl"
+        observed, decisions, reviews = None, [], []
+        if ev_path.exists():
+            for line in ev_path.read_text().splitlines():
+                try:
+                    e = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                p = e.get("payload", {})
+                if e.get("type") == "verdict" and p.get("claim_was_true") is not None:
+                    observed = {"status": p.get("status"), "match_pct": p.get("match_pct"),
+                                "first_diff": p.get("first_diff"), "claim_was_true": p.get("claim_was_true")}
+                elif e.get("type") == "snap.decision" and p.get("op") == "decide_next":
+                    decisions.append({k: p.get(k) for k in ("attempt", "action", "confidence", "p_match_within_budget")})
+                elif e.get("type") == "snap.decision" and p.get("op") == "review":
+                    reviews.append({k: p.get(k) for k in ("reviewer", "fakematch_p", "recital_p", "period_plausible_p")})
+        name = self.name(job["fn"])
+        return {"observed": observed, "inferred": {"name": name.get("name"), "basis": name.get("basis")},
+                "judgment": {"snap_decisions": decisions[-5:], "reviews": reviews[-2:], "route": job.get("route")},
+                "fixture": bool(job.get("fixture"))}
 
     # -------------------------------------------------- status and names
     def status(self) -> dict:
@@ -210,6 +235,8 @@ def make_handler(jobs: Jobs):
             if not FN_ID.fullmatch(fn):
                 return self._send(400, {"error": "fn must look like fn_08000A1C"})
             started = jobs.start(fn, max_usd)
+            if routed:
+                jobs.jobs[started["job_id"]]["route"] = {k: routed.get(k) for k in ("query", "fns", "p", "basis")}
             self._send(200, {**started, "route": routed} if routed else started)
 
     return H
