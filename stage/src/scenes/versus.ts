@@ -1,140 +1,118 @@
-// Scene 2: Versus. Every false claim: Digger vs Referee, the exact instruction that lied, K.O.
-// With no lie in the run, it shows the newest real claim the Checker re-ran and upheld, with the
-// referee's verdict and the fake gate (SubQ Snap, Gemini). Never a staged lie.
+// Scene 2: Caught. One idea: the agent claimed it was right; the Checker re-ran the compiler.
+// REJECTED (blood) with the one wrong instruction, or CONFIRMED (toxic) when the claim was true.
+// Only real events: the newest false claim or rejected fake, else the newest claim the Checker upheld.
+// Never a staged lie.
+import './versus.css';
 import type { Ctx, Scene } from '../types.ts';
 import { h, esc, diffIns } from '../types.ts';
-import type { Checked, Effect, FalseClaim, Review, State } from '../state.ts';
-import { modelName } from '../state.ts';
+import type { Checked, Effect, FakeRejected, FalseClaim, State } from '../state.ts';
 import { reject } from '../audio.ts';
 
-const pc = (x: number | null) => (x == null ? '--' : `${(x * 100).toFixed(1)}%`);
-const LAB: Record<string, string> = { snap: 'SUBQ SNAP', gemini: 'GEMINI' };
+type Shown =
+  | { kind: 'lie'; c: FalseClaim }
+  | { kind: 'fake'; f: FakeRejected }
+  | { kind: 'ok'; c: Checked }
+  | { kind: 'none' };
+
+const REASON_MAX = 64;
+/** cut a long reason at a word boundary, never mid-word */
+function clip(s: string, n = REASON_MAX): string {
+  const t = s.replace(/\s+/g, ' ').trim();
+  if (t.length <= n) return t;
+  const cut = t.slice(0, n);
+  const sp = cut.lastIndexOf(' ');
+  return `${(sp > n * 0.6 ? cut.slice(0, sp) : cut).replace(/[\s,;:.-]+$/, '')}…`;
+}
+
+/** newest of lies and fakes by ts; else the newest upheld claim; else nothing */
+function pick(s: State): Shown {
+  const lie = s.falseClaims[s.falseClaims.length - 1];
+  const fake = s.fakes[s.fakes.length - 1];
+  if (lie && (!fake || lie.ts >= fake.ts)) return { kind: 'lie', c: lie };
+  if (fake) return { kind: 'fake', f: fake };
+  if (s.lastChecked?.upheld) return { kind: 'ok', c: s.lastChecked };
+  return { kind: 'none' };
+}
+
+const objOf = (x: Shown) => (x.kind === 'lie' ? x.c : x.kind === 'fake' ? x.f : x.kind === 'ok' ? x.c : null);
 
 export class VersusScene implements Scene {
   id = 'versus' as const;
-  el = h('section', 'scene versus idle');
-  private shown: FalseClaim | null = null;
-  private checked: Checked | null = null;
-  private checkedAt = 0;
-  private koTimer = 0;
+  el = h('section', 'scene versus');
+  private claim: HTMLElement;
+  private word: HTMLElement;
+  private detail: HTMLElement;
+  private shownObj: object | null | undefined = undefined;
+  private loud: object | null = null; // a lie or fake that arrived live and has not been stamped yet
 
   constructor() {
     this.el.innerHTML = `
-      <div class="bg"></div>
-      <div class="waiting"><h1>HERE COMES A CLAIM</h1><p>Waiting for a digger to say "matched".</p><p data-k="wtally"></p></div>
-      <div class="fight">
-        <div class="top">
-          <div><div class="hbar"><i data-k="hpL"></i></div><div class="cap" data-k="capL"></div></div>
-          <div class="round">TRY<b data-k="round">1</b></div>
-          <div><div class="hbar r"><i data-k="hpR" style="width:100%"></i></div><div class="cap r">PROOF 100%</div></div>
-        </div>
-        <div class="names"><span data-k="digger">DIGGER</span><span>REFEREE</span></div>
-        <div class="vs">VS</div>
-        <div class="speech" data-k="speech"></div>
-        <div class="refline" data-k="refline"></div>
-        <div class="evidence" data-k="evidence"></div>
-        <div class="ko" data-k="ko"><b>K.O.</b><span>CLAIM REJECTED</span></div>
-        <div class="tally" data-k="tally"></div>
+      <div class="vs-col">
+        <p class="vs-claim" data-k="claim"></p>
+        <h1 class="vs-word" data-k="word"></h1>
+        <div class="vs-detail" data-k="detail"></div>
       </div>`;
+    const q = (k: string) => this.el.querySelector(`[data-k="${k}"]`) as HTMLElement;
+    this.claim = q('claim');
+    this.word = q('word');
+    this.detail = q('detail');
   }
 
-  enter(ctx: Ctx) {
-    const last = ctx.state.falseClaims[ctx.state.falseClaims.length - 1];
-    if (last && last !== this.shown) this.play(ctx, last);
-    else if (this.shown) this.ko(ctx, false);
-    else if (ctx.state.lastChecked) this.upheld(ctx, ctx.state.lastChecked);
-  }
+  enter(ctx: Ctx) { this.shownObj = undefined; this.render(ctx); }
 
   render(ctx: Ctx) {
-    const s = ctx.state;
-    const w = this.el.querySelector('[data-k="wtally"]')!;
-    const t = `LIES CAUGHT SO FAR: ${s.falseClaims.length}`;
-    if (w.textContent !== t) w.textContent = t;
-    if (!this.shown && s.falseClaims.length && ctx.current() === 'versus') this.play(ctx, s.falseClaims[s.falseClaims.length - 1]);
-    // no lies: keep showing real upheld claims, refreshed at most every 4 s so it can be read
-    else if (!this.shown && s.lastChecked && ctx.current() === 'versus'
-      && (this.checked !== s.lastChecked || this.checked.reviews !== s.lastChecked.reviews)
-      && (performance.now() - this.checkedAt > 4000 || !this.checked)) this.upheld(ctx, s.lastChecked);
-    const tl = this.el.querySelector('[data-k="tally"]')!;
-    const tt = this.shown ? `LIE ${this.shown.index} OF ${s.falseClaims.length} CAUGHT · ${s.claimsMade} CLAIMS CHECKED`
-      : this.checked ? `${s.claimsMade} CLAIMS RE-CHECKED. ${s.falseClaims.length} LIES.` : '';
-    if (tl.textContent !== tt) tl.textContent = tt;
+    const x = pick(ctx.state);
+    const obj = objOf(x);
+    if (obj === this.shownObj) return;
+    this.shownObj = obj;
+    this.draw(x);
+    if (x.kind === 'none') return;
+    // stamp the word in, once per new verdict
+    this.word.classList.remove('stamp');
+    void this.word.offsetWidth;
+    this.word.classList.add('stamp');
+    if (obj && obj === this.loud && ctx.current() === 'versus') {
+      this.loud = null;
+      if (!ctx.reduced) { ctx.fx.flash(); ctx.fx.shake(); }
+      reject();
+    }
   }
 
   effect(ctx: Ctx, e: Effect) {
-    if (e.kind === 'falseClaim' && ctx.current() === 'versus') this.play(ctx, e.c);
-    if (e.kind === 'reset') { this.shown = null; this.checked = null; this.el.classList.add('idle'); this.el.classList.remove('ok'); }
+    if (e.kind === 'falseClaim') this.loud = e.c;
+    else if (e.kind === 'fake') this.loud = e.f;
+    else if (e.kind === 'reset') { this.loud = null; this.shownObj = undefined; }
+    else return;
+    if (ctx.current() === 'versus') this.render(ctx);
   }
 
-  /** a true claim, checked three ways: Muse wrote it, the fake gate screened it, the compiler proved it */
-  upheld(ctx: Ctx, c: Checked) {
-    this.checked = c;
-    this.checkedAt = performance.now();
-    this.el.classList.remove('idle');
-    this.el.classList.add('ok');
-    const s = ctx.state;
-    const q = (k: string) => this.el.querySelector(`[data-k="${k}"]`) as HTMLElement;
-    q('hpL').style.width = `${c.match_pct}%`;
-    q('capL').textContent = `CLAIM ${c.match_pct.toFixed(0)}%`;
-    q('round').textContent = String(c.attempt);
-    q('digger').textContent = c.actor.toUpperCase();
-    q('speech').textContent = `"${c.text}"`;
-    q('refline').innerHTML = `RE-RAN THE COMPILER<br>${esc(c.status)} · ${c.match_pct.toFixed(0)}%`;
-    // Muse wrote it. Snap checked it. The compiler proved it (largest line, last).
-    const lines = [`<div class="where">${esc(c.fn)} · THE CLAIM, CHECKED THREE WAYS</div>`,
-      `<div class="m"><span class="lbl">MUSE</span>${esc(modelName(c.model ?? s.model).replace(/^MUSE /, ''))} WROTE IT</div>`];
-    lines.push(...gateLines(s, c.reviews));
-    lines.push(`<div class="c"><span class="lbl">COMPILER</span><span class="exp">${c.status === 'MATCH' ? 'BYTE-IDENTICAL' : esc(c.status)}</span></div>`);
-    q('evidence').innerHTML = lines.join('');
-    const ko = q('ko');
-    ko.innerHTML = c.upheld ? '<b>TRUE</b><span>CLAIM UPHELD</span>' : '<b>NO</b><span>NOT ACCEPTED</span>';
-    ko.classList.remove('on');
-    void ko.offsetWidth;
-    ko.classList.add('on');
-  }
-
-  /** set up the card; after a 1 s hold the referee lands the K.O. */
-  play(ctx: Ctx, c: FalseClaim) {
-    this.shown = c;
-    this.el.classList.remove('idle', 'ok');
-    (this.el.querySelector('[data-k="ko"]') as HTMLElement).innerHTML = '<b>K.O.</b><span>CLAIM REJECTED</span>';
-    const q = (k: string) => this.el.querySelector(`[data-k="${k}"]`) as HTMLElement;
-    q('hpL').style.width = `${c.match_pct}%`;
-    q('capL').textContent = `CLAIM ${c.match_pct.toFixed(1)}%`;
-    q('round').textContent = String(c.attempt);
-    q('digger').textContent = c.actor.toUpperCase();
-    q('speech').textContent = c.claim_text ? `"${c.claim_text}"` : '"Matched it."';
-    q('refline').innerHTML = `RE-RAN THE COMPILER<br>${esc(c.status)} · ${c.match_pct.toFixed(1)}%`;
-    const d = c.first_diff;
+  private draw(x: Shown) {
+    this.el.dataset.v = x.kind;
+    if (x.kind === 'none') {
+      this.claim.textContent = '';
+      this.word.textContent = 'NO CLAIMS YET';
+      this.detail.innerHTML = '';
+      return;
+    }
+    this.claim.textContent = 'Agent claimed it was right';
+    if (x.kind === 'ok') {
+      this.word.textContent = 'CONFIRMED';
+      this.detail.innerHTML = '<p class="vs-text">Every byte matches the original.</p>';
+      return;
+    }
+    this.word.textContent = 'REJECTED';
+    if (x.kind === 'fake') {
+      this.detail.innerHTML = `<p class="vs-text">Bytes matched, but: <b>${esc(clip(x.f.reason || 'the Checker refused it'))}</b></p>`;
+      return;
+    }
+    const d = x.c.first_diff;
     if (d) {
       const ins = diffIns(d.expected_ins, d.got_ins);
-      q('evidence').innerHTML = `<div class="where">${esc(c.fn)} · FIRST WRONG BYTE AT +0x${d.offset.toString(16).toUpperCase()}</div>
-        <div><span class="lbl">EXPECTED</span><span class="exp">${esc(d.expected_ins)}</span></div>
-        <div><span class="lbl">GOT</span>${ins.got}</div>`;
+      this.detail.innerHTML = `<div class="vs-ins">
+        <span class="lbl">expected</span><code>${ins.exp}</code>
+        <span class="lbl">got</span><code>${ins.got}</code></div>`;
     } else {
-      q('evidence').innerHTML = `<div class="where">${esc(c.fn)}</div><div><span class="lbl">VERDICT</span>${esc(c.status)}</div>`;
+      this.detail.innerHTML = `<p class="vs-text">Only ${x.c.match_pct.toFixed(1)}% of the bytes match.</p>`;
     }
-    q('ko').classList.remove('on');
-    clearTimeout(this.koTimer);
-    this.koTimer = window.setTimeout(() => this.ko(ctx, true), ctx.reduced ? 0 : 1000);
   }
-
-  private ko(ctx: Ctx, loud: boolean) {
-    const ko = this.el.querySelector('[data-k="ko"]')!;
-    ko.classList.remove('on');
-    void (ko as HTMLElement).offsetWidth;
-    ko.classList.add('on');
-    if (loud && ctx.current() === 'versus') { ctx.fx.flash(); ctx.fx.shake(); reject(); }
-  }
-}
-
-/** The fake gate on a match: per-lab scores when they belong to this match, else the run's screening so far. */
-function gateLines(s: State, reviews: Review[]): string[] {
-  if (reviews.length) {
-    // these scores attach only at fn.matched, i.e. after the fake gate let the match through
-    return reviews.map((r) => `<div class="g"><span class="lbl">${esc(LAB[r.reviewer] ?? r.reviewer.toUpperCase())}</span>PASSED <small>${pc(r.fakematch_p)} fake odds</small></div>`);
-  }
-  if (!s.reviews.length) return [];
-  const worst = Math.max(...s.reviews.map((r) => r.fakematch_p ?? 0));
-  return [`<div class="g"><span class="lbl">SUBQ SNAP</span>SCREENED ${s.reviews.length} <small>worst ${pc(worst)} fake odds</small></div>`];
 }
