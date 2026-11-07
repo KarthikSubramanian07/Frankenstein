@@ -1,0 +1,356 @@
+{
+ "v": 1,
+ "bench": true,
+ "game": {
+  "id": "bench",
+  "title": "FRANKENSTEIN real-compiler bench (original functions written 2026-11-07)",
+  "license": "MIT (written today for FRANKENSTEIN; not Doom code)",
+  "rom_path": "crew/bench/out/bench.bin",
+  "rom_sha1": "8ab5458970200c84003b3aed90d44d4661a386bd",
+  "compiler": {
+   "name": "GNU Arm Embedded GCC (Homebrew arm-none-eabi-gcc)",
+   "version": "arm-none-eabi-gcc 16.2.0",
+   "flags": "-O2 -mthumb -mthumb-interwork -mcpu=arm7tdmi -ffreestanding -fno-builtin"
+  }
+ },
+ "functions": [
+  {
+   "id": "fn_08000200",
+   "addr": "0x08000200",
+   "size": 46,
+   "mode": "thumb",
+   "scope": "game",
+   "split": "train",
+   "asm_path": "crew/bench/out/asm/fn_08000200.s",
+   "callees": [
+    "fn_080002F8"
+   ],
+   "callers": [],
+   "difficulty": 0.46,
+   "insns": 21,
+   "globals": [],
+   "libcalls": []
+  },
+  {
+   "id": "fn_08000230",
+   "addr": "0x08000230",
+   "size": 32,
+   "mode": "thumb",
+   "scope": "game",
+   "split": "train",
+   "asm_path": "crew/bench/out/asm/fn_08000230.s",
+   "callees": [],
+   "callers": [
+    "fn_080004E4"
+   ],
+   "difficulty": 0.18,
+   "insns": 10,
+   "globals": [
+    "data_A7868023"
+   ],
+   "libcalls": []
+  },
+  {
+   "id": "fn_08000250",
+   "addr": "0x08000250",
+   "size": 18,
+   "mode": "thumb",
+   "scope": "game",
+   "split": "heldout",
+   "asm_path": "crew/bench/out/asm/fn_08000250.s",
+   "callees": [],
+   "callers": [
+    "fn_08000498"
+   ],
+   "difficulty": 0.21,
+   "insns": 9,
+   "globals": [],
+   "libcalls": []
+  },
+  {
+   "id": "fn_08000264",
+   "addr": "0x08000264",
+   "size": 84,
+   "mode": "thumb",
+   "scope": "game",
+   "split": "train",
+   "asm_path": "crew/bench/out/asm/fn_08000264.s",
+   "callees": [],
+   "callers": [],
+   "difficulty": 0.76,
+   "insns": 36,
+   "globals": [
+    "data_0AA61C24",
+    "data_8D700FE5"
+   ],
+   "libcalls": []
+  },
+  {
+   "id": "fn_080002B8",
+   "addr": "0x080002B8",
+   "size": 40,
+   "mode": "thumb",
+   "scope": "game",
+   "split": "heldout",
+   "asm_path": "crew/bench/out/asm/fn_080002B8.s",
+   "callees": [],
+   "callers": [],
+   "difficulty": 0.3,
+   "insns": 18,
+   "globals": [
+    "data_8ECACF13"
+   ],
+   "libcalls": []
+  },
+  {
+   "id": "fn_080002E0",
+   "addr": "0x080002E0",
+   "size": 4,
+   "mode": "thumb",
+   "scope": "game",
+   "split": "train",
+   "asm_path": "crew/bench/out/asm/fn_080002E0.s",
+   "callees": [],
+   "callers": [],
+   "difficulty": 0.02,
+   "insns": 2,
+   "globals": [],
+   "libcalls": []
+  },
+  {
+   "id": "fn_080002E4",
+   "addr": "0x080002E4",
+   "size": 20,
+   "mode": "thumb",
+   "scope": "game",
+   "split": "train",
+   "asm_path": "crew/bench/out/asm/fn_080002E4.s",
+   "callees": [],
+   "callers": [],
+   "difficulty": 0.18,
+   "insns": 10,
+   "globals": [],
+   "libcalls": []
+  },
+  {
+   "id": "fn_080002F8",
+   "addr": "0x080002F8",
+   "size": 10,
+   "mode": "thumb",
+   "scope": "game",
+   "split": "train",
+   "asm_path": "crew/bench/out/asm/fn_080002F8.s",
+   "callees": [],
+   "callers": [
+    "fn_08000200"
+   ],
+   "difficulty": 0.06,
+   "insns": 5,
+   "globals": [],
+   "libcalls": []
+  },
+  {
+   "id": "fn_08000304",
+   "addr": "0x08000304",
+   "size": 32,
+   "mode": "thumb",
+   "scope": "game",
+   "split": "train",
+   "asm_path": "crew/bench/out/asm/fn_08000304.s",
+   "callees": [],
+   "callers": [],
+   "difficulty": 0.22,
+   "insns": 12,
+   "globals": [
+    "data_489E11BC",
+    "data_D3D51AE4"
+   ],
+   "libcalls": []
+  },
+  {
+   "id": "fn_08000324",
+   "addr": "0x08000324",
+   "size": 28,
+   "mode": "thumb",
+   "scope": "game",
+   "split": "heldout",
+   "asm_path": "crew/bench/out/asm/fn_08000324.s",
+   "callees": [],
+   "callers": [],
+   "difficulty": 0.27,
+   "insns": 14,
+   "globals": [],
+   "libcalls": []
+  },
+  {
+   "id": "fn_08000340",
+   "addr": "0x08000340",
+   "size": 50,
+   "mode": "thumb",
+   "scope": "game",
+   "split": "train",
+   "asm_path": "crew/bench/out/asm/fn_08000340.s",
+   "callees": [],
+   "callers": [],
+   "difficulty": 0.39,
+   "insns": 25,
+   "globals": [],
+   "libcalls": []
+  },
+  {
+   "id": "fn_08000374",
+   "addr": "0x08000374",
+   "size": 80,
+   "mode": "thumb",
+   "scope": "game",
+   "split": "heldout",
+   "asm_path": "crew/bench/out/asm/fn_08000374.s",
+   "callees": [],
+   "callers": [],
+   "difficulty": 0.49,
+   "insns": 40,
+   "globals": [],
+   "libcalls": []
+  },
+  {
+   "id": "fn_080003C4",
+   "addr": "0x080003C4",
+   "size": 46,
+   "mode": "thumb",
+   "scope": "game",
+   "split": "train",
+   "asm_path": "crew/bench/out/asm/fn_080003C4.s",
+   "callees": [],
+   "callers": [],
+   "difficulty": 0.51,
+   "insns": 23,
+   "globals": [],
+   "libcalls": []
+  },
+  {
+   "id": "fn_080003F4",
+   "addr": "0x080003F4",
+   "size": 20,
+   "mode": "thumb",
+   "scope": "game",
+   "split": "train",
+   "asm_path": "crew/bench/out/asm/fn_080003F4.s",
+   "callees": [],
+   "callers": [
+    "fn_080004E4"
+   ],
+   "difficulty": 0.11,
+   "insns": 8,
+   "globals": [],
+   "libcalls": []
+  },
+  {
+   "id": "fn_08000408",
+   "addr": "0x08000408",
+   "size": 76,
+   "mode": "thumb",
+   "scope": "game",
+   "split": "train",
+   "asm_path": "crew/bench/out/asm/fn_08000408.s",
+   "callees": [],
+   "callers": [],
+   "difficulty": 0.58,
+   "insns": 26,
+   "globals": [
+    "data_125FD592",
+    "data_8D4B0B19",
+    "data_8DC03A2F",
+    "data_A8918DEC"
+   ],
+   "libcalls": []
+  },
+  {
+   "id": "fn_08000454",
+   "addr": "0x08000454",
+   "size": 42,
+   "mode": "thumb",
+   "scope": "game",
+   "split": "train",
+   "asm_path": "crew/bench/out/asm/fn_08000454.s",
+   "callees": [],
+   "callers": [],
+   "difficulty": 0.28,
+   "insns": 21,
+   "globals": [],
+   "libcalls": []
+  },
+  {
+   "id": "fn_08000480",
+   "addr": "0x08000480",
+   "size": 24,
+   "mode": "thumb",
+   "scope": "game",
+   "split": "heldout",
+   "asm_path": "crew/bench/out/asm/fn_08000480.s",
+   "callees": [],
+   "callers": [],
+   "difficulty": 0.27,
+   "insns": 11,
+   "globals": [],
+   "libcalls": [
+    "__aeabi_lmul"
+   ]
+  },
+  {
+   "id": "fn_08000498",
+   "addr": "0x08000498",
+   "size": 38,
+   "mode": "thumb",
+   "scope": "game",
+   "split": "heldout",
+   "asm_path": "crew/bench/out/asm/fn_08000498.s",
+   "callees": [
+    "fn_08000250"
+   ],
+   "callers": [],
+   "difficulty": 0.38,
+   "insns": 17,
+   "globals": [],
+   "libcalls": []
+  },
+  {
+   "id": "fn_080004C0",
+   "addr": "0x080004C0",
+   "size": 34,
+   "mode": "thumb",
+   "scope": "game",
+   "split": "train",
+   "asm_path": "crew/bench/out/asm/fn_080004C0.s",
+   "callees": [],
+   "callers": [],
+   "difficulty": 0.43,
+   "insns": 15,
+   "globals": [],
+   "libcalls": [
+    "__aeabi_idiv"
+   ]
+  },
+  {
+   "id": "fn_080004E4",
+   "addr": "0x080004E4",
+   "size": 72,
+   "mode": "thumb",
+   "scope": "game",
+   "split": "train",
+   "asm_path": "crew/bench/out/asm/fn_080004E4.s",
+   "callees": [
+    "fn_08000230",
+    "fn_080003F4"
+   ],
+   "callers": [],
+   "difficulty": 0.84,
+   "insns": 31,
+   "globals": [
+    "data_E151E092"
+   ],
+   "libcalls": [
+    "__aeabi_uidivmod"
+   ]
+  }
+ ]
+}
