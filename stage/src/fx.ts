@@ -10,7 +10,7 @@ const PX = 12; // beam pixel size
 export class Fx {
   private ctx: CanvasRenderingContext2D;
   private beams: Beam[] = [];
-  private dissolve: { t0: number; order: number[]; cols: number; rows: number; mid?: () => void; midDone: boolean } | null = null;
+  private dissolve: { t0: number; order: number[]; cols: number; rows: number; color: string; mid?: () => void; midDone: boolean } | null = null;
   private running = false;
   private flashEl: HTMLElement;
   private stageEl: HTMLElement;
@@ -37,7 +37,9 @@ export class Fx {
     const cols = 30, rows = 17;
     const order = Array.from({ length: cols * rows }, (_, i) => i);
     for (let i = order.length - 1; i > 0; i--) { const j = (i * 7919 + 13) % (i + 1); [order[i], order[j]] = [order[j], order[i]]; }
-    this.dissolve = { t0: performance.now(), order, cols, rows, mid, midDone: false };
+    // Blocks are the stage background (--bg), so the cut reads as the screen going dark, not a foreign colour.
+    const color = getComputedStyle(this.stageEl).getPropertyValue('--bg').trim() || '#0c0a09';
+    this.dissolve = { t0: performance.now(), order, cols, rows, color, mid, midDone: false };
     this.kick();
   }
 
@@ -102,7 +104,7 @@ export class Fx {
       const n = d.order.length;
       const filled = t < 0.5 ? Math.floor(n * (t / 0.5)) : Math.floor(n * (1 - (t - 0.5) / 0.5));
       if (t >= 0.5 && !d.midDone) { d.midDone = true; d.mid?.(); }
-      c.fillStyle = '#0B0B2E';
+      c.fillStyle = d.color;
       for (let i = 0; i < Math.max(0, filled); i++) {
         const k = d.order[i];
         c.fillRect((k % d.cols) * bw, Math.floor(k / d.cols) * bh, Math.ceil(bw), Math.ceil(bh));
