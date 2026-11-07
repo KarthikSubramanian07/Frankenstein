@@ -69,7 +69,7 @@ export function scanEvents(lines) {
 export function roadData(opts = {}) {
   const repo = path.resolve(opts.repoDir ?? REPO);
   const roots = [path.resolve(opts.runsDir ?? path.join(repo, 'runs')), path.resolve(opts.exportsDir ?? path.join(repo, 'crew', 'exports'))];
-  const union = readJson(path.join(repo, 'crew', 'exports', 'union', 'UNION.json'));
+  const union = readJson(opts.unionPath ?? path.join(repo, 'crew', 'exports', 'union', 'UNION.json'));
   const man = readJson(path.join(repo, 'lab', 'out', 'manifest.json'));
   const game = (man?.functions ?? []).filter((f) => f.scope === 'game').sort((a, b) => parseInt(a.addr, 16) - parseInt(b.addr, 16));
   const gameIds = new Set(game.map((f) => f.id));
@@ -105,7 +105,7 @@ export function roadData(opts = {}) {
   const climb = [...proven].map((fn) => ({ fn, ts: first.get(fn)?.ts ?? null, run: first.get(fn)?.run ?? null }))
     .filter((c) => c.ts).sort((a, b) => a.ts.localeCompare(b.ts));
   // close, not proven: never in the union, never fn.matched, best attempt >= 90% (tools/close_tier.py, same rule)
-  const unionPath = path.join(repo, 'crew', 'exports', 'union', 'UNION.json');
+  const unionPath = opts.unionPath ?? path.join(repo, 'crew', 'exports', 'union', 'UNION.json');
   const closePath = path.join(repo, 'crew', 'exports', 'union', 'CLOSE.json');
   const mtime = (p) => { try { return fs.statSync(p).mtimeMs; } catch { return 0; } };
   const closeFile = mtime(closePath) >= mtime(unionPath) ? readJson(closePath) : null;
