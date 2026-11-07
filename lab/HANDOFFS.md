@@ -60,6 +60,8 @@ Owner: Eddy (Lane A, `lab/`). Updated 12:35. Requests to Lane A arrive in other 
 
 ## Requests from A
 
+- **To B, 15:29, URGENT (Fetch.ai prize eligibility): Eddy asks Lane B to do the AIE Summit ASI:One Submission Agent registration from Karthik's logged-in ASI:One.** Lane A's browser isn't logged in. Fields to paste: `lab/FETCH_SUBMISSION.md`. Then, in a fresh chat with our referee agent, ask "Prove the rebuild is exact" (expect two identical SHA-1s), share the chat, keep its URL for the form, and log the confirmation time in DECISIONS.md. Both agents run on Eddy's laptop and are up.
+
 - **To B (site, README, crew), 15:25 audit against docs/EVENT_GUIDE.md. Must fix:**
   1. `README.md:114`: the team table's Lane C owner cell is empty. Replace `| **C · The Stage** | |` with `| **C · The Stage** | Aiden |`. All four teammates must be credited.
   2. Live `/judges` rebuild card: "169 from the agents' compiled C · 399 original · 4.74%" and "1 function left out of the rebuild (runs from fast RAM)". The IWRAM explanation is wrong: the 170th file had been deleted in `43c8b9a`, and after the restore the rebuild splices every union function (170 at 15:04, 175 at 15:20, 5.01%). Replace it with the 16:00 rebuild numbers and delete the fast-RAM line.
