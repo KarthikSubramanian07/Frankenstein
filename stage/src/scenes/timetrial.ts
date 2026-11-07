@@ -10,10 +10,27 @@ type Run = {
   matched?: number; fn_total?: number; minutes_per_match?: number; snap?: { on?: boolean };
 };
 type Pick = { on?: Run; off?: Run; pair: boolean };
+type Outcomes = { MATCH?: number; PARTIAL?: number };
+type ProbeBuild = { outcomes?: Outcomes; after_repair?: Outcomes & { mean_pct?: number } };
+type Probe = { fn_count?: number; variant?: ProbeBuild; unmodified?: ProbeBuild };
 
 const timed = (r: Run) => !r.bench && (r.matched ?? 0) > 0 && r.minutes_per_match != null;
 const mins = (x: number) => `${x.toFixed(2)} min`;
-const splitName = (s?: string) => (s === 'heldout' ? 'held-out' : s ?? '');
+const SPLITS: Record<string, string> = { heldout: 'held-out split', train: 'training split' };
+const splitName = (s?: string) => (s ? SPLITS[s] ?? `${s} split` : '');
+
+/** The memory-probe plate, built only from lab/out/memory_probe.json fields. null = hide the plate. */
+export function probeLines(p: Probe | null): string[] | null {
+  const b = p?.variant ?? p?.unmodified;
+  const n = Number(p?.fn_count);
+  if (!b?.outcomes || !(n > 0)) return null;
+  const compiled = Number(b.outcomes.MATCH ?? 0) + Number(b.outcomes.PARTIAL ?? 0);
+  const lines = [`From memory: <b>${compiled} of ${n}</b> compile.`];
+  const r = b.after_repair;
+  if (r && Number.isFinite(Number(r.MATCH)) && Number.isFinite(Number(r.mean_pct)))
+    lines.push(`With the real headers: <b>${Number(r.MATCH)} of ${n}</b> exact, <b>${Math.round(Number(r.mean_pct))}%</b> average.`);
+  return lines;
+}
 
 /** Newest library on/off pair of Doom runs on the same split (held-out first, equal Snap preferred). */
 export function pickPair(runs: Run[]): Pick {
@@ -39,6 +56,7 @@ export class TimeTrialScene implements Scene {
   id = 'timetrial' as const;
   el = h('section', 'scene timetrial');
   private runs: Run[] = [];
+  private probe: Probe | null = null;
   private isSample = false;
   private loaded = false;
   private base: string;
@@ -47,8 +65,8 @@ export class TimeTrialScene implements Scene {
     this.base = base;
     this.el.innerHTML = `
       <div class="tt-head">Minutes per piece <span>· shorter is faster</span></div>
-      <div class="tt-rows" data-k="rows"></div>
-      <div class="tt-say" data-k="say"></div>
+      <div class="tt-body" data-k="body"></div>
+      <div class="tt-probe" data-k="probe" hidden></div>
       <div class="tt-runs" data-k="runs"></div>`;
     void this.load();
     setInterval(() => void this.load(), 10000);
@@ -67,6 +85,9 @@ export class TimeTrialScene implements Scene {
     const real = all.filter((r) => !r.fixture);
     this.isSample = !real.length;
     this.runs = real.length ? real : all;
+    // the probe file that matches the shown run (a real run never gets the sample file); no run, no plate
+    const on = pickPair(this.runs).on;
+    this.probe = on ? await this.json(`/lab/memory_probe?run=${encodeURIComponent(on.dir)}`) : null;
     this.loaded = true;
     this.draw();
   }
@@ -82,35 +103,41 @@ export class TimeTrialScene implements Scene {
     const q = (k: string) => this.el.querySelector(`[data-k="${k}"]`) as HTMLElement;
     const { on, off, pair } = pickPair(this.runs);
     const a = on?.minutes_per_match, b = pair ? off?.minutes_per_match : undefined;
-    const MAX = 1080; // px for the slower bar
-    const top = Math.max(a ?? 0, b ?? 0) || 1;
-    const close = a != null && b != null && Math.abs(a - b) < 0.1 * Math.max(a, b);
-    const row = (label: string, v: number | undefined, fast: boolean) =>
-      v == null
-        ? `<div class="tt-row"><div class="tt-label">${label}</div>
-             <div class="tt-track"><div class="tt-bar empty" style="--w:${MAX}px"><span>not measured yet</span></div></div></div>`
-        : `<div class="tt-row"><div class="tt-label">${label}</div>
-             <div class="tt-track"><div class="tt-bar ${fast ? 'fast' : 'bevel'}" style="--w:${Math.max(24, Math.round((v / top) * MAX))}px"></div>
-             <div class="tt-val${fast ? ' fast' : ''}">${mins(v)}</div></div></div>`;
+    const sp = splitName(on?.split);
 
-    const aFast = a != null && (b == null || (!close && a < b));
-    const bFast = a != null && b != null && !close && b < a;
-    q('rows').innerHTML = on
-      ? row('With memory', a, aFast) + row('Without memory', b, bFast)
-      : row('With memory', undefined, false) + row('Without memory', undefined, false);
-
-    let say: string;
-    if (!on) say = 'No Doom run has finished yet.';
-    else if (b == null) say = 'No memory-off run to compare yet.';
-    else if (close) say = 'Same speed so far: within noise.';
-    else {
-      const n = Math.round((Math.abs(a! - b) / Math.max(a!, b)) * 100);
-      say = `Memory makes it ${n}% ${a! < b ? 'faster' : 'slower'}.`;
+    if (a == null) {
+      q('body').innerHTML = `<p class="tt-note">No Doom run has finished yet.</p>`;
+    } else if (b == null) {
+      // one real run: its number alone, no bar (a lone bar has no scale and reads as "slowest")
+      q('body').innerHTML = `
+        <div class="tt-solo">
+          <div class="tt-solo-label">With memory</div>
+          <div class="tt-hero">${mins(a)}</div>
+          <div class="tt-solo-sub">${Number(on!.matched)} of ${on!.fn_total != null ? Number(on!.fn_total) : '?'} pieces proved</div>
+        </div>
+        <p class="tt-note">No memory-off run to compare yet.</p>`;
+    } else {
+      // both runs on one scale: the slower run fills the track, the faster is shorter
+      const MAX = 780; // px for the slower bar (keep in sync with .tt-axis width)
+      const top = Math.max(a, b);
+      const close = Math.abs(a - b) < 0.1 * top;
+      const row = (label: string, v: number, fast: boolean) => `
+        <div class="tt-row"><div class="tt-label">${label}</div>
+          <div class="tt-track"><div class="tt-bar ${fast ? 'fast' : 'bevel'}" style="--w:${Math.max(24, Math.round((v / top) * MAX))}px"></div>
+          <div class="tt-val${fast ? ' fast' : ''}">${mins(v)}</div></div></div>`;
+      const n = Math.round((Math.abs(a - b) / top) * 100);
+      const say = close ? 'Same speed so far: within noise.' : `Memory makes it ${n}% ${a < b ? 'faster' : 'slower'}.`;
+      q('body').innerHTML = `<div class="tt-rows">${row('With memory', a, !close && a < b)}${row('Without memory', b, !close && b < a)}</div>
+        <div class="tt-axis"><span>&#9664; faster</span><span>slower &#9654;</span></div>
+        <div class="tt-say">${say}</div>`;
     }
-    q('say').textContent = say;
+
+    const lines = probeLines(this.probe);
+    const plate = q('probe');
+    plate.hidden = !lines;
+    plate.innerHTML = lines ? `<div class="tt-probe-tag">Memory probe</div>${lines.map((l) => `<p>${l}</p>`).join('')}` : '';
 
     const names = [on?.dir, pair ? off?.dir : undefined].filter(Boolean).map((d) => esc(d!));
-    const sp = splitName(on?.split);
-    q('runs').innerHTML = names.length ? `${names.join(' vs ')}${sp ? ` · ${esc(sp)}` : ''}` : '';
+    q('runs').innerHTML = names.length ? `${names.length > 1 ? 'runs' : 'run'} ${names.join(' vs ')}${sp ? `, ${esc(sp)}` : ''}` : '';
   }
 }
