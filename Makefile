@@ -40,7 +40,7 @@ MODE ?= replay
 RUN ?=
 ARGS ?=
 
-.PHONY: up down status preflight
+.PHONY: up down status preflight rehearse demo-live
 
 up: ## start every lane in order (MODE=replay|live, RUN=crew/exports/<id>, ARGS=--yes-spend for live)
 	@python3 tools/frank.py up --mode $(MODE) $(if $(RUN),--run $(RUN)) $(ARGS)
@@ -53,3 +53,9 @@ status: ## one board: every service's health plus the run on stage
 
 preflight: ## the demo checklist: keys, referee, schemas, export, Stage build, ports, then the by-hand items
 	@python3 tools/frank.py preflight
+
+rehearse: ## walk the 3:00 judging cut on replay with a stopwatch and screenshots (PACE=0.25 for a 45 s walk)
+	@python3 tools/frank.py rehearse $(if $(RUN),--run $(RUN)) --pace $(or $(PACE),1)
+
+demo-live: ## the live micro-segment: 2 small Doom functions, real calls (~$0.05), the judge presses Enter
+	@python3 tools/frank.py demo-live $(ARGS)

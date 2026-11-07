@@ -9,6 +9,7 @@ Four lanes, ten processes, eleven ports. `frank` starts them in order, checks ea
 | File | What it is |
 |---|---|
 | `frank.py` | Brings the product up, shows the status board, takes it down, runs the demo preflight. Python 3.11+, stdlib only. |
+| `rehearse.mjs` | Walks `docs/DEMO_SCRIPT.md` beat by beat against the running Stage, presses the scene keys, screenshots each beat at 1920×1080 into `runs/_rehearsal/<time>/` and lists what a judge would miss. Uses Lane C's `playwright-core` and the local Chrome. |
 | `hackclock.py` | The event clock (prior work, see `DECISIONS.md`). |
 
 ## Use it
@@ -20,6 +21,8 @@ make up RUN=crew/exports/doom_r01            # replay a specific export or runs/
 make up MODE=live ARGS=--yes-spend           # live: the budgeted crew run plus Play to recover (spends money)
 make status                                  # the board
 make down                                    # stop what `make up` started
+make rehearse                                # walk the 3:00 judging cut on replay: stopwatch + screenshot per beat (PACE=0.25: 45 s)
+make demo-live                               # the live micro-segment (2 small functions, ~$0.05); the judge presses Enter
 python3 tools/frank.py logs bridge -n 60     # one service's log
 python3 tools/frank.py status --json         # the board, for scripts
 ```
@@ -79,3 +82,11 @@ own healthy service. Listed for you to tick: mGBA with the tap, controller, OBS 
 display, and the Built today / Not ours card.
 
 The story these services tell, step by step: [`docs/STORY.md`](../docs/STORY.md).
+
+## Rehearse and the live segment
+
+`make rehearse` replays a finished run (no spend) and checks each beat of the judging cut: the phone page has a ROM,
+the Stage shows the expected words, Versus has a real lie, the Ending has a rebuild proof, and the Stage didn't
+hot-reload mid-demo. `make demo-live` checks that the referee is real and that no other live run is on stage,
+prints the rehearsed timing, waits for the judge's Enter, then runs `python -m crew.demo --pick 2 --live`
+(`ARGS=--no-live` keeps the Stage on its replay, `ARGS=--yes` skips the Enter).

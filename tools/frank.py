@@ -6,6 +6,8 @@
     python3 tools/frank.py down
     python3 tools/frank.py preflight
     python3 tools/frank.py logs <service> [-n 40]
+    python3 tools/frank.py rehearse [--run doom_r01] [--pace 1]
+    python3 tools/frank.py demo-live [--pick 2] [--no-live] [--yes]
 
 `up` starts every lane in order as background processes (logs in runs/_logs/<service>.log, pids in
 runs/_pids.json), waits for each one's health check, and skips anything already healthy on its port.
@@ -792,6 +794,73 @@ def cmd_logs(a) -> int:
     return 0
 
 
+# ---------- the demo: rehearsal and the live micro-segment (docs/DEMO_SCRIPT.md) ----------
+def cmd_rehearse(a) -> int:
+    """Walk the judging-room cut against the running Stage with a stopwatch and screenshots. Spends nothing."""
+    code, _ = http_get("http://127.0.0.1:5173/")
+    if code != 200:
+        print(red("stage-page is not up on :5173. Run `make up` first."))
+        return 1
+    node = shutil.which("node")
+    if not node:
+        print(red("node is not installed"))
+        return 1
+    run = resolve_run(a.run).name if a.run else "doom_r01"
+    args = [node, str(REPO / "tools" / "rehearse.mjs"), "--run", run, "--pace", str(a.pace)]
+    print(dim(f"rehearsing the 3:00 cut on replay {run} at pace {a.pace} (about {180 * a.pace:.0f} s)"))
+    if "vite" in port_owner(5173)[1].lower() or "node" in port_owner(5173)[1].lower():
+        print(yellow("note: the Stage is the Vite dev server; a teammate's save reloads it mid-demo. "
+                     "For the real demo serve the built Stage (see docs/DEMO_SCRIPT.md, checklist)."))
+    return subprocess.call(args, cwd=REPO)
+
+
+def _live_run_in_progress() -> str | None:
+    """A live run is on stage if runs/live has no run.finished and wrote an event in the last 90 s."""
+    s = run_summary(LIVE) if LIVE.exists() else None
+    if s and not s["finished"] and s["last_ts"]:
+        try:
+            age = (datetime.now(timezone.utc) - datetime.fromisoformat(s["last_ts"].replace("Z", "+00:00"))).total_seconds()
+        except ValueError:
+            age = 0
+        if age < 90:
+            return s["run_id"]
+    try:
+        out = subprocess.run(["pgrep", "-fl", r"crew\.(run|demo).*--live"], capture_output=True, text=True).stdout.strip()
+    except OSError:
+        out = ""
+    return out.splitlines()[0] if out else None
+
+
+def cmd_demo_live(a) -> int:
+    """The safe live micro-segment: n small unrecovered functions, real Muse and Snap calls, on stage."""
+    code, body = http_get("http://127.0.0.1:7101/health")
+    if code != 200 or '"mock": false' not in body:
+        print(red(f"referee on :7101 is not healthy and real ({code} {body[:80]}). Run `make up` or lab/setup_referee.sh."))
+        return 1
+    busy = _live_run_in_progress()
+    if busy and a.live:
+        print(red(f"another live run is on stage ({busy}). Refusing to start a second one; wait for it or use --no-live."))
+        return 1
+    argv = [PY, "-m", "crew.demo", "--pick", str(a.pick)] + (["--live"] if a.live else [])
+    env = {**os.environ, "REFEREE_URL": "http://127.0.0.1:7101"}
+    print(bold(f"LIVE SEGMENT · {a.pick} small Doom functions · real Muse Spark + SubQ Snap + Gemini calls"))
+    print(dim("rehearsed 12:43: 2 functions, both matched 38 s after start, rebuild proof at 60 s, $0.045"))
+    print(dim("on stage: " + ("yes, runs/live switches to this run" if a.live else "no (--no-live), the Stage keeps its replay")))
+    if not a.yes:
+        if not sys.stdin.isatty():
+            print(red("not a terminal: pass --yes to start without the Enter press"))
+            return 1
+        try:
+            input(bold("\n  Judge: press ENTER to hire the agents. "))
+        except (EOFError, KeyboardInterrupt):
+            print("\ncancelled")
+            return 1
+    t0 = time.time()
+    rc = subprocess.call(argv, cwd=REPO, env=env)
+    print(dim(f"wall clock {time.time() - t0:.1f} s, exit {rc}. The Stage's Ending shows the run's build.rom."))
+    return rc
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(prog="frank", description="Run FRANKENSTEIN as one product.")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -808,8 +877,16 @@ def main() -> int:
     lg = sub.add_parser("logs", help="tail one service's log")
     lg.add_argument("service")
     lg.add_argument("-n", type=int, default=40)
+    rh = sub.add_parser("rehearse", help="walk the 3:00 judging cut on replay with a stopwatch and screenshots")
+    rh.add_argument("--run", help="replay run id (default doom_r01)")
+    rh.add_argument("--pace", type=float, default=1.0, help="1 = real time (3:00); 0.25 = the same walk in 45 s")
+    dl = sub.add_parser("demo-live", help="the live micro-segment: 2 small functions, real calls, judge presses Enter")
+    dl.add_argument("--pick", type=int, default=2)
+    dl.add_argument("--no-live", dest="live", action="store_false", help="don't switch runs/live (timing only)")
+    dl.add_argument("--yes", action="store_true", help="start without waiting for Enter")
     a = ap.parse_args()
-    return {"up": cmd_up, "status": cmd_status, "down": cmd_down, "preflight": cmd_preflight, "logs": cmd_logs}[a.cmd](a)
+    return {"up": cmd_up, "status": cmd_status, "down": cmd_down, "preflight": cmd_preflight, "logs": cmd_logs,
+            "rehearse": cmd_rehearse, "demo-live": cmd_demo_live}[a.cmd](a)
 
 
 if __name__ == "__main__":
