@@ -1,0 +1,13 @@
+{
+ "v": 1,
+ "rom_path": "lab/out/hud_shift.gba",
+ "rom_sha1": "19dcd9017bf1c869cb960ea0cdfd175832eafcb1",
+ "fn": "fn_0801C130",
+ "source": "crew/exports/doom_hud01/recovered/fn_0801C130.c (referee MATCH) with one edit: the second argument becomes a1 - 4",
+ "changed_functions": ["fn_0801C130"],
+ "unchanged": 567,
+ "patched_bytes": 32,
+ "original_bytes": 32,
+ "expected_effect": "every graphic drawn through this wrapper (status-bar digits and other numbered patches) draws 4 pixels higher; untested in an emulator",
+ "built_with": "python3 -m lab.referee patch --fn fn_0801C130 --src lab/demo/hud_shift/fn_0801C130.c"
+}
