@@ -274,7 +274,12 @@ def services(env: dict, mode: str, live_args: str) -> list[Service]:
                 "http://127.0.0.1:7111/health"),
         Service("stage-server", "C stage", ["npm", "run", "server"], 7201, "http://127.0.0.1:7201/health",
                 extra_ports=[7202], cwd=stage),
-        Service("stage-page", "C stage", ["npm", "run", "dev"], 5173, "http://127.0.0.1:5173/", cwd=stage, wait_s=25),
+        # demo default: a built, static Stage (no hot reload), so a teammate saving a file can't reset a scene
+        # mid-demo (rehearsal friction #5). STAGE_DEV=1 keeps the Vite dev server for development.
+        Service("stage-page", "C stage",
+                ["npm", "run", "dev"] if os.environ.get("STAGE_DEV") == "1" else
+                ["sh", "-c", "npm run build >/dev/null && exec npx vite preview --host 127.0.0.1 --port 5173 --strictPort"],
+                5173, "http://127.0.0.1:5173/", cwd=stage, wait_s=90),
         Service("bridge", "D creature", [PY, "-m", "creature.bridge", "--events", "runs/live/events.jsonl",
                                          "--manifest", "lab/out/manifest.json", "--viz-map", "lab/out/viz_map.json"],
                 7301, "http://127.0.0.1:7304/health", extra_ports=[7300, 7304],
