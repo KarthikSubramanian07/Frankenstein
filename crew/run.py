@@ -371,16 +371,26 @@ class Run:
             if run_dir == self.dir:
                 continue
             try:
+                previews = {}
                 for line in ev_path.read_text().splitlines():
-                    if fn not in line or '"verdict"' not in line:
+                    if fn not in line:
                         continue
                     e = json.loads(line)
-                    if e.get("type") != "verdict" or e.get("fn") != fn:
+                    if e.get("fn") != fn:
                         continue
                     p = e["payload"]
-                    src_path = run_dir / "attempts" / f"{fn}.{int(p.get('attempt', 0)):02d}.c"
-                    if p.get("status") == "PARTIAL" and src_path.exists() and (best is None or p["match_pct"] > best["match_pct"]):
-                        best = {"src": src_path.read_text().strip(), "match_pct": p["match_pct"], "run": run_dir.name}
+                    if e.get("type") == "attempt.submitted":
+                        prev = p.get("src_preview") or ""
+                        if prev and len(prev.splitlines()) < 40:  # under 40 lines, the preview is the whole source
+                            previews[int(p.get("attempt", 0))] = prev
+                        continue
+                    if e.get("type") != "verdict" or p.get("status") != "PARTIAL":
+                        continue
+                    n = int(p.get("attempt", 0))
+                    src_path = run_dir / "attempts" / f"{fn}.{n:02d}.c"
+                    src = src_path.read_text().strip() if src_path.exists() else previews.get(n)
+                    if src and (best is None or p["match_pct"] > best["match_pct"]):
+                        best = {"src": src, "match_pct": p["match_pct"], "run": run_dir.name}
             except (OSError, json.JSONDecodeError, ValueError):
                 continue
         return best
