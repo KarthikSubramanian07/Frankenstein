@@ -151,3 +151,50 @@ def test_claim_first_counts_real_lies_and_accepts_true_claims(tmp_path):
     evs = [_j.loads(l) for l in (tmp_path / "events.jsonl").read_text().splitlines()]
     verdicts = [e["payload"]["claim_was_true"] for e in evs if e["type"] == "verdict"]
     assert verdicts == [False, True]
+
+
+def _escalation_digger(tmp_path, error_text):
+    from crew.checker import Checker
+    from crew.config import Config
+    from crew.digger import Digger
+    from crew.events import EventLog
+    from crew.library import Library
+    from crew.llm import LLMError
+    from crew.referee import MockReferee
+    from crew.target import Target
+
+    cfg = Config()
+    cfg.escalation_model = "muse-wonder-1.0"
+    t = Target(cfg, MockReferee())
+    fn = next(iter(f["id"] for f in t.game_functions()))
+    models = []
+
+    class LLMStub:
+        def __init__(self):
+            self.cfg = cfg
+
+        def chat(self, messages, model=None, **k):
+            models.append(model)
+            if model == "muse-wonder-1.0":
+                raise LLMError(error_text)
+            return {"message": {"role": "assistant", "content": "done"}, "tin": 1, "tout": 1, "cost": 0.0, "model": model}
+
+    log = EventLog(tmp_path, "t")
+    d = Digger("digger-1", LLMStub(), t, Checker(MockReferee(), log), Library(cfg, mode="off", path=tmp_path / "l.json"),
+               log, escalate_after=0)
+    d.dig(fn)
+    return cfg, models
+
+
+def test_one_failed_escalation_call_does_not_disable_escalation_run_wide(tmp_path):
+    """A transient or request-specific error on the escalation model (e.g. HTTP 400) drops only this function back
+    to the base model. It used to clear the shared config, silently ending Wonder escalation for every Digger."""
+    cfg, models = _escalation_digger(tmp_path, "HTTP 400: b'bad request'")
+    assert models[0] == "muse-wonder-1.0" and models.count("muse-wonder-1.0") == 1
+    assert all(m == cfg.model for m in models[1:])
+    assert cfg.escalation_model == "muse-wonder-1.0"
+
+
+def test_missing_escalation_model_is_turned_off_for_everyone(tmp_path):
+    cfg, models = _escalation_digger(tmp_path, "HTTP 404: b'model not found'")
+    assert cfg.escalation_model == ""

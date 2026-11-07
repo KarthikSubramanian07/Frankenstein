@@ -89,21 +89,25 @@ class Digger:
         budget = attempt_budget(fn["difficulty"])
         last_src, last_attempt, best_src, failures, turns = None, 0, None, 0, 0
         escalated = False  # set by SubQ Snap (or by the fixed fallback rule when Snap is off)
+        esc_failed = False  # an escalation-model call errored during this function
         self.log.emit("fn.claimed", "scheduler", fn=fn_id, digger=self.name, difficulty=fn["difficulty"])
 
         while out.attempts < budget and turns < budget * 3 and out.cost_usd < self.max_usd and self.budget_ok():
             turns += 1
             if self.snap_decide is None and failures >= self.escalate_after:
                 escalated = True
-            model = self.llm.cfg.escalation_model if (escalated and self.llm.cfg.escalation_model) else self.llm.cfg.model
+            use_esc = escalated and not esc_failed and self.llm.cfg.escalation_model
+            model = self.llm.cfg.escalation_model if use_esc else self.llm.cfg.model
             effort = effort_for(fn["difficulty"], failures, self.llm.cfg.reasoning_effort)
             try:
                 # big functions need room to think AND write: scale the output budget with function size
                 r = self.llm.chat(messages, model=model, tools=TOOLS, effort=effort,
                                   max_tokens=min(32000, 8000 + fn["size"] * 16))
             except LLMError as e:
-                if model != self.llm.cfg.model:  # escalation model unavailable: stay on the base model
-                    self.llm.cfg.escalation_model = ""
+                if model != self.llm.cfg.model:  # escalation call failed: stay on the base model
+                    esc_failed = True  # for this function only; one bad call must not end escalation run-wide
+                    if "HTTP 404" in str(e):  # the escalation model does not exist: turn it off for everyone
+                        self.llm.cfg.escalation_model = ""
                     continue
                 out.status = "failed"
                 out.journey.append(("error", str(e)[:200]))
