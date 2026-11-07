@@ -246,3 +246,22 @@ def test_fakematch_is_not_accepted(tmp_path):
     assert out.status != "matched" and rig.checker.fakematches_rejected >= 1
     assert any(j[1] == "FAKEMATCH" for j in out.journey)
     assert any(e["type"] == "narration" and e["payload"]["mood"] == "alarmed" for e in rig.events)
+
+
+def test_draft_goes_into_first_message_for_big_functions(tmp_path):
+    rig = Rig(tmp_path, lambda fn: [check(GOOD.format(fn=fn)), claim()], ScriptedReferee(default="MATCH"))
+    rig.digger.draft = lambda fn: "void %s(void) { /* m2c */ }" % fn
+    rig.digger.draft_min_bytes = 0
+    out = rig.dig()
+    assert out.draft_used
+    first = rig.llm.calls[0]["messages"][1]["content"]
+    assert "machine decompiler's draft" in first and "/* m2c */" in first
+
+
+def test_draft_skipped_for_small_functions(tmp_path):
+    rig = Rig(tmp_path, lambda fn: [check(GOOD.format(fn=fn)), claim()], ScriptedReferee(default="MATCH"))
+    rig.digger.draft = lambda fn: "DRAFT"
+    rig.digger.draft_min_bytes = 10 ** 9
+    out = rig.dig()
+    assert not out.draft_used
+    assert "DRAFT" not in rig.llm.calls[0]["messages"][1]["content"]

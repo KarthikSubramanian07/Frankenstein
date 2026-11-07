@@ -34,6 +34,7 @@ class Outcome:
     journey: list = field(default_factory=list)  # (attempt, status, pct, first_diff ins) for the Distiller
     model_calls: dict = field(default_factory=dict)
     idioms: list = field(default_factory=list)  # idiom ids this Digger was given (credited or blamed afterwards)
+    draft_used: bool = False  # the first message carried a machine decompiler's draft (m2c)
 
 
 def attempt_budget(difficulty: float) -> int:
@@ -72,6 +73,8 @@ class Digger:
         self.cases = getattr(library, "cases", None)  # CaseMemory: solved training functions, by similarity
         self.max_attempts = 0  # 0 = budget from difficulty (Snap triage or the manifest)
         self.warm_start = None  # callable(fn_id) -> {"src", "match_pct", ...} or None (never in held-out evaluation)
+        self.draft = None  # callable(fn_id) -> m2c draft C or None (crew.draft.get_draft), for big functions
+        self.draft_min_bytes = 150
 
     def _tool_result(self, call_id: str, content) -> dict:
         return {"role": "tool", "tool_call_id": call_id,
@@ -100,6 +103,18 @@ class Digger:
             self.log.emit("narration", "archivist", fn=fn_id, text=f"{fn_id}: picking up where we left off at {warm['match_pct']}%.",
                           mood="dry", speak=False, priority=0)
         out = Outcome(fn=fn_id, status="abandoned")
+        if self.draft is not None and fn["size"] >= self.draft_min_bytes:
+            try:
+                draft = self.draft(fn_id)
+            except Exception:
+                draft = None
+            if draft:
+                out.draft_used = True
+                messages[1]["content"] += (
+                    "\n\n## A machine decompiler's draft of THIS function (m2c, from the asm above)\n"
+                    "Structure is usually right; types, names and registers are not (var_rN/temp_rN are registers, "
+                    "unkNN are field offsets, `?` is an unknown type). Use it as the map of the control flow, then "
+                    "write real C with proper types that compiles to these exact bytes.\n```c\n" + draft + "\n```")
         out.idioms = [i["idiom_id"] for i in idioms]
         out.cases = [c["fn"] for c in cases]
         budget = self.max_attempts or attempt_budget(fn["difficulty"])

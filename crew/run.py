@@ -268,6 +268,10 @@ class Run:
                        max_usd=self.args.max_usd_per_fn, types_slice=self.types_slice, budget_ok=self.budget_ok,
                        snap_decide=snap_decide)
             d.warm_start = d0
+            if self.args.draft and getattr(self.referee, "kind", "") == "lab":
+                from .draft import get_draft
+                d.draft = get_draft
+                d.draft_min_bytes = self.args.draft_min_bytes
             d.max_attempts = self.args.max_attempts
             while self.budget_ok():
                 with qlock:
@@ -447,6 +451,7 @@ class Run:
             "snap_reviews": self.checker.snap_reviews, "second_opinion_reviews": self.checker.second_reviews, "cartographer": bool(self.args.cartographer),
             "snap": self._snap_stats(),
             "aligned_feedback": getattr(self.referee, "aligner", None) is not None,
+            "draft": bool(self.args.draft), "draft_used": sum(1 for o in self.outcomes if getattr(o, "draft_used", False)),
             "cost_estimated": any(m not in ("muse-spark-1.3",) for m in self.usage.by_model),
         }
         if getattr(self.referee, "kind", "") == "mock" or self.target.fixture:
@@ -481,6 +486,9 @@ def parser() -> argparse.ArgumentParser:
     ap.add_argument("--warm-start", action="store_true",
                     help="resume each function from its best earlier attempt (never use in held-out evaluation)")
     ap.add_argument("--max-attempts", type=int, default=0, help="override the per-function attempt budget")
+    ap.add_argument("--draft", action=argparse.BooleanOptionalAction, default=True,
+                    help="put m2c's machine draft in the first message for big functions (crew/draft.py)")
+    ap.add_argument("--draft-min-bytes", type=int, default=150)
     ap.add_argument("--no-align", action="store_true", help="ablation: no aligned side-by-side feedback")
     ap.add_argument("--director", action="store_true", help="Play to recover: SubQ Snap steers by live heartbeats")
     ap.add_argument("--director-port", type=int, default=7112)
