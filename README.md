@@ -17,6 +17,14 @@ A compiler checks every byte.
 
 > Victor Frankenstein never checked his work. Ours checks everything.
 
+## The story in five beats
+
+1. **The patient.** A classic game whose source code is gone. It runs; nobody can fix it.
+2. **You ask.** "Bring back Doomguy's face," in an ASI:One chat. SubQ Snap ranked the real face function first (p 0.88).
+3. **The crew digs.** Diggers write C and the Checker re-runs every claim. "Matched it. Pretty sure." gets stamped REJECTED.
+4. **It's alive.** Recovered functions go back into the ROM. Same SHA-1, or it doesn't ship.
+5. **It changes again.** Edit the C, patch one function, and the room plays the fixed game on their phones.
+
 ## Emulators keep games playable. Source code keeps them alive.
 
 87% of classic games released in the US are critically endangered (Video Game History Foundation and Software Preservation Network, 2023). For most of them, only the compiled cartridge survives. It runs, but nobody can fix it.
@@ -25,7 +33,7 @@ A compiler checks every byte.
 
 1. **Dig.** Agents read the compiled game and write C, one function at a time.
 2. **Check.** A compiler rebuilds every piece. Byte-identical or it's out. Lies get caught.
-3. **Learn.** Every match teaches the crew a habit, so the next game goes faster.
+3. **Learn.** Every match teaches the crew a habit, so the next game goes faster. Habits that stop helping get retired.
 
 > Play it, and we rebuild it. SubQ Snap watches the live game and sends the crew to whatever is on screen.
 
@@ -35,16 +43,18 @@ Doom is our first patient: famous, hidden from the agents, scrambled so they can
 
 | What | Result | Source |
 |---|---|---|
+| First Doom run (`doom_r01`, the 30 smallest functions) | 28 of 30 matched, 1.29 attempts per match, 268 s, $0.73 of Muse + $0.06 of Snap, 0 false claims, 38 habits learned | `DECISIONS.md` |
+| Snap router, "Doomguy's face" | The real face function ranked #1 (p 0.88), checked afterwards against the hidden map | `DECISIONS.md` |
 | Bench (not Doom: 20 small functions written today, `-O2`) | 14 of 14 matched, 12 first try, 80 s, $0.29, 0 false claims, 24 idioms learned | `runs/bench_r01`, `DECISIONS.md` |
 | Doom target | 795 functions, 170 held out | `lab/out/manifest.json` |
 | Referee | 0.1 to 0.2 s per check | `DECISIONS.md` |
-| Doom results | measured live today | `runs/*/metrics.json` |
+| Full-game Doom results | measured live today | `runs/*/metrics.json` |
 
 **Evidence rule.** Bright means proved by the compiler. Violet with a "?" means our guess.
 
 ## Agents lie. The referee doesn't.
 
-Every "I matched it" is re-run by the Checker with a fresh compile. A match that doesn't hold is rejected with the first instruction that differs, and counted.
+Every "I matched it" is re-run by the Checker with a fresh compile. A match that doesn't hold is rejected with the first instruction that differs, and counted. The referee has never told a joke.
 
 ## Sponsors are the organs, not the logos
 
