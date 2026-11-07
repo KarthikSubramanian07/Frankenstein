@@ -19,10 +19,6 @@ export class LogScene implements Scene {
       <div class="lg-game"><b class="ttl">doom</b>${game ? `<iframe src="${esc(game)}" allow="cross-origin-isolated; autoplay; gamepad; fullscreen"></iframe>` : '<span>game capture</span>'}</div>
       <div class="lg-side">
         <div class="lg-panel">
-          <div class="lg-head">
-            <span class="cnt"><b data-k="n">0</b> <span data-k="of">/ 568</span> pieces rebuilt</span>
-            <span class="tot"><em class="p" data-k="p">+0</em><em class="r" data-k="r">−0</em></span>
-          </div>
           <ol class="lg-raw" data-k="log"></ol>
         </div>
       </div>`;
@@ -36,11 +32,6 @@ export class LogScene implements Scene {
     const key = `${s.matched.length}/${total}|${s.raw.length}|${last?.ts}|${last?.text}`;
     if (key === this.memo) return;
     this.memo = key;
-    (this.el.querySelector('[data-k="n"]') as HTMLElement).textContent = String(s.matched.length);
-    (this.el.querySelector('[data-k="of"]') as HTMLElement).textContent = `/ ${total || '--'}`;
-    // diff-style totals: proved in green, rejected (real lies + fake rejections) in red
-    (this.el.querySelector('[data-k="p"]') as HTMLElement).textContent = `+${s.matched.length} proved`;
-    (this.el.querySelector('[data-k="r"]') as HTMLElement).textContent = `−${s.falseClaims.length + s.fakes.length} rejected`;
     // the machine log: newest at the bottom, the column clips the oldest at the top like a terminal
     const log = this.el.querySelector('[data-k="log"]') as HTMLElement;
     log.innerHTML = tail.length

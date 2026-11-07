@@ -99,3 +99,12 @@ body.obs .lg-game .ttl { display: none; }
 .lg-raw li.rejected .w, .lg-raw li.rejected .f { color: #b5b5b5; }
 /* the counter line is one even run of text: no star, the number and the total look like the words */
 .lg-head .cnt, .lg-head .cnt b, .lg-head .cnt span { font-weight: 400; color: var(--ink); font-size: 26px; }
+
+/* no header: the log fills the column, top and bottom aligned with the game window */
+.lg-side { top: 140px; height: 800px; }
+.lg-panel { padding: 0; }
+.lg-raw { padding-top: 0; }
+/* the honesty label sits in the game window's top border, after "─ doom ─" */
+.stage[data-scene='log'] #mark { top: 128px; left: 190px; background: #000; padding: 0 10px; font-size: 18px; line-height: 24px; }
+.lg-raw li { height: 22px; } .lg-raw li .w { vertical-align: top; }
+.lg-raw { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 48px); mask-image: linear-gradient(to bottom, transparent 0, #000 48px); }

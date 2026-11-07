@@ -28,18 +28,18 @@ export function rawLine(e: Ev): RawLine | null {
     case 'attempt.submitted': return line(actor, `try ${p.attempt ?? '?'} · ${model(p.model) || 'muse'} wrote C`);
     case 'claim.made': return line(actor, `claims a match: "${cut(String(p.text ?? ''), 40)}"`);
     case 'verdict': {
-      if (p.fake_rejected === true) return line('checker', `✗ REJECTED fake: ${cut(String(p.reason ?? ''), 48)}`, 'rejected');
-      if (p.claim_was_true === false) return line('checker', `✗ REJECTED claimed right, ${pct(p.match_pct)} of bytes match`, 'rejected');
+      if (p.fake_rejected === true) return line('checker', `✗ REJECTED fake: ${cut(String(p.reason ?? ''), 26)}`, 'rejected');
+      if (p.claim_was_true === false) return line('checker', `✗ REJECTED claimed right · ${pct(p.match_pct)} match`, 'rejected');
       const st = String(p.status ?? '');
       if (st === 'MATCH') return line('referee', `match 100% · try ${p.attempt ?? '?'}`);
       if (st === 'PARTIAL') {
-        return line('referee', `✗ REJECTED only ${pct(p.match_pct)} of bytes match`, 'rejected');
+        return line('referee', `✗ REJECTED ${pct(p.match_pct)} match`, 'rejected');
       }
       if (st === 'NO_COMPILE') return line('referee', '✗ REJECTED does not compile', 'rejected');
-      if (st === 'LINT_FAIL') return line('referee', '✗ REJECTED breaks the no-cheating rules', 'rejected');
+      if (st === 'LINT_FAIL') return line('referee', '✗ REJECTED broke lint rules', 'rejected');
       return line('referee', st.toLowerCase());
     }
-    case 'fakematch.rejected': return line('checker', `✗ REJECTED fake: ${cut(String(p.reason ?? ''), 48)}`, 'rejected');
+    case 'fakematch.rejected': return line('checker', `✗ REJECTED fake: ${cut(String(p.reason ?? ''), 26)}`, 'rejected');
     case 'fn.matched': return line('checker', `✓ PROVED byte-identical · ${p.attempts ?? '?'} tries`, 'proved');
     case 'fn.abandoned': return line(actor, `gave up after ${p.attempts ?? '?'} tries · best ${pct(p.best_pct)}`);
     case 'snap.decision': {
