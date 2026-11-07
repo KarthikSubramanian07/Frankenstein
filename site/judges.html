@@ -28,9 +28,9 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&family=Press+Start+2P&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=20">
-<link rel="stylesheet" href="/assets/judges.css?v=2">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Schibsted+Grotesk:wght@500;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&family=Press+Start+2P&display=swap">
+<link rel="stylesheet" href="/assets/site.css?v=21">
+<link rel="stylesheet" href="/assets/judges.css?v=3">
 
 <script type="application/ld+json">
 {
@@ -44,12 +44,14 @@
 }
 </script>
 </head>
-<body>
+<body class="jp">
 <a class="skip" href="#main">Skip to content</a>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <symbol id="bolt" viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="#306230" d="M7 2h5v1h-5zM6 3h5v1h-5zM5 4h5v1h-5zM4 5h5v1h-5zM3 6h10v1h-10zM3 7h10v1h-10zM8 8h4v1h-4zM7 9h4v1h-4zM6 10h4v1h-4zM5 11h4v1h-4zM5 12h3v1h-3zM4 13h3v1h-3zM4 14h2v1h-2zM3 15h2v1h-2z"/><path fill="#FFD23F" d="M6 0h5v1h-5zM5 1h5v1h-5zM4 2h5v1h-5zM3 3h5v1h-5zM2 4h10v1h-10zM2 5h10v1h-10zM7 6h4v1h-4zM6 7h4v1h-4zM5 8h4v1h-4zM4 9h4v1h-4zM4 10h3v1h-3zM3 11h3v1h-3zM3 12h2v1h-2zM2 13h2v1h-2z"/></symbol>
+    <symbol id="arrow-down-left" viewBox="0 0 90 60"><path d="M84 6c-14 2-30 8-42 18S22 44 12 52" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M8 40c1 5 2 9 4 13 4-1 9-2 13-2" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="arrow-down" viewBox="0 0 60 70"><path d="M10 6c18 4 30 18 32 46" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M31 48c4 4 8 9 11 14 3-5 7-10 11-13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   </defs>
 </svg>
 
@@ -75,102 +77,129 @@
 <!-- ═════════════ IN 30 SECONDS ═════════════ -->
 <section class="j-head" aria-labelledby="j-h1">
   <div class="wrap">
-    <p class="kicker"><span class="chip">For judges</span> for the people with the clipboards</p>
+    <p class="hand hand-kicker">for the people with the clipboards</p>
     <h1 id="j-h1" class="j-h1">Frankenstein <span class="two">in 30 seconds.</span></h1>
 
-    <ul class="brief">
-      <li>
-        <h2>Who it's for</h2>
-        <p><b>Game preservation groups and rights holders.</b> Games they're allowed to rebuild, never any game.</p>
-      </li>
-      <li>
-        <h2>The problem</h2>
-        <p><b>87% of classic US games are critically endangered</b> (VGHF and SPN, 2023). For most, only the compiled cartridge survives: it runs, but nobody can fix it, port it or change it.</p>
-      </li>
-      <li>
-        <h2>What it does</h2>
-        <p>Coding agents read the compiled game and write its C again, one function at a time. <b>A compiler accepts a piece only if it becomes the exact original bytes.</b> Doom is our first patient.</p>
-      </li>
-      <li class="try">
-        <h2>Try it at our table</h2>
+    <div class="tldr-grid">
+      <section class="tldr" aria-labelledby="tldr-h">
+        <h2 id="tldr-h" class="tldr-h">TL;DR for judges</h2>
+        <dl>
+          <div><dt>What it is</dt><dd><b>AI agents rebuild a lost game's source code from the cartridge.</b> It's for game preservation groups and rights holders, because 87% of classic US games are critically endangered and their code is gone.</dd></div>
+          <div><dt>What's proven</dt><dd><b>A piece only counts if it's byte-identical:</b> the compiler turns the agents' C into the original's exact bytes. Put back into Doom, the rebuilt game has the same checksum.</dd></div>
+          <div><dt>The numbers</dt><dd><b>83 of Doom's 568 game functions are back.</b> That's 2.34% of the code by size, because the crew starts with the small ones.</dd></div>
+          <div><dt>Try it</dt><dd><b>Press Enter at our table</b> and watch two agents recover a function live. Then play Doom on the controller, or scan the QR code to play it on your phone.</dd></div>
+          <div><dt>Not done yet</dt><dd><b>Doomguy's face (1,164 bytes) isn't recovered,</b> and the habit library hasn't beaten noise on unseen code. Both are said plainly below.</dd></div>
+        </dl>
+      </section>
+
+      <!-- PROOF: progress meter -->
+      <figure class="pc progress" id="progress" data-functions="83" data-total="568" data-pct="14.6" data-bytes-pct="2.34" data-asof="14:08" data-source="unique fn.matched across runs/*" data-cells="0 23 42 47 50 64 70 71 75 76 81 82 85 88 89 95 96 100 107 116 117 122 124 126 128 130 134 137 142 146 158 160 162 170 180 187 193 194 195 207 221 225 233 239 252 260 264 266 270 298 301 333 334 353 365 375 385 386 391 402 404 409 437 438 451 452 454 455 458 470 474 476 484 487 491 504 505 514 521 534 535 538 550">
+        <p class="pc-k"><span class="ev ev-proved">PROVED</span> game functions recovered</p>
+        <p class="big"><span class="count" data-to="83">83</span><span class="of"> of 568</span></p>
+        <p class="big-l"><b>14.6%</b> of functions &middot; <b class="bytes">2.34% by code size</b></p>
+        <div class="meter" role="img" aria-label="568 cells, one per Doom game function in address order; 83 are filled mint because the compiler proved them."></div>
+        <p class="hand note note-meter"><svg class="arr" aria-hidden="true"><use href="#arrow-down-left"/></svg>each mint cell is one function the compiler proved</p>
+        <figcaption>Source: unique <code>fn.matched</code> across <code>runs/*</code>, 14:08. Small functions go first, so the byte share trails the count.</figcaption>
+      </figure>
+    </div>
+
+    <div class="table-row">
+      <section class="try" aria-labelledby="try-h">
+        <h2 id="try-h">Try it at our table</h2>
         <ol>
-          <li><b>Press <kbd>Enter</kbd>.</b> You just hired two agents. Watch them dig, live, until the referee stamps MATCH.</li>
+          <li><b>Press <kbd>Enter</kbd>.</b> You just hired two agents; watch them dig until the referee stamps MATCH.</li>
           <li><b>Pick up the controller.</b> It's Doom, running.</li>
           <li><b>Scan the QR code.</b> Now it's on your phone.</li>
         </ol>
-      </li>
-    </ul>
-
-    <dl class="realness" aria-label="What's real and what's replay">
-      <div><dt><span class="ev ev-proved">REAL</span></dt><dd>Every MATCH (the referee re-runs it in 0.1 to 0.2 s), the checksums, the costs, every Snap and Gemini call, and the live dig you start.</dd></div>
-      <div><dt><span class="tag-replay">REPLAY</span></dt><dd>Any screen with the REPLAY badge is a recorded real run, played back faster. Nothing on it is staged.</dd></div>
-      <div><dt><span class="tag-rule">DISPLAY RULE</span></dt><dd>Doomguy's static face means "code we haven't recovered yet". We chose that rule, and we say it out loud.</dd></div>
-      <div><dt><span class="ev ev-guess">our guess<b>?</b></span></dt><dd>Function names, what a function does and Snap's routing are inferred, always violet with a "?".</dd></div>
-    </dl>
-
-    <p class="brief-foot">Muse writes it. Snap judges it. The compiler proves it. MongoDB remembers it. ASI:One lets anyone ask for it, and Gemini gets a second look. Not at our table? <a href="/#story">Walk the story in five chapters</a>.</p>
+      </section>
+      <dl class="realness" aria-label="What's real and what's replay">
+        <div><dt><span class="ev ev-proved">REAL</span></dt><dd>Every MATCH, checksum, cost and Snap or Gemini call, and the live dig you start.</dd></div>
+        <div><dt><span class="tag-replay">REPLAY</span></dt><dd>A screen with this badge is a recorded real run, played faster.</dd></div>
+        <div><dt><span class="tag-rule">DISPLAY RULE</span></dt><dd>Doomguy's static face means "code we haven't recovered yet".</dd></div>
+        <div><dt><span class="ev ev-guess">our guess<b>?</b></span></dt><dd>Names and routing are inferred, so they're always violet with a "?".</dd></div>
+      </dl>
+    </div>
   </div>
 </section>
 
-<!-- ═════════════ TRACK INDEX ═════════════ -->
-<section class="j-tracks" id="tracks" aria-labelledby="tracks-h">
-  <div class="wrap">
-    <p class="tagpill tag-lcd">JUDGED ON</p>
-    <h2 id="tracks-h" class="h2">Every track, <span class="two">criterion by criterion.</span></h2>
-    <p class="j-lede">Each track's criteria in its own words, then how Frankenstein answers them. Every number names the run file or log it came from.</p>
-    <p class="sources"><b>Where the criteria come from.</b> The event page states the three problems in one sentence, quoted as is. The round-one weights and the Fetch.ai requirements come from the organizers' brief as we recorded it in DECISIONS.md and docs/LANE_A_LAB.md. The other partner tracks published no written criteria we could find, so we quote our own reading and label it.</p>
-
-    <nav class="toc" aria-label="Tracks on this page">
-      <p>The event</p>
-      <ul>
-        <li><a href="#overall"><span class="n">1</span>Overall</a></li>
-        <li><a href="#archaeology"><span class="n">2</span>Software Archaeology</a></li>
-        <li><a href="#trust"><span class="n">3</span>Trust but Verify</a></li>
-        <li><a href="#better"><span class="n">4</span>The System That Gets Better</a></li>
+<!-- ═════════════ TRACKS INTRO (full width) ═════════════ -->
+<section class="j-intro" id="tracks" aria-labelledby="tracks-h">
+  <div class="wrap intro-grid">
+    <div>
+      <p class="hand hand-label">how to read this page</p>
+      <h2 id="tracks-h" class="h2">Every track, <span class="two">criterion by criterion.</span></h2>
+    </div>
+    <div class="intro-side">
+      <p><b>Each card quotes the track's criteria, then answers them one row at a time.</b> Every row ends with the file its number came from.</p>
+      <p>The event page states the three problems; the weights and Fetch.ai rules come from the organizers' brief. Partner tracks without written criteria show our own reading, labelled as ours.</p>
+      <ul class="legend-row" aria-label="Legend">
+        <li><span class="ev ev-proved">MATCH</span> proved by the compiler</li>
+        <li><span class="ev ev-guess">name<b>?</b></span> our guess</li>
+        <li><span class="hand hand-inline">like this</span> our notes</li>
       </ul>
-      <p>Partner tracks</p>
-      <ul>
-        <li><a href="#meta"><img src="/assets/logos/meta.svg" alt="" width="18" height="18">Meta Model API</a></li>
-        <li><a href="#subquadratic"><img src="/assets/logos/subq-snap.svg" alt="" width="60" height="12" class="wl">Subquadratic</a></li>
-        <li><a href="#fetchai"><img src="/assets/logos/asi-one.webp" alt="" width="18" height="18">Fetch.ai</a></li>
-        <li><a href="#mongodb"><img src="/assets/logos/mongodb.svg" alt="" width="18" height="18">MongoDB</a></li>
-        <li><a href="#gemini"><img src="/assets/logos/gemini.svg" alt="" width="18" height="18">Google Gemini</a></li>
-      </ul>
-    </nav>
+    </div>
+  </div>
+</section>
 
-    <!-- ─────────── THE EVENT ─────────── -->
-    <p class="group">The event</p>
+<div class="wrap t-layout">
+
+  <!-- sticky rail (desktop) + jump bar (phones and tablets) -->
+  <nav class="rail" aria-label="Tracks on this page">
+    <p class="hand rail-h">the event</p>
+    <ol>
+      <li><a href="#overall">Overall</a></li>
+      <li><a href="#archaeology">Software Archaeology</a></li>
+      <li><a href="#trust">Trust but Verify</a></li>
+      <li><a href="#better">The System That Gets Better</a></li>
+    </ol>
+    <p class="hand rail-h">partner tracks</p>
+    <ol>
+      <li><a href="#meta"><img src="/assets/logos/meta.svg" alt="" width="16" height="16">Meta Model API</a></li>
+      <li><a href="#subquadratic"><img src="/assets/logos/subquadratic.svg" alt="" width="16" height="16" class="sq">Subquadratic</a></li>
+      <li><a href="#fetchai"><img src="/assets/logos/asi-one.webp" alt="" width="16" height="16">Fetch.ai</a></li>
+      <li><a href="#mongodb"><img src="/assets/logos/mongodb.svg" alt="" width="16" height="16">MongoDB</a></li>
+      <li><a href="#gemini"><img src="/assets/logos/gemini.svg" alt="" width="16" height="16">Google Gemini</a></li>
+    </ol>
+  </nav>
+
+  <div class="tracks">
+    <p class="hand group-title">the event</p>
 
     <!-- 1 · OVERALL -->
     <article class="track t-overall" id="overall" aria-labelledby="overall-h">
       <div class="t-side">
-        <p class="t-kind">The event</p>
-        <p class="sticker">Overall · round one</p>
-        <h3 id="overall-h">Lost games, <span class="two">rebuilt and proven.</span></h3>
+        <p class="t-kind">Round one</p>
+        <p class="sticker">Overall</p>
+        <h3 id="overall-h">Lost games, <span class="hl">rebuilt and proven.</span></h3>
         <div class="crit">
-          <p class="crit-h">JUDGED ON</p>
+          <p class="hand crit-h">judged on</p>
           <ul>
             <li>Technical Demo <span class="w">35%</span></li>
             <li>Implementation Difficulty <span class="w">30%</span></li>
             <li>Impact Potential <span class="w">20%</span></li>
             <li>Creativity <span class="w">15%</span></li>
           </ul>
-          <p class="crit-src">Source: organizers' brief, recorded in DECISIONS.md. Round two (top six) weights them equally.</p>
+          <p class="crit-src">Source: the organizers' brief, recorded in DECISIONS.md. Round two weights them equally.</p>
         </div>
-        <a class="back" href="#tracks">&#8593; All tracks</a>
       </div>
       <dl class="claims">
-        <div><dt>Technical Demo <span class="pct">35%</span></dt><dd>You press Enter and real agents dig, live: Muse writes C, the compiler checks it, the stamp lands. This morning they matched <b>28 of 30 real Doom functions in 268&nbsp;s</b>, at 1.29 attempts each. <span class="src">doom_r01</span></dd></div>
-        <div><dt>Implementation Difficulty <span class="pct">30%</span></dt><dd>Matching decompilation, by agents, at <code>-O3</code>: the C must compile to the original bytes under devkitARM GCC. We built the referee, an anonymized split of Doom's 568 game functions, a fakematch linter and a ROM rebuild from the agents' own bytes.</dd></div>
-        <div><dt>Impact Potential <span class="pct">20%</span></dt><dd>87% of classic US games are critically endangered, and source code is what lets a game be fixed and ported. Preservation groups get code that's proved, not guessed.</dd></div>
-        <div><dt>Creativity <span class="pct">15%</span></dt><dd>Frankenstein, played straight: a lab where agents lie and a referee can't be talked out of anything. Play the game, and Snap picks what's on your screen to rebuild next.</dd></div>
-        <div><dt>Cheap enough to matter</dt><dd>Those 28 functions cost <b>$0.73 of Muse and $0.06 of SubQ Snap</b>. <span class="src">doom_r01/metrics.json</span></dd></div>
+        <div><dt>Technical Demo <span class="pct">35%</span></dt><dd>You press Enter, two agents dig live, and the compiler stamps each MATCH in 0.1 to 0.2 seconds. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/docs/DEMO_SCRIPT.md">DEMO_SCRIPT.md</a></dd></div>
+        <div><dt>Implementation Difficulty <span class="pct">30%</span></dt><dd>Agents must write C that compiles to Doom's exact bytes at <code>-O3</code>, past a referee, a fake detector and a full ROM rebuild we built today. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/tree/main/lab">lab/</a></dd></div>
+        <div><dt>Impact Potential <span class="pct">20%</span></dt><dd>87% of classic US games are critically endangered, and source code is what lets a game be fixed and ported again. <span class="src">VGHF and SPN, 2023</span></dd></div>
+        <div><dt>Creativity <span class="pct">15%</span></dt><dd>A lab where agents lie and the referee can't be fooled; play the game, and Snap rebuilds what's on your screen first. <a class="src" href="#subquadratic">Play to recover</a></dd></div>
+        <div><dt>Progress so far</dt><dd>83 of 568 game functions are back, every one proved by the compiler, and the rebuilt game keeps its checksum. <a class="src" href="#progress">see the meter</a></dd></div>
       </dl>
       <div class="proof">
-        <p class="proof-k">PROOF</p>
-        <figure class="shot narrow">
-          <img src="/assets/judges/stage-rebuild.webp" width="688" height="800" loading="lazy" decoding="async" alt="The Stage at the end of the doom_r01 replay: 28 of 568 pieces rebuilt in large orange numerals, a progress bar, a green PROVED tag over the inferred name GUARDED ARRAY FIELD CLEAR? in violet, the line Muse writes, Snap checks, Compiler proves, and an orange REPLAY 4X END badge.">
-          <figcaption><b>The Stage, end of the doom_r01 replay.</b> 28 of 568 game functions proved. A real run played back at 4x; the badge says so.</figcaption>
+        <figure class="pc rebuild" id="rebuild-proof">
+          <p class="pc-k"><span class="ev ev-proved">REBUILD</span> Doom, put back together from the agents' C</p>
+          <div class="sha-rows">
+            <p><span class="lbl">original</span><code>d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2</code></p>
+            <p><span class="lbl">rebuilt</span><code class="sha-new">d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2</code></p>
+          </div>
+          <p class="split-line"><b>6</b> functions from the agents' own compiled C &middot; <b>562</b> from the original build &middot; method <code>object-splice</code></p>
+          <span class="stamp stamp-mint" aria-hidden="true">IDENTICAL</span>
+          <p class="hand note note-sha"><svg class="arr" aria-hidden="true"><use href="#arrow-down"/></svg>same 40 characters: not similar, identical</p>
+          <figcaption>From the <code>build.rom</code> event in <code>crew/exports/doom_r12</code>, 13:36.</figcaption>
         </figure>
       </div>
     </article>
@@ -180,27 +209,42 @@
       <div class="t-side">
         <p class="t-kind">Problem statement 1 of 3</p>
         <p class="sticker">Software Archaeology</p>
-        <h3 id="arch-h">Only the cartridge survived. <span class="two">The C comes back.</span></h3>
+        <h3 id="arch-h">Only the cartridge survived. <span class="hl">The C comes back.</span></h3>
         <div class="crit">
-          <p class="crit-h">JUDGED ON</p>
+          <p class="hand crit-h">judged on</p>
           <ul><li><q>reconstruct software from imperfect evidence</q></li></ul>
           <p class="crit-src">Source: the event page, cerebralvalley.ai.</p>
         </div>
-        <a class="back" href="#tracks">&#8593; All tracks</a>
       </div>
       <dl class="claims">
-        <div><dt>Evidence, not memory</dt><dd>Agents see only anonymous <code>fn_</code> ids, Thumb disassembly and a context header. The real source is locked away as the answer key, and <code>crew/guard.py</code> blocks every read of it.</dd></div>
-        <div><dt>A scrambled patient</dt><dd>Our private Doom build has 11 body-only edits, so recited source can't match it. From memory alone, Muse compiled <b>0 of 20</b> Doom functions; with the real headers and compiler feedback, 3 of 20, none of them ones we changed. <span class="src">DECISIONS 13:28</span></dd></div>
-        <div><dt>Proved instruction by instruction</dt><dd>Each candidate compiles in a pinned devkitARM container and is compared to the original, instruction by instruction. Calls and addresses must point at the same id. <b>One check takes 0.1 to 0.2 s.</b></dd></div>
-        <div><dt>Same bytes, same checksum, same game</dt><dd>The referee splices the agents' compiled functions back into the ROM and hashes it. With the 28 recovered pieces in, the SHA-1 is <b>identical</b>: <code>d936259b…</code></dd></div>
-        <div><dt>And it can change again</dt><dd>Change one constant in recovered C and exactly one byte of the ROM changes. That's what source code is for.</dd></div>
-        <div class="limits"><dt>Honest limits</dt><dd>Today's wins are Doom's smallest functions (120 bytes or less). Doomguy's 1,164-byte face isn't recovered: 2 attempts, best 0.7%. The static face is a display rule, not a recovery. <span class="src">crew/STATUS.md</span></dd></div>
+        <div><dt>Evidence, not memory</dt><dd>Agents see only anonymous ids and the game's machine code as text; the real source is locked away as the answer key. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/guard.py">crew/guard.py</a></dd></div>
+        <div><dt>A scrambled patient</dt><dd>We made 11 small edits to our Doom build, and from memory alone Muse compiled 0 of 20 Doom functions. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/DECISIONS.md">DECISIONS 13:28</a></dd></div>
+        <div><dt>Proved instruction by instruction</dt><dd>Each candidate compiles in a locked-down container and must match the original instruction for instruction. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/lab/README.md">lab/README.md</a></dd></div>
+        <div><dt>The whole game, rebuilt</dt><dd>The agents' functions go back into the ROM, and its SHA-1 checksum stays identical. <a class="src" href="#rebuild-proof">see the rebuild</a></dd></div>
+        <div class="limits"><dt>Not done yet</dt><dd>The crew wins on small functions; Doomguy's 1,164-byte face got 2 attempts and a best of 0.7%. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/STATUS.md">crew/STATUS.md</a></dd></div>
       </dl>
       <div class="proof">
-        <p class="proof-k">PROOF</p>
-        <figure class="shot narrow">
-          <img src="/assets/judges/lcd-match.webp" width="640" height="785" loading="lazy" decoding="async" alt="Our handheld referee on the site: target bytes and the agent's compiled bytes side by side for fn_08000230, every row equal, stamped MATCH 100% and 20 B IDENTICAL.">
-          <figcaption><b>The referee, on our site's handheld.</b> A real bench function we wrote today, its 20 bytes compared row by row. The retry before it is illustrative.</figcaption>
+        <figure class="pc proved">
+          <p class="pc-k"><span class="ev ev-proved">MATCH</span> one held-out function, start to finish</p>
+          <div class="code-card">
+            <p class="cc-top"><span>fn_08013CA4.c</span><span>doom_r12 &middot; 2 attempts</span></p>
+<pre><span class="k">void</span> <span class="f">fn_08013CA4</span>(<span class="k">void</span>)
+{
+    <span class="f">fn_08019244</span>();
+    <span class="f">fn_0801D8A4</span>(<span class="n">2</span>, <span class="n">3</span>);
+    <span class="f">fn_0801D5E8</span>(*(<span class="k">int</span> *)(data_030064C4 + <span class="n">0x878</span>));
+    *(<span class="k">int</span> *)(data_030064C4 + <span class="n">0x878</span>) = <span class="n">0</span>;
+    *(<span class="k">int</span> *)(data_030064C4 + <span class="n">0x880</span>) = <span class="n">0</span>;
+    *(<span class="k">int</span> *)(data_030064C4 + <span class="n">0x87c</span>) = <span class="n">0</span>;
+}</pre>
+          </div>
+          <ul class="chain">
+            <li><span class="ev ev-proved">MATCH</span> byte-identical to the original</li>
+            <li><span class="ev ev-proved">2 LABS</span> Snap and Gemini found no fake</li>
+            <li><span class="ev ev-proved">SHA-1</span> identical with it spliced in</li>
+            <li><span class="ev ev-guess">reset_global_state<b>?</b></span> Muse's guess at a name</li>
+          </ul>
+          <figcaption>From <code>crew/exports/doom_r12</code>: <code>recovered/fn_08013CA4.c</code>, <code>events.jsonl</code> and <code>names.json</code>. Declarations trimmed.</figcaption>
         </figure>
       </div>
     </article>
@@ -210,26 +254,36 @@
       <div class="t-side">
         <p class="t-kind">Problem statement 2 of 3</p>
         <p class="sticker">Trust but Verify</p>
-        <h3 id="trust-h">Agents lie. <span class="two">The referee doesn't.</span></h3>
+        <h3 id="trust-h">Agents lie. <span class="hl">The referee doesn't.</span></h3>
         <div class="crit">
-          <p class="crit-h">JUDGED ON</p>
+          <p class="hand crit-h">judged on</p>
           <ul><li><q>verify what other agents ship before it merges</q></li></ul>
           <p class="crit-src">Source: the event page, cerebralvalley.ai.</p>
         </div>
-        <a class="back" href="#tracks">&#8593; All tracks</a>
       </div>
       <dl class="claims">
-        <div><dt>A claim is only a claim</dt><dd>A Digger stakes its claim ("Matched it. Pretty sure.") before it sees the verdict. The Checker re-runs the referee fresh on every claim. No agent ever marks its own work done.</dd></div>
-        <div><dt>Matching bytes aren't enough</dt><dd>A MATCH coaxed with <code>volatile</code>, absolute-address casts, goto chains, padding or cast chains is thrown out. Every held-out run rejected <b>4 fakes, and let 0 through</b>. <span class="src">doom_r02 to r04</span></dd></div>
-        <div><dt>Two labs screen what bytes can't</dt><dd>SubQ Snap and Gemini score every match for fakes and recited source, in parallel. Snap rejects at 0.85; Gemini alone at 0.95, or at 0.7 when Snap agrees.</dd></div>
-        <div><dt>Hard to talk into anything</dt><dd>Pasted C is linted before and after macro expansion, then compiled with no network and an empty <code>.env</code>. We found and fixed an include trick that could have leaked keys to a chat user. <span class="src">SECURITY.md</span></dd></div>
-        <div class="limits"><dt>Honest limits</dt><dd>Before claim-first, a Digger could only claim after a MATCH, so no claim was false. With claim-first, round two caught <b>5 real false claims</b>; the referee refused every one, and no fake was accepted. Snap's gate has rejected nothing so far; the deterministic rules did the catching. <span class="src">DECISIONS 13:58</span></dd></div>
+        <div><dt>A claim is only a claim</dt><dd>Each agent stakes its claim before it sees the verdict, and the Checker re-runs the referee on every one. <a class="src" href="#lie-proof">see a caught lie</a></dd></div>
+        <div><dt>Lies caught</dt><dd>In round two the Checker caught 5 real false claims, and the referee refused every one. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/DECISIONS.md">DECISIONS 13:58</a></dd></div>
+        <div><dt>Fakes thrown out</dt><dd>A fake is C that matches by tricking the compiler, like a stray <code>volatile</code>; the easy held-out runs rejected 3 to 5 each, and none got through. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/EXPERIMENTS.md">crew/EXPERIMENTS.md</a></dd></div>
+        <div><dt>Two labs check what bytes can't</dt><dd>SubQ Snap and Gemini score every match for fakes and recited source, in parallel. <a class="src" href="#gemini">see both labs</a></dd></div>
+        <div><dt>Hard to talk into anything</dt><dd>Pasted C compiles with no network and no keys, after we fixed an include trick that could have leaked them. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/SECURITY.md">SECURITY.md</a></dd></div>
       </dl>
       <div class="proof">
-        <p class="proof-k">PROOF</p>
-        <figure class="shot">
-          <img src="/assets/judges/stage-confirmed.webp" width="1100" height="488" loading="lazy" decoding="async" alt="The Stage's Versus screen: AGENT CLAIMED IT WAS RIGHT above CONFIRMED in huge green letters, with the line Every byte matches the original, and an orange REPLAY 4X badge.">
-          <figcaption><b>Versus, on the doom_r01 replay.</b> The Digger's claim, re-run by the referee and upheld. A false claim gets REJECTED here instead.</figcaption>
+        <figure class="pc lie" id="lie-proof">
+          <p class="pc-k"><span class="ev ev-lie">FALSE CLAIM</span> doom_r12 &middot; <code>fn_0801143C</code> &middot; attempt 5</p>
+          <div class="bubble">Matched it. Pretty sure.</div>
+          <div class="diff">
+            <p class="diff-h"><span>referee: 96.5% match</span><span>first difference at +0x44</span></p>
+            <p class="row exp"><span class="lbl">expected</span><code>ldr r2, [pc, #48]</code></p>
+            <p class="row got"><span class="lbl">got</span><code>ldr r3, [r4, #76]</code></p>
+          </div>
+          <span class="stamp stamp-coral" aria-hidden="true">REJECTED</span>
+          <p class="hand note note-diff"><svg class="arr" aria-hidden="true"><use href="#arrow-down-left"/></svg>one instruction gave it away</p>
+          <div class="fake-row">
+            <span class="ev ev-lie">FAKE</span>
+            <p><code>fn_0801B1F8</code> matched the bytes, but the Checker refused it: <b>"volatile used to coax codegen"</b>. <span class="src-inline">doom_hud01</span></p>
+          </div>
+          <figcaption>From <code>claim.made</code>, <code>verdict</code> and <code>fakematch.rejected</code> events in <code>crew/exports</code>.</figcaption>
         </figure>
       </div>
     </article>
@@ -239,75 +293,68 @@
       <div class="t-side">
         <p class="t-kind">Problem statement 3 of 3</p>
         <p class="sticker">The System That Gets Better</p>
-        <h3 id="better-h">Habits earn their place. <span class="two">Or they're retired.</span></h3>
+        <h3 id="better-h">Habits earn their place, <span class="hl">or get retired.</span></h3>
         <div class="crit">
-          <p class="crit-h">JUDGED ON</p>
+          <p class="hand crit-h">judged on</p>
           <ul><li><q>systems that get measurably better with every run</q></li></ul>
           <p class="crit-src">Source: the event page, cerebralvalley.ai.</p>
         </div>
-        <a class="back" href="#tracks">&#8593; All tracks</a>
       </div>
       <dl class="claims">
-        <div><dt>Habits, never answers</dt><dd>After each match, the Distiller keeps a generic lesson, like <q>0x80000000 built with movs plus lsl</q>, never the code. A habit that shares 3 lines with the answer is rejected.</dd></div>
-        <div><dt>Kept on evidence</dt><dd>A habit is adopted after 3 uses at or above the library's quick-match rate, and retired after 4 or more at 15 points below it. Retired habits are never offered again.</dd></div>
-        <div><dt>Tested on code it has never seen</dt><dd>170 of Doom's 568 game functions are held out. The library is frozen before a held-out run, and its SHA-1 is the same afterwards, so the test never teaches it.</dd></div>
-        <div><dt>Adopted and retired, for real</dt><dd>doom_r01 learned <b>38 habits</b> while matching 28 of 30. On harder code, training run doom_r11 adopted 3 habits and retired 4. <span class="src">DECISIONS 13:58</span></dd></div>
-        <div class="limits"><dt>Honest result</dt><dd>Held out, the library hasn't beaten noise: <b>29 vs 29 of 40</b> on easy functions and <b>6 vs 6 of 20</b> on harder ones. Between two runs, 3 to 8 functions flip anyway. So <b>we don't claim it helped</b>, and the table says so. <span class="src">DECISIONS 14:06</span></dd></div>
+        <div><dt>Habits, never answers</dt><dd>After each match the crew keeps a general lesson, never the code, and drops any habit that copies 3 lines of the answer. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/README.md">crew/README.md</a></dd></div>
+        <div><dt>Kept only on evidence</dt><dd>A habit is adopted after 3 good uses and retired after 4 bad ones; one training run adopted 3 and retired 4. <a class="src" href="#mongodb">see the habits</a></dd></div>
+        <div><dt>Tested on unseen code</dt><dd>170 of 568 game functions are held out (never trained on), and the library is frozen while they're tested. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/EXPERIMENTS.md">crew/EXPERIMENTS.md</a></dd></div>
+        <div class="limits"><dt>Honest result</dt><dd>Held out, the library hasn't beaten noise: 29 vs 29 of 40 on easy code, 6 vs 6 of 20 on hard code, so we don't claim it helped. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/DECISIONS.md">DECISIONS 14:06</a></dd></div>
       </dl>
       <div class="proof">
-        <p class="proof-k">PROOF</p>
         <div class="tbl-wrap">
           <table class="tbl">
-            <caption>HELD-OUT · DOOM FUNCTIONS THE CREW NEVER SAW</caption>
+            <caption>Held out: Doom functions the crew never saw</caption>
             <thead><tr><th scope="col">Run</th><th scope="col">Setup</th><th scope="col">Matched</th><th scope="col" class="att">Attempts per match</th><th scope="col">Cost per match</th></tr></thead>
             <tbody>
-              <tr class="rd"><th scope="rowgroup" colspan="5">Round 2 · 20 harder functions, 57 to 200 bytes, one pinned commit</th></tr>
-              <tr><th scope="row">doom_r12</th><td>library on · Snap on</td><td class="v">6 / 20</td><td class="v att">2.00</td><td class="v">$0.536</td></tr>
-              <tr><th scope="row">doom_r13</th><td>library off · Snap on</td><td class="v">6 / 20</td><td class="v att">2.17</td><td class="v">$0.547</td></tr>
-              <tr><th scope="row">doom_r14</th><td>library on · Snap off</td><td class="v">4 / 20</td><td class="v att">2.25</td><td class="v">$0.822</td></tr>
-              <tr class="rd"><th scope="rowgroup" colspan="5">Round 1, rerun on current code · 40 easy functions, 16 to 56 bytes</th></tr>
-              <tr><th scope="row">doom_r02b</th><td>library on · Snap on</td><td class="v">29 / 40</td><td class="v att">1.41</td><td class="v">$0.076</td></tr>
-              <tr><th scope="row">doom_r03b</th><td>library off · Snap on</td><td class="v">29 / 40</td><td class="v att">1.45</td><td class="v">$0.075</td></tr>
-              <tr><th scope="row">doom_r04b</th><td>library on · Snap off</td><td class="v">30 / 40</td><td class="v att">1.47</td><td class="v">$0.086</td></tr>
+              <tr class="rd"><th scope="rowgroup" colspan="5">Hard: 20 functions of 57 to 200 bytes</th></tr>
+              <tr><th scope="row">doom_r12</th><td>library on &middot; Snap on</td><td class="v">6 / 20</td><td class="v att">2.00</td><td class="v">$0.536</td></tr>
+              <tr><th scope="row">doom_r13</th><td>library off &middot; Snap on</td><td class="v">6 / 20</td><td class="v att">2.17</td><td class="v">$0.547</td></tr>
+              <tr><th scope="row">doom_r14</th><td>library on &middot; Snap off</td><td class="v">4 / 20</td><td class="v att">2.25</td><td class="v">$0.822</td></tr>
+              <tr class="rd"><th scope="rowgroup" colspan="5">Easy: 40 functions of 16 to 56 bytes, rerun on current code</th></tr>
+              <tr><th scope="row">doom_r02b</th><td>library on &middot; Snap on</td><td class="v">29 / 40</td><td class="v att">1.41</td><td class="v">$0.076</td></tr>
+              <tr><th scope="row">doom_r03b</th><td>library off &middot; Snap on</td><td class="v">29 / 40</td><td class="v att">1.45</td><td class="v">$0.075</td></tr>
+              <tr><th scope="row">doom_r04b</th><td>library on &middot; Snap off</td><td class="v">30 / 40</td><td class="v att">1.47</td><td class="v">$0.086</td></tr>
             </tbody>
-            <tfoot><tr><td colspan="5">Same model and budget within each round. Copied from each run's metrics.json in crew/EXPERIMENTS.md. Bad results ship too.</td></tr></tfoot>
           </table>
         </div>
+        <p class="hand caption-hand">same model, same budget, same functions. bad results ship too.</p>
       </div>
     </article>
 
     <!-- ─────────── PARTNER TRACKS ─────────── -->
-    <p class="group">Partner tracks</p>
+    <p class="hand group-title">partner tracks</p>
 
     <!-- 5 · META -->
     <article class="track t-muse" id="meta" aria-labelledby="meta-h">
       <div class="t-side">
         <div class="t-logo"><img src="/assets/logos/meta.svg" alt="Meta logo" width="28" height="28"><b>Meta Model API</b></div>
         <p class="sticker">Best Use of Meta Model API</p>
-        <h3 id="meta-h">Muse is <span class="two">Frankenstein's hands.</span></h3>
+        <h3 id="meta-h">Muse is Frankenstein's <span class="hl">hands.</span></h3>
         <div class="crit">
-          <p class="crit-h">JUDGED ON</p>
+          <p class="hand crit-h">judged on</p>
           <ul><li><q>the best use of the Meta Model API</q></li><li>Muse is load-bearing, not decoration</li></ul>
-          <p class="crit-src">Source: the event page names the prize; no written criteria were published, so the second line is our reading (docs/MESSAGING.md).</p>
+          <p class="crit-src">Source: the event page names the prize; the second line is our reading.</p>
         </div>
-        <a class="back" href="#tracks">&#8593; All tracks</a>
       </div>
       <dl class="claims">
-        <div><dt>Every line of recovered C</dt><dd>Each Digger is a Muse Spark 1.3 tool-calling loop with the referee as its tool: write, compile, read the diff, try again. Six run in parallel.</dd></div>
-        <div><dt>Wonder for the stubborn ones</dt><dd>When Snap says escalate, the function moves to Muse Wonder 1.0. In doom_r01: <b>103 Spark calls and 11 Wonder calls, $0.73 together</b>. <span class="src">muse.by_model</span></dd></div>
-        <div><dt>It also teaches and names</dt><dd>The Distiller that writes the habits is Muse, and so are the function names, shown violet with a "?".</dd></div>
-        <div><dt>An effort ladder</dt><dd>Easy functions start at medium reasoning effort and climb back to high after 3 misses. Prompts are byte-stable, so the cache hits.</dd></div>
-        <div class="without"><dt>Without it</dt><dd>Nothing writes the C. The referee has nothing to judge.</dd></div>
-        <div class="limits"><dt>Honest limits</dt><dd>Wonder has no published price yet, so Doom costs count it at Spark rates and are marked estimated.</dd></div>
+        <div><dt>Every line of recovered C</dt><dd>Six Muse Spark agents write C in a loop with the referee as their tool: write, compile, read the diff, try again. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/digger.py">crew/digger.py</a></dd></div>
+        <div><dt>Wonder for the stubborn ones</dt><dd>When Snap says escalate, Muse Wonder takes over; the first Doom run used 103 Spark calls and 11 Wonder calls for $0.73. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/exports/doom_r01/metrics.json">doom_r01 metrics</a></dd></div>
+        <div><dt>It also teaches and names</dt><dd>Muse writes the habits and guesses the function names, which we show in violet. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/exports/doom_r01/names.json">names.json</a></dd></div>
+        <div class="without"><dt>Without it</dt><dd>Nothing writes the C, and the referee has nothing to judge.</dd></div>
+        <div class="limits"><dt>Honest limit</dt><dd>Wonder has no public price yet, so we count it at Spark rates and mark the cost as estimated.</dd></div>
       </dl>
       <div class="proof">
-        <p class="proof-k">PROOF</p>
-        <figure class="shot">
-          <div class="term">
-            <p class="top"><span>crew/exports/doom_r01/recovered/fn_0800FDFC.c</span><span>written by Muse</span></p>
-<pre><span class="c">/* Observed: compiles to identical bytes (referee MATCH, Checker accepted).
-   Inferred: nothing in this file is a claim about original names. */</span>
-<span class="k">int</span> <span class="f">fn_0800FDFC</span>(<span class="k">int</span> a, <span class="k">int</span> b)
+        <figure class="pc proved">
+          <p class="pc-k"><span class="ev ev-proved">MATCH</span> written by Muse, proved by the compiler</p>
+          <div class="code-card">
+            <p class="cc-top"><span>fn_0800FDFC.c</span><span>doom_r01</span></p>
+<pre><span class="k">int</span> <span class="f">fn_0800FDFC</span>(<span class="k">int</span> a, <span class="k">int</span> b)
 {
     <span class="k">if</span> (a &lt; <span class="n">0</span>) a = -a;
     <span class="k">if</span> (b &lt; <span class="n">0</span>) b = -b;
@@ -315,9 +362,12 @@
     <span class="k">if</span> (b &lt;= a) <span class="k">return</span> s - (b &gt;&gt; <span class="n">1</span>);
     <span class="k">else</span>        <span class="k">return</span> s - (a &gt;&gt; <span class="n">1</span>);
 }</pre>
-            <p class="pills"><span class="ev ev-proved">MATCH · referee</span><span class="ev ev-guess">sum_of_abs_minus_half_min<b>?</b></span></p>
           </div>
-          <figcaption><b>Real Doom code, back from the bytes.</b> Muse wrote it in doom_r01; the referee proved it. The name is Muse's guess, so it's violet. Lightly reformatted; the file is in the repo.</figcaption>
+          <ul class="chain">
+            <li><span class="ev ev-proved">MATCH</span> byte-identical to the original</li>
+            <li><span class="ev ev-guess">sum_of_abs_minus_half_min<b>?</b></span> Muse's guess at a name</li>
+          </ul>
+          <figcaption>From <code>crew/exports/doom_r01/recovered/fn_0800FDFC.c</code>, lightly reformatted.</figcaption>
         </figure>
       </div>
     </article>
@@ -327,41 +377,35 @@
       <div class="t-side">
         <div class="t-logo"><img class="wordlogo" src="/assets/logos/subq-snap.svg" alt="SubQ Snap logo" width="110" height="22"></div>
         <p class="sticker">Best Use of Subquadratic</p>
-        <h3 id="subq-h">SubQ Snap is <span class="two">its judgment.</span></h3>
+        <h3 id="subq-h">SubQ Snap is its <span class="hl">judgment.</span></h3>
         <div class="crit">
-          <p class="crit-h">JUDGED ON</p>
-          <ul><li>SubQ is load-bearing: it changes what the crew does, and it's measured</li></ul>
-          <p class="crit-src">Source: our reading (docs/MESSAGING.md). No written criteria were published that we could find.</p>
+          <p class="hand crit-h">judged on</p>
+          <ul><li>Snap changes what the crew does, and it's measured</li></ul>
+          <p class="crit-src">Source: our reading; no written criteria were published that we could find.</p>
         </div>
-        <a class="back" href="#tracks">&#8593; All tracks</a>
       </div>
       <dl class="claims">
-        <div><dt>The whole game in one read</dt><dd>Triage puts every function's disassembly in one 384K window and sets the work order and each function's budget. In doom_r01 it read <b>1.39M input tokens</b>.</dd></div>
-        <div><dt>Keep, escalate or abandon</dt><dd>After every miss from the second attempt on, Snap decides where the next Muse dollar goes. <b>37 Snap calls in doom_r01, 842 ms on average.</b> <span class="src">snap.by_op</span></dd></div>
-        <div><dt>The fake gate</dt><dd>Every MATCH also needs low fakematch and recital odds from Snap before the Checker accepts it. It rejects at 0.85.</dd></div>
-        <div><dt>Eyes on the screen</dt><dd>Play it, and we rebuild it: the director watches live frames and picks what to rebuild next, in 2.4 s. Eyes compares two frames and confirms a patch changed what we said, and nothing else (0.68 s, p 0.999).</dd></div>
+        <div><dt>The whole game in one read</dt><dd>Snap reads every function's machine code in one 384K window and sets the work order; in the first run that was 1.39M tokens. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/exports/doom_r01/metrics.json">doom_r01 metrics</a></dd></div>
+        <div><dt>Keep, escalate or abandon</dt><dd>After each miss, Snap decides where the next Muse dollar goes, in well under a second. <a class="src" href="#snap-feed">see its calls</a></dd></div>
+        <div><dt>The fake gate</dt><dd>Every MATCH also needs low fake and recital odds from Snap before it's accepted. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/checker.py">crew/checker.py</a></dd></div>
+        <div><dt>Eyes on the screen</dt><dd>Play the game, and Snap picks what's on screen to rebuild next, then checks a patch changed only what we said. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/DECISIONS.md">DECISIONS 12:00</a></dd></div>
         <div class="without"><dt>Without it</dt><dd>Muse digs blind, and nobody reads the whole game at once.</dd></div>
-        <div class="limits"><dt>Honest limits</dt><dd>The router is a hint, 5 to 7x better than random, not precise: it ranked the face #1 at 12:20 and missed the top three at 12:56. Held out, Snap on vs off was 6 vs 4 of 20 on harder code (<b>a weak hint, not a result</b>) and 29 vs 30 of 40 on easy code. <span class="src">DECISIONS 13:58, 14:06</span></dd></div>
+        <div class="limits"><dt>Honest limits</dt><dd>Plain-words routing is a hint, 5 to 7 times better than random. Snap on vs off was 6 vs 4 of 20 on hard code: a weak hint, not a result. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/DECISIONS.md">DECISIONS 13:58</a></dd></div>
       </dl>
-      <div class="proof two">
-        <p class="proof-k">PROOF</p>
-        <figure class="shot">
-          <div class="term">
-            <p class="top"><span>crew/exports/doom_r01/events.jsonl</span><span>2 of 34 Snap events</span></p>
-<pre>{"type":"snap.decision","fn":"fn_08005008",
- "payload":{"op":"<span class="f">decide_next</span>","action":"<span class="n">escalate</span>",
-  "probs":{"keep":<span class="n">0.15</span>,"escalate":<span class="n">0.74</span>,"abandon":<span class="n">0.11</span>},
-  "latency_ms":<span class="n">388.3</span>}}
-
-{"type":"snap.decision","payload":{"op":"<span class="f">review</span>",
-  "fakematch_p":<span class="ok">0.0012</span>,"recital_p":<span class="ok">0.0016</span>,
-  "latency_ms":<span class="n">564.7</span>}}</pre>
-          </div>
-          <figcaption><b>Snap's calls, as logged.</b> An escalation after a miss, and a fake-gate review that passed. Values rounded; the full lines are in the export.</figcaption>
+      <div class="proof">
+        <figure class="pc feed" id="snap-feed">
+          <p class="pc-k"><span class="ev ev-snap">SNAP</span> five real calls from doom_r12</p>
+          <ol class="log">
+            <li><span class="t">13:23:34</span><span class="op">review</span><span class="what">fake odds <b>0.33</b>, recital <b>0.00</b></span><span class="ms">351 ms</span></li>
+            <li><span class="t">13:24:05</span><span class="op">decide</span><span class="what"><b class="act esc">escalate</b> to Wonder &middot; conf 0.88</span><span class="ms">380 ms</span></li>
+            <li><span class="t">13:25:49</span><span class="op">decide</span><span class="what"><b class="act keep">keep</b> on Spark &middot; conf 0.85</span><span class="ms">326 ms</span></li>
+            <li><span class="t">13:33:34</span><span class="op">decide</span><span class="what"><b class="act stop">abandon</b> &middot; 12% chance to match</span><span class="ms">342 ms</span></li>
+          </ol>
+          <figcaption>From <code>snap.decision</code> events in <code>crew/exports/doom_r12/events.jsonl</code>, times in Pacific.</figcaption>
         </figure>
         <figure class="shot diagram narrow">
-          <img src="/assets/judges/play-to-recover-light.svg" width="560" height="440" loading="lazy" decoding="async" alt="A loop: you play, Snap picks what's on screen, the crew recovers it with Muse, the referee rebuilds with the same SHA-1, and the game heals on screen. Play it, and we rebuild it.">
-          <figcaption><b>Play to recover.</b> Snap watches the game and sends the crew to what you're looking at.</figcaption>
+          <img src="/assets/judges/play-to-recover-light.svg" width="560" height="440" loading="lazy" decoding="async" alt="A loop: you play, Snap picks what's on screen, the crew recovers it with Muse, the referee rebuilds with the same SHA-1, and the game heals on screen.">
+          <figcaption class="hand">play it, and Snap sends the crew to what you're looking at</figcaption>
         </figure>
       </div>
     </article>
@@ -371,53 +415,43 @@
       <div class="t-side">
         <div class="t-logo"><img class="wordlogo" src="/assets/logos/fetchai.svg" alt="Fetch.ai logo" width="122" height="20"><img src="/assets/logos/asi-one.webp" alt="ASI:One logo" width="26" height="26"></div>
         <p class="sticker">Agents That Prove Their Work</p>
-        <h3 id="fetch-h">ASI:One is <span class="two">the front door.</span></h3>
+        <h3 id="fetch-h">ASI:One is the <span class="hl">front door.</span></h3>
         <div class="crit">
-          <p class="crit-h">JUDGED ON</p>
+          <p class="hand crit-h">judged on</p>
           <ul>
-            <li>Agents that reconstruct software from binaries, with evidence that separates observed from inferred</li>
+            <li>Agents that rebuild software from binaries, keeping what's observed apart from what's inferred</li>
             <li>Agents that verify before trusting</li>
             <li>Agents that improve on held-out tasks</li>
           </ul>
-          <p class="crit-src">Source: the Fetch.ai challenge brief, as recorded in docs/LANE_A_LAB.md step 7. Its mandatory requirements are mapped one by one on the right.</p>
+          <p class="crit-src">Source: the Fetch.ai brief, recorded in docs/LANE_A_LAB.md. Its required items are ticked on the right.</p>
         </div>
-        <a class="back" href="#tracks">&#8593; All tracks</a>
       </div>
       <dl class="claims req">
-        <div><dt>At least one agent registered on Agentverse</dt><dd>Two, both mailbox agents, so no tunnel and no open port.
+        <div><dt>Registered on Agentverse</dt><dd>Two agents, both reachable by mailbox, so no tunnel and no open port.
           <ul class="agents">
             <li><b>Frankenstein Referee</b><code>agent1q088qnxafee4aug0qz4xnd9zkk4veq2r9ez07mp047u8enqhckc5w2hstx0</code><button class="copy" type="button" data-copy="agent1q088qnxafee4aug0qz4xnd9zkk4veq2r9ez07mp047u8enqhckc5w2hstx0" hidden>Copy</button></li>
             <li><b>frankenstein-excavator</b><code>agent1qf4w7kmtsgv4fdyuj72nwethhjwhmdh7m3u7kqe5tgz4wyq8nmmmq5gjacp</code><button class="copy" type="button" data-copy="agent1qf4w7kmtsgv4fdyuj72nwethhjwhmdh7m3u7kqe5tgz4wyq8nmmmq5gjacp" hidden>Copy</button></li>
           </ul>
         </dd></div>
-        <div><dt>Implements the Agent Chat Protocol</dt><dd>The Referee publishes its chat protocol manifest. Verdicts and rebuild proofs come back as interactive cards.</dd></div>
-        <div><dt>Discoverable and usable through ASI:One</dt><dd>Both are reachable from ASI:One through their Agentverse mailboxes. Mention the agent and ask.</dd></div>
-        <div><dt>Meaningful tools or multi-agent orchestration</dt><dd>The Referee runs the real compiler check, patch and rebuild. The Excavator runs a crew job, then <b>asks the Referee, agent to agent</b>, and quotes its verdict word for word. It ran end to end at 13:44.</dd></div>
-        <div><dt>The whole workflow inside one chat</dt><dd>"Does this C match fn_…?", "Recover fn_…", "Prove the rebuild is exact": asked and answered in ASI:One, split into Observed and Inferred. No custom front end.</dd></div>
-        <div><dt>Public repo with run and test steps</dt><dd><code>lab/README.md</code>: <code>run_agent.sh</code>, <code>run_excavator.sh</code> and the mailbox connector, plus <code>lab/tests/test_agents.py</code>.</dd></div>
-        <div class="todo"><dt>Registered with the ASI:One Submission Agent</dt><dd>On our submission checklist, done with the form at submission time.</dd></div>
+        <div><dt>Agent Chat Protocol</dt><dd>The Referee publishes its chat protocol, and verdicts come back as interactive cards. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/lab/agents/frankenstein_agent.py">frankenstein_agent.py</a></dd></div>
+        <div><dt>Usable in ASI:One</dt><dd>Mention the agent in ASI:One and ask; the whole job happens in the chat, no custom front end. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/lab/README.md">lab/README.md</a></dd></div>
+        <div><dt>Multi-agent, verify before trust</dt><dd>The Excavator runs a crew job, then asks the Referee agent and answers only with its verdict. <a class="src" href="#fetch-proof">see the log</a></dd></div>
+        <div><dt>Observed vs inferred</dt><dd>Every reply splits what the compiler proved from what is only a guess. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/lab/agents/AGENT_README.md">AGENT_README.md</a></dd></div>
+        <div><dt>Public repo, run and test steps</dt><dd><code>run_agent.sh</code>, <code>run_excavator.sh</code> and <code>lab/tests/test_agents.py</code> are in the repo. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/tree/main/lab/agents">lab/agents/</a></dd></div>
+        <div class="todo"><dt>Submission Agent</dt><dd>Registered with the form at submission time; it's on our checklist.</dd></div>
         <div class="without"><dt>Without it</dt><dd>Only our team can ask, and nobody can check our claims for themselves.</dd></div>
-        <div class="limits"><dt>Honest limits</dt><dd>The agents run on one teammate's laptop: when it sleeps, they're offline. End to end works on small functions; one with a string in its literal pool still trips the crew. Plain-words routing is a guess. <span class="src">lab/E2E_RECOVER.md</span></dd></div>
+        <div class="limits"><dt>Honest limits</dt><dd>The agents run on one teammate's laptop, so they sleep when it does. Functions with a string in their data still trip the crew. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/lab/E2E_RECOVER.md">E2E_RECOVER.md</a></dd></div>
       </dl>
-      <div class="proof two">
-        <p class="proof-k">PROOF</p>
-        <figure class="shot">
-          <div class="term">
-            <p class="top"><span>agent logs · ASI:One recovery, 13:44</span><span>lab/E2E_RECOVER.md</span></p>
-<pre><span class="c">[frankenstein-excavator]</span> asking Referee agent about fn_08004DA8
-<span class="c">[frankenstein-excavator]</span> reply from Referee agent:
-    ### Verdict for `fn_08004DA8`: <span class="ok">**MATCH**</span>
-<span class="c">[frankenstein-referee]</span>   answered agent1qf4w7kmtsg…:
-    ### Verdict for `fn_08004DA8`: <span class="ok">**MATCH**</span>
-<span class="c">[excavator → you]</span>
-    The crew reported a match …
-    <span class="n">I did not take its word for it.</span></pre>
-          </div>
-          <figcaption><b>"Recover fn_08004DA8", end to end.</b> A registered agent asked; the crew matched it; the Excavator waited for the Referee agent's own MATCH before answering. Log lines lightly trimmed.</figcaption>
-        </figure>
-        <figure class="shot diagram">
-          <img src="/assets/judges/system-light.svg" width="800" height="372" loading="lazy" decoding="async" alt="System map: ASI:One, where you ask, connects to the Lab referee on port 7101, which checks for the Crew on port 7111. Both write one event stream that the Creature and the Stage read.">
-          <figcaption><b>Where a chat request goes.</b> ASI:One to the Lab, the Lab to the Crew and back.</figcaption>
+      <div class="proof">
+        <figure class="pc chat" id="fetch-proof">
+          <p class="pc-k"><span class="ev ev-proved">MATCH</span> "Recover fn_08004DA8", agent to agent, 13:44</p>
+          <ol class="msgs">
+            <li class="from-you"><span class="who">a registered test agent</span><p>Recover fn_08004DA8</p></li>
+            <li class="from-exc"><span class="who">excavator &#8594; referee</span><p>Asking Referee agent about fn_08004DA8</p></li>
+            <li class="from-ref"><span class="who">referee</span><p>Verdict for <code>fn_08004DA8</code>: <span class="ev ev-proved">MATCH</span></p></li>
+            <li class="from-exc"><span class="who">excavator &#8594; asker</span><p>The crew reported a match. <b>I did not take its word for it.</b></p></li>
+          </ol>
+          <figcaption>Condensed from the agent logs in <code>lab/E2E_RECOVER.md</code>.</figcaption>
         </figure>
       </div>
     </article>
@@ -427,27 +461,44 @@
       <div class="t-side">
         <div class="t-logo"><img src="/assets/logos/mongodb.svg" alt="MongoDB logo" width="28" height="28"><b>MongoDB Atlas</b></div>
         <p class="sticker">MongoDB</p>
-        <h3 id="mongo-h">MongoDB is <span class="two">the memory.</span></h3>
+        <h3 id="mongo-h">MongoDB is the <span class="hl">memory.</span></h3>
         <div class="crit">
-          <p class="crit-h">JUDGED ON</p>
+          <p class="hand crit-h">judged on</p>
           <ul><li>Atlas is a real component, not a logo</li></ul>
-          <p class="crit-src">Source: our reading (docs/MESSAGING.md). No written criteria were published that we could find.</p>
+          <p class="crit-src">Source: our reading; no written criteria were published that we could find.</p>
         </div>
-        <a class="back" href="#tracks">&#8593; All tracks</a>
       </div>
       <dl class="claims">
-        <div><dt>One collection per habit library</dt><dd>Each library is its own Atlas collection, like <code>idioms__doom_lib</code>, seeded from its file on first use. A frozen held-out library stays frozen.</dd></div>
-        <div><dt>The run record</dt><dd>Every run event is mirrored to <code>events</code> and every run's metrics to <code>runs</code>, so runs can be compared with a query.</dd></div>
-        <div><dt>Verdicts travel with the habit</dt><dd>Adopted or retired, a habit's status lives with it, so the next run inherits the evidence, not just the text.</dd></div>
-        <div><dt>Held-out runs read from Atlas</dt><dd>Round two's held-out arms ran their frozen library straight from Atlas, and every <code>metrics.json</code> names its <code>library_backend</code>. The Stage says MONGODB only when a run really used it.</dd></div>
+        <div><dt>One collection per habit library</dt><dd>Each library is its own Atlas collection, so a frozen test library can never learn from its test. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/library.py">crew/library.py</a></dd></div>
+        <div><dt>The run record</dt><dd>Every run's events and metrics are mirrored to Atlas, so runs compare with one query. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/memory.py">crew/memory.py</a></dd></div>
+        <div><dt>Held-out runs read from Atlas</dt><dd>Round two's test runs loaded their frozen library straight from Atlas, and each run's metrics say so. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/EXPERIMENTS.md">crew/EXPERIMENTS.md</a></dd></div>
         <div class="without"><dt>Without it</dt><dd>Every run starts from zero, and nothing remembers why.</dd></div>
-        <div class="limits"><dt>Honest limits</dt><dd>Atlas went live at 13:05, after the morning runs: doom_r01 learned its 38 habits into a local JSON file, which stays on as the offline mirror. And a better memory hasn't yet shown up as more held-out matches. <span class="src">DECISIONS 13:05</span></dd></div>
+        <div class="limits"><dt>Honest limit</dt><dd>Atlas went live at 13:05, after the first run, and better memory hasn't yet meant more held-out matches. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/DECISIONS.md">DECISIONS 13:05</a></dd></div>
       </dl>
       <div class="proof">
-        <p class="proof-k">PROOF</p>
-        <figure class="shot diagram">
-          <img src="/assets/judges/how-it-works-light.svg" width="1152" height="290" loading="lazy" decoding="async" alt="How a function comes back: the compiled game goes to a Muse Digger, then the compiler referee, then the Checker, which re-runs claims. Rejected work loops back to the Digger; accepted work goes into the rebuilt ROM with the same SHA-1. SubQ Snap steers from above, and habits flow back to the Digger through MongoDB.">
-          <figcaption><b>The loop MongoDB closes.</b> Habits flow from the Checker back to every Digger, through Atlas.</figcaption>
+        <figure class="pc habits">
+          <p class="pc-k"><span class="ev ev-proved">ATLAS</span> habits judged in training run doom_r11</p>
+          <div class="habit-cols">
+            <div>
+              <p class="hc-h">adopted</p>
+              <ul>
+                <li>global byte-pointer base with literal-pool offsets</li>
+                <li>args parked in r4-r5-ip with pop-bx epilogue</li>
+                <li>guarded clear emits cmp-beq guard</li>
+              </ul>
+            </div>
+            <div>
+              <p class="hc-h out">retired</p>
+              <ul class="retired">
+                <li>large offset via movs plus lsls</li>
+                <li>large aligned offset built with movs plus lsls</li>
+                <li>if-else with shared tail</li>
+                <li>park struct pointer in r4 across call</li>
+              </ul>
+            </div>
+          </div>
+          <p class="hand note">kept: 1 quick match in 3 uses. retired: 0 in 4.</p>
+          <figcaption>From <code>crew/EXPERIMENTS.md</code>, round two.</figcaption>
         </figure>
       </div>
     </article>
@@ -457,32 +508,34 @@
       <div class="t-side">
         <div class="t-logo"><img src="/assets/logos/gemini.svg" alt="Google Gemini logo" width="28" height="28"><b>Google Gemini</b></div>
         <p class="sticker">Google Gemini</p>
-        <h3 id="gemini-h">Gemini is <span class="two">the second opinion.</span></h3>
+        <h3 id="gemini-h">Gemini is the <span class="hl">second opinion.</span></h3>
         <div class="crit">
-          <p class="crit-h">JUDGED ON</p>
+          <p class="hand crit-h">judged on</p>
           <ul><li>Gemini is used meaningfully</li></ul>
-          <p class="crit-src">Source: our reading (docs/MESSAGING.md). No written criteria were published that we could find.</p>
+          <p class="crit-src">Source: our reading; no written criteria were published that we could find.</p>
         </div>
-        <a class="back" href="#tracks">&#8593; All tracks</a>
       </div>
       <dl class="claims">
-        <div><dt>A different lab, on every match</dt><dd>When the bytes match, Gemini reviews the C for fakes and recited source alongside Snap, in parallel, so it adds no wait.</dd></div>
-        <div><dt>A vote that counts</dt><dd>A match is rejected when Snap is sure, when Gemini is near-certain (0.95), or when both flag it (0.7 with Snap agreeing).</dd></div>
-        <div><dt>In the live dig</dt><dd>In our live rehearsal run, both matches got a Gemini review next to Snap's. <span class="src">runs/r01, second_opinion_reviews</span></dd></div>
-        <div><dt>It drew the lab</dt><dd>Every illustration on our site was generated today with Gemini, from <code>site/tools/generate_art.py</code>.</dd></div>
+        <div><dt>A different lab, on every match</dt><dd>When the bytes match, Gemini checks the C for fakes next to Snap, in parallel, so it adds no wait. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/gemini.py">crew/gemini.py</a></dd></div>
+        <div><dt>A vote that counts</dt><dd>A match is rejected if Gemini is near-certain it's a fake, or if both labs flag it. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/README.md">crew/README.md</a></dd></div>
+        <div><dt>It drew the lab</dt><dd>Every illustration on our home page was generated today with Gemini. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/site/tools/generate_art.py">generate_art.py</a></dd></div>
         <div class="without"><dt>Without it</dt><dd>One lab's opinion on fakes, and a site with no pictures.</dd></div>
-        <div class="limits"><dt>Honest limits</dt><dd>Gemini is advisory and off the critical path. It reviewed every match in round two, but we haven't run Gemini on against off, so its effect isn't measured yet.</dd></div>
+        <div class="limits"><dt>Honest limit</dt><dd>Gemini is advisory, and we haven't run Gemini on against off, so its effect isn't measured yet.</dd></div>
       </dl>
       <div class="proof">
-        <p class="proof-k">PROOF</p>
-        <figure class="shot">
-          <img src="/assets/art/hero-800.webp" width="800" height="340" loading="lazy" decoding="async" alt="Gemini's illustration of our lab: a handheld game console on an operating table between two bolt electrodes, marbles rolling through a funnel and under a magnifying glass toward a glowing cartridge.">
-          <figcaption><b>The lab, as Gemini drew it for us today.</b> Its other job leaves a line per match: <code>"reviewer":"gemini"</code> in the event stream.</figcaption>
+        <figure class="pc labs">
+          <p class="pc-k"><span class="ev ev-proved">2 LABS</span> one match, <code>fn_08013CA4</code>, doom_r12</p>
+          <div class="lab-cols">
+            <div class="lab"><p class="lab-n">SubQ Snap</p><p class="lab-v"><span>fake odds</span><b>0.33</b></p><p class="lab-v"><span>recital odds</span><b>0.00</b></p><p class="lab-t">351 ms</p></div>
+            <div class="lab"><p class="lab-n">Gemini</p><p class="lab-v"><span>fake odds</span><b>0.00</b></p><p class="lab-v"><span>recital odds</span><b>0.00</b></p><p class="lab-t">5.75 s</p></div>
+          </div>
+          <p class="verdict-line"><span class="ev ev-proved">ACCEPTED</span> both under their reject lines, so the match stands</p>
+          <figcaption>From the two <code>snap.decision</code> review events before <code>fn.matched</code> at 13:23:39.</figcaption>
         </figure>
       </div>
     </article>
   </div>
-</section>
+</div>
 
 <section class="j-end" aria-labelledby="end-h">
   <div class="wrap">
@@ -508,6 +561,6 @@
     </div>
   </div>
 </footer>
-<script src="/assets/judges.js?v=2" defer></script>
+<script src="/assets/judges.js?v=3" defer></script>
 </body>
 </html>
