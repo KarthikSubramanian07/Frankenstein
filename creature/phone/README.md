@@ -90,3 +90,19 @@ The generated judging service worker intentionally differs from the universal pl
 ### Static bundle checks (2026-11-07, Windows)
 
 The real 5,704,780-byte static-face package (`337fbb15462b57eb6cc5a35bcf11e36646e130e2`) passed preservation validation against `lab/out/static_face.gba`. The earlier variant package (`e1ddb8fb96764422d5fb6b1c84c83b85c98236bd`) also passed against its corresponding engine. The static package correctly failed against the different `target.gba`. Manifest sizes/hashes and the exact output allowlist were checked, as were waiting-page status and eight failure cases: output outside `dist`, output equal to `dist`, overwrite, engine-only ROM, report without ROM, fixture report, non-object report and wrong report hash. Python compilation and generated service-worker syntax passed. This verifies packaging and rejection behavior; it does not re-run Doom gameplay, prove physical-phone controls, or verify Cloudflare's deployed headers. Those remain launch checks after an authorized deployment.
+
+
+## Stage and player on one local origin
+
+Build the Stage, then mount its compiled output in the Node player host. From the repository root:
+
+```sh
+npm --prefix stage run build
+node creature/phone/serve.mjs --port 7412 --stage stage/dist --rom creature/runtime/generated/doom-static-playable.gba
+```
+
+Open `http://127.0.0.1:7412/stage/?game=http%3A%2F%2F127.0.0.1%3A7412%2F%3Fwindowed`. The Stage document is at `/stage/` and its embedded player is at `/`, on the same scheme, host and port. Use this same hostname consistently; `localhost` and `127.0.0.1` are different origins. Port 7412 is an optional local test override. Existing `--report` and `--engine` arguments still work. The Stage data/websocket services on 7201/7202 must also be running; this option does not start or proxy them.
+
+`--stage` serves only the built `index.html`, `/assets/` JavaScript/CSS, and `/fonts/` font files plus `LICENSE*.txt`/`OFL*.txt`. It rejects source/config paths, traversal and real paths outside the configured build directory, including symlink escapes. There is no arbitrary-file or SPA fallback. Isolation headers, gzip, content ETags and HEAD responses apply to the Stage files too. Without `--stage`, the server retains its existing player-only routes. The programmatic equivalent is `createPlayerServer({ stage: '/absolute/path/to/stage/dist', rom: '/absolute/path/to/playable.gba' })`.
+
+HTTP checks verified exact Stage build bytes, MIME types, redirect/query preservation, gzip, ETag/304, HEAD, isolation headers, unchanged real ROM/status/player routes and refusal of invalid paths. A live symlink/junction check could not run because Windows denied junction creation (`EPERM`); canonical-path containment is implemented but that case is not runtime verified here. Browser iframe rendering and gameplay inside the mounted Stage remain separate checks; computer control was stopped at the user's request.
