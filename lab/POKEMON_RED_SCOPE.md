@@ -1,5 +1,11 @@
 # Requested by Enzo: Pokémon Red scope after Doom
 
+## Priority clarification from Enzo
+
+Read [POKEMON_RED_DECISION.md](POKEMON_RED_DECISION.md). Enzo reports Eddy's agreement with a bounded Pokémon proof of concept after Doom and asks the agent to focus on technical feasibility. The note explains its recognition, cross-platform, coverage-map and scope benefits. General rights questions are recorded for the human team, with no claimed exemption.
+
+Next output: a concrete smallest-slice target/proof plan, entry/stop checkpoints, actual topology evidence and technical dependencies. Show the exact blocker if the slice cannot fit the remaining time.
+
 Read [the canonical plan](../creature/POKEMON_RED_PLAN.md). Enzo explicitly asked for this request to be added to Lane A and B.
 
 First finish a good Doom demo. Then assess a bounded Pokémon Red opening slice: landing/title menu and first Pokémon interactions, alongside a genuine world/progression map showing how far Frankenstein has reached.
