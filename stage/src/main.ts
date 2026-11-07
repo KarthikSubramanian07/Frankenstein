@@ -10,12 +10,10 @@ import { h } from './types.ts';
 import { SplitScene } from './scenes/split.ts';
 import { VersusScene } from './scenes/versus.ts';
 import { TitleScene } from './scenes/title.ts';
-import { HiscoreScene } from './scenes/hiscore.ts';
 import { TimeTrialScene } from './scenes/timetrial.ts';
 import { EndingScene } from './scenes/ending.ts';
 import { Director } from './director.ts';
 import type { Source } from './director.ts';
-import { Rail } from './rail.ts';
 
 const params = new URLSearchParams(location.search);
 const host = params.get('server') || '127.0.0.1';
@@ -39,13 +37,11 @@ const scenes: Partial<Record<SceneId, Scene>> = {};
 const split = new SplitScene();
 const versus = new VersusScene();
 const title = new TitleScene(reduced);
-const hiscore = new HiscoreScene();
 const timetrial = new TimeTrialScene(HTTP);
 const ending = new EndingScene(HTTP, reduced);
-for (const s of [title, split, hiscore, versus, timetrial, ending] as Scene[]) { scenes[s.id] = s; stageEl.appendChild(s.el); }
-// the judgment rail (sponsors at work) sits over Split and Hi-score; judgment.css places it per scene
-const rail = new Rail(reduced);
-stageEl.append(rail.el, fxCanvas, flashEl, markEl);
+for (const s of [title, split, versus, timetrial, ending] as Scene[]) { scenes[s.id] = s; stageEl.appendChild(s.el); }
+// sponsors are one line on Rebuild (minimal redesign); the judgment rail's reducer still runs (judgment.ts)
+stageEl.append(fxCanvas, flashEl, markEl);
 
 let current: SceneId = 'split';
 const ctx: Ctx = {
@@ -107,14 +103,12 @@ let sideDir: string | null | undefined;
 let versusCut = false;
 function onEffects(list: Effect[]) {
   for (const e of list) {
-    // a false claim during Hi-score: liar row, hold 1 s, Versus for 4 s, back to Hi-score
-    if (e.kind === 'falseClaim' && current === 'hiscore' && !versusCut) {
+    // a caught lie or a rejected fake during Rebuild: hold 1 s, Caught for 4.5 s, back to Rebuild
+    if ((e.kind === 'falseClaim' || e.kind === 'fake') && current === 'split' && !versusCut) {
       versusCut = true;
-      hiscore.showLiar(ctx, e.c);
       setTimeout(() => go('versus'), 1000);
-      setTimeout(() => { if (current === 'versus') go('hiscore'); versusCut = false; }, 5300);
+      setTimeout(() => { if (current === 'versus') go('split'); versusCut = false; }, 5500);
     }
-    if (current === 'split' || current === 'hiscore' || e.kind === 'reset') rail.effect(ctx, e);
     for (const s of Object.values(scenes)) {
       // the visible scene animates; hidden scenes still hear resets
       if (s!.id === current || e.kind === 'reset') s!.effect?.(ctx, e);
@@ -183,20 +177,19 @@ function frame() {
   if (dirty || split.busy() || scenes[current]?.animating?.(ctx)) {
     dirty = false;
     scenes[current]?.render(ctx);
-    rail.render(ctx);
     renderMark();
   }
   requestAnimationFrame(frame);
 }
 
 // ---------- keys (the presenter never touches the mouse) ----------
-const KEYS: Record<string, SceneId> = { '0': 'title', '1': 'split', '2': 'versus', '3': 'timetrial', '4': 'ending', '5': 'hiscore', h: 'hiscore' };
+const KEYS: Record<string, SceneId> = { '0': 'title', '1': 'split', '2': 'versus', '3': 'timetrial', '4': 'ending', '5': 'split', h: 'split' }; // Hi-score folded into Rebuild
 addEventListener('keydown', (k) => {
   unlockAudio();
   if (director?.key(k.key)) { k.preventDefault(); dirty = true; return; }
   if (scenes[current]?.key?.(ctx, k.key)) { dirty = true; return; }
   if (KEYS[k.key]) go(KEYS[k.key]);
-  else if (k.key === ' ' && current === 'title') go('hiscore');
+  else if (k.key === ' ' && current === 'title') go('split');
   else if (k.key === 'm') { setMuted(!isMuted()); }
 });
 addEventListener('pointerdown', unlockAudio);

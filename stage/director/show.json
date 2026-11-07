@@ -6,14 +6,22 @@
     {
       "at": "0:00",
       "scene": "title",
-      "source": { "replay": "doom_r01", "speed": 8, "t": 999 },
+      "source": {
+        "replay": "doom_r01",
+        "speed": 8,
+        "t": 999
+      },
       "say": "87% of classic games are endangered, and most of their source code is gone. Lost games, rebuilt and proven."
     },
     {
       "at": "0:15",
       "scene": "split",
-      "source": { "replay": "doom_r01", "speed": 8, "t": 0 },
-      "say": "Doom is our first patient. Muse writes it. Snap judges it. The compiler proves it. Every green cell is a piece of Doom proved byte for byte. This is a real run, at 8x."
+      "source": {
+        "replay": "doom_r01",
+        "speed": 8,
+        "t": 0
+      },
+      "say": "Doom is our first patient. Every piece the agents rebuild must compile to the exact original bytes. Muse writes, Snap checks, the compiler proves. Real run, 8x."
     },
     {
       "at": "0:50",
@@ -21,14 +29,11 @@
       "say": "Agents lie. The referee doesn't. Every claim is re-run by the compiler, and two labs screen every match for fakes."
     },
     {
-      "at": "1:10",
-      "scene": "hiscore",
-      "say": "Counts, not vibes: functions proved out of all of Doom. Violet with a question mark is our guess; everything else is proved."
-    },
-    {
       "at": "1:25",
       "scene": "split",
-      "source": { "live": true },
+      "source": {
+        "live": true
+      },
       "say": "This part is live. Play it, and we rebuild it: the crew is working on Doomguy's face right now."
     },
     {

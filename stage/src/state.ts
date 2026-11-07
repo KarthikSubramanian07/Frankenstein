@@ -26,6 +26,8 @@ export type Matched = {
 };
 /** A Digger's "matched" claim and what the Checker found. */
 export type Checked = { fn: string; actor: string; attempt: number; text: string; status: string; match_pct: number; upheld: boolean; model: string | null; reviews: Review[]; ts: number };
+/** Bytes matched, but the Checker refused it as compiler-coaxing (rules, SubQ Snap or Gemini). */
+export type FakeRejected = { fn: string; actor: string; attempt: number; reason: string; ts: number };
 /** A SubQ Snap decision that changed what the crew did (contracts v1.1 snap.decision). */
 export type SnapDecision = { op: string; fn: string | null; p: any; ts: number };
 export type FalseClaim = {
@@ -76,6 +78,7 @@ export type State = {
   reviews: Review[]; // every fake-gate review in the run
   pendingReviews: Review[]; // reviews since the last fn.matched
   lastChecked: Checked | null; // newest claim the Checker re-ran
+  fakes: FakeRejected[]; // fakematch.rejected: bytes matched but the Checker refused it (contract v1.1)
   modelsUsed: Record<string, number>; // attempts per Muse model
   judge: Judge; // the judgment rail: sponsor lines (judgment.ts)
 };
@@ -88,6 +91,7 @@ export type Effect =
   | { kind: 'narration'; text: string; mood: string; speak: boolean }
   | { kind: 'swap'; pct: number }
   | { kind: 'build' }
+  | { kind: 'fake'; f: FakeRejected }
   | { kind: 'snap'; d: SnapDecision }
   | { kind: 'judgment'; line: Line }
   | { kind: 'reset' };
@@ -99,7 +103,7 @@ export function emptyState(): State {
     lintFails: 0, falseClaims: [], claims: new Map(), claimsMade: 0, lastAttempt: null, lastVerdict: null,
     narration: [], idiomsLearned: 0, pctAgentCode: null, swaps: 0, build: null, patch: null, phone: null,
     tick: null, finished: null, ended: false, events: 0,
-    snap: [], snapCount: 0, reviews: [], pendingReviews: [], lastChecked: null, modelsUsed: {},
+    snap: [], snapCount: 0, reviews: [], pendingReviews: [], lastChecked: null, fakes: [], modelsUsed: {},
     judge: emptyJudge(),
   };
 }
@@ -229,6 +233,12 @@ export function apply(s: State, e: Ev): Effect[] {
       break;
     }
     case 'fn.abandoned': s.abandoned++; break;
+    case 'fakematch.rejected': {
+      const f: FakeRejected = { fn: e.fn ?? '?', actor: e.actor ?? 'checker', attempt: Number(p.attempt) || 0, reason: String(p.reason ?? ''), ts: t ?? 0 };
+      s.fakes.push(f);
+      fx.push({ kind: 'fake', f });
+      break;
+    }
     case 'idiom.learned': s.idiomsLearned++; break;
     case 'narration': {
       const n = { text: String(p.text ?? ''), mood: String(p.mood ?? 'dry'), speak: !!p.speak, ts: t ?? 0 };

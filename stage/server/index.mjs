@@ -100,6 +100,7 @@ export function startServer(opts = {}) {
       'content-type': type,
       'access-control-allow-origin': res.allowOrigin ?? origins[0],
       vary: 'Origin',
+      'cross-origin-resource-policy': 'cross-origin',
       'cache-control': 'no-store',
     });
     res.end(typeof body === 'string' ? body : JSON.stringify(body));
@@ -133,7 +134,7 @@ export function startServer(opts = {}) {
       const rel = url.searchParams.get('path') || '';
       const abs = path.resolve(repoDir, rel);
       if (!abs.startsWith(path.join(repoDir, 'creature') + path.sep) || !abs.endsWith('.png') || !fs.existsSync(abs)) return send(res, 404, { error: 'not found' });
-      res.writeHead(200, { 'content-type': 'image/png', 'access-control-allow-origin': res.allowOrigin, vary: 'Origin', 'cache-control': 'no-store' });
+      res.writeHead(200, { 'content-type': 'image/png', 'access-control-allow-origin': res.allowOrigin, vary: 'Origin', 'cross-origin-resource-policy': 'cross-origin', 'cache-control': 'no-store' });
       return res.end(fs.readFileSync(abs));
     }
     if (parts[0] === 'lab' && parts.length === 2) {
