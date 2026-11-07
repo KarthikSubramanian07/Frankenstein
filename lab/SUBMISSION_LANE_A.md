@@ -58,4 +58,4 @@ The variant's source stays private until after judging. GBADoom is GPL-2.0-or-la
 
 ## Memory probe
 
-Did the model just remember Doom? Muse Spark gets only a function's public name and writes it from memory, and its function replaces the original in the real source file and is compared against two targets: the unmodified GBADoom build and our private variant. From memory it matched [UNMODIFIED] of 20 functions against the unmodified build and [VARIANT] of 20 against our variant.
+Did the model just remember Doom? Muse Spark gets only a function's public name and writes it from memory, and its function replaces the original in the real source file and is compared against two targets: the unmodified GBADoom build and our private variant. It matched 0 of 20, against both the unmodified build and our variant. It refused 10 of them, even when told the code is GPL. The other 10 did not compile against GBADoom's real headers: it invented struct fields and remembered different function signatures.
