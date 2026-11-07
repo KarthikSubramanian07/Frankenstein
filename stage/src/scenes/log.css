@@ -28,10 +28,10 @@ body.obs .lg-game span { display: none; }
 .lg-panel { padding: 8px 0 0; }
 
 .lg-head { display: grid; gap: 12px; padding: 0 0 18px; white-space: nowrap; border-bottom: 1px solid var(--line); margin-bottom: 8px; }
-.lg-head .cnt { font: 500 22px/1 var(--sans); color: var(--ink); }
-.lg-head .cnt b { font-weight: 600; font-size: 30px; }
+.lg-head .cnt { font: 400 22px/1 var(--sans); color: var(--ink); }
+.lg-head .cnt b { font-weight: inherit; font-size: inherit; }
 .lg-head .cnt span { color: var(--mute); }
-.lg-head .tot { display: flex; gap: 16px; font: 400 18px/1 var(--mono); }
+.lg-head .tot { display: flex; gap: 16px; font: 400 22px/1 var(--mono); }
 .lg-head .tot em { font-style: normal; }
 .lg-head .tot .p { color: var(--ok); }
 .lg-head .tot .r { color: var(--no); }
