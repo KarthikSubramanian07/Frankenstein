@@ -48,8 +48,13 @@ class Director:
             if frame_png:
                 self.frame_png = frame_png
 
+    STALE_S = 12.0  # only what the player did in the last few seconds counts
+
     def hot(self) -> list[tuple[str, int]]:
+        now = time.time()
         with self.lock:
+            while self.recent and now - self.recent[0][0] > self.STALE_S:
+                self.recent.popleft()
             c = Counter(f for _, ids in self.recent for f in ids)
         return [(f, n) for f, n in c.most_common() if self.target.fns[f]["scope"] == "game"
                 and f not in self.target.recovered]

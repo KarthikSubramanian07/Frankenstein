@@ -102,7 +102,7 @@ def test_unknown_routes_are_404(server):
 def test_max_usd_is_clamped(tmp_path, monkeypatch):
     jobs = Jobs(offline_config(tmp_path), mock=True)
     seen = []
-    monkeypatch.setattr(jobs, "start", lambda fn, max_usd: seen.append(max_usd) or {"job_id": "j", "run_id": "r"})
+    monkeypatch.setattr(jobs, "start", lambda fn, max_usd, **kw: seen.append(max_usd) or {"job_id": "j", "run_id": "r"})
     srv = ThreadingHTTPServer(("127.0.0.1", 0), make_handler(jobs))
     threading.Thread(target=srv.serve_forever, kwargs={"poll_interval": 0.02}, daemon=True).start()
     try:

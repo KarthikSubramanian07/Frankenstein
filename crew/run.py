@@ -150,11 +150,24 @@ class Run:
             threading.Thread(target=self.rebuild, daemon=True).start()
 
     def rebuild(self) -> None:
+        """Ask the Lab to splice every accepted function into the ROM and prove the SHA-1; log it in THIS run."""
         try:
-            self.referee.rebuild(str(self.dir / "recovered"))  # Lab emits build.rom into runs/live itself
+            with self._lock:
+                if getattr(self, "_rebuilding", False):
+                    return
+                self._rebuilding = True
+            r = self.referee.rebuild(str(self.dir / "recovered"))
+            if isinstance(r, dict) and r.get("rom_sha1"):
+                self.log.emit("build.rom", "lab", rom_sha1=r["rom_sha1"], identical=bool(r.get("identical")),
+                              recovered=int(r.get("recovered", 0)), from_original=int(r.get("from_original", 0)),
+                              pct_agent_code=float(r.get("pct_agent_code", 0.0)), rom_path=r.get("rom_path", ""),
+                              original_sha1=r.get("original_sha1"), method=r.get("method"))
+                self.last_build = r
         except Exception as e:
             self.log.emit("narration", "archivist", text="Rebuild hiccup. The referee will try again.", mood="dry",
                           speak=False, priority=0, error=str(e)[:160])
+        finally:
+            self._rebuilding = False
 
     def distill(self, out: Outcome) -> None:
         journey = "\n".join(f"attempt {j[0]}: {j[1]} {j[2]}% {j[3] or ''} -> {j[4] if len(j) > 4 else ''}"
@@ -220,6 +233,14 @@ class Run:
                 tmp.unlink()
             os.symlink(self.run_id, tmp)
             os.replace(tmp, live)  # atomic switch for the Stage
+        if self.args.route_json:
+            try:
+                rt = json.loads(self.args.route_json)
+                self.log.emit("snap.decision", "scheduler", fn=(rt.get("fns") or [None])[0], op="route",
+                              query=str(rt.get("query", ""))[:200], fns=rt.get("fns"), p=rt.get("p"),
+                              basis=rt.get("basis"), latency_ms=rt.get("latency_ms"), source="asi:one")
+            except (json.JSONDecodeError, TypeError):
+                pass
         tick = threading.Thread(target=self.ticker, daemon=True)
         tick.start()
         self.director = None
@@ -270,7 +291,11 @@ class Run:
             except Exception:
                 pass
         self.distill_pool.shutdown(wait=True)
+        if self.matched and getattr(self.referee, "kind", "") == "lab" and not self.args.no_rebuild:
+            self.rebuild()  # the proof at the end of every run: rebuilt ROM, same SHA-1
         self._stop.set()
+        if getattr(self, "_director_srv", None):
+            self._director_srv.shutdown()  # release :7112 for the next live run
         self.tick()
         return self.finish()
 
@@ -313,6 +338,7 @@ class Run:
                 self.wfile.write(data)
 
         srv = ThreadingHTTPServer(("127.0.0.1", self.args.director_port), H)
+        self._director_srv = srv
         threading.Thread(target=srv.serve_forever, daemon=True).start()
 
         def steer_loop():
@@ -406,6 +432,7 @@ def parser() -> argparse.ArgumentParser:
     ap.add_argument("--director-every", type=float, default=4.0, help="seconds between Snap steering decisions")
     ap.add_argument("--live", action="store_true", help="point runs/live at this run")
     ap.add_argument("--run-id", default="")
+    ap.add_argument("--route-json", default="", help="SubQ Snap route that started this run (ASI:One jobs)")
     return ap
 
 

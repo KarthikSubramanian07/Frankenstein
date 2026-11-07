@@ -28,19 +28,21 @@ FN_ID = re.compile(r"fn_[0-9A-F]{8}")  # contracts: ^fn_[0-9A-F]{8}$
 
 
 class Jobs:
-    def __init__(self, cfg: Config, mock: bool):
+    def __init__(self, cfg: Config, mock: bool, live_jobs: bool = False):
         self.cfg = cfg
         self.mock = mock
+        self.live_jobs = live_jobs  # ASI:One jobs become runs/live, so the Stage shows them
         self.jobs: dict[str, dict] = {}
         self.ids = itertools.count(1)
         self.lock = threading.Lock()
 
     # -------------------------------------------------- jobs
-    def start(self, fn: str, max_usd: float) -> dict:
+    def start(self, fn: str, max_usd: float, *, route: dict | None = None, live: bool = False) -> dict:
         n = next(self.ids)
         job_id, run_id = f"j_{n}", f"r_asi_{n:02d}"
         job = {"job_id": job_id, "run_id": run_id, "fn": fn, "status": "running", "attempts": 0, "best_pct": 0.0,
-               "cost_usd": 0.0, "src_path": None, "false_claims": 0, "started": time.time()}
+               "cost_usd": 0.0, "src_path": None, "false_claims": 0, "started": time.time(),
+               "route": route, "live": live or self.live_jobs}
         with self.lock:
             self.jobs[job_id] = job
         if self.mock:
@@ -59,9 +61,13 @@ class Jobs:
     def _real_job(self, job: dict, max_usd: float) -> None:
         from .run import Run, parser
 
-        args = parser().parse_args(["--fns", job["fn"], "--diggers", "1", "--run-id", job["run_id"],
-                                    "--library", "on", "--label", f"asi:one job {job['job_id']}",
-                                    "--max-usd-per-fn", str(max_usd), "--no-rebuild"])
+        argv = ["--fns", job["fn"], "--diggers", "1", "--run-id", job["run_id"],
+                "--library", "on", "--label", f"asi:one job {job['job_id']}", "--max-usd-per-fn", str(max_usd)]
+        if job.get("route"):
+            argv += ["--route-json", json.dumps(job["route"])]
+        if job.get("live"):
+            argv += ["--live"]  # the Stage shows this job as it happens (the ASI:One beat of the demo)
+        args = parser().parse_args(argv)
         args.budget_usd = max_usd * 1.2
         try:
             r = Run(self.cfg, args)
@@ -234,9 +240,8 @@ def make_handler(jobs: Jobs):
                 return self._send(400, {"error": "expected {\"fn\": \"fn_XXXXXXXX\", \"max_usd\": 1.5}"})
             if not FN_ID.fullmatch(fn):
                 return self._send(400, {"error": "fn must look like fn_08000A1C"})
-            started = jobs.start(fn, max_usd)
-            if routed:
-                jobs.jobs[started["job_id"]]["route"] = {k: routed.get(k) for k in ("query", "fns", "p", "basis")}
+            rt = {k: routed.get(k) for k in ("query", "fns", "p", "basis", "latency_ms")} if routed else None
+            started = jobs.start(fn, max_usd, route=rt, live=bool(body.get("live")))
             self._send(200, {**started, "route": routed} if routed else started)
 
     return H
@@ -247,8 +252,9 @@ def main(argv=None) -> int:
     ap.add_argument("--port", type=int, default=7111)
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--mock", action="store_true")
+    ap.add_argument("--live-jobs", action="store_true", help="every ASI:One job becomes runs/live (Stage shows it)")
     a = ap.parse_args(argv)
-    jobs = Jobs(Config(), a.mock)
+    jobs = Jobs(Config(), a.mock, live_jobs=a.live_jobs)
     srv = ThreadingHTTPServer((a.host, a.port), make_handler(jobs))
     print(f"crew jobs API on http://{a.host}:{a.port} ({'mock' if a.mock else 'real'})", flush=True)
     try:
