@@ -222,7 +222,7 @@
         <div><dt>Matching bytes aren't enough</dt><dd>A MATCH coaxed with <code>volatile</code>, absolute-address casts, goto chains, padding or cast chains is thrown out. Every held-out run rejected <b>4 fakes, and let 0 through</b>. <span class="src">doom_r02 to r04</span></dd></div>
         <div><dt>Two labs screen what bytes can't</dt><dd>SubQ Snap and Gemini score every match for fakes and recited source, in parallel. Snap rejects at 0.85; Gemini alone at 0.95, or at 0.7 when Snap agrees.</dd></div>
         <div><dt>Hard to talk into anything</dt><dd>Pasted C is linted before and after macro expansion, then compiled with no network and an empty <code>.env</code>. We found and fixed an include trick that could have leaked keys to a chat user. <span class="src">SECURITY.md</span></dd></div>
-        <div class="limits"><dt>Honest limits</dt><dd>On the easy round-one set, no claim was false: a Digger could only claim after a MATCH. With claim-first in round two, the Checker caught <b>5 real false claims</b>, refused every one, and accepted no fake. Snap's gate has rejected nothing so far; the deterministic rules did the catching. <span class="src">DECISIONS 13:58</span></dd></div>
+        <div class="limits"><dt>Honest limits</dt><dd>Before claim-first, a Digger could only claim after a MATCH, so no claim was false. With claim-first, round two caught <b>5 real false claims</b>; the referee refused every one, and no fake was accepted. Snap's gate has rejected nothing so far; the deterministic rules did the catching. <span class="src">DECISIONS 13:58</span></dd></div>
       </dl>
       <div class="proof">
         <p class="proof-k">PROOF</p>
@@ -251,7 +251,7 @@
         <div><dt>Kept on evidence</dt><dd>A habit is adopted after 3 uses at or above the library's quick-match rate, and retired after 4 or more at 15 points below it. Retired habits are never offered again.</dd></div>
         <div><dt>Tested on code it has never seen</dt><dd>170 of Doom's 568 game functions are held out. The library is frozen before a held-out run, and its SHA-1 is the same afterwards, so the test never teaches it.</dd></div>
         <div><dt>Adopted and retired, for real</dt><dd>doom_r01 learned <b>38 habits</b> while matching 28 of 30. On harder code, training run doom_r11 adopted 3 habits and retired 4. <span class="src">DECISIONS 13:58</span></dd></div>
-        <div class="limits"><dt>Honest result</dt><dd>Held out, the library hasn't beaten noise yet: 30 vs 28 of 40 on easy functions, and <b>6 vs 6 of 20</b> on harder ones. So <b>we don't claim it helped</b>. A rerun on current code is going now. <span class="src">crew/EXPERIMENTS.md</span></dd></div>
+        <div class="limits"><dt>Honest result</dt><dd>Held out, the library hasn't beaten noise: <b>29 vs 29 of 40</b> on easy functions and <b>6 vs 6 of 20</b> on harder ones. Between two runs, 3 to 8 functions flip anyway. So <b>we don't claim it helped</b>, and the table says so. <span class="src">DECISIONS 14:06</span></dd></div>
       </dl>
       <div class="proof">
         <p class="proof-k">PROOF</p>
@@ -264,10 +264,10 @@
               <tr><th scope="row">doom_r12</th><td>library on · Snap on</td><td class="v">6 / 20</td><td class="v att">2.00</td><td class="v">$0.536</td></tr>
               <tr><th scope="row">doom_r13</th><td>library off · Snap on</td><td class="v">6 / 20</td><td class="v att">2.17</td><td class="v">$0.547</td></tr>
               <tr><th scope="row">doom_r14</th><td>library on · Snap off</td><td class="v">4 / 20</td><td class="v att">2.25</td><td class="v">$0.822</td></tr>
-              <tr class="rd"><th scope="rowgroup" colspan="5">Round 1 · 40 easy functions, 16 to 56 bytes, two since-fixed bugs</th></tr>
-              <tr><th scope="row">doom_r02</th><td>library on · Snap on</td><td class="v">30 / 40</td><td class="v att">1.50</td><td class="v">$0.081</td></tr>
-              <tr><th scope="row">doom_r03</th><td>library off · Snap on</td><td class="v">28 / 40</td><td class="v att">1.50</td><td class="v">$0.081</td></tr>
-              <tr><th scope="row">doom_r04</th><td>library on · Snap off</td><td class="v">29 / 40</td><td class="v att">1.45</td><td class="v">$0.076</td></tr>
+              <tr class="rd"><th scope="rowgroup" colspan="5">Round 1, rerun on current code · 40 easy functions, 16 to 56 bytes</th></tr>
+              <tr><th scope="row">doom_r02b</th><td>library on · Snap on</td><td class="v">29 / 40</td><td class="v att">1.41</td><td class="v">$0.076</td></tr>
+              <tr><th scope="row">doom_r03b</th><td>library off · Snap on</td><td class="v">29 / 40</td><td class="v att">1.45</td><td class="v">$0.075</td></tr>
+              <tr><th scope="row">doom_r04b</th><td>library on · Snap off</td><td class="v">30 / 40</td><td class="v att">1.47</td><td class="v">$0.086</td></tr>
             </tbody>
             <tfoot><tr><td colspan="5">Same model and budget within each round. Copied from each run's metrics.json in crew/EXPERIMENTS.md. Bad results ship too.</td></tr></tfoot>
           </table>
@@ -340,7 +340,7 @@
         <div><dt>The fake gate</dt><dd>Every MATCH also needs low fakematch and recital odds from Snap before the Checker accepts it. It rejects at 0.85.</dd></div>
         <div><dt>Eyes on the screen</dt><dd>Play it, and we rebuild it: the director watches live frames and picks what to rebuild next, in 2.4 s. Eyes compares two frames and confirms a patch changed what we said, and nothing else (0.68 s, p 0.999).</dd></div>
         <div class="without"><dt>Without it</dt><dd>Muse digs blind, and nobody reads the whole game at once.</dd></div>
-        <div class="limits"><dt>Honest limits</dt><dd>The router is a hint, 5 to 7x better than random, not precise: it ranked the face #1 at 12:20 and missed the top three at 12:56. Held out on harder code, Snap on vs off was 6 vs 4 of 20 at $0.54 vs $0.82 per match: <b>a weak hint, not a result</b>. <span class="src">DECISIONS 13:58</span></dd></div>
+        <div class="limits"><dt>Honest limits</dt><dd>The router is a hint, 5 to 7x better than random, not precise: it ranked the face #1 at 12:20 and missed the top three at 12:56. Held out, Snap on vs off was 6 vs 4 of 20 on harder code (<b>a weak hint, not a result</b>) and 29 vs 30 of 40 on easy code. <span class="src">DECISIONS 13:58, 14:06</span></dd></div>
       </dl>
       <div class="proof two">
         <p class="proof-k">PROOF</p>
