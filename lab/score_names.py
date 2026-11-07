@@ -5,7 +5,7 @@
 Similarity (documented so Lane B knows what is measured):
   1. Normalise both names: drop a GBADoom module prefix (`P_`, `ST_`, `R_`, `A_`, `HU_`, ... any
      1-3 capitals followed by `_`), split camelCase and snake_case, lowercase.
-     `P_SetMobjState` -> [set, mobj, state]; `set_mobj_state` -> [set, mobj, state].
+     `X_SetThingState` -> [set, mobj, state]; `set_thing_state` -> [set, mobj, state].
   2. similarity = Jaccard overlap of the two token sets (0..1); exact = token lists are equal.
   A null inferred name, or a function missing from the key, scores 0.
   subsystem_hits: only when names.json entries carry a `subsystem` guess; compared with the
