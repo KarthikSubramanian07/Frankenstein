@@ -74,7 +74,7 @@ Every "I matched it" is re-run by the Checker with a fresh compile. A match that
 | Subquadratic (SubQ Snap) | The judgment | Reads the whole game at once and decides where every attempt goes. |
 | Fetch.ai (ASI:One) | The front door | Ask for a recovery in a chat. Get proof back. |
 | MongoDB Atlas | The memory | Remembers every trick, so the next game is faster. |
-| Google Gemini | The second opinion | A different lab double-checks every match. |
+| Google Gemini | The second opinion | A different lab double-checks every match. It also rendered every illustration on the site, today (`site/tools/generate_art.py`). |
 
 ## Built today / Not ours
 
