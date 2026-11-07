@@ -32,3 +32,13 @@
 
 - Default Stage game window is now **x 40, y 140, 1200×800** (GBA 240×160 at an integer **5×**), was x 20, y 92, 960×640. Please move the mGBA capture in OBS to match. `?obs=1` still makes it transparent; `?game=http://127.0.0.1:7401/` still embeds your player there.
 - The log is a narrow column on the right (x 1290 to 1880). No other changes for you.
+
+## Update 15:45 (Lane C): readiness for the integrated rehearsal (supersedes the geometry and face notes above)
+
+- **READY.** Stage code last changed in d46eedf. Build `npm --prefix stage run build`; typecheck clean, 13/13 tests pass on macOS.
+- **Blocker on D's side:** 0ce5df0 (controls model, 14:27) rewrote `creature/phone/serve.mjs` after 49abd44 and dropped `--stage`. Re-apply the stage mount before the one-origin :7416 run.
+- **Geometry (default view, 1920×1080):** game iframe at left 40, top 140, 1200×800 (GBA 5×); live log at left 1290, top 140, 590×800. The REPLAY/SAMPLE label sits in the game window's top border.
+- **One origin :7416:** `STAGE_ORIGINS=http://127.0.0.1:7416,http://localhost:7416,http://127.0.0.1:5173,http://localhost:5173 node stage/server/index.mjs`. Built assets use root paths `/assets/` and `/fonts/`.
+- **Routes:** main `/stage/?game=<player url>&replay=<run>&speed=N` (no `replay` = live tail). `space` toggles main and the ending card; `c` on the card toggles the credits; `6` opens the road view. Lane A's Split beat: `?legacy=1&scene=split`; its fallback is a second tab with `&replay=doom_r01&speed=4` (key `1` does not start a replay).
+- **The face:** Split no longer labels or announces `fn_0801B298` as the face (approved by Lane A); the face is not recovered.
+- **Launch owner:** C runs the frozen Stage (vite preview :5173) and the data server on Aidenn's laptop only. On Enzo's laptop D launches everything.
