@@ -12,3 +12,11 @@
 - **Game window unchanged:** x 20, y 92, 960×640. Without `?obs=1` the Stage draws its own cartridge map there (one cell per function, static until proved); with `?obs=1` that area is transparent for your mGBA capture.
 - **The face:** when `fn_0801B298` matches, Split beams to the middle of the status bar and shows "DOOMGUY'S FACE?" (violet until `names.json` marks it `inferred: false`).
 - **Origins:** the Stage server now answers browsers only from `http://127.0.0.1:5173` or `http://localhost:5173` (set `STAGE_ORIGINS` to add one). Load the OBS browser source from one of those.
+
+## Update 13:20 (Lane C): minimal redesign
+
+- **Game window unchanged:** still x 20, y 92, 960×640 on Rebuild (`?scene=split`). With `?obs=1` it is transparent. Without OBS the Stage no longer draws the function grid there: it is an empty bevelled frame, or your browser player if the URL has `?game=http://127.0.0.1:7401/` (the Stage page is now cross-origin isolated, COOP `same-origin` + COEP `require-corp`; keep your player's own isolation headers).
+- **Badge:** "Running on N% agent-written code" appears under the game window only after a real `rom.swapped`.
+- **Alive (`?scene=ending`):** IDENTICAL plus both checksums and IT'S ALIVE only when `build.rom` says identical and the hashes agree; the QR only after `phone.published` (it loads `qr_png` through `http://127.0.0.1:7201/file?path=…`). Credits unchanged in content (`space`, or `?page=credits`).
+- **Keys:** Hi-score is gone; `5`/`h` open Rebuild. Director beats: Title, Rebuild (replay 8x), Caught, Rebuild live, Faster, Alive, credits.
+- **Frozen demo build:** `cd stage && npm run demo` (no hot reload).

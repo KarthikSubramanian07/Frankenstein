@@ -24,7 +24,7 @@ npm run shots             # screenshots of every scene at 1920x1080 and 1280x720
 | `?obs=1` | transparent background for OBS (Split's game window is x 20, y 92, 960×640) |
 | `?scene=ending&page=credits` | the Built today / Not ours card |
 
-Keys: `0` Title · `1` Split · `5`/`h` Hi-score · `2` Versus · `3` Time trial · `4` Ending · `space` = start on Title, credits on Ending · `m` mute.
+Keys: `0` Title · `1` Rebuild · `2` Caught · `3` Faster · `4` Alive · `space` = start on Title, credits on Alive · `m` mute.
 
 ## Checks
 
@@ -35,16 +35,17 @@ Keys: `0` Title · `1` Split · `5`/`h` Hi-score · `2` Versus · `3` Time trial
 - **Server** (`server/index.mjs`): tails `runs/live/events.jsonl`, follows the symlink when it moves, rebuilds from the full file on truncation, and sends every line unchanged over ws :7202 after a `stage.hello` (contracts §8). Replay paces a finished file by its `ts` at 1–20x. HTTP :7201 serves `runs/<id>/{metrics,names}.json`, `/metrics` (all runs), `/lab/{viz_map,manifest,memory_probe}` (real `lab/out` files for real runs, `contracts/fixtures` samples for fixture runs) and `/file?path=` (PNGs under `creature/` only, for the QR).
 - **Page** (`src/`): `state.ts` is a pure reducer over events; every number comes from it, `names.json`, `metrics.json` or the lab files. Sample data shows **SAMPLE DATA** in a corner; replay shows **REPLAY · Nx**; a dropped socket shows **NO SIGNAL**.
 
-## Scenes
+## Screens (minimal, Doom-inspired: one idea per screen)
 
-- **Title**: logo, save-file menu fed from the run (`FILE 1 DOOM NN%`, lies caught), PRESS START.
-- **Split** (home): game window for the mGBA capture, the one hero number under it (NOW RUNNING ON NN% AGENT-WRITTEN CODE, from `rom.swapped`), the hi-score table (guessed names violet with `?`), the active Digger's C with verdict stamps and a picture-in-picture Versus card on false claims, the cartridge meter, and a beam from each recovered row to its screen region with a coin sound.
-- **Hi-score**: 1UP / HI-SCORE / LIES, the table, one hero number (% of the game recovered), the cartridge meter. A false claim shows a red liar row, cuts to Versus for 4 s and comes back. 25/50/75/100% are announced once.
-- **Versus**: Digger vs Referee for each false claim: claim % vs proof 100%, expected vs produced instruction with the wrong operand in red, the Digger's own words, K.O.
-- **Time trial**: lap board (min and cost per piece per run; lap record only within a split), held-out % for library on vs the library-off ghost, a road where each car's position is its match rate, the memory test plate and the Muse Spark powered-by line.
-- **Ending**: true % recovered, original and rebuilt SHA-1, IDENTICAL only when proved, patch notes, the phone QR, and the Built today / Not ours card.
+- **Title** (`0`): FRANKENSTEIN, "Lost games, rebuilt and proven.", PRESS START.
+- **Rebuild** (`1`, `?scene=split`): the game window on the left (x 20, y 92, 960×640; `?obs=1` transparent, `?game=<url>` embeds the browser player), and on the right one giant count ("28 / 568 pieces rebuilt", the whole game as denominator), one progress bar, the newest piece sliding in (guessed names violet with ?), and one line: Muse writes · Snap checks · Compiler proves. A caught lie or a rejected fake cuts to Caught for about 4 s.
+- **Caught** (`2`, `?scene=versus`): "Agent claimed it was right", then REJECTED (the wrong instruction, or the Checker's reason for a fake) or CONFIRMED.
+- **Faster** (`3`, `?scene=timetrial`): with memory vs without memory, minutes per piece, one sentence; "not measured yet" until a library-off run is exported.
+- **Alive** (`4`, `?scene=ending`): IDENTICAL with both checksums and IT'S ALIVE only when proved; NOT REBUILT YET otherwise; the QR after phone.published; `space` for Built today / Not ours.
 
-Fonts (all OFL, from Google Fonts) are self-hosted in `public/fonts/` so the Stage works offline. Sounds are synthesized square waves; the announcer uses the browser's speech voice.
+Colours: near-black, blood red (rejected), rust metal, fire orange (the hero number), toxic green only for proved, violet ? for guesses. Fonts: Anton and Barlow.
+
+Fonts (all OFL, from Google Fonts) are self-hosted in `public/fonts/` so the Stage works offline. Sounds are synthesized square waves; the announcer uses the browser's speech voice. For the demo, `npm run demo` serves a frozen build on :5173.
 
 ## Director mode
 
