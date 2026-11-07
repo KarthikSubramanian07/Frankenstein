@@ -13,10 +13,12 @@ import secrets
 import time
 from pathlib import Path
 
-from lab.agents.frankenstein_agent import CREW_URL, FN_RE, INFERRED, JOB_TIMEOUT_S, OBSERVED, REPO, _http
+from lab.agents.frankenstein_agent import (BUSY, CREW_URL, FN_RE, INFERRED, JOB_TIMEOUT_S, OBSERVED, REPO, TOO_LONG, _http,
+                                           too_long)
 
 REFEREE_AGENT = "agent1q088qnxafee4aug0qz4xnd9zkk4veq2r9ez07mp047u8enqhckc5w2hstx0"
 REFEREE_TIMEOUT_S = 120  # mailbox round trip: Agentverse relays both legs
+REFEREE_TRIES = 2  # ask once, re-send once if the first ask gets no reply in half the budget
 SELFTEST_C = "int fn_0801B724(const void *e){ (void)e; return 0; }"
 SEED_KEY = "FRANKENSTEIN_EXCAVATOR_SEED"
 
@@ -82,7 +84,7 @@ def verdict_reply(fn: str, src: str, referee_text: str | None, status: dict | No
                      f"(cost ${status.get('cost_usd', 0):.2f}); I did not take its word for it.")
     if referee_text is None:
         lines += [f"- I sent the C to the Frankenstein Referee agent (`{REFEREE_AGENT[:20]}…`), a separate agent, "
-                  f"and got no reply within {REFEREE_TIMEOUT_S} s. No verdict, so this is **not** verified."]
+                  f"(asked {REFEREE_TRIES} times) and got no reply within {REFEREE_TIMEOUT_S} s. No verdict, so this is **not** verified."]
     else:
         lines += [f"- Verdict from the Frankenstein Referee agent (`{REFEREE_AGENT[:20]}…`), a separate agent "
                   "that compiles the C and compares bytes. Its reply, quoted:", ""]
@@ -107,18 +109,29 @@ def build_agent():
         _referee_replies = _referee_replies or asyncio.Queue()
         question = f"Does this C match {fn}?\n\n```c\n{src.strip()}\n```"
         ctx.logger.info(f"asking Referee agent about {fn}")
-        await ctx.send(REFEREE_AGENT, ChatMessage(content=[TextContent(text=question)]))
-        deadline = time.time() + REFEREE_TIMEOUT_S
-        while (left := deadline - time.time()) > 0:
-            try:
-                text = await asyncio.wait_for(_referee_replies.get(), left)
-            except asyncio.TimeoutError:
-                break
-            if fn in text.splitlines()[0]:
-                return text
+        # ponytail: a late reply to the first ask can sit in the queue; it is for the same fn and C, so harmless
+        for attempt in range(1, REFEREE_TRIES + 1):
+            if attempt > 1:
+                ctx.logger.info(f"no reply from Referee agent about {fn}; asking again")
+            await ctx.send(REFEREE_AGENT, ChatMessage(content=[TextContent(text=question)]))
+            deadline = time.time() + REFEREE_TIMEOUT_S / REFEREE_TRIES
+            while (left := deadline - time.time()) > 0:
+                try:
+                    text = await asyncio.wait_for(_referee_replies.get(), left)
+                except asyncio.TimeoutError:
+                    break
+                if fn in text.splitlines()[0]:
+                    return text
         return None
 
     async def excavate(ctx: Context, user: str, text: str) -> None:
+        try:
+            await _excavate(ctx, user, text)
+        except Exception as e:  # a background task's exception would otherwise vanish and leave the user waiting
+            ctx.logger.exception(f"excavate failed: {e}")
+            await ctx.send(user, ChatMessage(content=[TextContent(text=BUSY), EndSessionContent()]))
+
+    async def _excavate(ctx: Context, user: str, text: str) -> None:
         fn_m = FN_RE.search(text)
         fn = _norm(fn_m.group(0)) if fn_m else None
         status = None
@@ -143,6 +156,9 @@ def build_agent():
                 _referee_replies.put_nowait(text)
             return
         if not text.strip():
+            return
+        if too_long(text):
+            await ctx.send(sender, ChatMessage(content=[TextContent(text=TOO_LONG), EndSessionContent()]))
             return
         lower = text.lower()
         if not (re.search(r"\b(recover|bring back|dig|excavate|selftest)\b", lower)):
