@@ -170,3 +170,5 @@ Repo About: "Lost games, rebuilt and proven. 87% of classic games are endangered
 - 2026-11-07 15:43 (B): doom_par0 matched 5 near-misses; union climbed with sweep3. Headline **219 of 568 (38.6%)**, 10118 of 141774 code bytes (7.14%).
 
 - 2026-11-07 15:48 (B): salvage loop refreshed the published union — **222 of 568 (39.1%)**, 10380 of 141774 code bytes (7.32%).
+
+- 2026-11-07 15:50 (B): union **225 of 568 (39.6%)**, 10684 of 141774 code bytes (7.54%).

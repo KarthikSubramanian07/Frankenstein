@@ -1,11 +1,11 @@
 {
   "v": 1,
-  "functions": 222,
+  "functions": 225,
   "of": 568,
-  "pct_functions": 39.1,
-  "bytes": 10380,
+  "pct_functions": 39.6,
+  "bytes": 10684,
   "of_bytes": 141774,
-  "pct_bytes": 7.32,
+  "pct_bytes": 7.54,
   "reverified_by_referee": true,
   "rejected_on_reverify": [],
   "target_rom_sha1": "d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2",
@@ -158,6 +158,13 @@
       "sha1": "ea543f1166bf0ee22c0a04294b89ba6d3b2773fe"
     },
     {
+      "fn": "fn_08003564",
+      "size": 104,
+      "split": "train",
+      "from": "runs/doom_sweep3",
+      "sha1": "d9587a31794ff1b65bc4ac5c11d555159eba5888"
+    },
+    {
       "fn": "fn_080035CC",
       "size": 56,
       "split": "heldout",
@@ -275,6 +282,13 @@
       "split": "heldout",
       "from": "crew/exports/doom_r04b",
       "sha1": "6efce79389e0ea08961d0584c3b22ec5fbdf8de5"
+    },
+    {
+      "fn": "fn_08004B58",
+      "size": 100,
+      "split": "train",
+      "from": "runs/doom_sweep3",
+      "sha1": "032f296c300839b8578107a49541293f82012c55"
     },
     {
       "fn": "fn_08004D4C",
@@ -653,6 +667,13 @@
       "split": "heldout",
       "from": "crew/exports/doom_r14",
       "sha1": "b0194e82d8998623dd2db7612e09ba2ba7bcd067"
+    },
+    {
+      "fn": "fn_08007830",
+      "size": 100,
+      "split": "train",
+      "from": "runs/doom_sweep3",
+      "sha1": "d7b465eb9f2bdf8317c65b643e38f0e3ebf00c66"
     },
     {
       "fn": "fn_08008C30",
