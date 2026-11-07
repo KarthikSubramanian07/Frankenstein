@@ -1,10 +1,64 @@
 # Experiments: does the crew get better, and does SubQ Snap earn its place?
 
-Frankenstein rebuilds a game's lost source code from the compiled game, and accepts a function only when a compiler turns the agents' C into byte-identical machine code. Doom (GBADoom) is our first patient, because we can check every answer against hidden source. This page reports the held-out experiments on the real GBADoom target, run on 2026-11-07 between 12:06 and 12:33 Pacific. Every number in the tables is copied from the run's own `metrics.json`. Numbers from the event logs are marked as such.
+Frankenstein rebuilds a game's lost source code from the compiled game, and accepts a function only when a compiler turns the agents' C into byte-identical machine code. Doom (GBADoom) is our first patient, because we can check every answer against hidden source. This page reports the held-out experiments on the real GBADoom target (ROM SHA-1 `d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2`), judged by Lane A's real referee. Every number in a results table is copied from that run's own `metrics.json`. Numbers taken from the event logs are marked as such.
 
-**Short version.** On 40 held-out functions, the frozen idiom library matched 30 against 28 without it, and SubQ Snap on matched 30 against 29 with Snap off. Both differences are one or two functions, which is inside the noise for a sample this small. A Digger bug also hit every run unevenly (details below), so neither comparison is clean yet. We do not claim that either treatment helped.
+**Short version.** We ran two rounds on 2026-11-07. In round 2 (harder functions, 57 to 200 bytes), the frozen library with its solved-before case memory matched 6 of 20, exactly as many as no library. Snap off matched 4 of 20. In round 1 (the 40 easiest held-out functions), the gaps were one or two functions. None of these differences is larger than the run-to-run noise we can see, so we do not claim that the library, the case memory or SubQ Snap improved the match rate. What the data does show is below, including where the crew spends its money.
 
-## Setup
+## Round 2: harder functions, clean code (13:00 to 13:55)
+
+### Design
+
+- **Training run doom_r11.** 40 train-split Thumb functions of 57 to 200 bytes, picked by size strata (sorted by size, cut into 40 equal bins, one function drawn per bin with seed 7; list in `runs/_train_set_v2.txt`). It ran with `--library learning` into a fresh `runs/_doom_lib_v2.json`, Snap on and Gemini on. Afterwards, `python -m crew.cases` loaded the verified training solutions from doom_r11 and doom_r01 (37 functions, train split only) into the case memory. Both files were then copied to `runs/_doom_lib_v2_frozen.json` and `runs/_doom_lib_v2_frozen.cases.json`. Their SHA-1s were unchanged after every held-out run.
+- **Held-out list.** 20 held-out Thumb functions of 57 to 200 bytes (58 to 192 in practice), picked the same way (20 size bins, seed 7) and saved to `runs/_heldout_set_v2.txt`. The plan said 30. Training showed about $0.14 per attempted function on this size range, so 30 functions per arm would not have fit three arms inside the $15 cap, and we cut the list to 20 before any held-out run started.
+- **Arms.** doom_r12: library on (frozen idioms plus case memory), Snap on. doom_r13: library off, Snap on, with `--names` so it pays the same naming overhead. doom_r14: library on, Snap off (`--no-snap`). Gemini second opinion on in all three. 6 Diggers, at most $0.60 of Muse per function, run budget $3.40 each. r12 and r13 ran in parallel, then r14.
+- **Same code for every arm.** All three held-out arms ran from a git worktree pinned at `2f5432e` (crew code as of `2f78923`, which added the case memory), so no teammate commit could change the code between arms. The training run ran from a worktree pinned at `67e6af2` (crew code as of `457603a`, before MongoDB Atlas and the case memory). Both include the round-1 bug fixes (`7ac47a2`, `c10b4b0`) and claim-first (`0f5a981`). None of round 2 includes `74997cf` (the aligned side-by-side diff for PARTIAL verdicts), which landed at 13:28, after r12 and r13 had started. That change is the one most likely to matter on these functions, and it is untested here.
+- **The run budget bound every round-2 run.** Each run stops starting new work at 90% of its budget. In doom_r11 that cut 5 functions short and left 10 of the 40 (the largest, 144 to 200 bytes) unattempted. In the held-out arms it cut 3 (r12), 4 (r13) and 4 (r14) functions short near the end, and r14 never started 2 of its 20. So these are "matches within $3.40" numbers, not "matches with unlimited attempts" numbers.
+
+### Results
+
+Cost is Muse spend (Wonder is priced at Spark rates, so every cost is an estimate). Snap cost is separate: $0.003 to $0.004 per run.
+
+| Run | Commit | Label | Matched | Match rate | Attempts per match | Minutes per match | Cost per match | Muse cost | False claims caught | Fakes rejected | Snap calls (mean latency) | Muse calls by model | Library backend |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| doom_r11 | 67e6af2 | doom · train v2 (57-200 B) · library learning · snap on | 9 / 40 | 0.225 | 2.33 | 2.55 | $0.471 | $4.24 | 1 | 0 | 52 (519 ms): 9 review, 43 decide_next | Spark 133, Wonder 46 | local-json |
+| doom_r12 | 2f5432e | doom · heldout v2 · library on (idioms + cases) · snap on | 6 / 20 | 0.300 | 2.00 | 1.71 | $0.536 | $3.22 | 3 | 0 | 37 (471 ms): 6 review, 31 decide_next | Spark 89, Wonder 33 | mongodb-atlas (idioms__doom_lib_v2_frozen) |
+| doom_r13 | 2f5432e | doom · heldout v2 · library off · snap on | 6 / 20 | 0.300 | 2.17 | 1.90 | $0.547 | $3.28 | 1 | 0 | 37 (405 ms): 6 review, 31 decide_next | Spark 104, Wonder 23 | mongodb-atlas (library off, never searched) |
+| doom_r14 | 2f5432e | doom · heldout v2 · library on (idioms + cases) · snap off | 4 / 20 | 0.200 | 2.25 | 2.06 | $0.822 | $3.29 | 0 | 0 | 0 (off) | Spark 96, Wonder 17 | mongodb-atlas (idioms__doom_lib_v2_frozen) |
+
+More from the same runs. The case-memory size is from `metrics.json`; everything else in this table comes from the event logs.
+
+| Run | Snap decisions (keep / escalate / abandon) | Functions escalated by Snap | Matched after a Snap escalation to Wonder | Case memory size | Cases offered (`idiom.used` with a `case:` id) | Habits judged in training |
+|---|---|---|---|---|---|---|
+| doom_r11 | 6 / 37 / 0 | 22 | 5 | not in this code | 0 | 3 adopted, 4 retired, 11 still candidates (18 idioms) |
+| doom_r12 | 5 / 25 / 1 | 11 | 0 | 37 | 35, to 18 of 20 functions | frozen (never judges) |
+| doom_r13 | 9 / 21 / 1 | 11 | 1 | 0 | 0 | off |
+| doom_r14 | Snap off (fixed rule escalates after 3 failures) | none | 1 matched after a fixed-rule Wonder attempt | 37 | 31, to 16 functions | frozen |
+
+The 7 habits judged in training: adopted "global byte-pointer base with literal-pool offsets", "args parked in r4-r5-ip with pop-bx epilogue" and "guarded clear emits cmp-beq guard" (each 1 quick match in 3 uses, at or above the baseline). Retired: "large offset via movs plus lsls", "large aligned offset built with movs plus lsls", "if-else with shared tail" and "park struct pointer in r4 across call" (each 0 quick matches in 4 uses).
+
+### Findings
+
+- **Library on vs off (r12 vs r13): 6 against 6.** Both runs matched the same 4 functions. Each also matched 2 that the other did not (r12: `fn_080039F8`, `fn_08012770`; r13: `fn_08008D04`, `fn_0800DF24`). Cases were offered on 35 occasions, to 18 of the 20 functions, and the matched count did not move. On this evidence, neither the idioms nor the solved-before cases help on held-out Doom functions of this size.
+- **How far apart runs land.** We could not afford a repeat run. The closest we have is r12 against r13: two runs with near-identical outcomes overall, yet 4 of their 8 distinct matched functions flipped between them. With matches this rare, one run's per-function outcome is close to a coin flip at the margin. A real effect would have to be several functions per 20 to show through.
+- **Snap on vs off (r12 vs r14): 6 against 4,** at $0.54 against $0.82 per match. This is the only comparison in either round that leans the way the treatment predicts. It is still only 2 functions, and r14 never started 2 of its functions because the budget ran out. We read it as a weak hint, not a result. Snap's decisions were mostly "escalate" (25 of 31 in r12). It abandoned once per run, and its fakematch gate rejected nothing (no run rejected a fake).
+- **Wonder escalation rarely converts on held-out code.** In training, 5 of the 9 matches came after Snap escalated to Wonder. In the held-out arms, Snap-escalated Wonder attempts produced 0 matches (r12) and 1 (r13), while Wonder took 10% (r13) to 21% (r12) of the spend.
+- **Claim-first works as intended.** With Diggers now staking a claim before they see the verdict, the Checker caught real false claims: 1 in training, 3 in r12 and 1 in r13. Every false claim was refused by the referee, and no false or fake match was accepted.
+- **Where the money goes.** About $0.53 to $0.82 of Muse per match on these functions, against $0.08 in round 1. Most of it goes to functions that never match: by the event logs, 81% to 86% of the per-attempt spend in the held-out arms went to functions that ended unmatched.
+- **What the data suggests next.** Run the aligned diff (`74997cf`) on this same list, since a 2% positional score for code that is 60% structurally right gives the Diggers nothing to climb. Raise the run budget so no arm is cut short. Repeat each arm at least twice before claiming any effect.
+
+Total Muse spend for round 2: $14.02 ($4.24 training and $9.78 for the three held-out arms).
+
+## Round 1 rerun on current code (easy functions)
+
+Running now on commit `0102bfb` (includes the aligned diff `74997cf`): doom_r02b, doom_r03b and doom_r04b on the same 40-function list as round 1. Results will be added here as each run finishes.
+
+## Round 1 (original runs, 12:06 to 12:33; confounded by two bugs that are now fixed)
+
+These numbers are kept as they were first reported. The empty-turn bug (`7ac47a2`) and the escalation bug (`c10b4b0`) affected every run unevenly, as explained below, so treat this round as superseded by the rerun above.
+
+**Round 1 short version (as first reported).** On 40 held-out functions, the frozen idiom library matched 30 against 28 without it, and SubQ Snap on matched 30 against 29 with Snap off. Both differences are one or two functions, which is inside the noise for a sample this small.
+
+### Setup
 
 - **Target.** GBADoom variant ROM, SHA-1 `d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2` (from `lab/out/manifest.json`), built with devkitARM r68 (GCC 16.1.0) using the GBADoom Makefile flags minus `-flto=8`. Each candidate is judged by Lane A's real referee running locally (`REFEREE_URL=http://127.0.0.1:7101`, not the mock).
 - **Function list (chosen once, before any held-out run).** From the 170 held-out game functions, we kept Thumb functions between 16 and 200 bytes, sorted them by size, and took the first 40. They are 16 to 56 bytes long, 25 of them call other functions, and the manifest's difficulty score ranges from 0.016 to 0.039, so this is the easy end of Doom. The list is in `runs/_heldout_set.txt` and every held-out run used it through `--fns`. With `--fns`, Snap's whole-program triage does not reorder the queue, so order cannot confound the comparison.
@@ -27,7 +81,7 @@ Frankenstein rebuilds a game's lost source code from the compiled game, and acce
 
 We checked the diff from `feee7a3` to `13cdcbc` by hand. With the flags r04 used, it changes nothing about how a function is attempted or judged. It adds the Gemini reviewer (turned off), habit judging for learning libraries (a frozen library never judges, and its search order is unchanged because the frozen file has no status fields), bookkeeping of which idioms a Digger saw, and new export and jobs code. None of the four Doom runs includes the later fixes `7ac47a2` (an empty model turn is never sent back to the API), `0f5a981` (Diggers can stake a claim before seeing the verdict) or `c10b4b0` (one failed Wonder call no longer ends escalation for the whole run).
 
-## Results
+### Results
 
 Cost is Muse spend. Wonder calls are priced at Spark rates because Wonder has no published price yet, so every Doom cost is an estimate (`cost_estimated: true`). Snap cost is separate and tiny.
 
@@ -41,7 +95,7 @@ Cost is Muse spend. Wonder calls are priced at Spark rates because Wonder has no
 
 Wall-clock time was 13.9 minutes for r02, 12.1 for r03 and 10.9 for r04. Snap cost $0.002 per held-out run (no triage) and $0.057 in r01 (triage read 1.39 M input tokens). The bench run uses a different compiler and different functions, so it is context only, never a Doom result. The training run uses different, train-split functions, so its higher match rate is not comparable either.
 
-## A bug that affected every Doom run
+### A bug that affected every Doom run
 
 While these runs were going, the team found a Digger bug (fixed in `7ac47a2` at 12:25). When the model spent its whole output budget reasoning, it returned an empty message. The Digger sent that empty turn back, the API answered HTTP 400, and the function ended as failed, even though the model had not run out of attempts. There was a second effect, found in this analysis and fixed in `c10b4b0`. If the failing call was a Wonder call, the Digger cleared the shared escalation setting, so every later escalation in that run stayed on Spark.
 
@@ -52,7 +106,7 @@ What the event logs show (an inference from the logs, not a field in `metrics.js
 
 So the bug hit the Snap-on runs harder than the Snap-off run. That biases the Snap comparison against Snap, by an unknown amount.
 
-## Findings
+### Findings
 
 **Library on (r02) vs library off (r03), both with Snap on: 30 against 28 of 40.** The two runs matched the same 28 functions. r02 also matched `fn_08009F9C` and `fn_08005AD0`, and r03 matched nothing that r02 missed. Attempts per match (1.50) and cost per match ($0.081) were the same. Leaving out the 7 functions that hit the bug in any of the three runs, the score is 30 against 28 of 33. A two-function gap on 40 functions is well within run-to-run noise, so this does not show the library helps on held-out Doom code. It is consistent with a small benefit and with none. These are also the 40 easiest held-out functions, and 27 of them matched in all three runs, so there was little room for a library to help.
 
@@ -62,7 +116,7 @@ So the bug hit the Snap-on runs harder than the Snap-off run. That biases the Sn
 
 **What would make these comparisons conclusive.** Rerun r02, r03 and r04 on current main (with `7ac47a2`, `0f5a981` and `c10b4b0`), on a list that includes harder functions (for example 60 to 200 bytes), and repeat each arm at least twice. Each run of 40 functions costs about $2.20 to $2.50 of Muse. That was not possible inside this experiment's $8 Muse cap: the three held-out runs here cost $6.90 together.
 
-## Reproduce
+### Reproduce
 
 ```bash
 FNS=$(cat runs/_heldout_set.txt)
