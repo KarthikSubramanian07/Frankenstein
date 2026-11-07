@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="336" viewBox="0 0 1200 336" role="img" aria-labelledby="t d"><title id="t">How Frankenstein works</title><desc id="d">The compiled game goes to a Digger (Muse), which writes C. The Referee compiles it, and the Checker re-runs the claim. Rejected work goes back to the Digger. Accepted work becomes a rebuilt ROM with the same SHA-1. SubQ Snap steers the loop, and every match adds habits to MongoDB for the next attempt.</desc><style>.s{font-family:Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif}.m{font-family:'JetBrains Mono', SFMono-Regular, ui-monospace, Menlo, Consolas, monospace}</style>
+<rect x="40.5" y="104.5" width="159" height="63" rx="8" fill="none" stroke="#17141F" stroke-opacity="0.32" stroke-width="1"/>
+<text x="120" y="132" class="s" font-size="15" font-weight="500" text-anchor="middle" fill="#17141F">Compiled game</text>
+<text x="120" y="150" class="s" font-size="13" text-anchor="middle" fill="#17141F" fill-opacity="0.6">source lost</text>
+<rect x="280.5" y="104.5" width="159" height="63" rx="8" fill="none" stroke="#17141F" stroke-opacity="0.32" stroke-width="1"/>
+<text x="360" y="132" class="s" font-size="15" font-weight="500" text-anchor="middle" fill="#17141F">Digger</text>
+<text x="360" y="150" class="s" font-size="13" text-anchor="middle" fill="#17141F" fill-opacity="0.6">Muse</text>
+<rect x="520.5" y="104.5" width="159" height="63" rx="8" fill="none" stroke="#17141F" stroke-opacity="0.32" stroke-width="1"/>
+<text x="600" y="132" class="s" font-size="15" font-weight="500" text-anchor="middle" fill="#17141F">Referee</text>
+<text x="600" y="150" class="s" font-size="13" text-anchor="middle" fill="#17141F" fill-opacity="0.6">compiler</text>
+<rect x="760.5" y="104.5" width="159" height="63" rx="8" fill="none" stroke="#17141F" stroke-opacity="0.32" stroke-width="1"/>
+<text x="840" y="132" class="s" font-size="15" font-weight="500" text-anchor="middle" fill="#17141F">Checker</text>
+<text x="840" y="150" class="s" font-size="13" text-anchor="middle" fill="#17141F" fill-opacity="0.6">re-runs claims</text>
+<rect x="1000.5" y="104.5" width="159" height="63" rx="8" fill="none" stroke="#0A7552" stroke-width="1"/>
+<text x="1080" y="132" class="s" font-size="15" font-weight="500" text-anchor="middle" fill="#17141F">Rebuilt ROM</text>
+<text x="1080" y="150" class="s" font-size="13" text-anchor="middle" fill="#17141F" fill-opacity="0.6">same SHA-1</text>
+<path d="M208,136 L272,136" fill="none" stroke="#17141F" stroke-width="1.25" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M266.5,131.7 L272.0,136.0 L266.5,140.3" fill="none" stroke="#17141F" stroke-width="1.25" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M448,136 L512,136" fill="none" stroke="#17141F" stroke-width="1.25" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M506.5,131.7 L512.0,136.0 L506.5,140.3" fill="none" stroke="#17141F" stroke-width="1.25" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M688,136 L752,136" fill="none" stroke="#17141F" stroke-width="1.25" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M746.5,131.7 L752.0,136.0 L746.5,140.3" fill="none" stroke="#17141F" stroke-width="1.25" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M928,136 L992,136" fill="none" stroke="#0A7552" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M986.5,131.7 L992.0,136.0 L986.5,140.3" fill="none" stroke="#0A7552" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="960" y="124" class="s" font-size="13" text-anchor="middle" fill="#0A7552">accepted</text>
+<path d="M360.0,96 V80 Q360.0,72 368.0,72 H832.0 Q840.0,72 840.0,80 V96" fill="none" stroke="#17141F" stroke-width="1.25" stroke-opacity="0.5" stroke-dasharray="1 4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M364.3,90.5 L360.0,96.0 L355.7,90.5" fill="none" stroke="#17141F" stroke-width="1.25" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M844.3,90.5 L840.0,96.0 L835.7,90.5" fill="none" stroke="#17141F" stroke-width="1.25" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="600" y="56" class="s" font-size="13" text-anchor="middle" fill="#17141F" fill-opacity="0.6">SubQ Snap steers</text>
+<path d="M816.0,176 C816.0,240 384.0,240 384.0,176" fill="none" stroke="#C42A22" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M379.7,181.5 L384.0,176.0 L388.3,181.5" fill="none" stroke="#C42A22" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="600" y="208" class="s" font-size="13" text-anchor="middle" fill="#C42A22">rejected</text>
+<path d="M872.0,176 C872.0,320 328.0,320 328.0,176" fill="none" stroke="#17141F" stroke-width="1.25" stroke-opacity="0.5" stroke-dasharray="1 4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M323.7,181.5 L328.0,176.0 L332.3,181.5" fill="none" stroke="#17141F" stroke-width="1.25" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="600" y="312" class="s" font-size="13" text-anchor="middle" fill="#17141F" fill-opacity="0.6">habits · MongoDB</text></svg>
