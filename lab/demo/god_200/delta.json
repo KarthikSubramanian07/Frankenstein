@@ -1,0 +1,12 @@
+{
+ "v": 1,
+ "what": "god_200 = target.gba with one function (fn_080054C8, the god-mode cheat) recompiled from the agents' recovered C with one line changed (health 200)",
+ "baseline": "lab/out/target.gba",
+ "baseline_sha1": "d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2",
+ "result_sha1": "7acc0dc9122dbbabcab271afd735ebcde7dcfa34",
+ "offset": "0x54cc",
+ "length": 68,
+ "baseline_bytes": "0e4b1b6852009958414099500c4a9a5808420ed0eb21c9005958486a842149005850d621890051585218cc2149005a507047d721890051585218f6e7c46400035c070000",
+ "new_bytes": "0d4b1b6852009958414099500b4a9a5808420bd08421c63049005850d621890051585218cc2149005a507047d721890051585218f6e7c046c46400035c070000c046c046",
+ "apply": "copy target.gba, write new_bytes at offset; SHA-1 must equal result_sha1; then package with the WAD (runtime/package_rom.py). Packaged SHA-1 on Lane A's laptop: see lab/demo/PLAYABLE.md"
+}
