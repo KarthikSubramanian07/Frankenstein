@@ -6,9 +6,11 @@ MAX_LINES_PER_INSN = 8
 RULES: list[tuple[str, re.Pattern[str], str]] = [
     ("L001", re.compile(r"\b(?:__asm__|__asm|asm)\b"), "inline assembly is not allowed"),
     ("L002", re.compile(r"\.(?:byte|2byte|4byte|hword|short|word|inst)\b"), "raw bytes or words emitted into code"),
-    ("L003", re.compile(r"#\s*pragma|__attribute__"), "#pragma or __attribute__ that can change codegen"),
+    ("L003", re.compile(r"#\s*pragma|_Pragma|__attribute__"), "#pragma or __attribute__ that can change codegen"),
     ("L004", re.compile(r"\bregister\b[^;]*\basm\s*\("), "register asm bindings"),
     # RAM and ROM only (EWRAM 0x02, IWRAM 0x03, cart 0x08); I/O, palette, VRAM and OAM casts are normal GBA code.
+    # Only <system> headers: a quoted, absolute or ../ include could read lab/secrets through the compile log.
+    ("L009", re.compile(r'#\s*(?:include|include_next|import|embed)\s*(?:"|<[^>]*(?:\.\.|^/|/work|secrets)|[^"<\s])'), "only <system> headers may be included"),
     ("L006", re.compile(r"\(\s*\w[\w\s\*]*\*\s*\)\s*0x0?[238][0-9a-fA-F]{6}\b"), "hard-coded RAM or ROM address instead of an fn_/data_ id"),
 ]
 COMPUTED_GOTO = re.compile(r"goto\s*\*|&&\s*[A-Za-z_]\w*")

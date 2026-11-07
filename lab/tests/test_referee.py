@@ -42,6 +42,7 @@ def test_results_never_leak_original_names(referee):
 
 def test_lint_rules_each_have_a_failing_example():
     cases = {"L001": 'void f(void){ __asm__("nop"); }', "L002": 'void f(void){ x(".word 1"); }', "L003": "#pragma GCC optimize(0)\nint x;",
-             "L004": 'void f(void){ register int x asm("r4"); }', "L006": "int f(void){ return *(int *)0x03001234; }"}
+             "L004": 'void f(void){ register int x asm("r4"); }', "L006": "int f(void){ return *(int *)0x03001234; }",
+             "L009": '#include "/work/lab/secrets/gbadoom/source/st_stuff.c"\nint x;'}
     for rule, src in cases.items():
         assert any(v["rule"] == rule for v in lint(src, 4)["violations"]), rule
