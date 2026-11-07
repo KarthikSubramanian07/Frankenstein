@@ -13,7 +13,7 @@ Latest checkpoint: 2026-11-07, 13:59 Pacific. Source checkpoint `54dca9e` is on 
 | Phone deployment bundle | Allowlisted Cloudflare Pages folder, isolation headers, truthful status and pinned notices. Real packaged game and all file hashes checked; waiting states and refusal cases passed. Judging service worker caches shell only; ROM/status stay network-only. Not deployed. |
 | Stage | Frozen Vite build and TypeScript check passed. Eight of nine tests passed; remaining server test blocked by Windows symlink EPERM. No tracked Stage changes. Rebuilt the newer one-screen/card revision `1075572` too. |
 | Stage services | Frontend 5173 supplies COOP/COEP. HTTP 7201 and websocket 7202; health reports live:null. Real Doom replay renders 28/568 with REPLAY · 8X. No live run invented. |
-| Murmur | Official v0.2.3 checksum verified. Root AGENTS/CLAUDE discovery committed. Clone-local join/daemon and official MCP who/status/inbox calls worked. Real inbound message received from Lane A and remote agents visible. Outbound send explicitly failed in shell credential-manager; name pending and global registration blocked. See MURMUR.md. |
+| Murmur | Normal-terminal join completed. Lane A confirmed D presence; real inbound message received and official outbound send e00492e2 succeeded. Telemetry disabled by environment and clone config. See MURMUR.md. |
 
 The static face is our hand-written display rule. `fn_0801B298` is absent from the 28-function recovered set. Restoring it must not be called face-source recovery.
 
