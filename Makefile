@@ -34,3 +34,22 @@ ci: ## what GitHub Actions runs: deterministic fixtures, schemas, all offline te
 	$(PY) contracts/validate.py
 	$(PY) -m pytest -q contracts/tests crew/tests -m "not live"
 	@if command -v arm-none-eabi-gcc >/dev/null; then $(PY) -m pytest -q crew/bench; else echo "skip crew/bench: no arm-none-eabi-gcc"; fi
+
+# ---- one product: tools/frank.py (see tools/README.md) ----
+MODE ?= replay
+RUN ?=
+ARGS ?=
+
+.PHONY: up down status preflight
+
+up: ## start every lane in order (MODE=replay|live, RUN=crew/exports/<id>, ARGS=--yes-spend for live)
+	@python3 tools/frank.py up --mode $(MODE) $(if $(RUN),--run $(RUN)) $(ARGS)
+
+down: ## stop everything `make up` started
+	@python3 tools/frank.py down
+
+status: ## one board: every service's health plus the run on stage
+	@python3 tools/frank.py status
+
+preflight: ## the demo checklist: keys, referee, schemas, export, Stage build, ports, then the by-hand items
+	@python3 tools/frank.py preflight
