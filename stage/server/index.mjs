@@ -26,7 +26,10 @@ export function startServer(opts = {}) {
   const pollMs = Number(opts.pollMs ?? 150);
   const log = opts.quiet ? () => {} : (...a) => console.log('[stage]', ...a);
 
-  const safeRun = (id) => (typeof id === 'string' && /^[\w.-]+$/.test(id) ? id : null);
+  // a run id is one plain folder name: no "." or ".." (SECURITY.md, Lane C 1)
+  const safeRun = (id) => (typeof id === 'string' && /^[A-Za-z0-9][\w.-]*$/.test(id) && !id.includes('..') ? id : null);
+  // only the Stage page itself may read this server from a browser (SECURITY.md, Lane C 2)
+  const origins = (process.env.STAGE_ORIGINS ?? 'http://127.0.0.1:5173,http://localhost:5173').split(',').map((o) => o.trim()).filter(Boolean);
   const runDir = (id) => {
     for (const r of roots) { const d = path.join(r, id); try { if (fs.statSync(d).isDirectory()) return d; } catch { /* next root */ } }
     return path.join(runsDir, id);
@@ -95,7 +98,8 @@ export function startServer(opts = {}) {
   const send = (res, code, body, type = 'application/json') => {
     res.writeHead(code, {
       'content-type': type,
-      'access-control-allow-origin': '*',
+      'access-control-allow-origin': res.allowOrigin ?? origins[0],
+      vary: 'Origin',
       'cache-control': 'no-store',
     });
     res.end(typeof body === 'string' ? body : JSON.stringify(body));
@@ -107,6 +111,7 @@ export function startServer(opts = {}) {
 
   const httpServer = http.createServer((req, res) => {
     const url = new URL(req.url, `http://${host}`);
+    res.allowOrigin = origins.includes(req.headers.origin) ? req.headers.origin : origins[0];
     const parts = url.pathname.split('/').filter(Boolean);
     const runParam = safeRun(url.searchParams.get('run') || '') || liveRunId();
     if (url.pathname === '/health') return send(res, 200, { ok: true, live: liveRunId(), runs_dir: runsDir });
@@ -128,7 +133,7 @@ export function startServer(opts = {}) {
       const rel = url.searchParams.get('path') || '';
       const abs = path.resolve(repoDir, rel);
       if (!abs.startsWith(path.join(repoDir, 'creature') + path.sep) || !abs.endsWith('.png') || !fs.existsSync(abs)) return send(res, 404, { error: 'not found' });
-      res.writeHead(200, { 'content-type': 'image/png', 'access-control-allow-origin': '*', 'cache-control': 'no-store' });
+      res.writeHead(200, { 'content-type': 'image/png', 'access-control-allow-origin': res.allowOrigin, vary: 'Origin', 'cache-control': 'no-store' });
       return res.end(fs.readFileSync(abs));
     }
     if (parts[0] === 'lab' && parts.length === 2) {
