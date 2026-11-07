@@ -1,0 +1,798 @@
+{
+  "v": 1,
+  "functions": 112,
+  "of": 568,
+  "pct_functions": 19.7,
+  "bytes": 4412,
+  "of_bytes": 141774,
+  "pct_bytes": 3.11,
+  "reverified_by_referee": true,
+  "rejected_on_reverify": [],
+  "target_rom_sha1": "d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2",
+  "rows": [
+    {
+      "fn": "fn_03000D94",
+      "size": 12,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "542eb7716c36d12d11de7956f7c57cadc2102c72"
+    },
+    {
+      "fn": "fn_03002660",
+      "size": 20,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "09a5803fff18fb93c6a82ce00c647cac03c2f3ee"
+    },
+    {
+      "fn": "fn_0800197C",
+      "size": 20,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "59e9aa4751b2da6bc635c9371b5766948d36c78d"
+    },
+    {
+      "fn": "fn_08001990",
+      "size": 64,
+      "split": "train",
+      "from": "runs/doom_relay1",
+      "sha1": "ff9dff57377cb6962fd2a8ebf48b54e2177972c7"
+    },
+    {
+      "fn": "fn_08001A94",
+      "size": 40,
+      "split": "heldout",
+      "from": "runs/doom_r04b",
+      "sha1": "94b5e458b520c0a4fd82a20255231572a59273a2"
+    },
+    {
+      "fn": "fn_08001B10",
+      "size": 28,
+      "split": "train",
+      "from": "runs/doom_sweep1",
+      "sha1": "c88a58fc997bf033eb0bb0ad8b1b7b9eb5428866"
+    },
+    {
+      "fn": "fn_08001B2C",
+      "size": 16,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "66a562f297c6c8003ae5f2a308a363e90842b379"
+    },
+    {
+      "fn": "fn_08001BA0",
+      "size": 28,
+      "split": "train",
+      "from": "runs/doom_sweep1",
+      "sha1": "3546e8e9d8ea101a68fe8ec43d23a047239a182b"
+    },
+    {
+      "fn": "fn_08002E58",
+      "size": 4,
+      "split": "heldout",
+      "from": "runs/doom_sweep1",
+      "sha1": "1fdc109d25f80669880f1cbe773be0f160944853"
+    },
+    {
+      "fn": "fn_08002E5C",
+      "size": 4,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "942fd4c6d6d91308daae02374a41383a2e70bdca"
+    },
+    {
+      "fn": "fn_080032B8",
+      "size": 16,
+      "split": "heldout",
+      "from": "runs/doom_r03b",
+      "sha1": "2681e34c35b05f3a4de4f534e6915fb61b0472e3"
+    },
+    {
+      "fn": "fn_080032C8",
+      "size": 28,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "06d2fb7dbde6e766c629c56e98754098e52e8f4a"
+    },
+    {
+      "fn": "fn_080032E4",
+      "size": 40,
+      "split": "train",
+      "from": "runs/doom_sweep1",
+      "sha1": "ea543f1166bf0ee22c0a04294b89ba6d3b2773fe"
+    },
+    {
+      "fn": "fn_080035CC",
+      "size": 56,
+      "split": "heldout",
+      "from": "runs/doom_r04b",
+      "sha1": "76873da89080b10fe0691d1b21dfeb0a39c791d9"
+    },
+    {
+      "fn": "fn_08003604",
+      "size": 16,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "8387892c4e53ed64a588b887dccfa813099078e3"
+    },
+    {
+      "fn": "fn_080039DC",
+      "size": 28,
+      "split": "heldout",
+      "from": "runs/doom_r02b",
+      "sha1": "f26e125f07321465e5faed9f4157f83101e51f45"
+    },
+    {
+      "fn": "fn_080039F8",
+      "size": 104,
+      "split": "heldout",
+      "from": "runs/doom_align_off",
+      "sha1": "10788f18c087a203dcb5993c00966dd80bd78c22"
+    },
+    {
+      "fn": "fn_08003B18",
+      "size": 44,
+      "split": "train",
+      "from": "runs/doom_sweep1",
+      "sha1": "47b177dd13ae94638b9dc0d8f44a4a20d3fcb6a7"
+    },
+    {
+      "fn": "fn_08003B44",
+      "size": 20,
+      "split": "heldout",
+      "from": "runs/doom_r04b",
+      "sha1": "d358f73d6558fe5728c320c9b9f5bb87d3a5bb88"
+    },
+    {
+      "fn": "fn_08003D1C",
+      "size": 4,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "376cf1c5ccede7fc505bb05dea51607e623e8637"
+    },
+    {
+      "fn": "fn_08003D20",
+      "size": 24,
+      "split": "heldout",
+      "from": "runs/doom_r02b",
+      "sha1": "9d6407dbcc9b000fe96ab74ff5e98d94b41dcfeb"
+    },
+    {
+      "fn": "fn_08004670",
+      "size": 14,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "d0fac0e7d6f43f036ebef749441ac965635c74d3"
+    },
+    {
+      "fn": "fn_08004680",
+      "size": 24,
+      "split": "heldout",
+      "from": "runs/doom_r04b",
+      "sha1": "22d80c0bce1eb9b90b6b824c3cfa1acf495e636e"
+    },
+    {
+      "fn": "fn_08004698",
+      "size": 46,
+      "split": "train",
+      "from": "runs/doom_sweep1",
+      "sha1": "a4af21d84d6b681c349245c019c9cc539c121ff5"
+    },
+    {
+      "fn": "fn_0800478C",
+      "size": 12,
+      "split": "heldout",
+      "from": "runs/doom_sweep1",
+      "sha1": "d2b83d53e09d34bc6e7bf2a468a2cdf163e84872"
+    },
+    {
+      "fn": "fn_08004798",
+      "size": 56,
+      "split": "heldout",
+      "from": "runs/doom_r04b",
+      "sha1": "6277b9b97a157b4ce17e4e7e0cb2885243d9cdd8"
+    },
+    {
+      "fn": "fn_08004AC4",
+      "size": 40,
+      "split": "heldout",
+      "from": "runs/doom_r04b",
+      "sha1": "6efce79389e0ea08961d0584c3b22ec5fbdf8de5"
+    },
+    {
+      "fn": "fn_08004E4C",
+      "size": 28,
+      "split": "heldout",
+      "from": "runs/doom_r02b",
+      "sha1": "289e8babda44c9702ab463c2bd54902862db78c9"
+    },
+    {
+      "fn": "fn_08004E68",
+      "size": 28,
+      "split": "heldout",
+      "from": "runs/doom_r03b",
+      "sha1": "45601628fcbdb55cf906aaf31efd0be7b5373c7e"
+    },
+    {
+      "fn": "fn_0800501C",
+      "size": 2,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "e8a899aabf1ee242b335776dd95f5e088047354e"
+    },
+    {
+      "fn": "fn_08005048",
+      "size": 2,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "c12c2514a0f1a6b0ccba452f31317bb45490eecd"
+    },
+    {
+      "fn": "fn_0800504C",
+      "size": 2,
+      "split": "heldout",
+      "from": "runs/doom_sweep1",
+      "sha1": "6ae5af6531fd8181d2b933f00bde520ab04ebb14"
+    },
+    {
+      "fn": "fn_08005050",
+      "size": 2,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "1459f9d07bacc0e0d8402eb0cd39678ae3d9e1a3"
+    },
+    {
+      "fn": "fn_080050C0",
+      "size": 16,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "0fe945f9b6c5aed7abaa1fccc11518865d98ad06"
+    },
+    {
+      "fn": "fn_080050DC",
+      "size": 44,
+      "split": "heldout",
+      "from": "runs/doom_r02b",
+      "sha1": "3b9bd9dd602441a358fae0b378ef368c5b5a57a4"
+    },
+    {
+      "fn": "fn_08005404",
+      "size": 30,
+      "split": "heldout",
+      "from": "runs/doom_r04b",
+      "sha1": "f97a47af22e74434a9f9904ca5033f73962b701c"
+    },
+    {
+      "fn": "fn_08005488",
+      "size": 20,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "160666ec2dd67acab35ea569e281e59d7a65a5d3"
+    },
+    {
+      "fn": "fn_0800549C",
+      "size": 42,
+      "split": "train",
+      "from": "runs/doom_sweep1",
+      "sha1": "0cc6b81e6234bf417da14643818e6444c6d5fa5a"
+    },
+    {
+      "fn": "fn_080056FC",
+      "size": 60,
+      "split": "train",
+      "from": "runs/doom_r11",
+      "sha1": "f798f93674031234a5005a123baf01dfef9f6d72"
+    },
+    {
+      "fn": "fn_08005788",
+      "size": 24,
+      "split": "heldout",
+      "from": "runs/doom_r02b",
+      "sha1": "01d7431816b0706094f098ddeb293883b308501b"
+    },
+    {
+      "fn": "fn_08005A90",
+      "size": 32,
+      "split": "heldout",
+      "from": "runs/doom_r04b",
+      "sha1": "95ed511f01c743fea01f2994b9848154d6655e8a"
+    },
+    {
+      "fn": "fn_08005AD0",
+      "size": 52,
+      "split": "heldout",
+      "from": "runs/doom_r02",
+      "sha1": "3f108f5911a000c544b0ded5897c2c82e54e3a18"
+    },
+    {
+      "fn": "fn_08005B9C",
+      "size": 40,
+      "split": "heldout",
+      "from": "runs/doom_r04b",
+      "sha1": "1c5003f83b4cf72e27bcd731bdaf98c37f1ae4f6"
+    },
+    {
+      "fn": "fn_08005D7C",
+      "size": 48,
+      "split": "heldout",
+      "from": "runs/doom_r03b",
+      "sha1": "81abd26a02b6bcc736aa84ac6c2c28178d1413b9"
+    },
+    {
+      "fn": "fn_08006284",
+      "size": 2,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "f13dede24a723695e14c05c16304cae03a40896b"
+    },
+    {
+      "fn": "fn_080067DC",
+      "size": 28,
+      "split": "train",
+      "from": "runs/doom_sweep1",
+      "sha1": "4ca4b703438f38cbadd8b5120a7815f4556b5359"
+    },
+    {
+      "fn": "fn_080067F8",
+      "size": 28,
+      "split": "train",
+      "from": "runs/doom_sweep1",
+      "sha1": "d9445cca7fb8ecee086f059fe55df82c1970bb57"
+    },
+    {
+      "fn": "fn_0800684C",
+      "size": 72,
+      "split": "train",
+      "from": "runs/doom_r11",
+      "sha1": "12036c1fecb6fceb8a902e27cfe4bbc7b8d2b492"
+    },
+    {
+      "fn": "fn_08006B00",
+      "size": 32,
+      "split": "heldout",
+      "from": "runs/doom_r04b",
+      "sha1": "c216ea93ccc24a4263061a068624dcea14af1702"
+    },
+    {
+      "fn": "fn_08006B20",
+      "size": 36,
+      "split": "heldout",
+      "from": "runs/doom_r03b",
+      "sha1": "44ddb92467888d38b9b633e293cc5b4dc40a6304"
+    },
+    {
+      "fn": "fn_08006B44",
+      "size": 28,
+      "split": "heldout",
+      "from": "runs/doom_r02b",
+      "sha1": "fdcaeef0c0a003848a5452ea13adf9ab7e327bd7"
+    },
+    {
+      "fn": "fn_080077E4",
+      "size": 76,
+      "split": "heldout",
+      "from": "runs/doom_align_off",
+      "sha1": "6ea0d689a9c69284b57ad57a1152419680adf4d9"
+    },
+    {
+      "fn": "fn_08008D04",
+      "size": 166,
+      "split": "heldout",
+      "from": "runs/doom_r13",
+      "sha1": "f9785a442e4cdc8fbea4b8c81a625a2f94d79f88"
+    },
+    {
+      "fn": "fn_08008F54",
+      "size": 78,
+      "split": "train",
+      "from": "runs/doom_r11",
+      "sha1": "cf87089c09aa7420044bdc1963391116340a2048"
+    },
+    {
+      "fn": "fn_08009468",
+      "size": 76,
+      "split": "heldout",
+      "from": "runs/doom_align_off",
+      "sha1": "69e4b73adbf5d29c00193331f8706e7d09f253b5"
+    },
+    {
+      "fn": "fn_08009850",
+      "size": 112,
+      "split": "heldout",
+      "from": "runs/doom_r14",
+      "sha1": "32672705d97e7aa852c1c2aab1fa0aac83ea1a85"
+    },
+    {
+      "fn": "fn_08009F9C",
+      "size": 44,
+      "split": "heldout",
+      "from": "runs/doom_r03b",
+      "sha1": "322b1f63c4bef069f137eed075306368043cd5ad"
+    },
+    {
+      "fn": "fn_08009FC8",
+      "size": 10,
+      "split": "heldout",
+      "from": "runs/doom_sweep1",
+      "sha1": "8ce122959810d0cfdbba3edd4a05b133c05c28db"
+    },
+    {
+      "fn": "fn_0800A174",
+      "size": 16,
+      "split": "heldout",
+      "from": "runs/doom_r02b",
+      "sha1": "64cc11ca826091193981f41ff3eef02f3dd7fe8e"
+    },
+    {
+      "fn": "fn_0800A270",
+      "size": 16,
+      "split": "heldout",
+      "from": "runs/doom_r02b",
+      "sha1": "bba247d4e7b8b15f14e335ac5aa41f1337a4f2d2"
+    },
+    {
+      "fn": "fn_0800A30C",
+      "size": 100,
+      "split": "train",
+      "from": "runs/doom_r11",
+      "sha1": "c129a8a48f9f14651f704dbfff33b6e101e88101"
+    },
+    {
+      "fn": "fn_0800A43C",
+      "size": 26,
+      "split": "heldout",
+      "from": "runs/doom_r02b",
+      "sha1": "3198d4891cfd5b674f426e34b2b4f6ff349f0ff4"
+    },
+    {
+      "fn": "fn_0800DD94",
+      "size": 46,
+      "split": "train",
+      "from": "runs/doom_sweep1",
+      "sha1": "b9e233c6b349821aaf4fd550c1d5089e0ee7908a"
+    },
+    {
+      "fn": "fn_0800DE40",
+      "size": 64,
+      "split": "train",
+      "from": "runs/doom_r11",
+      "sha1": "b92ca4244b7979aeb19f869e22e935c5619fd86c"
+    },
+    {
+      "fn": "fn_0800DF24",
+      "size": 112,
+      "split": "heldout",
+      "from": "runs/doom_r13",
+      "sha1": "f6daa01c75b7458d9cff7050ed73178bef8bc65b"
+    },
+    {
+      "fn": "fn_0800E728",
+      "size": 132,
+      "split": "heldout",
+      "from": "runs/doom_align_on",
+      "sha1": "f8ea77563e21b5aec9b0539bc082d54f1b4e7a4d"
+    },
+    {
+      "fn": "fn_0800FDE4",
+      "size": 2,
+      "split": "heldout",
+      "from": "runs/doom_sweep1",
+      "sha1": "9b9b1c1e5869cab2d842c944972d7b68e31bf071"
+    },
+    {
+      "fn": "fn_0800FDE8",
+      "size": 20,
+      "split": "train",
+      "from": "runs/r01",
+      "sha1": "2b654265f5bca3a646a020417f86b17eeb03c6fa"
+    },
+    {
+      "fn": "fn_0800FDFC",
+      "size": 30,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "2995ee13290c8c577498f974c8c1272a5a4ef40f"
+    },
+    {
+      "fn": "fn_080100E4",
+      "size": 40,
+      "split": "train",
+      "from": "runs/doom_sweep1",
+      "sha1": "b3aad0d0a95b84999f95f81da40343ec91dd2493"
+    },
+    {
+      "fn": "fn_08010D78",
+      "size": 36,
+      "split": "train",
+      "from": "runs/doom_sweep1",
+      "sha1": "e1595bb952973d16d5a6114cc91ead7d3c12f939"
+    },
+    {
+      "fn": "fn_0801102C",
+      "size": 140,
+      "split": "heldout",
+      "from": "runs/doom_align_on",
+      "sha1": "b9d6fb046965c33e99eb81bd4a645dd6038a2473"
+    },
+    {
+      "fn": "fn_08011B54",
+      "size": 2,
+      "split": "heldout",
+      "from": "runs/doom_sweep1",
+      "sha1": "f7cdb320db7c23634afc017b2313a9bbe80ba3e5"
+    },
+    {
+      "fn": "fn_08011E6C",
+      "size": 112,
+      "split": "train",
+      "from": "runs/doom_r11",
+      "sha1": "5a3a687388a4c5715315cd0e9de01367e3a474d7"
+    },
+    {
+      "fn": "fn_08012770",
+      "size": 60,
+      "split": "heldout",
+      "from": "runs/doom_align_on",
+      "sha1": "3098609a184e6cf0736e993a870bfece93520b99"
+    },
+    {
+      "fn": "fn_080127AC",
+      "size": 84,
+      "split": "train",
+      "from": "runs/doom_relay1",
+      "sha1": "72223f22ae55b4a6e8452e130ab8d9f33f93bc18"
+    },
+    {
+      "fn": "fn_08012FBC",
+      "size": 108,
+      "split": "train",
+      "from": "runs/doom_r11",
+      "sha1": "d44fa8980f5c12da48ec7bc37c4cd9dbd56916ca"
+    },
+    {
+      "fn": "fn_08013028",
+      "size": 44,
+      "split": "heldout",
+      "from": "runs/doom_r03b",
+      "sha1": "ffff23d161fd4a53c1c88f440d7185f759f7d5f3"
+    },
+    {
+      "fn": "fn_08013370",
+      "size": 68,
+      "split": "train",
+      "from": "runs/doom_r11",
+      "sha1": "6808c3e4d4455af1f38c3b45d193e0d8bb0ffb37"
+    },
+    {
+      "fn": "fn_08013A98",
+      "size": 8,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "bdb7348d7cc2ac9094b0603c25b8ea3f066ba231"
+    },
+    {
+      "fn": "fn_08013AA0",
+      "size": 8,
+      "split": "heldout",
+      "from": "runs/doom_sweep1",
+      "sha1": "7987be3482b0569e781022e75ec8b4104fa70d38"
+    },
+    {
+      "fn": "fn_08013AA8",
+      "size": 8,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "86c9d50f7e5f1f01d37f2e5e4c2983a198b253d7"
+    },
+    {
+      "fn": "fn_08013CA4",
+      "size": 60,
+      "split": "heldout",
+      "from": "runs/doom_align_on",
+      "sha1": "60338885a6414f7fd3017f56d97b4441bbea5eb0"
+    },
+    {
+      "fn": "fn_080143EC",
+      "size": 32,
+      "split": "train",
+      "from": "runs/doom_sweep1",
+      "sha1": "0fdca03215324ed67efcb1bf646ac356629283c1"
+    },
+    {
+      "fn": "fn_08014504",
+      "size": 96,
+      "split": "heldout",
+      "from": "runs/doom_align_off",
+      "sha1": "e3a2eaa444dd37abdab0114a7ea1092b6d669e6b"
+    },
+    {
+      "fn": "fn_080153C0",
+      "size": 36,
+      "split": "train",
+      "from": "runs/doom_sweep1",
+      "sha1": "8d0094f5baafecf0bd64c747cc1c2dd7bdce16ba"
+    },
+    {
+      "fn": "fn_080154F0",
+      "size": 18,
+      "split": "train",
+      "from": "runs/r01",
+      "sha1": "20f4ac161eb4a1e8ee6483dd43291f4095947c88"
+    },
+    {
+      "fn": "fn_08015504",
+      "size": 10,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "fc8c968f2033571bb746258d795efa379773f365"
+    },
+    {
+      "fn": "fn_080184D8",
+      "size": 34,
+      "split": "heldout",
+      "from": "runs/doom_r03b",
+      "sha1": "a8857a60386e1a9eb139f8657ab015d004749b2f"
+    },
+    {
+      "fn": "fn_080184FC",
+      "size": 32,
+      "split": "heldout",
+      "from": "runs/doom_r03b",
+      "sha1": "0522615d79c038b54aacfe135b2d5f56e907f7f4"
+    },
+    {
+      "fn": "fn_0801851C",
+      "size": 32,
+      "split": "train",
+      "from": "runs/doom_sweep1",
+      "sha1": "4f44309265aebd1a92058e4f0c32c2bd65074daa"
+    },
+    {
+      "fn": "fn_0801853C",
+      "size": 12,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "cc6ec3574a599b6d9b2ad5df0f1a1f3cf2842c95"
+    },
+    {
+      "fn": "fn_08018548",
+      "size": 16,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "d5013ee824527eb17b5e710680164be6cd7f7331"
+    },
+    {
+      "fn": "fn_08018588",
+      "size": 40,
+      "split": "train",
+      "from": "runs/doom_sweep1",
+      "sha1": "71f5b4aef26e16dc86b3f8ca31ec8c08fb5fa51e"
+    },
+    {
+      "fn": "fn_080185B0",
+      "size": 4,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "3787c2a6443c562ad0111460f72173e65e12ec67"
+    },
+    {
+      "fn": "fn_08019060",
+      "size": 28,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "ade1afc7c991a00e8494882c521592494e3671d1"
+    },
+    {
+      "fn": "fn_08019220",
+      "size": 16,
+      "split": "heldout",
+      "from": "runs/doom_r02b",
+      "sha1": "917c975ec3dfbe3b8c6b7cc69a53fbb4b3f323a7"
+    },
+    {
+      "fn": "fn_08019240",
+      "size": 2,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "f295ed46aaf556ae1f1a3ab80f033553dfc408a4"
+    },
+    {
+      "fn": "fn_08019B44",
+      "size": 32,
+      "split": "heldout",
+      "from": "runs/doom_r02b",
+      "sha1": "f3394f02047d102f13172ae66090ecacdad61f83"
+    },
+    {
+      "fn": "fn_08019BB0",
+      "size": 20,
+      "split": "heldout",
+      "from": "runs/doom_r03b",
+      "sha1": "6559648b7be35bd1f1f4e678c7640f4858eab60d"
+    },
+    {
+      "fn": "fn_08019D74",
+      "size": 148,
+      "split": "train",
+      "from": "runs/doom_r11",
+      "sha1": "c38a6da4f7aa67ef58f6516fd7852d166efa98b8"
+    },
+    {
+      "fn": "fn_0801ABC0",
+      "size": 76,
+      "split": "train",
+      "from": "runs/doom_hud03",
+      "sha1": "80b3ad6f63c83ab18a7d13d27340c1d5b50e8566"
+    },
+    {
+      "fn": "fn_0801AC0C",
+      "size": 48,
+      "split": "train",
+      "from": "runs/doom_hud01",
+      "sha1": "dbe586a09f5037cd8ee6b893e9eb83f895cebcf6"
+    },
+    {
+      "fn": "fn_0801B724",
+      "size": 4,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "d82cdfe6936a8580246a5cef194cf38a047cc9f1"
+    },
+    {
+      "fn": "fn_0801C130",
+      "size": 32,
+      "split": "heldout",
+      "from": "runs/doom_r03b",
+      "sha1": "2c2a8699156c1a1b01cdb2606168d33a0858dd7e"
+    },
+    {
+      "fn": "fn_0801C8C8",
+      "size": 2,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "c2b423e1edba6beb22a5877a21c3f85f053b6232"
+    },
+    {
+      "fn": "fn_0801C8CC",
+      "size": 2,
+      "split": "train",
+      "from": "runs/live",
+      "sha1": "6c023c379dd2828c0db3e7c803b94b952558b4c5"
+    },
+    {
+      "fn": "fn_0801C8D0",
+      "size": 2,
+      "split": "heldout",
+      "from": "runs/doom_sweep1",
+      "sha1": "88e99d57fb485728b1e5ee39106eda164f0cd4a3"
+    },
+    {
+      "fn": "fn_0801C8D4",
+      "size": 40,
+      "split": "train",
+      "from": "runs/doom_sweep1",
+      "sha1": "e37d195012a8324afb7262c1346e3b4f650cd435"
+    },
+    {
+      "fn": "fn_0801C8FC",
+      "size": 40,
+      "split": "heldout",
+      "from": "runs/doom_r03b",
+      "sha1": "a881c1eb5f6e29636f82a5fcd4515b713b5e96ad"
+    },
+    {
+      "fn": "fn_0801C990",
+      "size": 92,
+      "split": "train",
+      "from": "runs/doom_relay1",
+      "sha1": "4dcd1e703018c0689c5c97a49e34550f0b77614d"
+    },
+    {
+      "fn": "fn_0801D19C",
+      "size": 56,
+      "split": "heldout",
+      "from": "runs/doom_r04b",
+      "sha1": "d5aec43eacdc0aa98b9d6f517b49b06e25b24e92"
+    }
+  ]
+}
