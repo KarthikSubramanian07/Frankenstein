@@ -114,3 +114,17 @@
     $$('.track').forEach(function (t) { tio.observe(t); });
   }
 })();
+// open a collapsed proof when a link points into it
+(function () {
+  function openFor(hash) {
+    var el = hash && document.getElementById(hash.slice(1));
+    var d = el && el.closest('details');
+    if (d && !d.open) d.open = true;
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (a) openFor(a.getAttribute('href'));
+  });
+  window.addEventListener('hashchange', function () { openFor(location.hash); });
+  openFor(location.hash);
+})();

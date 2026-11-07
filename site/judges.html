@@ -29,9 +29,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Schibsted+Grotesk:wght@500;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&family=Press+Start+2P&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=23">
+<link rel="stylesheet" href="/assets/site.css?v=24">
 <link rel="stylesheet" href="/assets/road.css?v=2">
-<link rel="stylesheet" href="/assets/judges.css?v=5">
+<link rel="stylesheet" href="/assets/judges.css?v=6">
 
 <script type="application/ld+json">
 {
@@ -62,10 +62,9 @@
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links"><span class="sr">Menu</span><i aria-hidden="true"></i><i aria-hidden="true"></i></button>
     <ul class="nav-links" id="nav-links">
       <li class="nl-judges"><a href="/judges" aria-current="page"><i class="led" aria-hidden="true"></i>For judges <span aria-hidden="true">&#8594;</span><em class="hand" aria-hidden="true">the 60-second version</em></a></li>
+      <li><a href="/#how">How it works</a></li>
       <li><a href="/#partners">Partners</a></li>
-      <li><a href="/#referee">The referee</a></li>
-      <li><a href="/#story">The story</a></li>
-      <li><a href="/#numbers">Numbers</a></li>
+      <li><a href="/#numbers">Proof</a></li>
       <li><a href="/#credits">Credits</a></li>
     </ul>
     <div class="jcta">
@@ -98,22 +97,6 @@
       <div id="progress" data-road aria-label="The road to 100%: how much of Doom is back, from crew/exports/union/UNION.json"></div>
     </div>
 
-    <div class="table-row">
-      <section class="try" aria-labelledby="try-h">
-        <h2 id="try-h">Try it at our table</h2>
-        <ol>
-          <li><b>Press <kbd>Enter</kbd>.</b> You just hired two agents; watch them dig until the referee stamps MATCH.</li>
-          <li><b>Pick up the controller.</b> It's Doom, running.</li>
-          <li><b>Scan the QR code.</b> Now it's on your phone.</li>
-        </ol>
-      </section>
-      <dl class="realness" aria-label="What's real and what's replay">
-        <div><dt><span class="ev ev-proved">REAL</span></dt><dd>Every MATCH, checksum, cost and Snap or Gemini call, and the live dig you start.</dd></div>
-        <div><dt><span class="tag-replay">REPLAY</span></dt><dd>A screen with this badge is a recorded real run, played faster.</dd></div>
-        <div><dt><span class="tag-rule">DISPLAY RULE</span></dt><dd>Doomguy's static face means "code we haven't recovered yet".</dd></div>
-        <div><dt><span class="ev ev-guess">our guess<b>?</b></span></dt><dd>Names and routing are inferred, so they're always violet with a "?".</dd></div>
-      </dl>
-    </div>
   </div>
 </section>
 
@@ -126,10 +109,11 @@
     </div>
     <div class="intro-side">
       <p><b>Each card quotes the track's criteria, then answers them one row at a time.</b> Every row ends with the file its number came from.</p>
-      <p>The event page states the three problems; the weights and Fetch.ai rules come from the organizers' brief. Partner tracks without written criteria show our own reading, labelled as ours.</p>
       <ul class="legend-row" aria-label="Legend">
         <li><span class="ev ev-proved">MATCH</span> proved by the compiler</li>
         <li><span class="ev ev-guess">name<b>?</b></span> our guess</li>
+        <li><span class="tag-replay">REPLAY</span> a recorded real run, played faster</li>
+        <li><span class="tag-rule">STATIC FACE</span> code not recovered yet</li>
         <li><span class="hand hand-inline">like this</span> our notes</li>
       </ul>
     </div>
@@ -184,7 +168,8 @@
         <div><dt>Creativity <span class="pct">15%</span></dt><dd>A lab where agents lie and the referee can't be fooled; play the game, and Snap rebuilds what's on your screen first. <a class="src" href="#subquadratic">Play to recover</a></dd></div>
         <div><dt>Progress so far</dt><dd>166 of 568 game functions are back (4.62% of the code bytes), every one proved by the compiler, and the rebuilt game keeps its checksum. <a class="src" href="#progress">see the meter</a></dd></div>
       </dl>
-      <div class="proof">
+      <details class="proof">
+        <summary><span class="hand">show proof</span></summary>
         <figure class="pc rebuild" id="rebuild-proof">
           <p class="pc-k"><span class="ev ev-proved">REBUILD</span> Doom, put back together from the agents' C</p>
           <div class="sha-rows">
@@ -196,7 +181,7 @@
           <p class="hand note note-sha"><svg class="arr" aria-hidden="true"><use href="#arrow-down"/></svg>same 40 characters: not similar, identical</p>
           <figcaption>From the <code>build.rom</code> event in <code>crew/exports/doom_r12</code>, 13:36.</figcaption>
         </figure>
-      </div>
+      </details>
     </article>
 
     <!-- 2 · SOFTWARE ARCHAEOLOGY -->
@@ -215,11 +200,12 @@
         <div><dt>Evidence, not memory</dt><dd>Agents see only anonymous ids and the game's machine code as text; the real source is locked away as the answer key. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/guard.py">crew/guard.py</a></dd></div>
         <div><dt>A scrambled patient</dt><dd>We made 11 small edits to our Doom build, and from memory alone Muse compiled 0 of 20 Doom functions. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/DECISIONS.md">DECISIONS 13:28</a></dd></div>
         <div><dt>Proved instruction by instruction</dt><dd>Each candidate compiles in a locked-down container and must match the original instruction for instruction. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/lab/README.md">lab/README.md</a></dd></div>
-        <div><dt>The whole game, rebuilt</dt><dd>The agents' functions go back into the ROM, and its SHA-1 checksum stays identical. <a class="src" href="#rebuild-proof">see the rebuild</a></dd></div>
+        <div><dt>Spliced back in, same checksum</dt><dd>The recovered functions go back into the ROM, next to the original code for the rest, and its SHA-1 checksum stays identical. <a class="src" href="#rebuild-proof">see the rebuild</a></dd></div>
         <div><dt>And it can change again</dt><dd>We edited one recovered function, <code>fn_0801C130</code>, so its graphics should draw 4 pixels higher; the referee confirms the other 567 are unchanged, and the emulator check is next. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/tree/main/lab/demo/hud_shift">lab/demo/hud_shift</a></dd></div>
         <div class="limits"><dt>Not done yet</dt><dd>The crew wins on small functions; Doomguy's 1,164-byte face got 2 attempts and a best of 0.7%. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/STATUS.md">crew/STATUS.md</a></dd></div>
       </dl>
-      <div class="proof">
+      <details class="proof">
+        <summary><span class="hand">show proof</span></summary>
         <figure class="pc proved">
           <p class="pc-k"><span class="ev ev-proved">MATCH</span> one held-out function, start to finish</p>
           <div class="code-card">
@@ -242,7 +228,7 @@
           </ul>
           <figcaption>From <code>crew/exports/doom_r12</code>: <code>recovered/fn_08013CA4.c</code>, <code>events.jsonl</code> and <code>names.json</code>. Declarations trimmed.</figcaption>
         </figure>
-      </div>
+      </details>
     </article>
 
     <!-- 3 · TRUST BUT VERIFY -->
@@ -264,7 +250,8 @@
         <div><dt>Two labs check what bytes can't</dt><dd>SubQ Snap and Gemini score every match for fakes and recited source, in parallel. <a class="src" href="#gemini">see both labs</a></dd></div>
         <div><dt>Hard to talk into anything</dt><dd>Pasted C compiles with no network and no keys, after we fixed an include trick that could have leaked them. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/SECURITY.md">SECURITY.md</a></dd></div>
       </dl>
-      <div class="proof">
+      <details class="proof">
+        <summary><span class="hand">show proof</span></summary>
         <figure class="pc lie" id="lie-proof">
           <p class="pc-k"><span class="ev ev-lie">FALSE CLAIM</span> doom_r12 &middot; <code>fn_0801143C</code> &middot; attempt 5</p>
           <div class="bubble">Matched it. Pretty sure.</div>
@@ -281,7 +268,7 @@
           </div>
           <figcaption>From <code>claim.made</code>, <code>verdict</code> and <code>fakematch.rejected</code> events in <code>crew/exports</code>.</figcaption>
         </figure>
-      </div>
+      </details>
     </article>
 
     <!-- 4 · THE SYSTEM THAT GETS BETTER -->
@@ -302,7 +289,8 @@
         <div><dt>Tested on unseen code</dt><dd>170 of 568 game functions are held out (never trained on), and the library is frozen while they're tested. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/crew/EXPERIMENTS.md">crew/EXPERIMENTS.md</a></dd></div>
         <div class="limits"><dt>Honest result</dt><dd>Held out, the library hasn't beaten noise: 29 vs 29 of 40 on easy code, 6 vs 6 of 20 on hard code, so we don't claim it helped. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/DECISIONS.md">DECISIONS 14:06</a></dd></div>
       </dl>
-      <div class="proof">
+      <details class="proof">
+        <summary><span class="hand">show proof</span></summary>
         <div class="tbl-wrap">
           <table class="tbl">
             <caption>Held out: Doom functions the crew never saw</caption>
@@ -320,7 +308,7 @@
           </table>
         </div>
         <p class="hand caption-hand">same model, same budget, same functions. bad results ship too.</p>
-      </div>
+      </details>
     </article>
 
     <!-- ─────────── PARTNER TRACKS ─────────── -->
@@ -345,7 +333,8 @@
         <div class="without"><dt>Without it</dt><dd>Nothing writes the C, and the referee has nothing to judge.</dd></div>
         <div class="limits"><dt>Honest limit</dt><dd>Wonder has no public price yet, so we count it at Spark rates and mark the cost as estimated.</dd></div>
       </dl>
-      <div class="proof">
+      <details class="proof">
+        <summary><span class="hand">show proof</span></summary>
         <figure class="pc proved">
           <p class="pc-k"><span class="ev ev-proved">MATCH</span> written by Muse, proved by the compiler</p>
           <div class="code-card">
@@ -365,7 +354,7 @@
           </ul>
           <figcaption>From <code>crew/exports/doom_r01/recovered/fn_0800FDFC.c</code>, lightly reformatted.</figcaption>
         </figure>
-      </div>
+      </details>
     </article>
 
     <!-- 6 · SUBQUADRATIC -->
@@ -388,7 +377,8 @@
         <div class="without"><dt>Without it</dt><dd>Muse digs blind, and nobody reads the whole game at once.</dd></div>
         <div class="limits"><dt>Honest limits</dt><dd>Plain-words routing is a hint, 5 to 7 times better than random. Snap on vs off was 6 vs 4 of 20 on hard code: a weak hint, not a result. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/DECISIONS.md">DECISIONS 13:58</a></dd></div>
       </dl>
-      <div class="proof">
+      <details class="proof">
+        <summary><span class="hand">show proof</span></summary>
         <figure class="pc feed" id="snap-feed">
           <p class="pc-k"><span class="ev ev-snap">SNAP</span> five real calls from doom_r12</p>
           <ol class="log">
@@ -399,11 +389,7 @@
           </ol>
           <figcaption>From <code>snap.decision</code> events in <code>crew/exports/doom_r12/events.jsonl</code>, times in Pacific.</figcaption>
         </figure>
-        <figure class="shot diagram narrow">
-          <img src="/assets/judges/play-to-recover-light.svg" width="560" height="440" loading="lazy" decoding="async" alt="A loop: you play, Snap picks what's on screen, the crew recovers it with Muse, the referee rebuilds with the same SHA-1, and the game heals on screen.">
-          <figcaption class="hand">play it, and Snap sends the crew to what you're looking at</figcaption>
-        </figure>
-      </div>
+      </details>
     </article>
 
     <!-- 7 · FETCH.AI -->
@@ -438,7 +424,8 @@
         <div class="without"><dt>Without it</dt><dd>Only our team can ask, and nobody can check our claims for themselves.</dd></div>
         <div class="limits"><dt>Honest limits</dt><dd>The agents run on one teammate's laptop, so they sleep when it does. Functions with a string in their data still trip the crew. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/lab/E2E_RECOVER.md">E2E_RECOVER.md</a></dd></div>
       </dl>
-      <div class="proof">
+      <details class="proof">
+        <summary><span class="hand">show proof</span></summary>
         <figure class="pc chat" id="fetch-proof">
           <p class="pc-k"><span class="ev ev-proved">MATCH</span> "Recover fn_08004DA8", agent to agent, 13:44</p>
           <ol class="msgs">
@@ -449,7 +436,7 @@
           </ol>
           <figcaption>Condensed from the agent logs in <code>lab/E2E_RECOVER.md</code>.</figcaption>
         </figure>
-      </div>
+      </details>
     </article>
 
     <!-- 8 · MONGODB -->
@@ -471,7 +458,8 @@
         <div class="without"><dt>Without it</dt><dd>Every run starts from zero, and nothing remembers why.</dd></div>
         <div class="limits"><dt>Honest limit</dt><dd>Atlas went live at 13:05, after the first run, and better memory hasn't yet meant more held-out matches. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/DECISIONS.md">DECISIONS 13:05</a></dd></div>
       </dl>
-      <div class="proof">
+      <details class="proof">
+        <summary><span class="hand">show proof</span></summary>
         <figure class="pc habits">
           <p class="pc-k"><span class="ev ev-proved">ATLAS</span> habits judged in training run doom_r11</p>
           <div class="habit-cols">
@@ -496,7 +484,7 @@
           <p class="hand note">kept: 1 quick match in 3 uses. retired: 0 in 4.</p>
           <figcaption>From <code>crew/EXPERIMENTS.md</code>, round two.</figcaption>
         </figure>
-      </div>
+      </details>
     </article>
 
     <!-- 9 · GEMINI -->
@@ -518,7 +506,8 @@
         <div class="without"><dt>Without it</dt><dd>One lab's opinion on fakes, and a site with no pictures.</dd></div>
         <div class="limits"><dt>Honest limit</dt><dd>Gemini is advisory, and we haven't run Gemini on against off, so its effect isn't measured yet.</dd></div>
       </dl>
-      <div class="proof">
+      <details class="proof">
+        <summary><span class="hand">show proof</span></summary>
         <figure class="pc labs">
           <p class="pc-k"><span class="ev ev-proved">2 LABS</span> one match, <code>fn_08013CA4</code>, doom_r12</p>
           <div class="lab-cols">
@@ -528,21 +517,11 @@
           <p class="verdict-line"><span class="ev ev-proved">ACCEPTED</span> both under their reject lines, so the match stands</p>
           <figcaption>From the two <code>snap.decision</code> review events before <code>fn.matched</code> at 13:23:39.</figcaption>
         </figure>
-      </div>
+      </details>
     </article>
   </div>
 </div>
 
-<section class="j-end" aria-labelledby="end-h">
-  <div class="wrap">
-    <p class="lcd-pill lcd-static"><span>NEW GAME+</span></p>
-    <h2 id="end-h" class="ng-line">Anywhere the only thing left is the compiled program, <span class="two">Frankenstein can bring the source back.</span></h2>
-    <div class="ctas">
-      <a class="btn btn-ink" href="/">Back to the lab <span aria-hidden="true">&#8594;</span></a>
-      <a class="btn btn-cream" href="https://github.com/KarthikSubramanian07/Frankenstein" rel="noopener">Read our source <em>(we kept ours)</em> <span aria-hidden="true">&#8599;</span></a>
-    </div>
-  </div>
-</section>
 </main>
 
 <footer class="footer">
@@ -557,7 +536,7 @@
     </div>
   </div>
 </footer>
-<script src="/assets/judges.js?v=4" defer></script>
+<script src="/assets/judges.js?v=5" defer></script>
 <script src="/assets/road.js?v=2" defer></script>
 </body>
 </html>

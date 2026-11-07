@@ -31,7 +31,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Schibsted+Grotesk:wght@500;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&family=Press+Start+2P&display=swap">
 <link rel="preload" as="image" href="/assets/art/hero-1400.webp" imagesrcset="/assets/art/hero-800.webp 800w, /assets/art/hero-1400.webp 1400w, /assets/art/hero-full.webp 1584w" imagesizes="(max-width: 1240px) 100vw, 1200px">
-<link rel="stylesheet" href="/assets/site.css?v=23">
+<link rel="stylesheet" href="/assets/site.css?v=24">
 <noscript><style>[data-reveal]{opacity:1!important;transform:none!important}.msg{opacity:1!important;transform:none!important}.msg.typing{display:none}</style></noscript>
 
 <script type="application/ld+json">
@@ -68,10 +68,9 @@
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links"><span class="sr">Menu</span><i aria-hidden="true"></i><i aria-hidden="true"></i></button>
     <ul class="nav-links" id="nav-links">
       <li class="nl-judges"><a href="/judges"><i class="led" aria-hidden="true"></i>For judges <span aria-hidden="true">&#8594;</span><em class="hand" aria-hidden="true">the 60-second version</em></a></li>
+      <li><a href="#how">How it works</a></li>
       <li><a href="#partners">Partners</a></li>
-      <li><a href="#referee">The referee</a></li>
-      <li><a href="#story">The story</a></li>
-      <li><a href="#numbers">Numbers</a></li>
+      <li><a href="#numbers">Proof</a></li>
       <li><a href="#credits">Credits</a></li>
     </ul>
     <div class="jcta">
@@ -88,9 +87,9 @@
   <div class="wrap hero-top">
     <h1 id="hero-h" class="display" data-reveal style="--i:1">Lost games,<br><span class="two">rebuilt and proven.</span></h1>
     <div class="hero-sub" data-reveal style="--i:2">
-      <p>87% of classic games are endangered, and most of their source code is gone. Frankenstein's agents rebuild it from the cartridge, one piece at a time. <b>A compiler checks every byte.</b></p>
+      <p>87% of classic games are endangered, and their source code is gone. Our agents rebuild it from the cartridge, and <b>a compiler checks every byte.</b></p>
       <div class="ctas">
-        <a class="btn btn-ink" href="#story">Enter the lab <span aria-hidden="true">&#8594;</span></a>
+        <a class="btn btn-ink" href="#how">Enter the lab <span aria-hidden="true">&#8594;</span></a>
         <a class="btn btn-cream" href="https://github.com/KarthikSubramanian07/Frankenstein" rel="noopener">Read our source <em>(we kept ours)</em> <span aria-hidden="true">&#8599;</span></a>
       </div>
     </div>
@@ -119,355 +118,97 @@
 </section>
 
 
-<!-- ═════════════ PARTNERS ═════════════ -->
-<section class="partners" id="partners" aria-labelledby="pt-h">
+<!-- ═════════════ HOW IT WORKS: three beats ═════════════ -->
+<section class="beats3" id="how" aria-labelledby="how-h">
   <div class="wrap">
-    <header class="sec-head pt-head" data-reveal>
-      <p class="tagpill">Built with</p>
-      <h2 id="pt-h" class="h2">Five partners. Five organs. <span class="two"><span class="hl">Pull one</span> and the creature dies.</span></h2>
-      <p class="sub">Muse writes it. Snap judges it. The compiler proves it. MongoDB remembers it. ASI:One lets anyone ask for it. Gemini gets a second look.</p>
-    </header>
+    <p class="hand hand-label">how it works</p>
+    <h2 id="how-h" class="h2">Dig. Check. <span class="two">Learn.</span></h2>
+    <ol class="b3">
+      <li><span class="b3-n">1</span><h3>Dig</h3><p>Agents read the compiled game and write C, one function at a time.</p></li>
+      <li><span class="b3-n">2</span><h3>Check</h3><p>A compiler rebuilds every piece. <span class="hl">Byte-identical or it's out</span>, and lies get caught.</p></li>
+      <li><span class="b3-n">3</span><h3>Learn</h3><p>Each match teaches the crew a habit, kept only if it helps on code it hasn't seen.</p></li>
+    </ol>
+  </div>
+</section>
 
-    <ul class="logo-rail" data-reveal aria-label="Partners">
-      <li><img src="/assets/logos/meta.svg" alt="Meta" width="40" height="40"><span>Muse Spark · Muse Wonder</span></li>
-      <li><img class="wide" src="/assets/logos/subquadratic.svg" alt="Subquadratic" width="212" height="34"><span>SubQ Snap</span></li>
-      <li><img class="wide fetch" src="/assets/logos/fetchai.svg" alt="Fetch.ai" width="122" height="20"><span><img class="asi" src="/assets/logos/asi-one.webp" alt="" width="18" height="18">ASI:One</span></li>
-      <li><img src="/assets/logos/mongodb.svg" alt="MongoDB" width="40" height="40"><span>MongoDB Atlas</span></li>
-      <li><img src="/assets/logos/gemini.svg" alt="Google Gemini" width="40" height="40"><span>Gemini</span></li>
-    </ul>
-
-    <ul class="pt-grid">
-      <li class="pt pt-meta" data-tilt data-reveal>
-        <div class="pt-top"><span class="pt-logo"><img src="/assets/logos/meta.svg" alt="" width="34" height="34"><b>Meta Model API</b></span><span class="pt-role">THE HANDS</span></div>
-        <div class="pt-anim anim-type" aria-hidden="true"><i style="--w:62%"></i><i style="--w:84%"></i><i style="--w:48%"></i><i class="caret"></i></div>
-        <h3>Writes every line of recovered C.</h3>
-        <ul class="pt-does">
-          <li>Every Digger is a Muse Spark loop with the referee as its tool.</li>
-          <li>Stubborn functions escalate to Muse Wonder when Snap says so.</li>
-          <li>Muse also writes the habits and the names.</li>
-        </ul>
-        <p class="pt-without"><b>Without it:</b> nothing writes the C. The referee has nothing to judge.</p>
-        <p class="pt-num"><span><b>103</b> + <b>11</b></span> Spark and Wonder calls in the first Doom run <code>doom_r01</code></p>
-      </li>
-
-      <li class="pt pt-subq" data-tilt data-reveal style="--i:1">
-        <div class="pt-top"><span class="pt-logo"><img class="wide" src="/assets/logos/subq-snap.svg" alt="SubQ Snap" width="120" height="24"></span><span class="pt-role">THE JUDGMENT</span></div>
-        <div class="pt-anim anim-gauge" aria-hidden="true"><svg viewBox="0 0 120 70"><path class="g-tr" d="M12 62 A 48 48 0 0 1 108 62"/><path class="g-on" d="M12 62 A 48 48 0 0 1 108 62" pathLength="100"/><g class="g-nd"><line x1="60" y1="62" x2="60" y2="22"/><circle cx="60" cy="62" r="5"/></g></svg></div>
-        <h3>Reads the whole game at once and decides where every attempt goes.</h3>
-        <ul class="pt-does">
-          <li>Triage: every game function's disassembly in one 384K window.</li>
-          <li>After each miss: keep going, escalate to Muse Wonder, or abandon.</li>
-          <li>Gates every match for fakes, and watches the live game to pick what to rebuild next.</li>
-        </ul>
-        <p class="pt-without"><b>Without it:</b> we pay Muse to dig dead ends, blind to the rest of the game.</p>
-        <p class="pt-num"><span><b>37</b></span> Snap decisions in <code>doom_r01</code>, 842 ms average; triage read 1.39M tokens</p>
-      </li>
-
-      <li class="pt pt-fetch" data-tilt data-reveal style="--i:2">
-        <div class="pt-top"><span class="pt-logo"><img class="wide fetch" src="/assets/logos/fetchai.svg" alt="Fetch.ai" width="110" height="18"><img class="asi" src="/assets/logos/asi-one.webp" alt="ASI:One" width="26" height="26"></span><span class="pt-role">THE FRONT DOOR</span></div>
-        <div class="pt-anim anim-chat" aria-hidden="true"><i class="q">recover the face</i><i class="a">MATCH, per the referee</i></div>
-        <h3>Ask for a recovery in a chat. Get proof back.</h3>
-        <ul class="pt-does">
-          <li>Ask in plain words in ASI:One.</li>
-          <li>The Excavator agent runs a crew job, then asks the Referee agent, agent to agent.</li>
-          <li>It answers only with the Referee's verdict.</li>
-        </ul>
-        <p class="pt-without"><b>Without it:</b> only our team can ask, and nobody can check our claims for themselves.</p>
-        <p class="pt-num"><span><b>2</b></span> agents live on Agentverse: Frankenstein Referee and Excavator</p>
-      </li>
-
-      <li class="pt pt-mongo" data-tilt data-reveal style="--i:3">
-        <div class="pt-top"><span class="pt-logo"><img src="/assets/logos/mongodb.svg" alt="" width="34" height="34"><b>MongoDB Atlas</b></span><span class="pt-role">THE MEMORY</span></div>
-        <div class="pt-anim anim-jar" aria-hidden="true"><span class="jar"><i></i><i></i><i></i><i></i><i></i><i class="drop"></i></span></div>
-        <h3>Remembers every trick, so the next game is faster.</h3>
-        <ul class="pt-does">
-          <li>Each habit library is its own collection; held-out libraries stay frozen.</li>
-          <li>Every run event and every run's metrics are mirrored to Atlas.</li>
-          <li>Habits are adopted or retired on evidence.</li>
-        </ul>
-        <p class="pt-without"><b>Without it:</b> every run starts from zero, and nothing remembers why.</p>
-        <p class="pt-num"><span><b>38</b></span> habits learned in the first Doom run <code>doom_r01</code></p>
-      </li>
-
-      <li class="pt pt-gemini" data-tilt data-reveal style="--i:4">
-        <div class="pt-top"><span class="pt-logo"><img src="/assets/logos/gemini.svg" alt="" width="34" height="34"><b>Google Gemini</b></span><span class="pt-role">THE SECOND OPINION</span></div>
-        <div class="pt-anim anim-lens" aria-hidden="true"><span class="lens"></span><i class="m"></i></div>
-        <h3>A different lab double-checks every match.</h3>
-        <ul class="pt-does">
-          <li>Reviews every byte match alongside Snap, in parallel, so it adds no wait.</li>
-          <li>A match is rejected when Snap is sure, both labs flag it, or Gemini is near-certain.</li>
-          <li>It also drew every illustration on this page.</li>
-        </ul>
-        <p class="pt-without"><b>Without it:</b> one lab's opinion on fakes, and a page with no pictures.</p>
-        <p class="pt-num"><span><b>8</b></span> illustrations on this page, generated today</p>
-      </li>
+<!-- ═════════════ PARTNERS: one strip ═════════════ -->
+<section class="pstrip" id="partners" aria-labelledby="pt-h">
+  <div class="wrap">
+    <h2 id="pt-h" class="h2">Five partners. <span class="two">Five organs.</span></h2>
+    <ul class="ps">
+      <li><img src="/assets/logos/meta.svg" alt="Meta" width="32" height="32"><p><b>Muse writes it.</b> Every line of recovered C.</p></li>
+      <li><img class="wide" src="/assets/logos/subq-snap.svg" alt="SubQ Snap" width="110" height="22"><p><b>Snap judges it.</b> Where each attempt goes, and what's fake.</p></li>
+      <li><span class="ps-logos"><img class="wide" src="/assets/logos/fetchai.svg" alt="Fetch.ai" width="96" height="16"><img src="/assets/logos/asi-one.webp" alt="ASI:One" width="22" height="22"></span><p><b>ASI:One lets anyone ask.</b> Recover a function from a chat.</p></li>
+      <li><img src="/assets/logos/mongodb.svg" alt="MongoDB" width="32" height="32"><p><b>MongoDB remembers it.</b> The habits and every run.</p></li>
+      <li><img src="/assets/logos/gemini.svg" alt="Google Gemini" width="32" height="32"><p><b>Gemini double-checks.</b> A second lab on every match.</p></li>
     </ul>
   </div>
 </section>
 
-<!-- ═════════════ THE REFEREE (LCD) ═════════════ -->
-<section class="referee" id="referee" aria-labelledby="ref-h">
-  <div class="wrap ref-grid">
-    <div class="ref-copy" data-reveal>
-      <p class="tagpill tag-lcd">THE REFEREE</p>
-      <h2 id="ref-h" class="h2"><span class="hl">Byte-identical,</span> <span class="two">or it's out.</span></h2>
-      <p class="sub">Every piece of C the agents write is compiled with the game's own toolchain and compared, instruction by instruction, against the original. The referee has never told a joke.</p>
-      <ul class="legend">
-        <li><span class="ev ev-proved">MATCH 100%</span> Bright means proved by the compiler.</li>
-        <li><span class="ev ev-guess">update_face<b>?</b></span> Violet with a "?" means our guess.</li>
-      </ul>
-    </div>
-
-    <div class="handheld-wrap" data-reveal style="--i:1">
-      <p class="hand hand-note ref-note" aria-hidden="true">one wrong byte, and it's out<svg viewBox="0 0 60 70"><path d="M10 6c18 4 30 18 32 46" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M31 48c4 4 8 9 11 14 3-5 7-10 11-13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></p>
-      <div class="handheld" id="machine" role="img" aria-label="Animation on a handheld screen: the target function's bytes and the bytes compiled from an agent's C are compared row by row. Two rows differ on the first attempt; on the retry every byte matches.">
-        <div class="hh-top"><span class="hh-led"></span><span class="hh-brand">FRANKENSTEIN</span></div>
-        <div class="hh-bezel">
-          <div class="lcd">
-            <div class="lcd-bar"><span>REF fn_08000230</span><span class="lcd-status" data-state="idle">WAKING UP</span></div>
-            <div class="lcd-head"><span>OFF</span><span>TARGET</span><span>AGENT C</span><span></span></div>
-            <ol class="lcd-rows"></ol>
-            <div class="lcd-foot"><span class="lcd-attempt">TRY 1</span><span class="lcd-asm"></span></div>
-            <div class="lcd-stamp">MATCH 100%</div>
-          </div>
-        </div>
-        <div class="hh-controls" aria-hidden="true">
-          <span class="dpad"><i></i><i></i></span>
-          <span class="ab"><i class="b">B</i><i class="a">A</i></span>
-        </div>
-        <div class="hh-start" aria-hidden="true"><i></i><i></i></div>
-      </div>
-      <p class="cap">A real bench function we wrote today, replayed on our own handheld. The retry is illustrative.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ═════════════ THE STORY: stacking chapter panels ═════════════ -->
-<section class="story" id="story" aria-label="The story in five chapters">
-
-  <!-- I -->
-  <article class="panel p-dead note-right" aria-labelledby="c1-h">
-    <div class="panel-copy">
-      <p class="tagpill"><b>1</b> The game is dead</p>
-      <h2 id="c1-h" class="h2">Emulators keep games playable. <span class="two">Source code keeps them alive.</span></h2>
-      <p class="sub">For most classic games, only the compiled cartridge survives. It still runs, but nobody can fix it, port it or change it.</p>
-      <p class="fine">First users: preservation groups and rights holders. Only games we're allowed to rebuild.</p>
-    </div>
-    <div class="panel-art">
-      <img src="/assets/art/patient-800.webp" srcset="/assets/art/patient-800.webp 800w, /assets/art/patient-full.webp 1200w" sizes="(max-width: 900px) 92vw, 560px" width="1200" height="896" loading="lazy" decoding="async" alt="A dusty game cartridge under a glass bell jar with cobwebs, beside a tiny blank tombstone and a small green sprout.">
-      <div class="float stat-card">
-        <p class="stat-n"><span class="count" data-to="87">0</span><span>%</span></p>
-        <p class="stat-l">of classic US games are critically endangered</p>
-        <p class="stat-src">Video Game History Foundation and Software Preservation Network, 2023</p>
-      </div>
-    </div>
-  </article>
-
-  <!-- II -->
-  <article class="panel p-ask" aria-labelledby="c2-h">
-    <div class="panel-copy">
-      <p class="tagpill"><b>2</b> You ask</p><p class="by"><span>with</span><img class="wide" src="/assets/logos/fetchai.svg" alt="Fetch.ai" height="18" loading="lazy"><img src="/assets/logos/asi-one.webp" alt="ASI:One" height="18" loading="lazy"><img class="wide snap" src="/assets/logos/subq-snap.svg" alt="SubQ Snap" height="18" loading="lazy"></p>
-      <h2 id="c2-h" class="h2">"Bring back Doomguy's face." <span class="two">Typed in a chat.</span></h2>
-      <p class="sub">The Frankenstein Referee agent on ASI:One takes plain words. SubQ Snap reads the whole game and points at the function behind them. Nothing is "done" until the referee says MATCH.</p>
-    </div>
-    <div class="panel-art">
-      <img src="/assets/art/ask-800.webp" srcset="/assets/art/ask-800.webp 800w, /assets/art/ask-full.webp 1200w" sizes="(max-width: 900px) 92vw, 560px" width="1200" height="896" loading="lazy" decoding="async" alt="A speech bubble beside a small mailbox with its flag up; a mint marble rolls out of the slot down a little chute.">
-      <div class="float chat" id="chat" role="group" aria-label="Example chat with the Frankenstein Referee agent">
-        <div class="msg me">Bring back Doomguy's face.</div>
-        <div class="msg bot typing" aria-hidden="true"><i></i><i></i><i></i></div>
-        <div class="msg bot reply">Snap's best guess: <span class="ev ev-guess">fn_0801B298<b>?</b></span> p&nbsp;0.88. Digging. I'll say done when the referee says MATCH.</div>
-      </div>
-      <p class="art-note">The ranking is real, checked afterwards against the hidden map. The chat is illustrative.</p>
-    </div>
-  </article>
-
-  <!-- III -->
-  <article class="panel p-dig note-right" aria-labelledby="c3-h">
-    <div class="panel-copy">
-      <p class="tagpill"><b>3</b> The crew digs</p><p class="by"><span>with</span><img src="/assets/logos/meta.svg" alt="Meta" height="18" loading="lazy"><img class="wide snap" src="/assets/logos/subq-snap.svg" alt="SubQ Snap" height="18" loading="lazy"></p>
-      <h2 id="c3-h" class="h2">Muse writes it. <span class="two">The referee checks it.</span></h2>
-      <ol class="beats">
-        <li><b>Dig.</b> Agents read the compiled game and write C, one function at a time.</li>
-        <li><b>Check.</b> A compiler rebuilds every piece. Byte-identical or it's out.</li>
-        <li><b>Decide.</b> Snap picks what's next: keep going, escalate to Muse Wonder, or move on.</li>
-      </ol>
-    </div>
-    <div class="panel-art">
-      <img src="/assets/art/dig-800.webp" srcset="/assets/art/dig-800.webp 800w, /assets/art/dig-full.webp 1200w" sizes="(max-width: 900px) 92vw, 560px" width="1200" height="896" loading="lazy" decoding="async" alt="Three tiny robots with shovels dig colourful marbles out of a large microchip and load them into a cart.">
-      <div class="float code">
-        <p class="code-top"><span>fn_08000230.c</span><span>Digger 4</span></p>
-<pre data-type><code><span class="k">u32</span> <span class="f">fn_08000230</span>(<span class="k">void</span>) {
-  seed = seed * <span class="n">1103515245u</span> + <span class="n">12345u</span>;
-  <span class="k">return</span> (seed &gt;&gt; <span class="n">16</span>) &amp; <span class="n">0x7FFF</span>;
-}</code></pre>
-      </div>
-    </div>
-  </article>
-
-  <!-- III, the lie -->
-  <article class="panel p-lie" id="liar" aria-labelledby="c3b-h">
-    <div class="panel-copy">
-      <p class="tagpill"><b>3</b> The Checker catches a lie</p><p class="by"><span>with</span><img class="wide snap" src="/assets/logos/subq-snap.svg" alt="SubQ Snap" height="18" loading="lazy"><img src="/assets/logos/gemini.svg" alt="Google Gemini" height="18" loading="lazy"></p>
-      <h2 id="c3b-h" class="h2">Agents lie. <span class="two">The referee doesn't.</span></h2>
-      <p class="sub">A claim is just a claim until a fresh compile agrees. Then SubQ Snap and Gemini judge what bytes can't. Every lie is logged and counted.</p>
-      <div class="lie-actions">
-        <button class="btn btn-cream btn-sm" type="button" data-replay>Let it lie again <span aria-hidden="true">&#8635;</span></button>
-        <span class="lie-count" aria-live="polite">Lies caught on this page <b data-lies>0</b></span>
-      </div>
-    </div>
-    <div class="panel-art lie-art" id="liarScene">
-      <img src="/assets/art/lie-800.webp" srcset="/assets/art/lie-800.webp 800w, /assets/art/lie-full.webp 1200w" sizes="(max-width: 900px) 92vw, 560px" width="1200" height="896" loading="lazy" decoding="async" alt="A stern little referee with a whistle raises a red flag at the end of a chute, where a red marble has stopped.">
-      <div class="float claim">Matched it. Pretty sure.</div>
-      <div class="float verdict">
-        <p><span>first diff</span>+0x000A</p>
-        <p><span>expected</span><i class="ok">adds r0, r0, r2</i></p>
-        <p><span>got</span><i class="bad">adds r0, r2, r0</i></p>
-      </div>
-      <div class="rejected" aria-hidden="true">REJECTED</div>
-      <p class="art-note">Illustration. Real rejections are logged as events and counted.</p>
-    </div>
-  </article>
-
-  <!-- III, learn -->
-  <article class="panel p-learn" aria-labelledby="c3c-h">
-    <div class="panel-copy">
-      <p class="tagpill"><b>3</b> The crew learns</p><p class="by"><span>with</span><img src="/assets/logos/mongodb.svg" alt="MongoDB" height="18" loading="lazy"></p>
-      <h2 id="c3c-h" class="h2">Every game we bring back <span class="two">makes the next one faster.</span></h2>
-      <p class="sub">Each match teaches the crew a habit, never an answer, kept in MongoDB Atlas. Habits are adopted or retired on evidence, and we test them on functions they never saw.</p>
-    </div>
-    <div class="panel-art">
-      <img src="/assets/art/learn-800.webp" srcset="/assets/art/learn-800.webp 800w, /assets/art/learn-full.webp 1200w" sizes="(max-width: 900px) 92vw, 560px" width="1200" height="896" loading="lazy" decoding="async" alt="A shelf of glass jars, each full of marbles of one colour, with one more marble dropping into a jar.">
-      <div class="float habit">
-        <p class="habit-k">habit · adopted</p>
-        <p>Signed <code>x / 2</code> is a shift trick, not a divide.</p>
-<pre>lsrs r3, r0, #31
-adds r0, r3, r0
-asrs r0, r0, #1</pre>
-      </div>
-    </div>
-  </article>
-
-  <!-- IV -->
-  <article class="panel p-alive note-right" aria-labelledby="c4-h">
-    <div class="panel-copy">
-      <p class="tagpill"><b>4</b> It's alive</p>
-      <h2 id="c4-h" class="h2">Same bytes. <span class="two">Same checksum. Same game.</span></h2>
-      <p class="sub">The referee splices the agents' functions back into the ROM and hashes it. Identical, or it doesn't ship. Play it, and we rebuild what's on screen first.</p>
-    </div>
-    <div class="panel-art">
-      <img src="/assets/art/alive-800.webp" srcset="/assets/art/alive-800.webp 800w, /assets/art/alive-full.webp 1200w" sizes="(max-width: 900px) 92vw, 560px" width="1200" height="896" loading="lazy" decoding="async" alt="The handheld on its operating table jolted awake by a lightning bolt between two electrodes, its screen glowing green, marbles bouncing like confetti.">
-      <div class="float sha" id="sha">
-        <p><span>original</span><code data-sha="d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2">d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2</code></p>
-        <p><span>rebuilt</span><code class="sha-typed"></code></p>
-        <b class="sha-ok">IDENTICAL</b>
-        <small class="in-note">The target hash is real; the animation shows the check.</small>
-      </div>
-    </div>
-  </article>
-
-  <!-- V -->
-  <article class="panel p-change note-right" aria-labelledby="c5-h">
-    <div class="panel-copy">
-      <p class="tagpill"><b>5</b> It changes again</p><p class="by"><span>with</span><img class="wide snap" src="/assets/logos/subq-snap.svg" alt="SubQ Snap" height="18" loading="lazy"></p>
-      <h2 id="c5-h" class="h2">One function patched. <span class="two">Phones play it.</span></h2>
-      <p class="sub">Once the code is back, the game can be fixed. Change one constant and exactly one byte changes; Snap's eyes confirm the visible change, and nothing else.</p>
-    </div>
-    <div class="panel-art">
-      <img src="/assets/art/play-800.webp" srcset="/assets/art/play-800.webp 800w, /assets/art/play-full.webp 1376w" sizes="(max-width: 900px) 92vw, 560px" width="1376" height="768" loading="lazy" decoding="async" alt="A small TV, a handheld and a phone on a stand all show the same green landscape, linked by a chute of marbles, with a controller in front.">
-      <div class="float patch">
-        <p class="patch-k">referee patch</p>
-        <p class="patch-pills"><span class="ev ev-proved">1 function changed</span><span class="ev ev-byte">1 byte</span></p>
-<pre><span class="del">- movs r2, #3</span>
-<span class="add">+ movs r2, #4</span></pre>
-        <small class="in-note">The one-byte proof is real; this diff is an example.</small>
-      </div>
-    </div>
-  </article>
-</section>
-
-<!-- ═════════════ NUMBERS (lab green) ═════════════ -->
-<section class="numbers" id="numbers" aria-labelledby="num-h">
-  <div class="wrap">
-    <header class="num-head" data-reveal>
+<!-- ═════════════ PROOF BAND: one number ═════════════ -->
+<section class="proofband" id="numbers" aria-labelledby="pb-h">
+  <div class="wrap pb-grid">
+    <div>
       <p class="tagpill tag-lcd">DOOM · THE FIRST PATIENT</p>
-      <h2 id="num-h" class="h2 h2-on-dark">Numbers only from run files. <span class="two">Doom is famous, hidden and checkable.</span></h2>
-    </header>
-    <div class="num-grid">
-      <div class="num num-hero" data-reveal>
-        <p class="num-v"><span class="count" data-to="28">0</span><span class="of">/30</span></p>
-        <p class="num-l">small Doom functions matched through the real referee <span>doom_r01</span></p>
-      </div>
-      <div class="num" data-reveal style="--i:1"><p class="num-v"><span class="count" data-to="1.29" data-dec="2">0</span></p><p class="num-l">attempts per match</p></div>
-      <div class="num" data-reveal style="--i:2"><p class="num-v"><span class="count" data-to="268">0</span><small>s</small></p><p class="num-l">wall time</p></div>
-      <div class="num" data-reveal style="--i:3"><p class="num-v"><small>$</small><span class="count" data-to="0.73" data-dec="2">0</span></p><p class="num-l">of Muse, plus $0.06 of Snap</p></div>
-      <div class="num" data-reveal style="--i:4"><p class="num-v"><span class="count" data-to="38">0</span></p><p class="num-l">habits learned</p></div>
-      <div class="num" data-reveal style="--i:5"><p class="num-v"><span class="count" data-to="795">0</span></p><p class="num-l">functions in the target, <span class="count" data-to="170">0</span> held out</p></div>
+      <h2 id="pb-h" class="pb-big"><span>166</span><small> of 568</small></h2>
+      <p class="pb-l">game functions rebuilt from the cartridge and proved byte for byte</p>
+      <p class="pb-s">4.62% of the code by size: the small ones come first.</p>
     </div>
-    <div class="num-foot" data-reveal>
-      <p><span class="lcd-tag">BENCH</span> not Doom: 14 of 14 matched, 12 first try, 80 s, $0.29.</p>
-      <p><span class="lcd-tag live">LIVE</span> full-game Doom and held-out results: measured live today.</p>
-      <p class="src">From <code>DECISIONS.md</code> and <code>lab/out/manifest.json</code>. The 30 were the smallest functions; the 1,164-byte face is next.</p>
-    </div>
+    <ul class="pb-facts">
+      <li><span class="ev ev-proved">SHA-1 IDENTICAL</span> Put back into the ROM, the game's checksum doesn't change.</li>
+      <li><span class="ev ev-proved">0 FAKES ACCEPTED</span> Every match is re-run by the referee before it counts.</li>
+      <li><a class="btn btn-cream" href="/judges">See the evidence <span aria-hidden="true">&#8594;</span></a></li>
+    </ul>
+    <p class="pb-src">From <code>crew/exports/union/UNION.json</code>, re-verified by the referee and on a second machine (DECISIONS 14:41).</p>
   </div>
 </section>
 
 <!-- ═════════════ PLAY ANYWHERE ═════════════ -->
-<section class="anywhere" id="play" aria-labelledby="any-h">
-  <div class="wrap">
-    <header class="sec-head" data-reveal>
-      <p class="tagpill"><b>&#9654;</b> Player 2, press start</p>
+<section class="anyline" id="play" aria-labelledby="any-h">
+  <div class="wrap any-row">
+    <div>
       <h2 id="any-h" class="h2">Play it anywhere <span class="two">a browser runs.</span></h2>
-      <p class="sub">The rebuilt game runs in an in-browser emulator (the mGBA core). No install, no account.</p>
-    </header>
-    <ul class="any-grid">
-      <li data-reveal><span class="any-ico ico-phone" aria-hidden="true"></span><h3>Phones</h3><p>A touch controller with multi-touch, made for thumbs.</p></li>
-      <li data-reveal style="--i:1"><span class="any-ico ico-tv" aria-hidden="true"></span><h3>TV and console browsers</h3><p>Big screen, keyboard or remote. Same game.</p></li>
-      <li data-reveal style="--i:2"><span class="any-ico ico-pad" aria-hidden="true"></span><h3>Controllers</h3><p>Any standard gamepad over the Gamepad API.</p></li>
-      <li data-reveal style="--i:3"><span class="any-ico ico-app" aria-hidden="true"></span><h3>Install it</h3><p>Add it to your home screen; it keeps working offline.</p></li>
+      <p class="sub">The rebuilt game runs in an in-browser emulator (the mGBA core). A port compiled from the recovered source is next.</p>
+    </div>
+    <ul class="any-icons" aria-label="Devices">
+      <li><span class="any-ico ico-phone" aria-hidden="true"></span>Phones</li>
+      <li><span class="any-ico ico-tv" aria-hidden="true"></span>TVs</li>
+      <li><span class="any-ico ico-pad" aria-hidden="true"></span>Controllers</li>
+      <li><span class="any-ico ico-app" aria-hidden="true"></span>Home screen</li>
     </ul>
-    <p class="cap-bar any-bar" data-reveal><span><span class="lcd-tag">SOON</span> The public player link lands here once it's published, after the license check on the shareware data.</span><span class="cap-meta">mGBA core · touch · gamepad · offline</span></p>
   </div>
 </section>
 
 <!-- ═════════════ CREDITS ═════════════ -->
 <section class="credits" id="credits" aria-labelledby="cr-h">
   <div class="wrap">
-    <header class="sec-head" data-reveal>
-      <p class="tagpill">Credits</p>
+    <header class="sec-head">
       <h2 id="cr-h" class="h2">Built today. <span class="two">And what isn't ours.</span></h2>
       <p class="sub">The commit history after 10:45 PT is the record.</p>
     </header>
     <div class="cr-grid">
-      <div class="cr cr-ours" data-reveal>
+      <div class="cr cr-ours">
         <h3>Built today <span>Nov 7, 2026, after 10:45 PT</span></h3>
         <ul>
-          <li>The contracts, schemas and fixtures in <code>contracts/</code></li>
-          <li>The build, split, referee and fakematch linter in <code>lab/</code></li>
-          <li>The Diggers, the Checker, Snap steering and the habit library in <code>crew/</code></li>
-          <li>The Stage in <code>stage/</code>; the emulator overlay and phone player in <code>creature/</code></li>
-          <li>The Frankenstein Referee agent on ASI:One</li>
-          <li>This site and the README. Illustrations generated today with Gemini, from <code>site/tools/generate_art.py</code></li>
+          <li>The referee, the function split and the fake linter in <code>lab/</code></li>
+          <li>The agent crew, the Checker and the habit library in <code>crew/</code></li>
+          <li>The Stage in <code>stage/</code>, and the phone player in <code>creature/</code></li>
+          <li>The Frankenstein Referee and Excavator agents on ASI:One</li>
+          <li>This site; its illustrations were generated today with Gemini</li>
         </ul>
       </div>
-      <div class="cr cr-theirs" data-reveal style="--i:1">
+      <div class="cr cr-theirs">
         <h3>Not ours <span>credited, never claimed</span></h3>
         <ul>
-          <li><b>Doom</b> by id Software; <b>prBoom</b> by its authors</li>
-          <li><b>GBADoom</b> by doomhack, GPL-2.0-or-later. Used only as the hidden answer key, never committed</li>
-          <li><b>devkitARM</b> GCC by devkitPro; the <b>mGBA</b> emulator core</li>
-          <li><b>Muse Spark</b> and <b>Muse Wonder</b> (Meta), <b>SubQ Snap</b> (Subquadratic), <b>ASI:One</b> and Agentverse (Fetch.ai), <b>MongoDB Atlas</b>, <b>Gemini</b> (Google)</li>
-          <li>Fonts by their designers, via Google Fonts; <b>GSAP</b> for scroll animation</li>
+          <li><b>Doom</b> by id Software, and the <b>Doom shareware WAD</b></li>
+          <li><b>GBADoom</b> by doomhack, GPL-2.0-or-later, used only as the hidden answer key</li>
+          <li><b>devkitARM</b> GCC by devkitPro, and <b>GbaWadUtil</b></li>
+          <li><b>mGBA</b>, the browser emulator core</li>
+          <li><b>Meta Muse</b>, <b>SubQ Snap</b>, <b>Fetch.ai</b> (ASI:One, Agentverse), <b>MongoDB Atlas</b> and <b>Gemini</b></li>
         </ul>
-        <p class="prior"><b>Prior work we brought:</b> the planning kit in <code>docs/</code>, including <code>docs/design_system.html</code> (a visual reference only, never shipped or pasted), and the event clock <code>tools/hackclock.py</code>.</p>
+        <p class="prior"><b>Prior work we brought:</b> the planning kit in <code>docs/</code> and the event clock <code>tools/hackclock.py</code>.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="ngplus" aria-labelledby="ng-h">
-  <div class="wrap" data-reveal>
-    <p class="lcd-pill lcd-static"><span>NEW GAME+</span></p>
-    <h2 id="ng-h" class="ng-line">Anywhere the only thing left is the compiled program, <span class="two">Frankenstein can bring the source back.</span></h2>
   </div>
 </section>
 
