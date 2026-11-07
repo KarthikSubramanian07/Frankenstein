@@ -66,3 +66,37 @@ def test_idioms_are_adopted_or_retired_on_evidence(tmp_path):
     st = {c["idiom_id"]: c["status"] for c in ch}
     assert st[good["idiom_id"]] == "adopted" and st[bad["idiom_id"]] == "retired"
     assert all(h["idiom_id"] != bad["idiom_id"] for h in lib.search("lsls asrs short sign extend"))
+
+
+def test_empty_model_turn_is_never_sent_back(tmp_path):
+    """A model that burns its whole budget thinking returns no content and no tool calls; the Digger must nudge
+    it instead of appending an empty assistant message (which the API rejects with HTTP 400)."""
+    from crew.config import Config
+    from crew.digger import Digger
+    from crew.events import EventLog
+    from crew.library import Library
+    from crew.referee import MockReferee
+    from crew.target import Target
+    from crew.checker import Checker
+
+    cfg = Config()
+    t = Target(cfg, MockReferee())
+    fn = next(iter(f["id"] for f in t.game_functions()))
+    seen = []
+
+    class LLMStub:
+        def __init__(self):
+            self.cfg = cfg
+            self.n = 0
+
+        def chat(self, messages, **k):
+            seen.append([m for m in messages if m["role"] == "assistant" and not m.get("content") and not m.get("tool_calls")])
+            self.n += 1
+            if self.n == 1:
+                return {"message": {"role": "assistant", "content": None}, "tin": 1, "tout": 1, "cost": 0.0, "model": cfg.model}
+            return {"message": {"role": "assistant", "content": "done"}, "tin": 1, "tout": 1, "cost": 0.0, "model": cfg.model}
+
+    log = EventLog(tmp_path, "t")
+    d = Digger("digger-1", LLMStub(), t, Checker(MockReferee(), log), Library(cfg, mode="off", path=tmp_path / "l.json"), log)
+    d.dig(fn)
+    assert all(not s for s in seen)

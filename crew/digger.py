@@ -97,7 +97,9 @@ class Digger:
             model = self.llm.cfg.escalation_model if (escalated and self.llm.cfg.escalation_model) else self.llm.cfg.model
             effort = effort_for(fn["difficulty"], failures, self.llm.cfg.reasoning_effort)
             try:
-                r = self.llm.chat(messages, model=model, tools=TOOLS, effort=effort)
+                # big functions need room to think AND write: scale the output budget with function size
+                r = self.llm.chat(messages, model=model, tools=TOOLS, effort=effort,
+                                  max_tokens=min(32000, 8000 + fn["size"] * 16))
             except LLMError as e:
                 if model != self.llm.cfg.model:  # escalation model unavailable: stay on the base model
                     self.llm.cfg.escalation_model = ""
@@ -109,6 +111,11 @@ class Digger:
             out.model_calls[r["model"]] = out.model_calls.get(r["model"], 0) + 1
             msg = r["message"]
             calls = msg.get("tool_calls") or []
+            if not calls and not (msg.get("content") or "").strip():
+                # the model spent its whole budget thinking: never send an empty assistant turn back (API 400)
+                messages.append({"role": "user", "content": "You ran out of room before answering. Submit your best "
+                                 "complete C candidate now with referee_check; refine it after you see the diff."})
+                continue
             messages.append({k: v for k, v in msg.items() if k in ("role", "content", "tool_calls") and v is not None}
                             | {"role": "assistant"})
             if not calls:
