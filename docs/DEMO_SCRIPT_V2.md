@@ -42,6 +42,9 @@ Cast as in v1: Karthik speaks, Aidenn drives keys, Enzo has the phones and the c
 "UNTESTED" marks a beat that has not run end to end yet; it is cut from the 16:30 recording unless it passes a
 rehearsal first.
 
+
+> **16:36 update (Lane B test):** with 235 recovered, `make demo-live` found no easy unsolved function (0 of 2 matched in 3 min). Live beat options, in order: (a) re-dig an already-solved small function from scratch, cold, no warm start and no library hits for that function: still a genuine live match, said as "watch it redo one from scratch"; (b) switch to the REPLAY tab (`?legacy=1&scene=split&replay=doom_r01&speed=4`): "Agents are slow; the referee isn't. Here's a real run from this morning." The REPLAY badge stays on screen.
+
 | Time | Screen | The judge does | Karthik says (exact words) | Rubric · problem · prize | Fallback |
 |---|---|---|---|---|---|
 | **0:00 to 0:12** | Doom running full screen. | Watches. | "For most old games, only the cartridge survives. The recipe, the source code, is gone. It's like being handed a cake and asked for the exact recipe. Our agents write the recipe back from the cartridge, and a compiler bakes it to check it's the same cake, byte for byte. This is Doom." | Impact 20 (identity in 10 s) · Software Archaeology | No playable ROM on the demo laptop: start on the Stage's Split scene and say the same words. |
