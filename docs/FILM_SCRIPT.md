@@ -1,22 +1,28 @@
-# Submission film: one minute, narration script
+# Submission film: one minute, v3 (plain language)
 
-Read this aloud in one take, at a calm pace (about 140 words a minute). Leave a one-second pause at each `/`.
-Record on a phone, voice memo is fine, quiet room, phone 20 cm from your mouth. Push the file to
-`lab/film/public/voice/narration.m4a` (or `.wav`) by 16:20, or AirDrop it to Eddy.
+Written for someone who has never heard of decompilation. One short sentence on screen at a time, held long
+enough to read twice. The narration (Karthik) reads exactly the on-screen line, calmly. No jargon on screen:
+no "SHA-1", no "machine code", no "function", no model names except on the end card.
 
-The number in [brackets] is the 16:00 frozen count. Read the number Lane B posts at 16:00.
+| Time | Picture | On screen = narration |
+|---|---|---|
+| 0:00 to 0:04 | Doom gameplay, full screen, crisp | This is Doom, from 1993. |
+| 0:04 to 0:08 | same | For most games this old, the original code is lost. |
+| 0:08 to 0:12 | A cartridge, and a blank page with a question mark | The game still runs, but nobody can read how it works. |
+| 0:12 to 0:16 | same, the page stays blank | So nobody can fix it, or bring it to new devices. |
+| 0:16 to 0:21 | Left: a wall of raw numbers from the cartridge. Right: readable code appearing line by line | Our AI agents read the cartridge and rewrite the code, piece by piece. |
+| 0:21 to 0:24.5 | The code goes into a checker box | Then a checker rebuilds each piece. |
+| 0:24.5 to 0:28 | A green EXACT MATCH stamp | It passes only if it's an exact match. |
+| 0:28 to 0:32 | A chat bubble from the AI: "Done. It matches!" | Sometimes the AI says it got it right when it didn't. |
+| 0:32 to 0:36 | A red NOT A MATCH stamp lands on the bubble | The checker caught all 24 of those today. |
+| 0:36 to 0:40 | 568 squares; [225] fill in green, the counter ticks up | [225] of Doom's 568 pieces are back so far. |
+| 0:40 to 0:44 | The squares snap into a cartridge; a check mark | Put back together, the game is identical to the original. |
+| 0:44 to 0:49 | Original Doom, cheat on. Zoom into the health number: 100% | Now that we have the code, we can change it. |
+| 0:49 to 0:55 | Edited build, same cheat. Zoom into the health number: 200% | We changed one line of the AI's code. Same cheat, double the health. |
+| 0:55 to 1:00 | End card | Frankenstein. Lost games, brought back. |
 
-| Time | Narration (Karthik) | Caption | On screen |
-|---|---|---|---|
-| 0:00 | "Same game. Same cheat. / On the right, we changed one line of code that AI rebuilt from the cartridge." | Doom, rebuilt by AI from machine code. Then changed. | God mode: health 100% next to 200% |
-| 0:06 | "Most classic games survive only as a cartridge. / The source code is gone." | 87% of classic games are endangered (VGHF and SPN, 2023). | The cartridge; the recipe card with its lines missing |
-| 0:11 | "Our agents read the machine code and write the C back. / It only counts if it compiles to the exact same bytes." | Meta's Muse writes the C. Byte for byte, or it doesn't count. / From memory alone: 0 of 20 compiled. | Machine code becomes C, then MATCH |
-| 0:20 | "Agents lie. / Twenty-four times today they claimed a match that wasn't. / The referee caught every one." | 24 lies caught · 30 fakes rejected · 0 let through. Agents lie. Compilers don't. | A real false claim, rejected at one instruction |
-| 0:28 | "225 of Doom's 568 functions are back. / Rebuilt into the game, it's identical to the original, byte for byte." | 225 of 568 functions, proven. SHA-1 identical. | The counter, two identical checksums |
-| 0:36 | "Stuck at ninety percent? The next run starts from its best try." | Run over run: a 90% near-miss became a MATCH. (No held-out gain yet; we don't claim one.) | fn_0801ABC0: 90% in run 1, MATCH in the warm-start run (DECISIONS 14:03) |
-| 0:40 | "That's what source buys you. / Change the game. Run the same code in a browser, and get the same answers." | One line of recovered C changed. 20,000 of 20,000 identical in a browser. | God mode at 200%; the equivalence page |
-| 0:46 | "Muse writes it. SubQ Snap judges it. The compiler proves it. / And anyone can ask for it in ASI:One." | Muse writes · Snap judges · the compiler proves · ASI:One asks | The four partners, each doing its job |
-| 0:53 | "Frankenstein. / Lost games, rebuilt and proven." | Built today / Not ours (at least 3 s) | Credits, tryfrankenstein.pages.dev |
+End card small print (not narrated): "Built today: the AI agents, the checker, the patch, this film. Not ours: Doom (id Software),
+GBADoom (doomhack), mGBA. Made with Meta Muse, SubQ Snap, Fetch.ai ASI:One, MongoDB Atlas, Gemini." Plus the URL and the team.
 
-About 135 words, 57 seconds. If it runs long, drop the 0:36 voice line first (keep its caption), then "The source code is gone."
-Sources: 87% DECISIONS 12:12; 0 of 20 DECISIONS 13:28; 24 / 31 / 0 `python3 tools/counts.py`; 90% to MATCH DECISIONS 14:03 (doom_hud03); 225 and the SHA-1 from the 16:00 freeze.
+Sources: 24 = `tools/counts.py` false_claims_caught; [225] and "identical" = the 16:12 freeze (`lab/demo/union_rebuild.json`);
+the 100% and 200% shots = `lab/demo/clips/god_original.mp4`, `god_200.mp4`.
