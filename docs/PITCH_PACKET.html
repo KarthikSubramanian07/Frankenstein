@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frankenstein Pitch Packet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Schibsted+Grotesk:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F1EFEA; --paper:#FBFAF7; --ink:#1D2026; --mute:#5C6170; --line:#D9D5CC;
+  --lcd0:#0F380F; --lcd1:#306230; --lcd2:#8BAC0F; --lcd3:#9BBC0F;
+  --red:#B3261E; --amber:#A86400;
+  --karthik:#1D2026; --aidenn:#2F5DA8; --enzo:#306230; --eddy:#8A3FA0;
+}
+@page{ size: Letter; margin: 0.55in 0.55in 0.6in; }
+*{ box-sizing:border-box; }
+html,body{ margin:0; background:var(--cream); color:var(--ink); }
+body{ font-family:Inter,system-ui,sans-serif; font-size:9.6pt; line-height:1.42; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+.page{ break-after:page; page-break-after:always; }
+.page:last-child{ break-after:auto; page-break-after:auto; }
+h1,h2,h3{ font-family:"Schibsted Grotesk",Inter,sans-serif; margin:0; letter-spacing:-0.01em; }
+h1{ font-size:28pt; font-weight:900; line-height:1; }
+h2{ font-size:17pt; font-weight:800; margin-bottom:4pt; }
+h3{ font-size:11pt; font-weight:800; margin:11pt 0 4pt; color:var(--lcd0); text-transform:uppercase; letter-spacing:0.06em; }
+p{ margin:0 0 6pt; }
+.mono,.num{ font-family:"JetBrains Mono",ui-monospace,monospace; }
+.num{ font-weight:700; }
+.kicker{ font-family:"JetBrains Mono",monospace; font-size:7.6pt; letter-spacing:0.14em; text-transform:uppercase; color:var(--lcd1); font-weight:600; }
+.secthead{ display:flex; align-items:baseline; justify-content:space-between; border-bottom:2px solid var(--ink); padding-bottom:5pt; margin-bottom:9pt; }
+.secthead .n{ font-family:"JetBrains Mono",monospace; font-size:8pt; color:var(--mute); }
+.lede{ font-size:10.5pt; color:var(--mute); margin-bottom:8pt; }
+
+/* hero */
+.hero{ background:var(--lcd0); color:var(--lcd3); border-radius:10pt; padding:13pt 18pt 12pt; position:relative; overflow:hidden; }
+.hero::after{ content:""; position:absolute; inset:0; background:repeating-linear-gradient(0deg, rgba(0,0,0,.10) 0 1px, transparent 1px 3px); pointer-events:none; }
+.hero .kicker{ color:var(--lcd2); }
+.hero h1{ color:var(--lcd3); margin:6pt 0 8pt; }
+.anchor{ font-family:"Schibsted Grotesk",sans-serif; font-weight:700; font-size:13pt; color:#E9F3C2; line-height:1.25; border-left:3pt solid var(--lcd2); padding-left:10pt; }
+.anchor small{ display:block; font-family:"JetBrains Mono",monospace; font-size:7pt; letter-spacing:.12em; color:var(--lcd2); text-transform:uppercase; margin-bottom:3pt; font-weight:600; }
+
+.grid2{ display:grid; grid-template-columns:1fr 1fr; gap:8pt; margin-top:8pt; }
+.p1 .card p{ font-size:8.8pt; margin:0; }
+.p1 td{ padding:4pt 7pt; }
+.p1 .stat{ padding:6pt 8pt; }
+.p1 h3{ margin-top:8pt; }
+.card{ background:var(--paper); border:1px solid var(--line); border-radius:8pt; padding:9pt 11pt; }
+.card h3{ margin-top:0; }
+.stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:6pt; margin-top:8pt; }
+.stat{ background:var(--paper); border:1px solid var(--line); border-radius:8pt; padding:8pt 9pt; }
+.stat .v{ font-family:"JetBrains Mono",monospace; font-weight:700; font-size:14pt; color:var(--lcd0); line-height:1.05; }
+.stat .l{ font-size:7.8pt; color:var(--mute); margin-top:3pt; line-height:1.3; }
+.sha{ font-family:"JetBrains Mono",monospace; font-size:7.4pt; word-break:break-all; color:var(--lcd1); }
+
+/* tables */
+table{ width:100%; border-collapse:separate; border-spacing:0; background:var(--paper); border:1px solid var(--line); border-radius:8pt; overflow:hidden; font-size:8.6pt; }
+th{ text-align:left; font-family:"JetBrains Mono",monospace; font-size:7pt; letter-spacing:.1em; text-transform:uppercase; color:var(--lcd3); background:var(--ink); padding:6pt 7pt; font-weight:600; }
+td{ padding:6pt 7pt; vertical-align:top; border-top:1px solid var(--line); }
+tr{ break-inside:avoid; page-break-inside:avoid; }
+tbody tr:nth-child(even) td{ background:#F6F4EF; }
+td.t{ font-family:"JetBrains Mono",monospace; font-weight:700; white-space:nowrap; color:var(--lcd0); }
+td.words{ font-weight:500; }
+td.words q{ quotes:"\201C" "\201D"; }
+td.fb{ color:var(--mute); font-size:8pt; }
+code{ font-family:"JetBrains Mono",monospace; font-size:7.6pt; background:#E8E5DC; padding:0 3pt; border-radius:3pt; word-break:break-all; }
+
+/* chips */
+.chip{ display:inline-block; font-family:"JetBrains Mono",monospace; font-size:7pt; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:#fff; border-radius:99pt; padding:1.5pt 6pt; margin:0 2pt 2pt 0; white-space:nowrap; }
+.k{ background:var(--karthik); } .a{ background:var(--aidenn); } .e{ background:var(--enzo); } .d{ background:var(--eddy); }
+.judge{ background:transparent; color:var(--ink); border:1px solid var(--ink); }
+.tag{ display:inline-block; font-family:"JetBrains Mono",monospace; font-size:6.8pt; font-weight:700; padding:1pt 5pt; border-radius:3pt; letter-spacing:.06em; }
+.tag.warn{ background:#F7E3B5; color:var(--amber); }
+.tag.ok{ background:var(--lcd3); color:var(--lcd0); }
+.cast{ display:flex; gap:8pt; flex-wrap:wrap; margin:6pt 0 9pt; font-size:8.4pt; }
+.cast span.role{ color:var(--mute); }
+
+/* Q&A */
+.qa td:first-child{ width:31%; font-weight:600; }
+.qa td.src{ width:15%; font-family:"JetBrains Mono",monospace; font-size:7pt; color:var(--mute); }
+.qa{ margin-bottom:6pt; }
+.rules{ display:grid; grid-template-columns:repeat(4,1fr); gap:7pt; margin-bottom:8pt; }
+.rules div{ background:var(--paper); border:1px solid var(--line); border-left:3pt solid var(--lcd2); border-radius:6pt; padding:6pt 8pt; font-size:8.2pt; }
+.rules b{ display:block; font-family:"Schibsted Grotesk",sans-serif; font-size:9.4pt; }
+
+/* never say */
+.never{ background:#2A1414; color:#F6E6E3; border-radius:10pt; padding:12pt 16pt; margin-top:10pt; break-inside:avoid; }
+.never h2{ color:#FFB4AB; font-size:14pt; }
+.never ul{ margin:6pt 0 0; padding-left:14pt; columns:2; column-gap:20pt; }
+.never li{ margin-bottom:4pt; break-inside:avoid; }
+.never s{ color:#FFB4AB; }
+.never .say{ color:var(--lcd3); }
+
+/* film */
+.film{ background:var(--ink); color:var(--cream); border-radius:10pt; padding:16pt 20pt; }
+.film p{ font-family:"Schibsted Grotesk",sans-serif; font-size:15pt; font-weight:700; line-height:1.35; margin:0 0 6pt; }
+.film p.last{ color:var(--lcd3); font-size:22pt; font-weight:900; margin-top:8pt; }
+.foot{ margin-top:10pt; font-size:7.4pt; color:var(--mute); border-top:1px solid var(--line); padding-top:5pt; }
+.foot a{ color:var(--lcd1); }
+.note{ font-size:8pt; color:var(--mute); margin-top:6pt; }
+ul.tight{ margin:0; padding-left:13pt; } ul.tight li{ margin-bottom:2.5pt; }
+
+@media screen and (max-width:700px){
+  body{ padding:16px; }
+  .grid2,.stats,.rules{ grid-template-columns:1fr 1fr; }
+  table{ display:block; overflow-x:auto; }
+  .never ul{ columns:1; }
+}
+@media screen{ .page{ max-width:8.5in; margin:0 auto 32px; } }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: SUMMARY -->
+<section class="page p1">
+  <div class="hero">
+    <div class="kicker">FRANKENSTEIN · Pitch-prep packet · AI Engineer Code Summit · Sat Nov 7 2026 · judging after 17:00</div>
+    <h1>Lost games, rebuilt and proven.</h1>
+    <div class="anchor"><small>The one line judges should repeat</small>“The agents rebuilt Doom’s code from the cartridge, and the compiler proved every piece.”</div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>The problem</h3>
+      <p>87% of classic games released in the US are critically endangered (Video Game History Foundation and Software Preservation Network, 2023). For most of them only the compiled cartridge survives. It runs, but nobody can fix it, change it or move it, because the source code is gone.</p>
+    </div>
+    <div class="card">
+      <h3>What we built today</h3>
+      <p>A crew of AI agents that reads a game’s machine code and writes the C source back, one function at a time. A referee compiles every piece with the original compiler and accepts it only if the bytes are identical. Then we splice the agents’ code back into the game and the whole cartridge checksums identical. First patient: GBADoom.</p>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="v">235<span style="font-size:10pt"> / 568</span></div><div class="l">game functions rebuilt (41.4% of the functions)</div></div>
+    <div class="stat"><div class="v">8.39%</div><div class="l">of code bytes: 11,900 of 141,774. The small ones came first.</div></div>
+    <div class="stat"><div class="v">IDENTICAL</div><div class="l">rebuild: 235 agent-written + 333 original functions</div></div>
+    <div class="stat"><div class="v">0.1–0.2 s</div><div class="l">per check by the referee</div></div>
+    <div class="stat"><div class="v">39</div><div class="l">lies caught (agents claimed a match that wasn’t one)</div></div>
+    <div class="stat"><div class="v">32 / 0</div><div class="l">fakes rejected / fakes accepted</div></div>
+    <div class="stat"><div class="v">0 of 20</div><div class="l">compiled when Muse worked from memory alone: it isn’t recall</div></div>
+    <div class="stat"><div class="v">200%</div><div class="l">health from god mode in the changed build (<span class="mono">god_200</span>)</div></div>
+  </div>
+  <p class="note">Rebuild SHA-1 <span class="sha">d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2</span> · 36 finished runs · numbers frozen at 16:12, commit <span class="mono">b805d42</span> (DECISIONS.md 16:11 and 16:12).</p>
+
+  <h3>Sponsors are organs, not logos</h3>
+  <table>
+    <thead><tr><th style="width:22%">Sponsor</th><th style="width:16%">Role</th><th>What it does on screen</th></tr></thead>
+    <tbody>
+      <tr><td><b>Meta</b> · Muse Spark, Muse Wonder</td><td>The hands</td><td>Writes every line of recovered C.</td></tr>
+      <tr><td><b>Subquadratic</b> · SubQ Snap</td><td>The judgment</td><td>Triage, escalate or abandon, fakematch screening, the Stage director, the “eyes” that confirm a change on screen.</td></tr>
+      <tr><td><b>Fetch.ai</b> · ASI:One, Agentverse</td><td>The front door</td><td>Anyone asks for proof in chat. The Excavator agent runs a job, then asks the Referee agent agent-to-agent before it reports success.</td></tr>
+      <tr><td><b>MongoDB Atlas</b></td><td>The memory</td><td>Every habit the crew learns and every event lives in Atlas.</td></tr>
+      <tr><td><b>Google Gemini</b></td><td>Second opinion</td><td>The second lab that screens every match.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- PAGE 2-3: SCRIPT -->
+<section class="page">
+  <div class="secthead"><h2>The 3-minute judging-room script</h2><span class="n">02 · based on docs/DEMO_SCRIPT_V2.md</span></div>
+  <div class="cast">
+    <span><span class="chip k">Karthik</span><span class="role">speaks the whole pitch</span></span>
+    <span><span class="chip a">Aidenn</span><span class="role">drives the keys and the Stage</span></span>
+    <span><span class="chip e">Enzo</span><span class="role">phones, controller, the game</span></span>
+    <span><span class="chip d">Eddy</span><span class="role">referee and technical Q&amp;A</span></span>
+  </div>
+  <p class="note" style="margin-top:0">Open in advance: the Stage Split tab <code>http://127.0.0.1:5173/?legacy=1&amp;scene=split</code> and the labelled REPLAY tab <code>http://127.0.0.1:5173/?legacy=1&amp;scene=split&amp;replay=doom_r01&amp;speed=4</code>. Start the live redo with <code>make demo-live ARGS="--redo 2"</code>. Stop at 3:00, even mid-sentence.</p>
+
+  <table>
+    <thead><tr><th style="width:9%">Time</th><th style="width:20%">On screen</th><th style="width:12%">Who acts</th><th style="width:36%">Exact words (Karthik)</th><th>Fallback</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="t">0:00<br>–0:12</td>
+        <td>Doom running full screen.</td>
+        <td><span class="chip k">Karthik</span><span class="chip e">Enzo</span> game up</td>
+        <td class="words"><q>For most old games, only the cartridge survives. The recipe, the source code, is gone. It’s like being handed a cake and asked for the exact recipe. Our agents write the recipe back from the cartridge, and a compiler bakes it to check it’s the same cake, byte for byte. This is Doom.</q></td>
+        <td class="fb">No playable ROM: start on the Stage Split scene and say the same words.</td>
+      </tr>
+      <tr>
+        <td class="t">0:12<br>–0:20</td>
+        <td>Terminal: <code>Judge: press ENTER to hire the agents.</code> running <code>make demo-live ARGS="--redo 2"</code>.</td>
+        <td><span class="chip a">Aidenn</span> sets it up · <span class="chip judge">Judge</span> presses Enter</td>
+        <td class="words"><q>Press Enter. You just hired two agents. With 235 already back, watch it redo one from scratch: library off, no head start.</q></td>
+        <td class="fb">Referee down: <q>The referee is down, so nothing can count; here’s the last real run.</q> Aidenn switches to the REPLAY tab (REPLAY · 4x badge stays visible).</td>
+      </tr>
+      <tr>
+        <td class="t">0:20<br>–0:55</td>
+        <td>Stage Split: machine code left, Muse writing C right, the MATCH stamp, then the judgment rail.</td>
+        <td><span class="chip a">Aidenn</span> Stage · <span class="chip k">Karthik</span></td>
+        <td class="words"><q>Left: what’s on the cartridge. Right: C that Meta’s Muse Spark is writing right now. One rule: it only counts if it compiles to the exact same bytes.</q> At MATCH: <q>There. Byte for byte, checked in a fifth of a second. From memory alone, Muse compiled 0 of 20, so this isn’t recall. Then SubQ Snap screens it for tricks.</q></td>
+        <td class="fb"><b>Nothing lands by 0:50:</b> Aidenn switches to the REPLAY tab. Karthik: <q>Agents are slow; the referee isn’t. Here’s a real run from this morning.</q> First MATCH in under 2 s.</td>
+      </tr>
+      <tr>
+        <td class="t">0:55<br>–1:15</td>
+        <td>Versus or Road scene: a claimed match, the referee’s re-run, REJECTED with the first wrong instruction.</td>
+        <td><span class="chip a">Aidenn</span> scene · <span class="chip k">Karthik</span></td>
+        <td class="words"><q>Agents lie. Today they told us “it matches” 39 times when it didn’t. The referee re-runs every claim, and one instruction gives each of them away. Agents lie. Compilers don’t.</q></td>
+        <td class="fb">No live lie in Versus: show the FALSE CLAIM card on <code>/judges</code> (a real event from <code>doom_r12</code>).</td>
+      </tr>
+      <tr>
+        <td class="t">1:15<br>–1:35</td>
+        <td>Ending: ORIGINAL and REBUILT checksums, IDENTICAL. Then the meter.</td>
+        <td><span class="chip a">Aidenn</span> · <span class="chip k">Karthik</span></td>
+        <td class="words"><q>We put the agents’ code back into Doom: 235 functions. Same checksum as the original. Not similar: identical. That’s 235 of Doom’s 568 functions so far, the small ones first. And every run starts from the last one’s best try; that’s how a 90% near-miss became a match.</q></td>
+        <td class="fb">Ending says NOT REBUILT YET: show the <code>/judges</code> rebuild card.</td>
+      </tr>
+      <tr>
+        <td class="t">1:35<br>–2:00</td>
+        <td>Doom (original build), controller in the judge’s hands.</td>
+        <td><span class="chip e">Enzo</span> hands controller · <span class="chip judge">Judge</span> presses</td>
+        <td class="words"><q>Doom’s god-mode cheat on the Game Boy is a button sequence. Press up, up, down, down, left, left, right, right. That just ran the god-mode function our agents rebuilt from machine code; the code that reads the buttons is still the original.</q></td>
+        <td class="fb">Cheat doesn’t trigger: <q>The god-mode function is one we rebuilt.</q> Move on. (Tested 15:07 in the browser player: HEALTH 100%.)</td>
+      </tr>
+      <tr>
+        <td class="t">2:00<br>–2:30</td>
+        <td>Same cheat in the changed build: status bar reads <b>200%</b>. Optional: Snap’s eyes line “CHANGE CONFIRMED”.</td>
+        <td><span class="chip e">Enzo</span> swaps build · <span class="chip judge">Judge</span> presses</td>
+        <td class="words"><q>And this is why source matters. An emulator can only play the game. We changed one line in the agents’ god-mode C, rebuilt, and now god mode gives you 200% health. Everything else is byte for byte the same.</q></td>
+        <td class="fb">Use a fresh session (saved god-mode state skews it). <code>god_200</code> won’t boot: cut the beat, say <q>Recovered code can be changed and rebuilt; that’s next.</q> (<code>instant_raise</code> is untested; don’t use it.)</td>
+      </tr>
+      <tr>
+        <td class="t">2:30<br>–2:45</td>
+        <td><span class="tag warn">IF READY</span> Game picker on the laptop, Doom preselected → QR → phone loads → Game Boy controls take shape → playable Doom.</td>
+        <td><span class="chip e">Enzo</span> phones · <span class="chip judge">Judge</span> scans</td>
+        <td class="words"><q>Pick a game. Scan it. That’s our rebuilt game on your phone, running in a browser emulator, with controls made for your hands.</q></td>
+        <td class="fb">Not shown working in Lane D’s files (see note below). No QR: Enzo hands over Phone A. No phone works: skip straight to the close.</td>
+      </tr>
+      <tr>
+        <td class="t">2:45<br>–3:00</td>
+        <td>Credits card: Built today / Not ours.</td>
+        <td><span class="chip k">Karthik</span></td>
+        <td class="words"><q>Ask for any function in ASI:One and the Fetch.ai agents bring back the proof. Muse writes it, Snap judges it, the compiler proves it. On the left, everything we built today; on the right, everyone else’s work. Lost games, rebuilt and proven.</q></td>
+        <td class="fb">None. Stop at 3:00.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note"><b>Why the phone beat is marked IF READY.</b> <code>creature/RESULTS_DEMO.md</code> does not exist. <code>creature/EXPERIENCE_IDEA.md</code> describes the picker, QR and adaptive controls as “product requirements and research directions, not completed features”. <code>creature/DEMO_READINESS.md</code> and <code>creature/STATUS.md</code> say the phone bundle is built but not deployed, and physical phones, the public judging URL and the QR are still pending. Run it only if Enzo has shown it working on a real phone before 17:00.</p>
+</section>
+
+<!-- PAGE: FILM -->
+<section class="page">
+  <div class="secthead"><h2>The film closing</h2><span class="n">03 · last lines of the 1-minute submission film</span></div>
+  <div class="film">
+    <div class="kicker" style="color:var(--lcd2);margin-bottom:8pt">Voice: Karthik · over the god-mode cheat, HEALTH 100% beside 200%</div>
+    <p>“Now that we have the code, we can change it.</p>
+    <p>We changed one line of the AI’s code.</p>
+    <p>Same cheat, double the health.</p>
+    <p>Not emulated. Not imitated. Rebuilt, byte for byte.”</p>
+    <p class="last">Frankenstein.</p>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>If a judge has seen the film</h3>
+      <ul class="tight">
+        <li>Lead with the live redo, not the film’s shots: the judge pressing Enter is what scores Technical Demo.</li>
+        <li>Repeat the same anchor line; don’t introduce a new one.</li>
+        <li>The REPLAY badge stays on screen whenever we show recorded runs.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Credits we must show</h3>
+      <p><b>Built today:</b> the agents, the referee, the Stage, the patches, the phone page and the site.<br><b>Not ours:</b> Doom, GBADoom, the shareware WAD, mGBA, devkitARM and the partner platforms.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:14pt">One number per scene</h3>
+  <table>
+    <thead><tr><th style="width:24%">Scene</th><th style="width:22%">The one number</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>The dig</td><td class="num">0.2 s</td><td>A check takes 0.1 to 0.2 s (DECISIONS.md 11:24)</td></tr>
+      <tr><td>The lie</td><td class="num">39</td><td>Lies caught, <code>tools/counts.py</code> (DECISIONS.md 16:12)</td></tr>
+      <tr><td>The rebuild</td><td class="num">235 of 568</td><td>Union rebuild, identical, commit b805d42</td></tr>
+      <tr><td>The change</td><td class="num">200%</td><td><code>god_200</code>, tested 15:07, <code>lab/demo/shots/god_200_after.png</code></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Q&A -->
+<section class="page">
+  <div class="secthead"><h2>Q&amp;A prep</h2><span class="n">04 · the biggest section · one breath each</span></div>
+  <div class="rules">
+    <div><b>Answer first</b>Then one piece of evidence. Then stop.</div>
+    <div><b>One number</b>Only numbers from the repo. Say “of the functions”.</div>
+    <div><b>Admit limits early</b>Say what isn’t done before they ask. It scores as confidence.</div>
+    <div><b>Tie back</b>End on preservation: a game you can fix, change and move.</div>
+  </div>
+  <p class="note" style="margin-top:0">Default owner: <span class="chip d">Eddy</span> for referee and technical questions, <span class="chip k">Karthik</span> for everything else, <span class="chip e">Enzo</span> for the phone and game, <span class="chip a">Aidenn</span> for the Stage.</p>
+
+  <h3>Technical</h3>
+  <table class="qa">
+    <thead><tr><th>Question</th><th>Answer</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>How does matching work? <span class="chip d">Eddy</span></td><td>An agent sees one function’s machine code under an anonymous id and writes C. The referee compiles it with the game’s own compiler and flags and compares the bytes. Identical, it’s a MATCH; one byte off, it isn’t. 0.1 to 0.2 s per check.</td><td class="src">DECISIONS 11:24</td></tr>
+      <tr><td>Why byte-identical instead of “behaves the same”?</td><td>Because it’s a proof, not an opinion. Tests can miss a branch; identical bytes can’t. And identical bytes mean the whole cartridge checksums identical when we put the code back.</td><td class="src">README</td></tr>
+      <tr><td>How do you know it isn’t memorized? GBADoom is public.</td><td>We scrambled our build with small edits and hid the source. From memory alone, Muse compiled 0 of 20. Even with the real headers and compiler errors, 3 of 20 matched, none of them functions we’d changed.</td><td class="src">DECISIONS 13:28 · lab/out/memory_probe.json</td></tr>
+      <tr><td>How is the full rebuild proven? <span class="chip d">Eddy</span></td><td>Object splice: the referee re-checks every recovered file (each must MATCH), writes the agents’ own compiled bytes into the ROM, and keeps linked addresses only where it proved them identical. 235 agent-written plus 333 original functions: SHA-1 identical, <span class="mono">d936259b…</span>, verified on two machines.</td><td class="src">DECISIONS 11:49, 16:11, 16:12</td></tr>
+      <tr><td>Couldn’t an agent cheat the compiler, like inline assembly?</td><td>That’s a fakematch, and we screen for it: the Checker’s rules plus SubQ Snap. 32 fakes rejected, 0 accepted. The final union was re-checked against the fakematch rules with 0 failures.</td><td class="src">DECISIONS 16:12</td></tr>
+      <tr><td>Why only 8.39% of the code if you have 41% of the functions?</td><td>Small functions came first. What’s left is big: the renderer and the status-bar face. That’s 235 of 568 functions but only 11,900 of 141,774 code bytes. The next lever is bigger functions, not more runs.</td><td class="src">DECISIONS 16:12</td></tr>
+      <tr><td>What’s hard about the remaining 59%?</td><td>Size and compiler habits. On big functions one register choice moves every byte after it, so “almost right” is still wrong. Our permuter tried exact rewrites on 17 near-misses at 90% or better and closed none.</td><td class="src">DECISIONS 15:31 · crew/EXPERIMENTS.md</td></tr>
+      <tr><td>Which compiler and flags?</td><td>devkitARM r68, GCC 16.1.0 in Docker, GBADoom’s own Makefile flags minus link-time optimisation, at -O2. Pinned by digest.</td><td class="src">DECISIONS 11:20 · lab/TOOLCHAIN.md</td></tr>
+      <tr><td>How would you do another game?</td><td>Point the same referee at a new target and compiler. We tried Attack on Voxelburg: 4 of 20 on a first run. We don’t claim Doom’s library made it faster: one run each, no measured transfer.</td><td class="src">DECISIONS 13:43 · lab/TRANSFER.md</td></tr>
+      <tr><td>Does the recovered code run anywhere else?</td><td>Six recovered functions compiled for this Mac and for WebAssembly gave the same outputs as the original machine code: 20,000 of 20,000 identical in a browser page. It says nothing about the other 562 functions, and it isn’t a port.</td><td class="src">lab/demo/equivalence/EQUIVALENCE.md</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="page">
+  <h3 style="margin-top:0">Trust but Verify</h3>
+  <table class="qa">
+    <thead><tr><th>Question</th><th>Answer</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>What does “lie” mean?</td><td>An agent said “it matches” and it didn’t. 39 times today. The referee re-ran each claim and showed the first wrong instruction.</td><td class="src">tools/counts.py · DECISIONS 16:12</td></tr>
+      <tr><td>And fakes?</td><td>Code that passes the byte check by a trick instead of real C. 32 rejected, 0 accepted, across 36 finished runs.</td><td class="src">same</td></tr>
+      <tr><td>How do I re-verify a claim myself? <span class="chip d">Eddy</span></td><td>Ask in ASI:One. The Excavator agent asks the Referee agent agent-to-agent and only answers with its verdict. Or run <span class="mono">python3 tools/counts.py</span>: the tallies come only from files in the repo.</td><td class="src">DECISIONS 12:46, 15:06</td></tr>
+      <tr><td>Why trust the referee?</td><td>It doesn’t think, it compiles. Same input, same bytes, every time, and anyone can re-run it from the repo. Agents lie. Compilers don’t.</td><td class="src">contracts/</td></tr>
+    </tbody>
+  </table>
+
+  <h3>The System That Gets Better</h3>
+  <table class="qa">
+    <thead><tr><th>Question</th><th>Answer</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>Does it get better?</td><td>Run over run, yes: warm starts and salvage turned near-misses into matches; one 90% near-miss became a MATCH. On held-out code, no measured gain yet: library on versus off, 29 vs 29 of 40 easy, 6 vs 6 of 20 hard. So we don’t claim one.</td><td class="src">README · crew/EXPERIMENTS.md</td></tr>
+      <tr><td>Then why build the library?</td><td>Because the gain we can see is on the hard near-misses, and that’s where the remaining code is. Measuring it honestly on held-out code is the next experiment, not a slide.</td><td class="src">crew/EXPERIMENTS.md</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Business and impact</h3>
+  <table class="qa">
+    <thead><tr><th>Question</th><th>Answer</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>Who pays for this?</td><td>Rights holders re-releasing old games, studios that lost their own source, and the archives and preservation groups that keep games alive. Source is what lets a game be fixed, ported and re-released.</td><td class="src">site/judges.html</td></tr>
+      <tr><td>How big is the problem?</td><td>87% of classic games released in the US are critically endangered (Video Game History Foundation and Software Preservation Network, 2023). For most, only the cartridge survives.</td><td class="src">README</td></tr>
+      <tr><td>Why not just emulate?</td><td>An emulator can only play a game. With source you can fix it, change it and move it. You just saw it: one line changed, 200% health.</td><td class="src">god_200</td></tr>
+      <tr><td>What’s next?</td><td>The big functions, then a second real game. Today the phone runs our rebuilt ROM in an emulator; a WebAssembly or native build from recovered C is the step after.</td><td class="src">DEMO_SCRIPT_V2</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Legal and ethics</h3>
+  <table class="qa">
+    <thead><tr><th>Question</th><th>Answer</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>Is this piracy?</td><td>No commercial ROMs, ever. GBADoom is GPL and we use the shareware WAD. The point is the opposite of piracy: rights holders are the customers.</td><td class="src">DECISIONS (target)</td></tr>
+      <tr><td>Did the agents see the source?</td><td>Never. They see anonymous ids and machine code. GBADoom’s public source is our answer key, which is why we picked it.</td><td class="src">DEMO_SCRIPT_V2</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="page">
+  <h3 style="margin-top:0">Sponsors</h3>
+  <table class="qa">
+    <thead><tr><th>Question</th><th>Answer</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>Where is Meta?</td><td>Muse writes every line of recovered C. Muse Spark digs; when Snap escalates a stubborn function, Muse Wonder takes it.</td><td class="src">README · DECISIONS</td></tr>
+      <tr><td>Where is Subquadratic?</td><td>SubQ Snap is the judgment: triage, when to escalate or abandon, fakematch screening, the Stage director and the eyes that confirm the change on screen.</td><td class="src">CLAUDE.md · README</td></tr>
+      <tr><td>Where is Fetch.ai?</td><td>The front door. Anyone can ask for proof in ASI:One. The Excavator runs a job and asks the Referee agent before it reports, agent to agent. Team <span class="mono">aie-ff9bcbc6</span>, 4 of 4 joined. Shared chat: <span class="mono" style="font-size:7pt;word-break:break-all">asi1.ai/shared-chat/5dfc14f7-815e-42e7-a0be-96db539cf5ab</span></td><td class="src">DECISIONS 15:52, 16:04</td></tr>
+      <tr><td>Where is MongoDB?</td><td>Every habit and every event lives in Atlas.</td><td class="src">DEMO_SCRIPT_V2</td></tr>
+      <tr><td>Where is Gemini?</td><td>The second lab that screens every match.</td><td class="src">DEMO_SCRIPT_V2</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Hackathon generic</h3>
+  <table class="qa">
+    <thead><tr><th>Question</th><th>Answer</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>What did you build today versus before?</td><td>Everything runnable was written after 10:45 today. Only the planning docs in <span class="mono">docs/</span> and the hackathon clock were prior work.</td><td class="src">CLAUDE.md</td></tr>
+      <tr><td>What was hardest?</td><td>Making “byte-identical” real: pinning the exact compiler, and catching agents that say they matched when they didn’t. 39 times.</td><td class="src">DECISIONS</td></tr>
+      <tr><td>Biggest failure?</td><td>Our permuter: exact rewrites on 17 near-misses at 90% or better closed none. And held-out code shows no measured gain yet.</td><td class="src">DECISIONS 15:31</td></tr>
+      <tr><td>What surprised you?</td><td>How often agents lie about success, and how cheaply a compiler catches it: one instruction gives each one away.</td><td class="src">tools/counts.py</td></tr>
+      <tr><td>How would you scale it?</td><td>The referee is a 0.2 s check, so the cost is model time, not proof. More agents in parallel on more functions; every match is independent and re-checkable.</td><td class="src">DECISIONS 11:24</td></tr>
+      <tr><td>Why this team?</td><td>Four lanes, one repo: Eddy built the referee and lab, Karthik the crew, Aidenn the Stage, Enzo the game and phones. Each of us can answer for our own part.</td><td class="src">CLAUDE.md</td></tr>
+      <tr><td>“It’s just Doom.”</td><td>The game looks the same on purpose: that’s the proof. What we built is the system that wrote 235 of its functions back from machine code and the referee that refuses anything that isn’t byte-identical. You just ran one.</td><td class="src">DEMO_SCRIPT_V2</td></tr>
+    </tbody>
+  </table>
+
+  <div class="never">
+    <h2>Never say</h2>
+    <ul>
+      <li><s>“The whole game recovered”</s> or <s>“Doom recovered”</s> <span class="say">→ “235 of Doom’s 568 functions”</span></li>
+      <li><s>Any percentage without “of the functions”</s> <span class="say">→ “41.4% of the functions, 8.39% of the code bytes”</span></li>
+      <li><s>“Port”</s> for the phone <span class="say">→ “our rebuilt ROM, running in a browser emulator”</span></li>
+      <li><s>“Dashboard”</s> <span class="say">→ “the Stage”</span></li>
+      <li>Any number not in this packet or the repo, any held-out gain, any transfer to the second game</li>
+      <li><s>“The face is back”</s> or anything about the renderer being recovered</li>
+    </ul>
+  </div>
+
+  <div class="foot">
+    Q&amp;A rules drawn from: <a href="https://dev.to/techie_sprinter/hackathon-survival-guide-questions-every-team-should-be-ready-to-answer-bcd">Hackathon survival guide: questions every team should be ready to answer</a> (dev.to) ·
+    <a href="https://dev.to/kurbaitaev/what-judges-actually-score-notes-from-a-year-of-hackathon-judging-3p4l">What judges actually score</a> (dev.to) ·
+    <a href="https://developer.salesforce.com/blogs/2014/07/deliver-winning-pitch-hackathons">Deliver a winning pitch at hackathons</a> (Salesforce). They agree on concise answers, stating limits before a judge raises them, and being able to explain your own core work.
+    Numbers: DECISIONS.md 16:11 and 16:12 (commit b805d42), README.md, crew/EXPERIMENTS.md, lab/demo/equivalence/EQUIVALENCE.md.
+  </div>
+</section>
+
+</body>
+</html>
