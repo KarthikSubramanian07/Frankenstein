@@ -32,7 +32,7 @@ const Line: React.FC<{text: string; len: number; onDark?: boolean}> = ({text, le
 const Tag: React.FC<{text: string; dark?: boolean}> = ({text, dark}) => {
   const f = useCurrentFrame();
   return (
-    <div style={{position: 'absolute', left: 120, top: 44, fontFamily: BODY, fontWeight: 700, fontSize: 22, letterSpacing: '0.08em', textTransform: 'uppercase', color: dark ? C.cream : C.ink, opacity: 0.6 * interpolate(f, [8, 20], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})}}>
+    <div style={{position: 'absolute', left: 120, top: 44, fontFamily: BODY, fontWeight: 700, fontSize: 30, letterSpacing: '0.08em', textTransform: 'uppercase', color: dark ? '#FFFFFF' : C.ink, opacity: (dark ? 0.8 : 0.75) * interpolate(f, [8, 20], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})}}>
       {text}
     </div>
   );
@@ -158,7 +158,7 @@ const Lie: React.FC = () => {
   const stamp = ramp(f, s(4), s(4.8));
   return (
     <Fade len={s(8)}>
-      <div style={{position: 'absolute', left: 960, top: 560, transform: `translate(-50%,-50%) scale(${0.94 + 0.06 * bubble})`, opacity: bubble}}>
+      <div style={{position: 'absolute', left: 960, top: 450, transform: `translate(-50%,-50%) scale(${0.94 + 0.06 * bubble})`, opacity: bubble}}>
         <div style={{background: C.paper, border: `6px solid ${C.ink}`, borderRadius: 48, padding: '50px 80px', fontFamily: BODY, fontWeight: 700, fontSize: 92, color: C.ink, whiteSpace: 'nowrap'}}>
           <span style={{display: 'inline-block', background: C.ink, color: C.cream, borderRadius: 999, fontSize: 44, padding: '10px 22px', marginRight: 30, verticalAlign: 'middle'}}>AI</span>
           Done. It matches!
@@ -167,17 +167,17 @@ const Lie: React.FC = () => {
       </div>
       <div
         style={{
-          position: 'absolute', left: 1180, top: 720, whiteSpace: 'nowrap', transform: `translate(-50%,-50%) rotate(-4deg) scale(${interpolate(stamp, [0, 1], [1.15, 1])})`, opacity: stamp,
+          position: 'absolute', left: 1180, top: 610, whiteSpace: 'nowrap', transform: `translate(-50%,-50%) rotate(-4deg) scale(${interpolate(stamp, [0, 1], [1.15, 1])})`, opacity: stamp,
           border: `12px solid ${C.coral}`, borderRadius: 20, padding: '10px 44px', background: 'rgba(251,250,247,0.94)', boxShadow: '0 18px 40px rgba(29,32,38,0.18)', color: C.coral, fontFamily: HEAD, fontWeight: 800, fontSize: 96, letterSpacing: 4,
         }}
       >
         NOT A MATCH
       </div>
-      <div style={{position: 'absolute', left: 0, right: 0, top: 860, textAlign: 'center', opacity: ramp(f, s(4.4), s(5)), fontFamily: HEAD, fontWeight: 800, color: C.coral, fontVariantNumeric: 'tabular-nums'}}>
-        <span style={{fontSize: 96}}>{DATA.liesCaught}</span>
-        <span style={{fontSize: 28, color: C.ink, marginLeft: 12, marginRight: 40}}>lies caught</span>
-        <span style={{fontSize: 96}}>{DATA.fakesAccepted}</span>
-        <span style={{fontSize: 28, color: C.ink, marginLeft: 12}}>let through</span>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 790, textAlign: 'center', opacity: ramp(f, s(4.4), s(5)), fontFamily: HEAD, fontWeight: 800, color: C.coral, fontVariantNumeric: 'tabular-nums'}}>
+        <span style={{fontSize: 160}}>{DATA.liesCaught}</span>
+        <span style={{fontSize: 32, color: C.ink, marginLeft: 14, marginRight: 56}}>lies caught</span>
+        <span style={{fontSize: 160}}>{DATA.fakesAccepted}</span>
+        <span style={{fontSize: 32, color: C.ink, marginLeft: 14}}>let through</span>
       </div>
       <Tag text="Trust but verify · SubQ Snap and Gemini screen every match" />
       <Lines items={[[0, 4, "Sometimes the AI says it got it right when it didn't."], [4, 8, `The checker caught all ${DATA.liesCaught} of those today.`]]} />
@@ -233,7 +233,6 @@ const Before: React.FC = () => {
   return (
     <Fade len={s(5)} bg={C.ink}>
       <Game clip="clips/god_original.mp4" still="clips/god_original_end.png" from={s(3)} view={zoomView(z)} clipLen={s(5)} />
-      <Tag dark text="Ask for proof in Fetch.ai ASI:One" />
       <Lines onDark items={[[0, 5, 'Now that we have the code, we can change it.']]} />
     </Fade>
   );
@@ -250,7 +249,6 @@ const After: React.FC = () => {
       {/* starts 5 s into the clip: the cheat fires and health turns 200%; the clip's real last frame holds after it ends */}
       <Game clip="clips/god_200.mp4" still="clips/god_200_end.png" from={s(5)} view={zoomView(z)} clipLen={s(4.3)} />
       <div style={{position: 'absolute', left: 960 + (DIGITS.cx - HP.cx) * HP.k - r, top: 540 + (DIGITS.cy - HP.cy) * HP.k - r * 0.44, width: 2 * r, height: 2 * r * 0.44, borderRadius: '50%', border: `14px solid ${C.mint}`, opacity: ring, boxShadow: `0 0 40px ${C.mint}`}} />
-      <Tag dark text="Ask for proof in Fetch.ai ASI:One" />
       <Lines onDark items={[[0, 6, "We changed one line of the AI's code. Same cheat, double the health."]]} />
     </Fade>
   );
@@ -259,19 +257,22 @@ const After: React.FC = () => {
 // 0:55 to 1:00 End card.
 const End: React.FC = () => (
   <Fade len={s(5)} bg={C.ink}>
-    <div style={{position: 'absolute', top: 150, left: 120, right: 120, textAlign: 'center'}}>
-      <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 140, color: C.lcd3, letterSpacing: -2}}>Frankenstein</div>
-      <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 64, color: C.cream, marginTop: 6, textWrap: 'balance'} as React.CSSProperties}>Doom is just the first. Frankenstein brings lost games back.</div>
-      <div style={{fontFamily: BODY, fontWeight: 600, fontSize: 30, color: C.cream, opacity: 0.85, marginTop: 18}}>Built for any game we can compile. Doom is the first.</div>
+    <div style={{position: 'absolute', top: 110, left: 120, right: 120, textAlign: 'center'}}>
+      <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 140, color: C.lcd3, letterSpacing: -2}}>{DATA.close[0]}</div>
+      {DATA.close.slice(1).map((l) => (
+        <div key={l} style={{fontFamily: HEAD, fontWeight: 800, fontSize: 60, color: C.cream, marginTop: 6, textWrap: 'balance'} as React.CSSProperties}>{l}</div>
+      ))}
+      <div style={{fontFamily: BODY, fontWeight: 700, fontSize: 44, color: C.cream, opacity: 0.9, marginTop: 20}}>Built for any game we can compile. Doom is the first.</div>
     </div>
-    <div style={{position: 'absolute', top: 640, left: 0, right: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', color: C.cream}}>
+    <div style={{position: 'absolute', top: 660, left: 0, right: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', color: C.cream}}>
       <div style={{maxWidth: 1400, fontFamily: BODY, fontSize: 26, lineHeight: 1.5, textWrap: 'balance'} as React.CSSProperties}>
         Built today: the AI agents, the checker, the patch, this film. Not ours: Doom (id Software), GBADoom (doomhack), mGBA.
       </div>
       <div style={{maxWidth: 1400, fontFamily: BODY, fontSize: 26, lineHeight: 1.5, marginTop: 8, textWrap: 'balance'} as React.CSSProperties}>
         Made with Meta Muse, SubQ Snap, Fetch.ai ASI:One, MongoDB Atlas and Gemini.
       </div>
-      <div style={{fontFamily: MONO, fontSize: 20, color: C.mint, marginTop: 26}}>{DATA.url} · {DATA.repo}</div>
+      <div style={{fontFamily: BODY, fontWeight: 700, fontSize: 28, color: C.mint, marginTop: 26}}>Ask for proof in Fetch.ai ASI:One</div>
+      <div style={{fontFamily: MONO, fontSize: 20, color: C.mint, marginTop: 10}}>{DATA.url} · {DATA.repo}</div>
       <div style={{fontFamily: BODY, fontWeight: 600, fontSize: 22, marginTop: 10}}>{DATA.team.join(' · ')}</div>
     </div>
   </Fade>
