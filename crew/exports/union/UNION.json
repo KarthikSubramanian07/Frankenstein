@@ -1,11 +1,11 @@
 {
   "v": 1,
-  "functions": 231,
+  "functions": 235,
   "of": 568,
-  "pct_functions": 40.7,
-  "bytes": 11372,
+  "pct_functions": 41.4,
+  "bytes": 11900,
   "of_bytes": 141774,
-  "pct_bytes": 8.02,
+  "pct_bytes": 8.39,
   "reverified_by_referee": true,
   "rejected_on_reverify": [],
   "target_rom_sha1": "d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2",
@@ -711,6 +711,13 @@
       "sha1": "1479ebf85c967bc57329cadaa331c8c79cd74b49"
     },
     {
+      "fn": "fn_080092AC",
+      "size": 124,
+      "split": "train",
+      "from": "runs/doom_sweep3",
+      "sha1": "9205a64ad445712e58d9fd0d5ff5cbd5ed38a2f2"
+    },
+    {
       "fn": "fn_08009468",
       "size": 76,
       "split": "heldout",
@@ -858,6 +865,13 @@
       "sha1": "cfeea0470258e5b62f7ec40223f7bd8e224bbbbf"
     },
     {
+      "fn": "fn_0800A280",
+      "size": 140,
+      "split": "train",
+      "from": "runs/doom_sweep3",
+      "sha1": "8257e2b332a397c2e0be60fba4cb71fd9eaaac42"
+    },
+    {
       "fn": "fn_0800A30C",
       "size": 100,
       "split": "train",
@@ -963,11 +977,25 @@
       "sha1": "99d5365139e18fad0057f6202f6c99cd76eaaf6a"
     },
     {
+      "fn": "fn_0800E340",
+      "size": 132,
+      "split": "train",
+      "from": "runs/doom_sweep3",
+      "sha1": "e08bd9bbc8d47f6c44c959ac9ca91d0fcc4f5b80"
+    },
+    {
       "fn": "fn_0800E58C",
       "size": 108,
       "split": "train",
       "from": "runs/doom_sweep3",
       "sha1": "c39201c27a7b51ef0f958a95041f976605d13f75"
+    },
+    {
+      "fn": "fn_0800E5F8",
+      "size": 132,
+      "split": "heldout",
+      "from": "runs/doom_sweep3",
+      "sha1": "e52e4933509c3378e7c11fc39208f20b8f5e9a70"
     },
     {
       "fn": "fn_0800E728",

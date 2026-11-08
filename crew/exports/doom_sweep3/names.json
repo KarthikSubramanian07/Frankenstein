@@ -1,0 +1,342 @@
+{
+  "v": 1,
+  "run_id": "doom_sweep3",
+  "names": [
+    {
+      "fn": "fn_08006FC0",
+      "name": "store_in_first_empty_slot",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08006F70",
+      "name": "consume_matching_entry",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080145A0",
+      "name": "get_first_non_matching_ptr",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800CEE8",
+      "name": "try_increase_stat",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080039B8",
+      "name": "store_value_and_trigger_update",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801D7A4",
+      "name": "lookup_process_register",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005BC4",
+      "name": "store_arg_then_clear_flags",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08019B64",
+      "name": "forward_stored_value_and_clear_flag",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08004E84",
+      "name": "run_init_sequence",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08019BC4",
+      "name": "forward_scaled_value",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800A458",
+      "name": "forward_with_conditional_code",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08019244",
+      "name": "init_struct_and_link_self_ptr",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08019144",
+      "name": "run_message_sequence",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08009ED8",
+      "name": "clear_flag_and_call_helper_three_times",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08014254",
+      "name": "run_test_sequence",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005D3C",
+      "name": "saturating_counter_adjust_and_refresh",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005458",
+      "name": "snprintf_wrapper",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08013520",
+      "name": "consume_indexed_slot",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080057E8",
+      "name": "init_control_struct",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080110B8",
+      "name": "init_and_conditionally_clear_substructs",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801C61C",
+      "name": "conditional_format_integers",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080154AC",
+      "name": "downmix_paired_buffers",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08008C30",
+      "name": "update_result_with_optional_offset",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801C94C",
+      "name": "conditional_init_state",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801A850",
+      "name": "guarded_one_shot_init",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801A95C",
+      "name": "guarded_store_value",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08004A7C",
+      "name": "check_flag_then_run_sequence",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08013560",
+      "name": "decrement_indexed_slot",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005CAC",
+      "name": "adjust_clamped_counter_and_notify",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005DAC",
+      "name": "conditional_reset_and_notify",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005CF4",
+      "name": "adjust_bounded_setting_and_refresh",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800DE80",
+      "name": "create_linked_object",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800DF94",
+      "name": "alloc_link_wrapper",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0801A894",
+      "name": "guarded_callback_and_clear_flag",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08009A28",
+      "name": "update_result_from_next",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08001ABC",
+      "name": "guarded_sequence_runner",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08009E8C",
+      "name": "update_cached_value_and_notify",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080135A4",
+      "name": "decrement_slot_count_and_notify",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800DECC",
+      "name": "alloc_and_link_work_item",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800253C",
+      "name": "init_global_state",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080091C8",
+      "name": "update_result_from_next",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08013B6C",
+      "name": "init_obj_from_type_table",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800F6CC",
+      "name": "clamp_limit_and_check_fit",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08004B58",
+      "name": "toggle_double_buffer_and_kick_dma",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08003564",
+      "name": "update_status_and_dispatch",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08007830",
+      "name": "allocate_and_link_subobject",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800E58C",
+      "name": "range_check_and_call",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08010314",
+      "name": "process_entry_list",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08005E6C",
+      "name": "init_slot_table",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08009768",
+      "name": "sync_pos_from_anchor",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_08011EDC",
+      "name": "spawn_entity",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080098C0",
+      "name": "process_pending_node",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_080092AC",
+      "name": "update_from_next",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800E5F8",
+      "name": "check_flags_and_threshold",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800E340",
+      "name": "check_box_blocked",
+      "inferred": true,
+      "basis": "recovered code"
+    },
+    {
+      "fn": "fn_0800A280",
+      "name": "spawn_object_row",
+      "inferred": true,
+      "basis": "recovered code"
+    }
+  ]
+}
