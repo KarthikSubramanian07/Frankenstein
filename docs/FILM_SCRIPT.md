@@ -15,11 +15,11 @@ no "SHA-1", no "machine code", no "function", no model names except on the end c
 | 0:24.5 to 0:28 | A green EXACT MATCH stamp | It passes only if it's an exact match. | 07 · S2 · Eddy |
 | 0:28 to 0:32 | A chat bubble from the AI: "Done. It matches!" | Sometimes the AI says it got it right when it didn't. | 08 · S3 · Aiden |
 | 0:32 to 0:36 | A red NOT A MATCH stamp lands on the bubble | The checker caught all 39 of those today. | 09 · S3 · Aiden |
-| 0:36 to 0:40 | 568 squares; 235 fill in green, the counter ticks up | 235 of Doom's 568 pieces are back so far. | 10 · S3 · Aiden |
-| 0:40 to 0:44 | The squares snap into a cartridge; a check mark | Put back together, the game is identical to the original. | 11 · S3 · Aiden |
+| 0:36 to 0:40 | 235 green pieces assemble; a big "235" counter, no denominator | 235 pieces of Doom are back. Each one is an exact match. | 10 · S3 · Aiden |
+| 0:40 to 0:44 | The pieces snap into the cartridge; a check mark; then "20,000 tests · 20,000 identical answers" | Put back together, the game is identical to the original. | 11 · S3 · Aiden |
 | 0:44 to 0:49 | Original Doom, cheat on. Zoom into the health number: 100% | Now that we have the code, we can change it. | 12 · S4 · Karthik |
 | 0:49 to 0:55 | Edited build, same cheat. Zoom into the health number: 200% | We changed one line of the AI's code. Same cheat, double the health. | 13 · S4 · Karthik |
-| 0:55 to 1:00 | End card | Doom is just the first. Frankenstein brings lost games back. | 14 · S4 · Karthik |
+| 0:55 to 1:00 | End card | A game you can only play is a game you can't save. Frankenstein. Lost games, rebuilt and proven. | 14 · S4 · Karthik |
 
 End card line under the title (not narrated, readable): "Built for any game we can compile. Doom is the first." End card small print (not narrated): "Built today: the AI agents, the checker, the patch, this film. Not ours: Doom (id Software),
 GBADoom (doomhack), mGBA. Made with Meta Muse, SubQ Snap, Fetch.ai ASI:One, MongoDB Atlas, Gemini." Plus the URL and the team.
