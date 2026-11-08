@@ -19,9 +19,9 @@ no "SHA-1", no "machine code", no "function", no model names except on the end c
 | 0:40 to 0:44 | The squares snap into a cartridge; a check mark | Put back together, the game is identical to the original. | 11 · Aiden |
 | 0:44 to 0:49 | Original Doom, cheat on. Zoom into the health number: 100% | Now that we have the code, we can change it. | 12 · Enzo |
 | 0:49 to 0:55 | Edited build, same cheat. Zoom into the health number: 200% | We changed one line of the AI's code. Same cheat, double the health. | 13 · Eddy |
-| 0:55 to 1:00 | End card | Frankenstein. Lost games, brought back. | 14 · Karthik |
+| 0:55 to 1:00 | End card | Doom is just the first. Frankenstein brings lost games back. | 14 · Karthik |
 
-End card small print (not narrated): "Built today: the AI agents, the checker, the patch, this film. Not ours: Doom (id Software),
+End card line under the title (not narrated, readable): "Built for any game we can compile. Doom is the first." End card small print (not narrated): "Built today: the AI agents, the checker, the patch, this film. Not ours: Doom (id Software),
 GBADoom (doomhack), mGBA. Made with Meta Muse, SubQ Snap, Fetch.ai ASI:One, MongoDB Atlas, Gemini." Plus the URL and the team.
 
 Sources: 39 = `tools/counts.py` false_claims_caught; 235 and "identical" = the 16:12 freeze (`lab/demo/union_rebuild.json`);
