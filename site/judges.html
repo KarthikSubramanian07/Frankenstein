@@ -87,7 +87,7 @@
         <dl>
           <div><dt>What it is</dt><dd><b>AI agents rebuild a lost game's source code from the cartridge.</b> It's for game preservation groups and rights holders, because 87% of classic US games are critically endangered and their code is gone. <span class="src">VGHF and SPN, 2023</span></dd></div>
           <div><dt>What's proven</dt><dd><b>A piece only counts if it's byte-identical:</b> the compiler turns the agents' C into the original's exact bytes. Put back into Doom, the rebuilt game has the same checksum.</dd></div>
-          <div><dt>The numbers</dt><dd><b>170 of Doom's 568 game functions are back, proven byte-identical.</b> That's 4.78% of the code by size, because the crew starts with the small ones.</dd></div>
+          <div><dt>The numbers</dt><dd><b>235 of Doom's 568 game functions are back, proven byte-identical.</b> That's 8.39% of the code by size, because the crew starts with the small ones.</dd></div>
           <div><dt>Try it</dt><dd><b>Press Enter at our table</b> and watch two agents recover a function live. Then play Doom on the controller, or scan the QR code to play it on your phone.</dd></div>
           <div><dt>Not done yet</dt><dd><b>Doomguy's face (1,164 bytes) isn't recovered,</b> and the habit library hasn't beaten noise on unseen code. Both are said plainly below.</dd></div>
         </dl>
@@ -165,7 +165,7 @@
         <div><dt>Implementation Difficulty <span class="pct">30%</span></dt><dd>Agents must write C that compiles to Doom's exact bytes at <code>-O3</code>, past a referee, a fake detector and a full ROM rebuild we built today. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/tree/main/lab">lab/</a></dd></div>
         <div><dt>Impact Potential <span class="pct">20%</span></dt><dd>87% of classic US games are critically endangered, and source code is what lets a game be fixed and ported again. <span class="src">VGHF and SPN, 2023</span></dd></div>
         <div><dt>Creativity <span class="pct">15%</span></dt><dd>A lab where agents lie and the referee can't be fooled; play the game, and Snap rebuilds what's on your screen first. <a class="src" href="#subquadratic">Play to recover</a></dd></div>
-        <div><dt>Progress so far</dt><dd>170 of 568 game functions are back (4.78% of the code bytes), every one proved by the compiler, and the rebuilt game keeps its checksum. <a class="src" href="#progress">see the meter</a></dd></div>
+        <div><dt>Progress so far</dt><dd>235 of 568 game functions are back (8.39% of the code bytes), every one proved by the compiler, and the rebuilt game keeps its checksum. <a class="src" href="#progress">see the meter</a></dd></div>
       </dl>
       <details class="proof">
         <summary><span class="hand">show proof</span></summary>
@@ -175,10 +175,10 @@
             <p><span class="lbl">original</span><code>d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2</code></p>
             <p><span class="lbl">rebuilt</span><code class="sha-new">d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2</code></p>
           </div>
-          <p class="split-line"><b>169</b> functions from the agents' own compiled C &middot; <b>399</b> from the original build &middot; <b>4.74%</b> agent-written code &middot; verified on two machines</p>
+          <p class="split-line"><b>235</b> functions from the agents' own compiled C &middot; <b>333</b> from the original build &middot; <b>8.39%</b> agent-written code &middot; verified on two machines</p>
           <span class="stamp stamp-mint" aria-hidden="true">IDENTICAL</span>
           <p class="hand note note-sha"><svg class="arr" aria-hidden="true"><use href="#arrow-down"/></svg>same 40 characters: not similar, identical</p>
-          <figcaption>The union rebuild at 14:55, from <code>crew/exports/union</code> (DECISIONS 14:52).</figcaption>
+          <figcaption>The union rebuild at the 16:12 freeze, from <code>crew/exports/union</code> (DECISIONS 16:12).</figcaption>
         </figure>
       </details>
     </article>
@@ -244,7 +244,7 @@
       </div>
       <dl class="claims">
         <div><dt>A claim is only a claim</dt><dd>Each agent stakes its claim before it sees the verdict, and the Checker re-runs the referee on every one. <a class="src" href="#lie-proof">see a caught lie</a></dd></div>
-        <div><dt>Lies caught</dt><dd>Across 33 finished runs the Checker caught 24 lies, and the referee refused every one. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/tools/counts.py">tools/counts.py</a></dd></div>
+        <div><dt>Lies caught</dt><dd>Across 36 finished runs the Checker caught 39 lies, and the referee refused every one. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/tools/counts.py">tools/counts.py</a></dd></div>
         <div><dt>Fakes thrown out</dt><dd>A fake is C that matches by tricking the compiler; the Checker rejected 30 and accepted 0. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/DECISIONS.md">DECISIONS 14:52</a></dd></div>
         <div><dt>Two labs check what bytes can't</dt><dd>SubQ Snap and Gemini score every match for fakes and recited source, in parallel. <a class="src" href="#mongodb">see both labs</a></dd></div>
         <div><dt>Hard to talk into anything</dt><dd>Pasted C compiles with no network and no keys, after we fixed an include trick that could have leaked them. <a class="src" href="https://github.com/KarthikSubramanian07/Frankenstein/blob/main/SECURITY.md">SECURITY.md</a></dd></div>

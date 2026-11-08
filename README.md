@@ -51,13 +51,13 @@ A compiler checks every byte.
 
 Doom is our first patient: famous, hidden from the agents, scrambled so they can't recite it, and checkable byte for byte.
 
-> **170 of Doom's 568 game functions recovered (29.9%), each proven byte-identical.** That's 6,774 of 141,774 code bytes (4.78%): the crew started with the small functions; the big ones (the face, the renderer) are next on the road.
+> **235 of Doom's 568 game functions recovered (41.4%), each proven byte-identical.** That's 11,900 of 141,774 code bytes (8.39%): the crew started with the small functions; the big ones (the face, the renderer) are next on the road.
 
 | What | Result | Source |
 |---|---|---|
-| Recovered and proven | **170 of 568 functions (29.9%)**, 6,774 of 141,774 code bytes (4.78%); every one re-verified by the referee, 0 rejected | `crew/exports/union/UNION.json` |
-| Rebuilt game | 169 agent-written functions spliced into the ROM, 399 original: **SHA-1 identical** (`d936259b…`), verified on two machines | `DECISIONS.md` 14:52 |
-| Trust but verify | **24 lies caught**, **30 fakes rejected**, **0 fakes accepted** across 33 finished runs | `python3 tools/counts.py` |
+| Recovered and proven | **235 of 568 functions (41.4%)**, 11,900 of 141,774 code bytes (8.39%); every one re-verified by the referee and re-checked against the Checker's fakematch rules, 0 rejected | `crew/exports/union/UNION.json` |
+| Rebuilt game | 235 agent-written functions spliced into the ROM, 333 original: **SHA-1 identical** (`d936259b…`), verified on two machines | `DECISIONS.md` 16:12 |
+| Trust but verify | **39 lies caught**, **32 fakes rejected**, **0 fakes accepted** across 36 finished runs | `python3 tools/counts.py` |
 | Didn't it just remember Doom? | From memory alone, 0 of 20 functions compiled. Given the real headers and compiler errors, 3 of 20 matched, none of them functions we'd changed | `lab/out/memory_probe.json`, `DECISIONS.md` 13:28 |
 | Held-out (functions the crew never trained on) | Library on vs off: 29 vs 29 of 40 easy, 6 vs 6 of 20 hard. **No measured gain, so we don't claim one.** Run over run, warm start, salvage and the permuter turned near-misses into matches | `crew/EXPERIMENTS.md` |
 | Snap router, "Doomguy's face" | The real face function ranked #1 (p 0.88), checked afterwards against the hidden map | `DECISIONS.md` |
