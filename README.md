@@ -15,8 +15,6 @@ A compiler checks every byte.
 
 **Live site:** [tryfrankenstein.pages.dev](https://tryfrankenstein.pages.dev)
 
-> Victor Frankenstein never checked his work. Ours checks everything.
-
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/how-it-works-dark.svg">
   <img src="docs/diagrams/how-it-works-light.svg" width="1200" alt="How it works: the compiled game, its source lost, goes to a Digger (Muse), which writes C. The Referee compiles it and the Checker re-runs the claim. Rejected work goes back to the Digger; accepted work becomes a rebuilt ROM with the same SHA-1. SubQ Snap steers the loop, and every match adds habits to MongoDB for the next attempt.">
