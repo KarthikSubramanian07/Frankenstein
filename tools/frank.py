@@ -846,7 +846,8 @@ def cmd_demo_live(a) -> int:
     if busy and a.live:
         print(red(f"another live run is on stage ({busy}). Refusing to start a second one; wait for it or use --no-live."))
         return 1
-    argv = [PY, "-m", "crew.demo", "--pick", str(a.pick)] + (["--live"] if a.live else [])
+    argv = [PY, "-m", "crew.demo", "--pick", str(a.pick)] + (["--redo", str(a.redo)] if a.redo else []) \
+        + (["--live"] if a.live else [])
     env = {**os.environ, "REFEREE_URL": "http://127.0.0.1:7101"}
     print(bold(f"LIVE SEGMENT · {a.pick} small Doom functions · real Muse Spark + SubQ Snap + Gemini calls"))
     print(dim("rehearsed 12:43: 2 functions, both matched 38 s after start, rebuild proof at 60 s, $0.045"))
@@ -902,6 +903,7 @@ def main() -> int:
     rh.add_argument("--pace", type=float, default=1.0, help="1 = real time (3:00); 0.25 = the same walk in 45 s")
     dl = sub.add_parser("demo-live", help="the live micro-segment: 2 small functions, real calls, judge presses Enter")
     dl.add_argument("--pick", type=int, default=2)
+    dl.add_argument("--redo", type=int, default=0, help="redo N already-recovered small functions from scratch")
     dl.add_argument("--no-live", dest="live", action="store_false", help="don't switch runs/live (timing only)")
     dl.add_argument("--yes", action="store_true", help="start without waiting for Enter")
     a = ap.parse_args()

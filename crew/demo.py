@@ -28,20 +28,32 @@ def pick(cfg: Config, n: int, max_size: int = 64) -> list[str]:
     return [f["id"] for f in fns[:n]]
 
 
+def pick_redo(cfg: Config, n: int, min_size: int = 16, max_size: int = 40) -> list[str]:
+    """Already-recovered small leaf functions, to redo from scratch on stage (library off, no warm start)."""
+    t = Target(cfg)
+    done = {p.stem for p in (cfg.runs_dir.parent / "crew" / "exports" / "union" / "recovered").glob("fn_*.c")}
+    fns = [f for f in t.game_functions("train") if f["mode"] == "thumb" and min_size <= f["size"] <= max_size
+           and f["id"] in done and not f["callees"]]
+    fns.sort(key=lambda f: (f["difficulty"], f["size"]))
+    return [f["id"] for f in fns[:n]]
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="python -m crew.demo")
     ap.add_argument("--fns", default="")
     ap.add_argument("--pick", type=int, default=0)
     ap.add_argument("--live", action="store_true")
     ap.add_argument("--diggers", type=int, default=3)
+    ap.add_argument("--redo", type=int, default=0,
+                    help="redo N already-recovered small functions from scratch (library off, no warm start)")
     a = ap.parse_args(argv)
     cfg = Config()
-    fns = [f for f in a.fns.split(",") if f] or pick(cfg, a.pick or 3)
+    fns = [f for f in a.fns.split(",") if f] or (pick_redo(cfg, a.redo) if a.redo else pick(cfg, a.pick or 3))
     if not fns:
         print("no functions to demo", file=sys.stderr)
         return 1
-    args = run_parser().parse_args(["--fns", ",".join(fns), "--diggers", str(a.diggers), "--library", "on",
-                                    "--label", "LIVE on stage", *(["--live"] if a.live else [])])
+    args = run_parser().parse_args(["--fns", ",".join(fns), "--diggers", str(a.diggers), "--library", "off" if a.redo else "on",
+                                    "--label", "LIVE on stage · redo from scratch" if a.redo else "LIVE on stage", *(["--live"] if a.live else [])])
     args.budget_usd = 5.0
     cfg.reasoning_effort = "medium"  # on stage, a first attempt in seconds beats a perfect one in 25 s
     r = Run(cfg, args)
