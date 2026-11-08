@@ -112,12 +112,6 @@ const Lost: React.FC = () => {
   );
 };
 
-// A partner mark from public/assets/logos (see SOURCES.md), small, beside a short label.
-const Mark: React.FC<{src: string; h?: number}> = ({src, h = 28}) =>
-  has(`assets/logos/${src}`) ? <Img src={staticFile(`assets/logos/${src}`)} style={{height: h, width: 'auto', verticalAlign: 'middle'}} /> : null;
-const Chip: React.FC<{children: React.ReactNode; style?: React.CSSProperties}> = ({children, style}) => (
-  <div style={{display: 'inline-flex', alignItems: 'center', gap: 12, padding: '10px 18px', borderRadius: 999, background: C.paper, border: `2px solid rgba(29,32,38,.14)`, boxShadow: SHADOW, fontFamily: BODY, fontWeight: 600, fontSize: 24, color: C.ink, whiteSpace: 'nowrap', ...style}}>{children}</div>
-);
 const countUp = (f: number, at: number, n: number) => Math.round(n * sp(f, at, 40));
 
 // 0:16 to 0:28 Raw numbers to readable code, into the checker, EXACT MATCH.
@@ -129,32 +123,25 @@ const Rebuild: React.FC = () => {
   const intoBox = ramp(f, s(5.2), s(7));
   const stamp = ramp(f, s(8.6), s(9.2));
   const stampS = sp(f, s(8.6), 18, SP_STAMP);
-  const review = ramp(f, s(6.6), s(7.4));
   // group of hex wall (620) + gap (80) + code card (740) = 1440 wide, centred
   return (
     <Fade len={s(12)}>
-      <div style={{position: 'absolute', left: 240 - 300 * intoBox, top: 340, width: 620, opacity: 1 - intoBox, fontFamily: MONO, fontSize: 28, lineHeight: 1.5, color: C.gray, wordBreak: 'break-all'}}>
-        {hex.slice(0, 150).join(' ')}
+      <div style={{position: 'absolute', left: 280 - 300 * intoBox, top: 400, width: 640, opacity: 1 - intoBox, fontFamily: MONO, fontSize: 28, lineHeight: 1.5, color: C.gray, wordBreak: 'break-all'}}>
+        {hex.slice(0, 144).join(' ')}
       </div>
-      <div style={{position: 'absolute', left: interpolate(intoBox, [0, 1], [940, 627]), top: interpolate(intoBox, [0, 1], [340, 455]), width: 740, transform: `scale(${interpolate(intoBox, [0, 1], [1, 0.9])})`, transformOrigin: '50% 0'}}>
-        <div style={{background: C.paper, border: `5px solid ${C.ink}`, borderRadius: 22, boxShadow: SHADOW, padding: '22px 30px 30px'}}>
-          <div style={{display: 'flex', alignItems: 'center', gap: 12, fontFamily: BODY, fontWeight: 600, fontSize: 22, color: C.gray, marginBottom: 14}}>
-            <Mark src="meta.svg" h={22} /> written by Meta Muse
-          </div>
-          <div style={{fontFamily: MONO, fontSize: 25, lineHeight: 1.45, color: C.ink, whiteSpace: 'pre'}}>{code.slice(0, typed)}</div>
+      <div style={{position: 'absolute', left: interpolate(intoBox, [0, 1], [1000, 640]), top: interpolate(intoBox, [0, 1], [440, 470]), width: 640, transform: `scale(${interpolate(intoBox, [0, 1], [1, 0.9])})`, transformOrigin: '50% 0'}}>
+        <div style={{background: C.paper, border: `5px solid ${C.ink}`, borderRadius: 22, boxShadow: SHADOW, padding: '28px 30px', minHeight: 320, boxSizing: 'border-box'}}>
+          <div style={{fontFamily: MONO, fontSize: 22, lineHeight: 1.5, color: C.ink, whiteSpace: 'pre'}}>{code.slice(0, typed)}</div>
         </div>
       </div>
       {/* the checker */}
       <div style={{position: 'absolute', left: 520, top: 340, width: 880, height: 600, border: `10px solid ${C.ink}`, borderRadius: 34, opacity: intoBox}}>
         <div style={{position: 'absolute', left: 30, top: -22, padding: '0 14px', background: C.cream, fontFamily: BODY, fontWeight: 700, fontSize: 30, color: C.ink}}>checker</div>
       </div>
-      <div style={{position: 'absolute', left: 0, right: 0, top: 962, display: 'flex', justifyContent: 'center', opacity: review, transform: `translateY(${(1 - review) * 16}px)`}}>
-        <Chip>+ <Mark src="subq-snap.svg" h={24} /> · <Mark src="gemini.svg" h={26} /> review every match</Chip>
-      </div>
       <div style={{position: 'absolute', left: 960, top: 640, whiteSpace: 'nowrap', transform: `translate(-50%,-50%) rotate(-4deg) scale(${1.15 - 0.15 * stampS})`, opacity: stamp, border: `12px solid ${C.lcd1}`, borderRadius: 20, padding: '10px 44px', background: 'rgba(251,250,247,0.96)', boxShadow: SHADOW, color: C.lcd1, fontFamily: HEAD, fontWeight: 800, fontSize: 104, letterSpacing: 4}}>
         EXACT MATCH
       </div>
-      <Lines items={[[0, 5, 'Our AI agents read the cartridge and rewrite the code, piece by piece.'], [5, 8.5, 'Then a checker rebuilds each piece.'], [8.5, 12, "It passes only if it's an exact match."]]} />
+      <Lines items={[[0, 5, "Meta's Muse reads the cartridge and rewrites the code, piece by piece."], [5, 8.5, 'Then our checker rebuilds each piece.'], [8.5, 12, "It passes only if it's an exact match."]]} />
     </Fade>
   );
 };
@@ -176,19 +163,18 @@ const Lie: React.FC = () => {
       </div>
       <div style={{position: 'absolute', left: 960, top: 560, display: 'flex', flexDirection: 'column', alignItems: 'center', transform: `translate(-50%,0)`, opacity: stamp}}>
         <div style={{whiteSpace: 'nowrap', transform: `rotate(-4deg) scale(${1.15 - 0.15 * stampS})`, border: `12px solid ${C.coral}`, borderRadius: 20, padding: '8px 40px', background: 'rgba(251,250,247,0.96)', boxShadow: SHADOW, color: C.coral, fontFamily: HEAD, fontWeight: 800, fontSize: 92, letterSpacing: 4}}>NOT A MATCH</div>
-        <div style={{marginTop: 22, display: 'flex', alignItems: 'center', gap: 10, fontFamily: BODY, fontWeight: 600, fontSize: 24, color: C.gray}}>caught by the checker · <Mark src="subq-snap.svg" h={22} /></div>
       </div>
       <div style={{position: 'absolute', left: 0, right: 0, top: 790, display: 'flex', justifyContent: 'center', gap: 120, opacity: stats, fontVariantNumeric: 'tabular-nums'}}>
         <div style={{textAlign: 'center'}}>
-          <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 150, lineHeight: 1, color: C.coral}}>{countUp(f, s(4.6), DATA.liesCaught)}</div>
-          <div style={{fontFamily: BODY, fontWeight: 600, fontSize: 32, color: C.ink, marginTop: 8}}>lies caught</div>
+          <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 150, lineHeight: 1, color: C.coral}}>{Math.round(DATA.wrongAnswersCaught * sp(f, s(4.6), 18))}</div>
+          <div style={{fontFamily: BODY, fontWeight: 600, fontSize: 32, color: C.ink, marginTop: 8}}>wrong answers caught</div>
         </div>
         <div style={{textAlign: 'center'}}>
           <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 150, lineHeight: 1, color: C.ink}}>{DATA.fakesAccepted}</div>
-          <div style={{fontFamily: BODY, fontWeight: 600, fontSize: 32, color: C.ink, marginTop: 8}}>got through</div>
+          <div style={{fontFamily: BODY, fontWeight: 600, fontSize: 32, color: C.ink, marginTop: 8}}>slipped through</div>
         </div>
       </div>
-      <Lines items={[[0, 4, "Sometimes the AI says it got it right when it didn't."], [4, 8, `The checker caught all ${DATA.liesCaught} of those today.`]]} />
+      <Lines items={[[0, 4, "Sometimes Muse says it's right when it isn't."], [4, 8, `Our checker and SubQ Snap caught ${DATA.wrongAnswersCaught} wrong answers today.`]]} />
     </Fade>
   );
 };
@@ -201,13 +187,12 @@ const Count: React.FC = () => {
   const cell = 26;
   const fold = ramp(f, s(4.2), s(5.2));
   const check = ramp(f, s(5.2), s(6));
-  const phone = ramp(f, s(5.6), s(6.3));
   const eq = ramp(f, s(6.2), s(6.8));
   const rows = Math.ceil(N / cols);
   return (
     <Fade len={s(8)}>
       {/* the pieces */}
-      <div style={{position: 'absolute', left: 960 - (cols * cell) / 2 - 300, top: 330, width: cols * cell, height: rows * cell, opacity: 1 - fold, transform: `scale(${1 - 0.4 * fold})`}}>
+      <div style={{position: 'absolute', left: 377, top: 400, width: cols * cell, height: rows * cell, opacity: 1 - fold, transform: `scale(${1 - 0.4 * fold})`}}>
         {Array.from({length: N}, (_, k) => {
           const p = sp(f, 4 + k * 0.18, 18);
           const x = (k % cols) * cell;
@@ -215,35 +200,24 @@ const Count: React.FC = () => {
           return <div key={k} style={{position: 'absolute', left: x, top: y + (1 - p) * 220, width: cell - 4, height: cell - 4, borderRadius: 4, background: C.lcd1, opacity: Math.min(1, p * 1.5)}} />;
         })}
       </div>
-      <div style={{position: 'absolute', left: 960 + 60, top: 400, opacity: 1 - fold, fontVariantNumeric: 'tabular-nums'}}>
+      <div style={{position: 'absolute', left: 983, top: 420, opacity: 1 - fold, fontVariantNumeric: 'tabular-nums'}}>
         <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 200, lineHeight: 1, color: C.lcd1}}>{countUp(f, 6, N)}</div>
-        <div style={{fontFamily: BODY, fontWeight: 600, fontSize: 34, color: C.ink, marginTop: 10, maxWidth: 520}}>pieces rebuilt, each an exact match</div>
+        <div style={{fontFamily: BODY, fontWeight: 600, fontSize: 32, color: C.ink, marginTop: 10, whiteSpace: 'nowrap'}}>pieces rebuilt, each an exact match</div>
       </div>
       {/* the game, checked */}
       <svg width={1920} height={1080} style={{position: 'absolute', inset: 0, opacity: fold}}>
-        <g transform={`translate(560 560) scale(${0.8 + 0.12 * fold})`}>
+        <g transform={`translate(860 560) scale(${0.8 + 0.12 * fold})`}>
           <rect x={-180} y={-230} width={360} height={430} rx={28} fill={C.lcd1} stroke={C.ink} strokeWidth={8} />
           <rect x={-130} y={-170} width={260} height={180} rx={10} fill={C.lcd3} stroke={C.ink} strokeWidth={6} />
           <text x={0} y={-62} textAnchor="middle" fontFamily={HEAD} fontWeight={800} fontSize={58} fill={C.lcd0}>DOOM</text>
           {[0, 1, 2, 3, 4].map((k) => <rect key={k} x={-118 + k * 50} y={160} width={30} height={40} fill={C.ink} />)}
         </g>
-        <path d="M 760 560 L 820 620 L 940 470" stroke={C.lcd1} strokeWidth={28} fill="none" strokeLinecap="round" strokeLinejoin="round" pathLength={1} strokeDasharray={1} strokeDashoffset={1 - check} />
+        <path d="M 1060 560 L 1120 620 L 1240 470" stroke={C.lcd1} strokeWidth={28} fill="none" strokeLinecap="round" strokeLinejoin="round" pathLength={1} strokeDasharray={1} strokeDashoffset={1 - check} />
       </svg>
-      {/* ASI:One proof, rebuilt in the site's card style from the real reply */}
-      <div style={{position: 'absolute', left: 1060, top: 330, width: 520, opacity: phone, transform: `translateY(${(1 - phone) * 24}px)`}}>
-        <div style={{background: C.paper, border: `4px solid ${C.ink}`, borderRadius: 28, boxShadow: SHADOW, padding: 28}}>
-          <div style={{display: 'flex', alignItems: 'center', gap: 12, fontFamily: BODY, fontWeight: 700, fontSize: 24, color: C.ink}}>
-            {has('assets/logos/asi-one.webp') ? <Img src={staticFile('assets/logos/asi-one.webp')} style={{width: 36, height: 36, borderRadius: 8}} /> : null} Ask in ASI:One <Mark src="fetchai.svg" h={18} />
-          </div>
-          <div style={{marginTop: 18, marginLeft: 'auto', width: 'fit-content', background: C.ink, color: C.cream, borderRadius: 18, padding: '12px 18px', fontFamily: BODY, fontSize: 26}}>Prove the rebuild is exact</div>
-          <div style={{marginTop: 14, width: 'fit-content', border: `3px solid ${C.lcd1}`, color: C.lcd1, borderRadius: 14, padding: '8px 16px', fontFamily: HEAD, fontWeight: 800, fontSize: 34, letterSpacing: 2}}>IDENTICAL</div>
-        </div>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 860, textAlign: 'center', opacity: eq, transform: `translateY(${(1 - eq) * 16}px)`, fontFamily: HEAD, fontWeight: 800, fontSize: 72, letterSpacing: 0, whiteSpace: 'nowrap', color: C.lcd1}}>
+        {DATA.equivalenceLine}
       </div>
-      <div style={{position: 'absolute', left: 1060, top: 690, width: 520, opacity: eq, fontVariantNumeric: 'tabular-nums'}}>
-        <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 84, lineHeight: 1, color: C.lcd1}}>{countUp(f, s(6.2), DATA.equivalence.identical).toLocaleString('en-US')} / {DATA.equivalence.total.toLocaleString('en-US')}</div>
-        <div style={{fontFamily: BODY, fontWeight: 600, fontSize: 30, color: C.ink, marginTop: 10}}>test inputs, identical answers</div>
-      </div>
-      <Lines items={[[0, 4, `${N} pieces of Doom are back. Each one is an exact match.`], [4, 8, 'Put back together, the game is identical to the original.']]} />
+      <Lines items={[[0, 4, `${N} pieces of Doom are back, each one an exact match.`], [4, 8, "Ask Fetch.ai's ASI:One, and it proves the rebuilt game is identical."]]} />
     </Fade>
   );
 };
@@ -281,9 +255,7 @@ const After: React.FC = () => {
 };
 
 // 0:55 to 1:00 End card: a centred stack on an 8 px grid.
-const PARTNERS = ['meta.svg', 'subquadratic.svg', 'fetchai.svg', 'mongodb.svg', 'gemini.svg'];
 const End: React.FC = () => {
-  const f = useCurrentFrame();
   return (
     <Fade len={s(5)} bg={C.ink}>
       <div style={{position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', color: C.cream, padding: '0 120px'}}>
@@ -295,12 +267,8 @@ const End: React.FC = () => {
           <div key={l} style={{fontFamily: HEAD, fontWeight: 800, fontSize: 56, lineHeight: 1.15, marginTop: k === 0 ? 32 : 8, textWrap: 'balance', maxWidth: 1400} as React.CSSProperties}>{l}</div>
         ))}
         <div style={{fontFamily: BODY, fontWeight: 600, fontSize: 40, opacity: 0.85, marginTop: 24}}>Built for any game we can compile. Doom is the first.</div>
-        <div style={{display: 'flex', alignItems: 'center', gap: 48, marginTop: 40, padding: '20px 44px', borderRadius: 24, background: C.cream}}>
-          {PARTNERS.map((m, k) => (
-            <div key={m} style={{opacity: sp(f, 14 + k * 6, 14), transform: `translateY(${(1 - sp(f, 14 + k * 6, 14)) * 12}px)`}}><Mark src={m} h={m === 'subquadratic.svg' ? 44 : m === 'fetchai.svg' ? 36 : 48} /></div>
-          ))}
-        </div>
-        <div style={{fontFamily: BODY, fontSize: 24, marginTop: 32, opacity: 0.85}}>Built today: the AI agents, the checker, the patch, this film. Not ours: Doom (id Software), GBADoom (doomhack), mGBA.</div>
+        <div style={{fontFamily: BODY, fontSize: 24, marginTop: 48, opacity: 0.85}}>Built today: the AI agents, the checker, the patch, this film. Not ours: Doom (id Software), GBADoom (doomhack), mGBA.</div>
+        <div style={{fontFamily: BODY, fontSize: 24, marginTop: 8, opacity: 0.85}}>Made with Meta Muse, SubQ Snap, Fetch.ai ASI:One, MongoDB Atlas and Gemini.</div>
         <div style={{fontFamily: MONO, fontSize: 20, color: C.mint, marginTop: 16}}>{DATA.url} · {DATA.repo}</div>
         <div style={{fontFamily: BODY, fontWeight: 600, fontSize: 22, marginTop: 8}}>{DATA.team.join(' · ')}</div>
       </div>
