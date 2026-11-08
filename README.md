@@ -1,202 +1,132 @@
 # Frankenstein
 
-**Lost games, rebuilt and proven.**
+**AI agents rebuild a game's lost source code, one function at a time, and a compiler accepts only byte-identical pieces.**
 
 [![Live site](https://img.shields.io/badge/live-tryfrankenstein.pages.dev-7CF2C8?style=flat-square&labelColor=17141F)](https://tryfrankenstein.pages.dev)
-[![License: MIT](https://img.shields.io/badge/license-MIT-FFD23F?style=flat-square&labelColor=17141F)](LICENSE)
-[![Built at](https://img.shields.io/badge/built%20at-AI%20Engineer%20Code%20Summit%20hackathon-9A9AFF?style=flat-square&labelColor=17141F)](#built-today--not-ours)
-[![First patient](https://img.shields.io/badge/first%20patient-GBADoom-FF5147?style=flat-square&labelColor=17141F)](https://github.com/doomhack/GBADoom)
+[![License: MIT](https://img.shields.io/badge/license-MIT-FFD23F?style=flat-square&labelColor=17141F)](#license)
 
-`#game-preservation` `#matching-decompilation` `#coding-agents` `#multi-agent` `#verification` `#gba` `#muse-spark` `#subquadratic` `#fetch-ai` `#mongodb` `#hackathon`
+For most classic games, only the compiled cartridge survives: 87% of classic games released in the US are critically endangered (Video Game History Foundation and Software Preservation Network, 2023). The game still runs, but nobody can fix, port or study it.
 
-87% of classic games are endangered (VGHF and SPN, 2023), and most of their source code is gone.
-Frankenstein's agents rebuild it from the cartridge, one piece at a time.
-A compiler checks every byte.
+Frankenstein points coding agents at the compiled game. They write C for each function, and a referee compiles it with the original toolchain. A piece counts only if its bytes match the original exactly. When an agent claims a match that isn't real, the claim is caught and counted.
 
-**Live site:** [tryfrankenstein.pages.dev](https://tryfrankenstein.pages.dev)
+Our first game is [**GBADoom**](https://github.com/doomhack/GBADoom), the Game Boy Advance port of Doom. The same method works anywhere only the compiled program survives.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/how-it-works-dark.svg">
   <img src="docs/diagrams/how-it-works-light.svg" width="1200" alt="How it works: the compiled game, its source lost, goes to a Digger (Muse), which writes C. The Referee compiles it and the Checker re-runs the claim. Rejected work goes back to the Digger; accepted work becomes a rebuilt ROM with the same SHA-1. SubQ Snap steers the loop, and every match adds habits to MongoDB for the next attempt.">
 </picture>
 
-## The story in five beats
+## Results
 
-1. **The patient.** A classic game whose source code is gone. It runs; nobody can fix it.
-2. **You ask.** "Bring back Doomguy's face," in an ASI:One chat. SubQ Snap ranked the real face function first (p 0.88).
-3. **The crew digs.** Diggers write C and the Checker re-runs every claim. "Matched it. Pretty sure." gets stamped REJECTED.
-4. **It's alive.** Recovered functions go back into the ROM. Same SHA-1, or it doesn't ship.
-5. **It changes again.** Edit the C, patch one function, and the room plays the fixed game on their phones.
+Final numbers, frozen at 16:12 PT on Nov 7, 2026.
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/play-to-recover-dark.svg">
-  <img src="docs/diagrams/play-to-recover-light.svg" width="1200" alt="Play to recover, a loop of five steps: you play, SubQ Snap picks the function on screen, the crew (Muse) recovers it, the Lab rebuilds the ROM with the same SHA-1, and that region heals on screen while you keep playing.">
-</picture>
-
-## Emulators keep games playable. Source code keeps them alive.
-
-87% of classic games released in the US are critically endangered (Video Game History Foundation and Software Preservation Network, 2023). For most of them, only the compiled cartridge survives. It runs, but nobody can fix it.
+| | Result | Source |
+|---|---|---|
+| Functions recovered | **235 of 568 (41.4%)**. Each one is byte-identical and was re-verified by the referee. | `crew/exports/union/UNION.json` |
+| Code bytes recovered | **11,900 of 141,774 (8.39%)**. The agents started with the small functions; the big ones (renderer, status-bar face) are still open. | same |
+| Rebuilt ROM | All 235 agent-written functions plus 333 original ones, linked into one ROM: **SHA-1 identical** to the original (`d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2`). Verified on two machines. | `DECISIONS.md`, 16:11 and 16:12 |
+| False claims | **39 caught.** **32 fake matches rejected, 0 accepted.** Across 36 finished runs. | `python3 tools/counts.py` |
+| Did the model just recite Doom? | From memory alone, 0 of 20 functions compiled. With the real headers and compiler errors, 3 of 20 matched. On the 4 functions we had secretly changed, 0 matched from memory. | `lab/out/memory_probe.json` |
+| Does the shared habit library help? | On held-out functions: 29 vs 29 of 40 easy, 6 vs 6 of 20 hard, library on vs off. **No measured gain, so we don't claim one.** | `crew/EXPERIMENTS.md` |
+| Referee speed | 0.1 to 0.2 s per check. | `DECISIONS.md`, 11:24 |
 
 ## How it works
 
-1. **Dig.** Agents read the compiled game and write C, one function at a time.
-2. **Check.** A compiler rebuilds every piece. Byte-identical or it's out. Lies get caught.
-3. **Learn.** Every match teaches the crew a habit, so the next game goes faster. Habits that stop helping get retired.
+1. **Split.** The Lab builds GBADoom with a pinned devkitARM GCC and splits the ROM into 568 anonymous functions (`fn_0801B298`, …). The real source is the answer key. It lives in the gitignored `lab/secrets/`, and only the referee reads it.
+2. **Dig.** Digger agents (Meta Muse Spark) read each function's disassembly and write C. SubQ Snap decides which function to try next and when to escalate.
+3. **Check.** The referee compiles the C and compares bytes. Anything other than an exact match is rejected, along with the first instruction that differs. The Checker then re-runs every "I matched it" claim with a fresh compile and lints for fake matches, such as inline assembly or hard-coded addresses. Gemini reviews each accepted match as a second opinion.
+4. **Rebuild.** Every proven function is linked back into the ROM. The result must have the same SHA-1 as the original.
 
-> Play it, and we rebuild it. SubQ Snap watches the live game and sends the crew to whatever is on screen.
+To stop the agents from reciting GBADoom's public source from memory, the target build carries 11 small source edits of ours. Those edits are kept private until after judging.
 
-## The proof
+Everything is Python except the Stage and the phone page. Model calls take seconds and a referee check takes 0.1 to 0.2 s, so the speed work is parallel Diggers, cached prompts and verdicts, and lower effort on easy functions.
 
-Doom is our first patient: famous, hidden from the agents, scrambled so they can't recite it, and checkable byte for byte.
+## Quick start
 
-> **235 of Doom's 568 game functions recovered (41.4%), each proven byte-identical.** That's 11,900 of 141,774 code bytes (8.39%): the crew started with the small functions; the big ones (the face, the renderer) are next on the road.
+You need Python 3, Node and `make`. These steps work offline and make no model calls.
 
-| What | Result | Source |
-|---|---|---|
-| Recovered and proven | **235 of 568 functions (41.4%)**, 11,900 of 141,774 code bytes (8.39%); every one re-verified by the referee and re-checked against the Checker's fakematch rules, 0 rejected | `crew/exports/union/UNION.json` |
-| Rebuilt game | 235 agent-written functions spliced into the ROM, 333 original: **SHA-1 identical** (`d936259b…`), verified on two machines | `DECISIONS.md` 16:12 |
-| Trust but verify | **39 lies caught**, **32 fakes rejected**, **0 fakes accepted** across 36 finished runs | `python3 tools/counts.py` |
-| Didn't it just remember Doom? | From memory alone, 0 of 20 functions compiled. Given the real headers and compiler errors, 3 of 20 matched, none of them functions we'd changed | `lab/out/memory_probe.json`, `DECISIONS.md` 13:28 |
-| Held-out (functions the crew never trained on) | Library on vs off: 29 vs 29 of 40 easy, 6 vs 6 of 20 hard. **No measured gain, so we don't claim one.** Run over run, warm start, salvage and the permuter turned near-misses into matches | `crew/EXPERIMENTS.md` |
-| Snap router, "Doomguy's face" | The real face function ranked #1 (p 0.88), checked afterwards against the hidden map | `DECISIONS.md` |
-| Referee | 0.1 to 0.2 s per check | `DECISIONS.md` |
+```bash
+git clone https://github.com/KarthikSubramanian07/Frankenstein.git
+cd Frankenstein
+make setup      # create .venv with the dev dependencies
+make test       # contract tests
+```
 
-**Evidence rule.** Bright means proved by the compiler. Violet with a "?" means our guess.
+To replay a finished run on the Stage, the live show page:
 
-## Agents lie. The referee doesn't.
+```bash
+cd stage && npm install
+npm run server            # http :7201, ws :7202
+npm run dev               # then open http://127.0.0.1:5173/?replay=doom_r12&speed=8
+```
 
-Every "I matched it" is re-run by the Checker with a fresh compile. A match that doesn't hold is rejected with the first instruction that differs, and counted. The referee has never told a joke.
+The team demo machine uses `make up` (start every lane, replay mode by default), `make status` and `make down`. The real referee needs the devkitARM container (`lab/setup_referee.sh`, Docker) and the private answer key, so outside the team use the fixture-backed mock with `python3 -m lab.referee mock serve --port 7101`. See [`lab/README.md`](lab/README.md).
 
-## Sponsors are the organs, not the logos
+Other entry points:
 
-| Partner | Role | One line |
-|---|---|---|
-| Meta Model API (Muse Spark, Muse Wonder) | The hands | Writes every line of recovered C. |
-| Subquadratic (SubQ Snap) | The judgment | Reads every function at once and decides where every attempt goes. |
-| Fetch.ai (ASI:One) | The front door | Ask for a recovery in a chat. Get proof back. |
-| MongoDB Atlas | The memory | Remembers every trick, so the next game is faster. |
-| Google Gemini | The second opinion | A different lab double-checks every match. It also rendered every illustration on the site, today (`site/tools/generate_art.py`). |
+- Crew: `python -m crew.run` for a run, `python -m crew.serve` for the jobs API. Offline tests: `make test-crew`. See [`crew/README.md`](crew/README.md).
+- Site: `python3 -m http.server -d site 8000`. Pushes to `main` that touch `site/**` deploy to Cloudflare Pages.
+- `make help` lists every target.
 
-## Talk to our agents in ASI:One
+On the Stage and the site, bright text means the compiler proved it. Violet with a "?" means it's our guess, such as a guessed function name.
 
-Two agents run on Agentverse with the Agent Chat Protocol. Open [asi1.ai](https://asi1.ai), start a chat and mention one of them.
+## Ask the agents in ASI:One
 
-| Agent | Address | What it does |
-|---|---|---|
-| `frankenstein-referee` | `agent1q088qnxafee4aug0qz4xnd9zkk4veq2r9ez07mp047u8enqhckc5w2hstx0` | Compiles your C and checks it against Doom's original bytes. Reports progress and proves the rebuild. |
-| `frankenstein-excavator` | `agent1qf4w7kmtsgv4fdyuj72nwethhjwhmdh7m3u7kqe5tgz4wyq8nmmmq5gjacp` | Starts a recovery with the crew, then asks the Referee agent for the verdict before it answers you. |
+Two agents run on Fetch.ai's Agentverse. Open [asi1.ai](https://asi1.ai) and mention one of them. They only answer while the Lab laptop is on and the referee is running.
 
-Things to ask:
-
-- "@frankenstein-referee How much of DOOM is back?"
-- "@frankenstein-referee Prove the rebuild is exact" (you get both SHA-1 checksums)
-- "@frankenstein-referee Does this C match fn_0801C130?", followed by a ```` ```c ```` block. A wrong guess comes back REJECTED with the first instruction that differs.
-- "@frankenstein-excavator Recover fn_08004DA8"
-
-Every reply keeps what the compiler proved (Observed) apart from our guesses (Inferred). The agents run on Eddy's laptop, so they answer while it's on and the referee is up. Setup is in [`lab/README.md`](lab/README.md).
-
-## Built today / Not ours
-
-| Built today (Nov 7, 2026, after 10:45 PT) | Not ours |
+| Agent | Address |
 |---|---|
-| Everything in `contracts/`, `lab/`, `crew/`, `stage/`, `creature/`, `site/` | **Doom** by id Software; **prBoom** by its authors; **GBADoom** by doomhack (GPL-2.0-or-later), used as the hidden answer key; its source is never committed. `lab/out/*.gba` are GBADoom builds with 11 edits of ours, not our work (written offer of the edits in [`lab/out/GPL_NOTICE.md`](lab/out/GPL_NOTICE.md)) |
-| The build and split, referee and linter, agents, Stage scenes, emulator overlay, phone page and site | Muse Spark and Muse Wonder (Meta), SubQ Snap (Subquadratic), ASI:One and Agentverse (Fetch.ai), MongoDB Atlas, Gemini (Google), mGBA, devkitARM, Google Fonts |
-| | **Prior work:** the planning kit in `docs/` (including `docs/design_system.html`, a visual reference only) and the event clock `tools/hackclock.py` |
+| `frankenstein-referee` | `agent1q088qnxafee4aug0qz4xnd9zkk4veq2r9ez07mp047u8enqhckc5w2hstx0` |
+| `frankenstein-excavator` | `agent1qf4w7kmtsgv4fdyuj72nwethhjwhmdh7m3u7kqe5tgz4wyq8nmmmq5gjacp` |
 
-## The team
-
-| Lane | Owner | What it does |
-|---|---|---|
-| **A · The Lab** | Eddy | Builds the game, runs the referee, hosts the ASI:One agent. [`lab/`](lab/README.md) |
-| **B · The Crew** | Karthik | The Diggers, the Checker, Snap steering and the idiom library. [`crew/`](crew/README.md) |
-| **C · The Stage** | Aidenn | The live show, driven only by the event stream. [`stage/`](stage/README.md) |
-| **D · The Creature** | Enzo | Doom in an emulator, healing as its code comes back, plus the phone page. [`creature/`](creature/README.md) |
-
-[`DECISIONS.md`](DECISIONS.md) is the engineering log.
+Try "@frankenstein-referee How much of DOOM is back?" or "@frankenstein-referee Prove the rebuild is exact". You can also paste a C function and ask whether it matches `fn_0801C130`; a wrong guess comes back REJECTED with the first instruction that differs. To start a recovery, try "@frankenstein-excavator Recover fn_08004DA8". Every reply keeps what the compiler proved (Observed) apart from guesses (Inferred).
 
 ## Architecture
 
+The repo has four lanes. They share only the contracts in [`contracts/CONTRACTS.md`](contracts/CONTRACTS.md): JSON schemas, two HTTP APIs and an append-only `runs/<run_id>/events.jsonl`.
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/system-dark.svg">
-  <img src="docs/diagrams/system-light.svg" width="1200" alt="System: someone asks in ASI:One, the Lab (referee, :7101) hands the job to the Crew (:7111), and the Crew asks the Lab to check every attempt. The Lab and the Crew write to one event stream, events.jsonl. The Stage (:7202) reads it to run the show, and the Creature (:7401) reads it to heal the game and writes back when it swaps the ROM. Lanes share nothing but the event stream.">
+  <img src="docs/diagrams/system-light.svg" width="1200" alt="System: someone asks in ASI:One, the Lab (referee, :7101) hands the job to the Crew (:7111), and the Crew asks the Lab to check every attempt. The Lab and the Crew write to one event stream, events.jsonl. The Stage (:7202) reads it to run the show, and the Creature (:7401) reads it to heal the game and writes back when it swaps the ROM.">
 </picture>
 
-<details>
-<summary>Plain-text version, for terminals</summary>
+| Folder | Lane | Owner | What's in it |
+|---|---|---|---|
+| [`lab/`](lab/README.md) | A · Lab | Eddy | Build and split, referee (:7101), fake-match linter, rebuild, ASI:One agents |
+| [`crew/`](crew/README.md) | B · Crew | Karthik | Diggers, Checker, Snap routing, habit library (MongoDB Atlas), jobs API (:7111), run exports |
+| [`stage/`](stage/README.md) | C · Stage | Aidenn | The live show: a log driven only by the event stream, replays at 1–20x (:5173, :7201/7202) |
+| [`creature/`](creature/README.md) | D · Creature | Enzo | Doom in mGBA, heal overlay, ROM hot-swap, phone play page (:7401) |
+| `contracts/` | shared | | Schemas, fixtures, validator |
+| `site/` | shared | | [tryfrankenstein.pages.dev](https://tryfrankenstein.pages.dev), deployed from `main` |
+| `tools/` | shared | | `frank.py` (`make up/down/status`), `counts.py` (official tallies) |
 
-```text
-  lab/secrets/   answer key · gitignored · only the referee reads it
-                │
-                ▼
-┌─ A · LAB  (referee) ─────────┐                          ┌─ B · CREW  (agents) ─────────┐
-│ check · rebuild · patch      │ ─ manifest · asm · ctx ▶ │ Diggers · Muse Spark         │
-│ serve :7101                  │                          │ Checker · SubQ Snap gate     │
-│ ASI:One agents · Fetch.ai    │ ◀──── POST /check ────── │ Snap triage · escalate       │
-│                              │  POST /jobs  (ASI:One) ▶ │ jobs API :7111               │
-└───────────────┬──────────────┘                          └───────────────┬──────────────┘
-                │                                                         │ appends
-                │                                                         │
-                │                                                         ▼
-                │ build.rom             ┌─────────────────────────────────┴────────────────┐
-                │ patched.gba           │  runs/live/events.jsonl · metrics.json           │
-                │                       └───────┬─────────────────────────┬────────────────┘
-                │                               │                         │
-                │                               │                         │ tail · ws :7202
-                │                               │                         │
-                │                               │                         │
-                ▼                               │                         ▼
-┌─ D · CREATURE  (game) ───────┐                │         ┌─ C · STAGE  (show) ──────────┐
-│ mGBA · heal overlay          │◀─ fn.matched ──┘         │ Title · Split · Versus       │
-│ hot-swap · bug fix           │                          │ Time trial · Ending          │
-│ heartbeat ▶ crew :7112       │                          │ replay 1-20x                 │
-│                              │                          │                              │
-└───────────────┬──────────────┘                          └───────────────┬──────────────┘
-                │                                                         │
-                ▼                                                         ▼
-         phones · video                                                judges · projector
-```
+The engineering log is [`DECISIONS.md`](DECISIONS.md).
 
-</details>
+## Partners
 
-Lanes share only what is in [`contracts/CONTRACTS.md`](contracts/CONTRACTS.md): file shapes (JSON Schema in `contracts/schemas/`), the referee and crew HTTP APIs, and the append-only `runs/<run_id>/events.jsonl`. Every lane builds against `contracts/fixtures/` from minute one.
+| Partner | What it does here |
+|---|---|
+| Meta Model API (Muse Spark, Muse Wonder) | Writes the recovered C |
+| Subquadratic (SubQ Snap) | Picks the next function, routes requests like "Doomguy's face" (ranked the real face function first, p 0.88), and gates claims |
+| Fetch.ai (ASI:One, Agentverse) | The chat front end and the two agents above |
+| MongoDB Atlas | Stores the habit library shared across runs |
+| Google Gemini | Second-opinion review of accepted matches; also generated the site's illustrations (`site/tools/generate_art.py`) |
 
-## Why it's fast enough
+## Built at the hackathon / not ours
 
-The slow parts are model calls (seconds) and the compiler (0.1 to 0.2 s). So we parallelize Diggers, cache prompts and verdicts, and start easy functions at lower effort. We didn't port anything to Rust or Go: the bottleneck is the model, not our code.
+Built at the AI Engineer Code Summit hackathon, Nov 7, 2026, after 10:45 PT: the code in `contracts/`, `lab/` (except `lab/out/`, see below), `crew/`, `stage/`, `creature/`, `site/` and `tools/` (except `tools/hackclock.py`).
 
-## How to run
+Not ours:
 
-```bash
-make setup         # .venv with jsonschema, python-dotenv, pytest
-make fixtures      # regenerate contracts/fixtures (deterministic, all marked fixture)
-make validate      # validate fixtures, runs/*, lab/out/*.json against the schemas
-make test          # contract tests
-make sample-runs   # runs/fx01..fx03 + runs/live -> fx01, for Stage/Creature dev
-make clock         # print the event schedule
-```
-
-- Referee: `lab/setup_referee.sh`, then `python3 -m lab.referee serve`. See [`lab/README.md`](lab/README.md).
-- Crew: `python -m crew.run`, and `python -m crew.serve` for the jobs API. See [`crew/README.md`](crew/README.md).
-- Site: `python3 -m http.server -d site 8000`. Pushes to `main` that touch `site/**` deploy to Cloudflare Pages.
-
-## Repo map
-
-```
-docs/        planning kit (prior work)            contracts/  shared schemas, fixtures, validator
-lab/         Lane A: build, referee, agent        crew/       Lane B: agents and experiments
-stage/       Lane C: the live show                creature/   Lane D: emulator, overlay, phone
-site/        public landing page                  runs/       run output (gitignored)
-tools/       event clock (prior work)
-```
+- **Doom** by id Software, **PrBoom** by its authors, and **GBADoom** by doomhack (GPL-2.0-or-later).
+- **`lab/out/`** is derived from GBADoom: the `.gba` builds, plus the per-function disassembly in `asm/` and the headers in `ctx/`. It is GPL, not MIT. See [`lab/out/GPL_NOTICE.md`](lab/out/GPL_NOTICE.md). No game data (WAD) is included.
+- **Tools and services:** mGBA, devkitARM, Muse Spark and Muse Wonder (Meta), SubQ Snap, ASI:One and Agentverse, MongoDB Atlas, Gemini, and Google Fonts.
+- **Prior work, made before the event:** the planning kit in `docs/` (including `docs/design_system.html`, used only as a visual reference) and the event clock `tools/hackclock.py`.
 
 ## Contributing
 
-Commit inside your lane folder, `git pull --rebase` before every push, never force-push `main`. Contract changes need a line in `DECISIONS.md`.
-
-## New Game+
-
-Anywhere the only thing left is the compiled program, Frankenstein can bring the source back. Games don't have to die.
+Commit inside your lane's folder. Run `git pull --rebase` before every push, and never force-push `main`. Contract changes need a line in `DECISIONS.md`.
 
 ## License
 
-MIT. See [LICENSE](LICENSE). This repo contains none of GBADoom's code or data. Doom is a trademark of id Software; we are not affiliated with id Software or doomhack.
+Our code is MIT, see [LICENSE](LICENSE). The files in `lab/out/` are derived from GBADoom and are GPL-2.0-or-later, see [`lab/out/GPL_NOTICE.md`](lab/out/GPL_NOTICE.md). Doom is a trademark of id Software. We are not affiliated with id Software or doomhack.
