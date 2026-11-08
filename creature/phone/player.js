@@ -1,5 +1,12 @@
 // Player 2: real mGBA WASM core, touch / keyboard / controller input, honest states. No gameplay is ever simulated.
 import * as C from './controls.js';
+import { playArrival } from './arrival.js';
+import { prepareDoom } from './doom-entry.js';
+const query = new URLSearchParams(location.search);
+const demo = query.get('demo') === '1';
+const selectedGame = query.get('game') || 'doom';
+let starting = false, preparedDemo = false;
+if (demo) document.documentElement.dataset.demo = 'true';
 const $ = (id) => document.getElementById(id);
 const root = document.documentElement;
 const GBA_W = 240, GBA_H = 160, HUD_ROWS = 32; // GBADoom's status bar is the bottom 32 of 160 rows.
@@ -50,10 +57,18 @@ const copy = {
   error: ['THAT DIDN\'T SURVIVE THE LIGHTNING<span class="dot">.</span>', 'Something went wrong.'],
 };
 function readyLine() {
+  if (demo) return 'Your game. Your screen. Ready when you are.';
   const mode = root.dataset.input;
   if (mode === 'touch') return copy.ready[1];
   const press = mode === 'pad' ? C.glyph(activePad(), 'b0') : C.glyph('keyboard', 'Enter');
   return `Doom in a Game Boy Advance emulator, on whatever screen you've got. Sound on. Press ${press} to start.`;
+}
+if (demo) {
+  copy.loading = ['Doom is loading', 'Getting your game ready.'];
+  copy.ready = ['Doom is ready', 'Your game. Your screen. Ready when you are.'];
+  copy.norom = ['Doom is not available yet', 'The phone link is being prepared. Please try again shortly.'];
+  copy.error = ['Couldn?t load Doom', 'Please try again.'];
+  $('start').textContent = 'Play Doom';
 }
 const signals = {loading: 'LOADING', ready: 'READY', norom: 'NO ROM YET', error: 'UNAVAILABLE', playing: 'PLAYING'};
 function setState(state, line, note) {
@@ -420,18 +435,33 @@ function registerOffline() {
   navigator.serviceWorker.register('sw.js').catch(error => console.warn('Offline cache unavailable', error));
 }
 async function boot() {
-  setState('loading', undefined, romLabel());
+  setState('loading', undefined, demo ? '' : romLabel());
   showProgress();
   try {
-    if (!window.isSecureContext || !window.crossOriginIsolated) throw new Error('This page needs a secure host with cross-origin isolation (COOP/COEP headers). Open it from the supplied server, or from HTTPS with those headers.');
+    if (selectedGame !== 'doom') throw new Error('That game is not available. Choose Doom on the game picker.');
+    if (!window.isSecureContext || !window.crossOriginIsolated) throw new Error(demo ? 'This phone link is not ready. Please return to the game picker and try the latest QR code.' : 'This page needs a secure host with cross-origin isolation (COOP/COEP headers). Open it from the supplied server, or from HTTPS with those headers.');
     const statusJob = fetch('status.json').then(r => (r.ok ? r.json() : null)).catch(() => null).then(applyStatus);
     const romJob = download('game.gba', (g, t) => { progress.rom = [g, t]; showProgress(); });
     const wasm = await download('core/mgba.wasm', (g, t) => { progress.core = [g, t || progress.core[1]]; showProgress(); });
-    if (!wasm.ok) throw new Error('The emulator core is not installed on this host. In creature/phone run npm install --ignore-scripts, then npm run prepare:core.');
+    if (!wasm.ok) throw new Error(demo ? 'A game file could not load. Check your connection and try again.' : 'The emulator core is not installed on this host. In creature/phone run npm install --ignore-scripts, then npm run prepare:core.');
     coreReady = startCore(wasm.buffer);
     const [rom] = await Promise.all([romJob, coreReady, statusJob]);
     registerOffline();
-    if (rom.ok) { stage(new Uint8Array(rom.buffer), 'demo'); return; }
+    if (rom.ok) {
+      stage(new Uint8Array(rom.buffer), 'demo');
+      if (demo) {
+        setState('loading', 'Starting Doom. Almost there.', '');
+        $('progress-text').textContent = 'Starting the game';
+        core.setCoreSettings({restoreAutoSaveStateOnLoad: false, autoSaveStateEnable: false});
+        core.setVolume(0);
+        const entry = prepareDoom(core, {onStep: text => { $('progress-text').textContent = text; }});
+        if (!core.loadGame(staged.path)) throw new Error('Doom could not start. Please try again.');
+        preparedDemo = await entry;
+        if (!preparedDemo) core.pauseGame();
+        setState('ready', preparedDemo ? undefined : 'Ready to play. Use MENU, then USE to start a new game.', '');
+      }
+      return;
+    }
     if (rom.status === 404) { setState('norom', undefined, 'Nothing to play yet, and nothing faked while you wait.'); return; }
     throw new Error(`The game download failed (HTTP ${rom.status}). Try again in a moment.`);
   } catch (error) { fail(error); }
@@ -448,10 +478,10 @@ async function startCore(wasmBinary) {
 }
 function stage(bytes, origin) {
   if (!bytes.byteLength || bytes.byteLength > 32 * 1024 * 1024) throw new Error('That isn\'t a usable .gba file (empty, or over 32 MB).');
-  const path = `${core.filePaths().gamePath}/frankenstein.gba`; // Fixed safe filename; user paths never reach the emulator FS.
+  const path = `${core.filePaths().gamePath}/${demo ? 'frankenstein-demo' : 'frankenstein'}.gba`; // Fixed safe filename; user paths never reach the emulator FS.
   core.FS.writeFile(path, bytes);
   staged = {path, origin};
-  setState('ready', undefined, origin === 'local' ? 'Your file. It stays on this device.' : romLabel());
+  setState('ready', undefined, origin === 'local' ? 'Your file. It stays on this device.' : demo ? '' : romLabel());
 }
 async function pickFile(file) {
   if (!file) return;
@@ -464,8 +494,11 @@ async function pickFile(file) {
 }
 
 /* ---------- One-tap start: sound, full screen, landscape lock (each optional) ---------- */
-function play() {
-  if (!core || !staged) return;
+async function play() {
+  if (!core || !staged || starting) return;
+  starting = true;
+  $('start').disabled = true;
+  try {
   releaseAll();
   // Full screen and orientation lock must start inside the tap. iPhone Safari has neither; that's fine.
   if (!document.fullscreenElement && !new URLSearchParams(location.search).has('windowed')) {
@@ -475,13 +508,20 @@ function play() {
         .then(() => screen.orientation?.lock?.('landscape')).catch(() => {});
     } catch { /* No full screen here. */ }
   }
-  if (!core.loadGame(staged.path)) { fail(new Error('The emulator could not start this ROM. It must be the assembled game: engine plus the shareware WAD.')); return; }
+  if (!demo && !core.loadGame(staged.path)) throw new Error('The emulator could not start this ROM. It must be the assembled game: engine plus the shareware WAD.');
   core.SDL2?.audioContext?.resume?.().catch(() => {});
+  if (demo) {
+    setInput('touch', true);
+    await playArrival({layout});
+    core.resumeGame();
+  }
   core.setVolume(muted ? 0 : 1);
   running = true; paused = false;
   setState('playing');
   keepAwake();
   syncSheet();
+  } catch (error) { fail(error); }
+  finally { starting = false; $('start').disabled = false; }
 }
 async function keepAwake() { try { if (!wakeLock || wakeLock.released) wakeLock = await navigator.wakeLock?.request('screen'); } catch { /* Optional. */ } }
 
@@ -602,7 +642,7 @@ document.addEventListener('fullscreenchange', () => { syncSheet(); layout(); });
 for (const ev of ['pointerdown', 'keydown']) window.addEventListener(ev, () => { if (running && !paused) core?.SDL2?.audioContext?.resume?.().catch(() => {}); }, {capture: true});
 document.querySelector('#controls').addEventListener('pointerdown', e => { if (e.pointerType === 'touch') setInput('touch'); });
 relabelTouch();
-setInput(matchMedia('(pointer: coarse)').matches ? 'touch' : 'keys', true);
+setInput(demo || matchMedia('(pointer: coarse)').matches ? 'touch' : 'keys', true);
 for (const gp of navigator.getGamepads?.() || []) if (gp) detectedPad = C.detectPad(gp.id);
 if ([...(navigator.getGamepads?.() || [])].some(Boolean)) padLoop = requestAnimationFrame(pollPads);
 layout();

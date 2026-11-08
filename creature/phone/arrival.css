@@ -1,0 +1,24 @@
+/* The intro moves the existing input elements; no second controller is substituted. */
+.arrival{position:fixed;inset:0;z-index:20;overflow:hidden;background:#111213;color:#dededb;pointer-events:auto;touch-action:none;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.arrival-copy{position:absolute;inset:calc(50% - 175px) 16px auto;text-align:center}
+.arrival-copy>span{font-size:11px;letter-spacing:.3em;font-weight:600;color:#a7a9aa}
+.arrival-copy p{margin:9px 0 0;font-size:clamp(20px,5vw,28px);font-weight:450;letter-spacing:-.035em}
+.arrival-handheld{position:absolute;border:1px solid #696b6d;border-radius:20% / 34%;background:linear-gradient(155deg,#b3b5b6,#85888b 58%,#72767a);box-shadow:inset 0 2px 1px #e0e2e3,0 24px 80px #0007;transform-origin:center}
+.arrival-display{position:absolute;left:31%;top:13%;width:38%;height:61%;border-radius:8%;background:#303234;border:calc(4px * var(--arrival-scale)) solid #515456;box-shadow:inset 0 1px 5px #0008;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(8px * var(--arrival-scale))}
+.arrival-display>span{font-size:calc(23px * var(--arrival-scale));font-weight:800;font-stretch:condensed;letter-spacing:-.045em;color:#d3d5d4}
+.arrival-display>i{display:block;width:38%;height:2px;background:#8f9494}
+.arrival-display>small{font-size:calc(5px * var(--arrival-scale));letter-spacing:.12em;color:#a8adad}
+.arrival-speaker{position:absolute;right:12%;bottom:10%;width:11%;height:12%;background:repeating-linear-gradient(90deg,transparent 0 4px,#565a5c 4px 6px);transform:rotate(-12deg);opacity:.5;border-radius:2px}
+.arrival-caption{position:absolute;inset:auto 16px calc(50% - 153px);margin:0;text-align:center;font-size:12px;letter-spacing:.03em;color:#898e90}
+[data-arrival] #gate,[data-arrival] #legend,[data-arrival] .bar{visibility:hidden!important}
+[data-arrival] #controls{visibility:visible!important;z-index:21;pointer-events:none!important}
+[data-arrival] #controls>*{visibility:hidden;pointer-events:none!important}
+[data-arrival] #controls>.arrival-part{display:block!important;visibility:visible!important;transform-origin:0 0;will-change:transform,opacity;transition:none!important;filter:grayscale(1)}
+[data-arrival] #controls>button.arrival-part{display:flex!important}
+[data-arrival] #controls>.arrival-part small{color:#ddd}
+[data-arrival] #controls>.arrival-part b{color:#eee;text-shadow:none}
+[data-arrival] #controls>.arrival-part.pill,[data-arrival] #dpad i,[data-arrival] #dpad .hub,[data-arrival] #actions i{background:#383b3e;border-color:#64686b;box-shadow:inset 0 1px 0 #8b8d8e;text-shadow:none}
+[data-arrival] #dpad .hub{box-shadow:none}
+[data-arrival] #dpad i::after{opacity:.65}
+@media(max-height:440px){.arrival-copy{inset:14px 16px auto}.arrival-copy p{font-size:18px;margin-top:4px}.arrival-caption{inset:auto 16px 14px}}
+@media(prefers-reduced-motion:reduce){.arrival{display:none}}

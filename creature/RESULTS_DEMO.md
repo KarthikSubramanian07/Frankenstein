@@ -1,5 +1,7 @@
 # The demo: choose Doom, scan, play
 
+**EVENT HARD RULE FROM ENZO: ALL AGENTS STOP at 16:58 Pacific on 2026-11-07. No edits, commits or pushes after that deadline, anywhere in this repo. Supersedes the earlier 16:59 cutoff. Murmur broadcast 302f6c01.**
+
 Enzo's explicit direction, 2026-11-07. This is the primary demo experience and supersedes the previous log-first presentation. Canonical implementation brief for every lane.
 
 ## User journey
@@ -42,3 +44,11 @@ Murmur kickoff broadcast: **ef34a457**. Reply STARTED with exact files, ETA and 
 ## Current dependencies
 
 D already has verified original and god_200 playable packages. Prefer original-equivalent rebuilt Doom for this flow; god_200 is an optional separate demonstration, not a required selection step. Public ROM distribution was previously authorized for 17:00–18:45 judging and applicable final round only; downloads remain hidden and D owns removal of production and preview copies afterward. Get a concrete serving plan ready now. Final physical-phone proof and publishing status must be reported honestly.
+
+## Implementation at cutoff
+
+D implemented the fallback computer picker under `creature/phone/results.html` while C awaited its own user's approval. The QR uses a supplied public HTTPS URL (`?player=...`) or a public same-origin host; localhost produces an honest waiting state and local preview link, never a fake QR. Phone URL: `/?game=doom&demo=1`.
+
+The phone has restrained grey UI, actual loading progress, a 1.8-second handheld morph animating real control elements, reduced-motion/interruption cleanup, and frame-timed real New Game menu inputs derived from the existing headless scenario. Auto-resume is disabled for this demo flow. The existing default player remains the fallback.
+
+Syntax checks and Python compilation passed. Static bundle `creature/phone/dist/results-demo-v1` built with 30 files, original playable SHA-1 e1ddb8fb96764422d5fb6b1c84c83b85c98236bd and verified 8.4% rounded build label (235-function report, exact 8.39%). Local preview server :7420. **New flow has not yet been visually rehearsed or tested on a physical phone. It is not a completed end-to-end demo.** Public HTTPS URL/deployment is pending B; no public URL or success is invented. At the hard cutoff, stop work and leave these limits explicit.

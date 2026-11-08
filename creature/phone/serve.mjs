@@ -7,7 +7,7 @@ import { dirname, resolve, extname, relative, isAbsolute, sep } from 'node:path'
 import { fileURLToPath } from 'node:url';
 
 const defaultRoot = dirname(fileURLToPath(import.meta.url));
-const allowed = new Set(['/index.html', '/player.js', '/controls.js', '/style.css', '/sw.js', '/manifest.webmanifest', '/DISTRIBUTION.md',
+const allowed = new Set(['/index.html', '/player.js', '/controls.js', '/arrival.js', '/arrival.css', '/doom-entry.js', '/demo.css', '/results.html', '/results.js', '/results.css', '/style.css', '/sw.js', '/manifest.webmanifest', '/DISTRIBUTION.md',
   '/icons/icon-192.png', '/icons/icon-512.png', '/icons/maskable-512.png', '/icons/apple-touch-icon.png',
   '/core/mgba.js', '/core/mgba.wasm', '/core/qrcode.mjs']);
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.wasm': 'application/wasm', '.gba': 'application/octet-stream', '.mjs': 'text/javascript; charset=utf-8', '.webmanifest': 'application/manifest+json', '.png': 'image/png', '.md': 'text/markdown; charset=utf-8', '.txt': 'text/plain; charset=utf-8', '.woff': 'font/woff', '.woff2': 'font/woff2', '.ttf': 'font/ttf', '.otf': 'font/otf' };

@@ -1,8 +1,8 @@
 // Offline play after the first load. Cached responses keep the server's COOP/COEP headers, so the page
 // stays cross-origin isolated when it is served from here. The ROM is network-first: a newly published
 // patched ROM always wins when the network is up; the cached copy is only for offline.
-const CACHE = 'player2-v2';
-const SHELL = ['./', 'index.html', 'style.css', 'player.js', 'controls.js', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png'];
+const CACHE = 'player2-results-v3';
+const SHELL = ['./', 'index.html', 'style.css', 'player.js', 'controls.js', 'arrival.js', 'arrival.css', 'doom-entry.js', 'demo.css', 'results.html', 'results.js', 'results.css',  'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png'];
 const HEAVY = ['core/mgba.js', 'core/mgba.wasm', 'core/qrcode.mjs', 'game.gba', 'status.json'];
 
 self.addEventListener('install', event => {

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#111313">
+  <meta name="description" content="Choose Doom. Scan the code. Play on your phone with adapted touch controls.">
+  <title>Choose. Scan. Play. · Frankenstein</title>
+  <link rel="stylesheet" href="results.css">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+</head>
+<body>
+<header class="masthead"><a class="wordmark" href="results.html" aria-label="Frankenstein home"><span class="mark" aria-hidden="true">F</span> FRANKENSTEIN</a><span class="edition">LOST GAMES. BACK IN YOUR HANDS.</span></header>
+<main>
+  <section class="intro" aria-labelledby="title">
+    <p class="eyebrow">CHOOSE A GAME</p>
+    <h1 id="title">Old game.<br>New screen.</h1>
+    <p class="lede">Pick it here. Play it on your phone.</p>
+    <fieldset class="games"><legend class="sr-only">Choose a game</legend>
+      <label class="game-card">
+        <input type="radio" name="game" value="doom" checked>
+        <span class="game-art" aria-hidden="true"><span class="cartridge"><span class="cartridge-label">DOOM<span>1993 / FIRST PERSON</span></span><span class="cartridge-grooves"></span></span></span>
+        <span class="game-copy"><span class="game-name">Doom</span><span class="game-meta">The original world. In your hands.</span></span>
+        <span class="selected"><span aria-hidden="true">✓</span> Selected</span>
+      </label>
+    </fieldset>
+    <button id="choose" class="primary" aria-controls="handoff">Play on your phone <span aria-hidden="true">↗</span></button>
+    <a id="preview" class="preview" href="./?game=doom&amp;demo=1&amp;windowed" hidden>Preview on this computer</a>
+  </section>
+  <section id="handoff" class="handoff" aria-labelledby="handoff-title" hidden>
+    <div class="handoff-top"><span class="step">02 / YOUR PHONE</span><span class="game-tag">DOOM</span></div>
+    <h2 id="handoff-title" tabindex="-1">Scan. Then play.</h2>
+    <p id="handoff-description">Open your phone's camera and point it here.</p>
+    <div id="qr-frame" class="qr-frame" hidden><div id="code" aria-label="QR code to play Doom"></div></div>
+    <a id="phone-link" class="phone-link" hidden></a>
+    <p id="handoff-status" class="status" role="status" aria-live="polite"></p>
+    <p class="controls-note" id="controls-note" hidden>Watch the controls take shape.<br>Then make yourself at home.</p>
+  </section>
+  <aside id="idle" class="idle" aria-label="From handheld to phone">
+    <div class="handheld" aria-hidden="true"><div class="shoulder left"></div><div class="shoulder right"></div><div class="display"><span>DOOM</span><span class="display-small">READY FOR A NEW SCREEN</span></div><div class="cross"></div><div class="buttons"><i>B</i><i>A</i></div><div class="system"><i></i><i></i></div></div>
+    <p>One classic.<br><span>A screen you already own.</span></p>
+  </aside>
+</main>
+<footer>
+  <span>CHOOSE <span aria-hidden="true">→</span> SCAN <span aria-hidden="true">→</span> PLAY</span>
+  <details class="about"><summary>Built today / Not ours</summary><div><p><b>Built today</b> Our recovery agents and checker, this game picker, and the phone player with adapted controls.</p><p><b>Not ours</b> Doom by id Software, GBADoom by doomhack, mGBA and its WASM bindings, devkitARM, and the QR encoder.</p><p id="build-fact">Gameplay runs in the mGBA emulator. Build details are available in the player's credits.</p><a href="https://github.com/KarthikSubramanian07/Frankenstein" target="_blank" rel="noopener">View the source ↗</a></div></details>
+  <details class="setup"><summary>Phone link setup</summary><form id="setup-form"><label for="player-url">Published player URL</label><div class="url-row"><input id="player-url" type="url" inputmode="url" autocomplete="off" placeholder="https://your-player.example" aria-describedby="setup-note"><button type="submit">Use link</button></div><p id="setup-note">Use the actual public HTTPS player address. Local addresses cannot be scanned from another device.</p><p id="setup-error" role="alert"></p></form></details>
+</footer>
+<script type="module" src="results.js"></script>
+</body>
+</html>
