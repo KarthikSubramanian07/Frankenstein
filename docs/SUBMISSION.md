@@ -18,15 +18,15 @@ Lost games, rebuilt and proven: AI agents write a game's lost source code back f
 
 Most classic games survive only as a cartridge. The source code, the recipe the game was built from, is gone, and 87% of classic games are endangered (VGHF and SPN, 2023). Rebuilding source from a cartridge is like being handed a cake and asked for the exact recipe.
 
-Frankenstein's agents read Doom's machine code for the Game Boy Advance and write the C back, one function at a time. A recovered function only counts if a compiler turns it into the original's exact bytes. A Checker re-runs every claim, because agents lie: today it caught 24 false "it matches" claims and rejected 31 fakes, and let none through.
+Frankenstein's agents read Doom's machine code for the Game Boy Advance and write the C back, one function at a time. A recovered function only counts if a compiler turns it into the original's exact bytes. A Checker re-runs every claim, because agents lie: today it caught 39 false "it matches" claims and rejected 32 fakes, and let none through.
 
-225 of Doom's 568 functions are back so far. With all of them spliced in, the rebuilt game has the same SHA-1 checksum as the original. We changed one line of the recovered god-mode code, and the cheat now gives 200% health.
+235 of Doom's 568 functions are back so far. With all of them spliced in, the rebuilt game has the same SHA-1 checksum as the original. We changed one line of the recovered god-mode code, and the cheat now gives 200% health.
 
 ## Problem statements
 
 **Software Archaeology.** The evidence is a compiled ROM and nothing else. The agents see anonymous function ids and machine code; GBADoom's real source is locked away as the answer key, and our build is a private variant with 11 small edits, so recital doesn't pass (from memory alone, Muse compiled 0 of 20 functions; `lab/out/memory_probe.json`). Every reply separates what was observed, meaning what the compiler proved (MATCH, the first differing instruction, SHA-1s), from what was inferred (function names, shown with a "?"). For behavioral equivalence across platforms, six recovered functions compiled for a Mac and for WebAssembly give the same answers as the original GBA machine code: 20,000 of 20,000 recorded outputs in the browser, and 1,000,000 inputs each on the Mac (`lab/demo/equivalence/`).
 
-**Trust but Verify.** The referee is independent of the agents that write the code. It compiles each candidate in a sealed container with no network and no keys, and compares it instruction by instruction with the original. Agents stake a claim before they see the verdict; the Checker re-runs the referee on every claim and throws out byte matches that trick the compiler, such as a stray `volatile`. Across 35 finished runs: 24 false claims caught, 31 fakes rejected, 0 fakes accepted (`python3 tools/counts.py`, reading `crew/exports` in the repo). The linter was red-teamed against 13 bypass classes, and all 13 are blocked (`lab/LINT.md`).
+**Trust but Verify.** The referee is independent of the agents that write the code. It compiles each candidate in a sealed container with no network and no keys, and compares it instruction by instruction with the original. Agents stake a claim before they see the verdict; the Checker re-runs the referee on every claim and throws out byte matches that trick the compiler, such as a stray `volatile`. Across 36 finished runs: 39 false claims caught, 32 fakes rejected, 0 fakes accepted (`python3 tools/counts.py`, reading `crew/exports` in the repo). The linter was red-teamed against 13 bypass classes, and all 13 are blocked (`lab/LINT.md`).
 
 **The System That Gets Better.** After each match the crew keeps a general habit, never the code. A habit is adopted after 3 good uses and retired after 4 bad ones, and the library is frozen while it's tested on 170 held-out functions it never trained on. The honest result: no measured gain yet. On 40 easy held-out functions, library on and off both matched 29; on 20 harder ones, both matched 6 (`crew/EXPERIMENTS.md`). Within a run, warm starts and salvage did turn near-misses into matches. We report the held-out result as it is.
 
@@ -64,10 +64,10 @@ The demo puts the agents' work under the judge's hands. They press Enter and wat
 
 | Claim | Number | Source |
 |---|---|---|
-| Functions recovered, each proven byte-identical | 225 of 568 | `python3 tools/counts.py` (16:00 freeze) |
-| Share of the game's code bytes | 7.54% | same |
+| Functions recovered, each proven byte-identical | 235 of 568 | `python3 tools/counts.py` (16:00 freeze) |
+| Share of the game's code bytes | 8.39% | same |
 | Rebuilt ROM with every recovered function spliced in | SHA-1 `d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2`, identical to the original | `python3 -m lab.referee rebuild --recovered crew/exports/union/recovered`, verified on two machines (`DECISIONS.md`) |
-| False claims caught | 24 | `tools/counts.py`, 35 finished runs |
+| False claims caught | 39 | `tools/counts.py`, 36 finished runs |
 | Fakes rejected / accepted | 30 / 0 | same |
 | Memory probe: functions compiled from memory alone | 0 of 20 | `lab/out/memory_probe.json`, `DECISIONS.md` 13:28 |
 | Visible change from recovered code | god mode HEALTH 200% vs 100% | `lab/demo/shots/god_200_after.png`, `original_god_after.png` |
