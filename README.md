@@ -18,7 +18,6 @@ Our first game is [**GBADoom**](https://github.com/doomhack/GBADoom), the Game B
 
 ## Results
 
-Final numbers, frozen at 16:12 PT on Nov 7, 2026.
 
 | | Result | Source |
 |---|---|---|
@@ -112,11 +111,11 @@ The engineering log is [`DECISIONS.md`](DECISIONS.md).
 | MongoDB Atlas | Stores the habit library shared across runs |
 | Google Gemini | Second-opinion review of accepted matches; also generated the site's illustrations (`site/tools/generate_art.py`) |
 
-## Built at the hackathon / not ours
+## What we built at the hackathon & what we did not build
 
 Built at the AI Engineer Code Summit hackathon, Nov 7, 2026, after 10:45 PT: the code in `contracts/`, `lab/` (except `lab/out/`, see below), `crew/`, `stage/`, `creature/`, `site/` and `tools/` (except `tools/hackclock.py`).
 
-Not ours:
+What we did not build:
 
 - **Doom** by id Software, **PrBoom** by its authors, and **GBADoom** by doomhack (GPL-2.0-or-later).
 - **`lab/out/`** is derived from GBADoom: the `.gba` builds, plus the per-function disassembly in `asm/` and the headers in `ctx/`. It is GPL, not MIT. See [`lab/out/GPL_NOTICE.md`](lab/out/GPL_NOTICE.md). No game data (WAD) is included.
