@@ -25,6 +25,8 @@ export const DATA = {
   memoryProbe: {compiled: 0, of: 20}, // DECISIONS 13:28, lab/out/memory_probe.json (memory alone)
   // crew/exports/doom_hud02 attempts 2-4 at 90.0%; crew/exports/doom_hud03 verdict seq 186: MATCH on attempt 10
   warmStart: {fn: 'fn_0801ABC0', before: 90, beforeRun: 'doom_hud02', after: 'MATCH', afterRun: 'doom_hud03', attempt: 10},
+  // public shared chat https://asi1.ai/shared-chat/5dfc14f7-815e-42e7-a0be-96db539cf5ab, captured 16:0x (stills in public/assets/asi_one_*)
+  asiOneLabel: 'real ASI:One chat, 15:41 (count at that time: 179)',
   url: 'tryfrankenstein.pages.dev',
   repo: 'github.com/KarthikSubramanian07/Frankenstein',
   team: ['Eddy Zhao', 'Karthik Subramanian', 'Aiden Huang', 'Enzo Emami'],

@@ -276,7 +276,8 @@ const Why: React.FC<{len: number}> = ({len}) => {
   );
 };
 
-// 0:49 Partners: each one's job.
+// 0:46 Partners: the real ASI:One chat next to each partner's job.
+const ASI_SHOTS = ['assets/asi_one_rejected_crop.png', 'assets/asi_one_match_crop.png', 'assets/asi_one_identical_crop.png'];
 const Partners: React.FC<{len: number}> = ({len}) => {
   const f = useCurrentFrame();
   const {fps} = useVideoConfig();
@@ -286,23 +287,34 @@ const Partners: React.FC<{len: number}> = ({len}) => {
     {who: 'The compiler', job: 'proves it, byte for byte', col: C.ink},
     {who: 'Fetch.ai ASI:One', job: 'lets anyone ask', col: C.coral},
   ];
+  const seg = len / ASI_SHOTS.length;
   return (
     <Scene len={len}>
-      <Caption size={62} lines={[{t: 'Muse writes · Snap judges · the compiler proves · ASI:One asks', at: 0}]} />
-      <div style={{position: 'absolute', top: 340, left: 0, right: 0, display: 'flex', justifyContent: 'center', gap: 36}}>
+      <Caption size={60} lines={[{t: 'Muse writes · Snap judges · the compiler proves · ASI:One asks', at: 0}]} />
+      <Card style={{position: 'absolute', left: 90, top: 250, width: 760, height: 709, overflow: 'hidden', padding: 0}}>
+        {ASI_SHOTS.map((src, k) => {
+          const o = interpolate(f, [k * seg - 8, k * seg + 4, (k + 1) * seg - 4, (k + 1) * seg + 8], [0, 1, 1, k === ASI_SHOTS.length - 1 ? 1 : 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+          const y = interpolate(f, [k * seg, (k + 1) * seg], [0, -24], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+          return has(src) ? (
+            <Img key={src} src={staticFile(src)} style={{position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', opacity: o, transform: `translateY(${y}px)`}} />
+          ) : k === 0 ? <Pending key={src} what={src} /> : null;
+        })}
+      </Card>
+      <div style={{position: 'absolute', left: 90, top: 972, width: 760, textAlign: 'center', fontFamily: BODY, fontWeight: 600, fontSize: 24, color: C.ink}}>{DATA.asiOneLabel}</div>
+      <div style={{position: 'absolute', left: 900, top: 250, width: 940, display: 'flex', flexWrap: 'wrap', gap: 28}}>
         {cards.map((c, k) => {
-          const p = spring({frame: f - 12 - k * 14, fps, config: SPRING.pop});
+          const p = spring({frame: f - 10 - k * 12, fps, config: SPRING.pop});
           return (
-            <Card key={k} style={{width: 420, height: 440, padding: 38, boxSizing: 'border-box', opacity: clamp01(p * 1.5), transform: `translateY(${(1 - p) * 60}px) rotate(${(k % 2 ? 1.5 : -1.5) * p}deg)`}}>
-              <div style={{height: 18, width: 110, background: c.col, borderRadius: 9, marginBottom: 32}} />
-              <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 58, color: C.ink, lineHeight: 1.05}}>{c.who}</div>
-              <div style={{fontFamily: BODY, fontWeight: 600, fontSize: 40, color: C.gray, marginTop: 18}}>{c.job}</div>
-              {'line' in c && c.line ? <div style={{fontFamily: MONO, fontSize: 24, color: C.violet, marginTop: 22}}>{c.line}</div> : null}
+            <Card key={k} style={{width: 440, height: 330, padding: 34, boxSizing: 'border-box', opacity: clamp01(p * 1.5), transform: `translateY(${(1 - p) * 50}px) rotate(${(k % 2 ? 1.2 : -1.2) * p}deg)`}}>
+              <div style={{height: 16, width: 100, background: c.col, borderRadius: 8, marginBottom: 26}} />
+              <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 52, color: C.ink, lineHeight: 1.05}}>{c.who}</div>
+              <div style={{fontFamily: BODY, fontWeight: 600, fontSize: 36, color: C.gray, marginTop: 14}}>{c.job}</div>
+              {'line' in c && c.line ? <div style={{fontFamily: MONO, fontSize: 22, color: C.violet, marginTop: 16}}>{c.line}</div> : null}
             </Card>
           );
         })}
       </div>
-      <Expert text="MongoDB Atlas holds the crew's memory · Gemini is the second lab screening every match" at={30} />
+      <Expert text="MongoDB Atlas holds the crew's memory · Gemini is the second lab screening every match" at={30} bottom={14} />
     </Scene>
   );
 };
