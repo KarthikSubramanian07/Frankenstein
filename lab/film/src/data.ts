@@ -2,9 +2,9 @@
 // Owned by the asset pass (fork V1); the scenes read it and never hardcode numbers.
 export const DATA = {
   // FROZEN at 16:00 by Lane B's union; update here once, then re-render.
-  functions: 179, // frozen at 16:00 (counts.py at 15:20); crew/exports/union/UNION.json "functions" (python3 tools/counts.py)
+  functions: 225, // frozen at 16:00 (counts.py at 15:20); crew/exports/union/UNION.json "functions" (python3 tools/counts.py)
   totalFunctions: 568,
-  pctBytes: 5.34, // counts.py pct_bytes; frozen at 16:00
+  pctBytes: 7.54, // counts.py pct_bytes; frozen at 16:00
   liesCaught: 24, // counts.py false_claims_caught (crew/exports, 35 runs)
   fakesRejected: 31, // counts.py fakes_rejected
   fakesAccepted: 0,
@@ -21,7 +21,7 @@ export const DATA = {
   // real snap.decision events in crew/exports/doom_r12/events.jsonl (decide_next on fn_08014504 and fn_08018624; review by gemini)
   snap: ['SNAP · ESCALATE · 0.88', 'SNAP · KEEP · 0.85', 'GEMINI · REVIEW · FAKE P 0.00'],
   // lab.agents.frankenstein_agent.answer_prove() at 15:22 (live union, so its count follows the freeze)
-  asiOne: "Is the rebuilt game exact?\nOriginal ROM SHA-1: d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2\nROM built from the agents' code: d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2\nIdentical: yes\nFunctions taken from the agents' compiled code: 175 (5.01% of the game's code bytes)\nInferred: none. Every line above is a checksum or a count.",
+  asiOne: "Is the rebuilt game exact?\nOriginal ROM SHA-1: d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2\nROM built from the agents' code: d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2\nIdentical: yes\nFunctions taken from the agents' compiled code: 225 (7.54% of the game's code bytes)\nInferred: none. Every line above is a checksum or a count.",
   memoryProbe: {compiled: 0, of: 20}, // DECISIONS 13:28, lab/out/memory_probe.json (memory alone)
   // crew/exports/doom_hud02 attempts 2-4 at 90.0%; crew/exports/doom_hud03 verdict seq 186: MATCH on attempt 10
   warmStart: {fn: 'fn_0801ABC0', before: 90, beforeRun: 'doom_hud02', after: 'MATCH', afterRun: 'doom_hud03', attempt: 10},

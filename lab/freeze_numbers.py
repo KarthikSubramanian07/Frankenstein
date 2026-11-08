@@ -34,7 +34,7 @@ def edits(n: dict) -> dict:
     x, y, lies, fakes = n["X"], n["Y"], n["L"], n["F"]
     num = r"\b1[5-9]\d\b"  # a stale function count (150 to 199)
     return {
-        "docs/FILM_SCRIPT.md": [(r"\[\d+\]", f"{x}"), (r"\b\d\d / \d\d / 0", f"{lies} / {fakes} / 0")],
+        "docs/FILM_SCRIPT.md": [(r"\[\d+\]", f"{x}"), (r"\b(1[5-9]\d|2[0-4]\d)\b(?= of (Doom's )?568)", f"{x}"), (r"\b\d\d / \d\d / 0", f"{lies} / {fakes} / 0")],
         "docs/SUBMISSION.md": [(r"\[X\]", f"{x}"), (r"\[Y\]", f"{y}"), (r"\b3\d fakes", f"{fakes} fakes"),
                                (num + r"(?= of (Doom's )?568)", f"{x}"), (r"\| \d\.\d\d%", f"| {y}%")],
         "docs/DEMO_SCRIPT_V2.md": [(r"0\.2 s, 24, " + num + ", " + num, f"0.2 s, {lies}, {x}, {x}"),

@@ -20,7 +20,7 @@ Most classic games survive only as a cartridge. The source code, the recipe the 
 
 Frankenstein's agents read Doom's machine code for the Game Boy Advance and write the C back, one function at a time. A recovered function only counts if a compiler turns it into the original's exact bytes. A Checker re-runs every claim, because agents lie: today it caught 24 false "it matches" claims and rejected 31 fakes, and let none through.
 
-179 of Doom's 568 functions are back so far. With all of them spliced in, the rebuilt game has the same SHA-1 checksum as the original. We changed one line of the recovered god-mode code, and the cheat now gives 200% health.
+225 of Doom's 568 functions are back so far. With all of them spliced in, the rebuilt game has the same SHA-1 checksum as the original. We changed one line of the recovered god-mode code, and the cheat now gives 200% health.
 
 ## Problem statements
 
@@ -64,8 +64,8 @@ The demo puts the agents' work under the judge's hands. They press Enter and wat
 
 | Claim | Number | Source |
 |---|---|---|
-| Functions recovered, each proven byte-identical | 179 of 568 | `python3 tools/counts.py` (16:00 freeze) |
-| Share of the game's code bytes | 5.34% | same |
+| Functions recovered, each proven byte-identical | 225 of 568 | `python3 tools/counts.py` (16:00 freeze) |
+| Share of the game's code bytes | 7.54% | same |
 | Rebuilt ROM with every recovered function spliced in | SHA-1 `d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2`, identical to the original | `python3 -m lab.referee rebuild --recovered crew/exports/union/recovered`, verified on two machines (`DECISIONS.md`) |
 | False claims caught | 24 | `tools/counts.py`, 35 finished runs |
 | Fakes rejected / accepted | 30 / 0 | same |
