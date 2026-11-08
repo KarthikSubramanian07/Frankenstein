@@ -13,8 +13,8 @@ no "SHA-1", no "machine code", no "function", no model names except on the end c
 | 0:16 to 0:21 | Left: a wall of raw numbers from the cartridge. Right: readable code appearing line by line | Our AI agents read the cartridge and rewrite the code, piece by piece. | 05 · S2 · Eddy |
 | 0:21 to 0:24.5 | The code goes into a checker box | Then a checker rebuilds each piece. | 06 · S2 · Eddy |
 | 0:24.5 to 0:28 | A green EXACT MATCH stamp | It passes only if it's an exact match. | 07 · S2 · Eddy |
-| 0:28 to 0:32 | A chat bubble from the AI: "Done. It matches!" | Sometimes the AI says it got it right when it didn't. | 08 · S3 · Aiden |
-| 0:32 to 0:36 | A red NOT A MATCH stamp lands on the bubble | The checker caught all 39 of those today. | 09 · S3 · Aiden |
+| 0:28 to 0:32 | A chat bubble from the AI: "Done. It matches!" | Sometimes the AI says it's right when it isn't. | 08 · S3 · Aiden |
+| 0:32 to 0:36 | A red NOT A MATCH stamp lands on the bubble | The checker catches it: 39 wrong answers caught today. | 09 · S3 · Aiden |
 | 0:36 to 0:40 | 235 green pieces assemble; a big "235" counter, no denominator | 235 pieces of Doom are back. Each one is an exact match. | 10 · S3 · Aiden |
 | 0:40 to 0:44 | The pieces snap into the cartridge; a check mark; then "20,000 tests · 20,000 identical answers" | Put back together, the game is identical to the original. | 11 · S3 · Aiden |
 | 0:44 to 0:49 | Original Doom, cheat on. Zoom into the health number: 100% | Now that we have the code, we can change it. | 12 · S4 · Karthik |
