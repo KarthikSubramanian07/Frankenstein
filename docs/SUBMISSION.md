@@ -68,7 +68,7 @@ The demo puts the agents' work under the judge's hands. They press Enter and wat
 | Share of the game's code bytes | 8.39% | same |
 | Rebuilt ROM with every recovered function spliced in | SHA-1 `d936259bcbe48b5ce5d8be4d5ffe935c1eece8b2`, identical to the original | `python3 -m lab.referee rebuild --recovered crew/exports/union/recovered`, verified on two machines (`DECISIONS.md`) |
 | False claims caught | 39 | `tools/counts.py`, 36 finished runs |
-| Fakes rejected / accepted | 30 / 0 | same |
+| Fakes rejected | 32 / 0 | same |
 | Memory probe: functions compiled from memory alone | 0 of 20 | `lab/out/memory_probe.json`, `DECISIONS.md` 13:28 |
 | Visible change from recovered code | god mode HEALTH 200% vs 100% | `lab/demo/shots/god_200_after.png`, `original_god_after.png` |
 | Cross-platform equivalence | 20,000 of 20,000 identical | `lab/demo/equivalence/` |

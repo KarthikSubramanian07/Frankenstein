@@ -5,7 +5,7 @@
   "description": "One-minute Frankenstein submission film, built with Remotion",
   "scripts": {
     "studio": "remotion studio",
-    "render": "node scripts/render.mjs Frankenstein out/frankenstein_film.mp4",
+    "render": "node scripts/render.mjs Frankenstein out/frankenstein_film_final.mp4",
     "render:vertical": "node scripts/render.mjs PlatypusVertical out/platypus_ad_vertical.mp4",
     "stills": "node scripts/stills.mjs",
     "audio": "node scripts/generate-audio.mjs",

@@ -174,7 +174,7 @@ const Lie: React.FC = () => {
           <div style={{fontFamily: BODY, fontWeight: 600, fontSize: 32, color: C.ink, marginTop: 8}}>slipped through</div>
         </div>
       </div>
-      <Lines items={[[0, 4, "Sometimes Muse says it's right when it isn't."], [4, 8, `Our checker and SubQ Snap caught ${DATA.wrongAnswersCaught} wrong answers today.`]]} />
+      <Lines items={[[0, 4, "Every answer gets checked before it counts."], [4, 8, `Our checker and SubQ Snap caught ${DATA.wrongAnswersCaught} wrong answers today.`]]} />
     </Fade>
   );
 };
@@ -217,7 +217,7 @@ const Count: React.FC = () => {
       <div style={{position: 'absolute', left: 0, right: 0, top: 860, textAlign: 'center', opacity: eq, transform: `translateY(${(1 - eq) * 16}px)`, fontFamily: HEAD, fontWeight: 800, fontSize: 72, letterSpacing: 0, whiteSpace: 'nowrap', color: C.lcd1}}>
         {DATA.equivalenceLine}
       </div>
-      <Lines items={[[0, 4, `${N} pieces of Doom are back, each one an exact match.`], [4, 8, "Ask Fetch.ai's ASI:One, and it proves the rebuilt game is identical."]]} />
+      <Lines items={[[0, 4, 'Many pieces of Doom are back, each one an exact match.'], [4, 8, "Ask Fetch.ai's ASI:One, and it proves the rebuilt game is identical."]]} />
     </Fade>
   );
 };
@@ -233,7 +233,7 @@ const Before: React.FC = () => {
   return (
     <Fade len={s(5)} bg={C.ink}>
       <Game clip="clips/god_original.mp4" still="clips/god_original_end.png" from={s(3)} view={zoomView(z)} clipLen={s(5)} len={s(5)} />
-      <Lines onDark items={[[0, 5, 'Now that we have the code, we can change it.']]} />
+      <Lines onDark items={[[0, 5, 'Take the god-mode cheat code. Now we can change it.']]} />
     </Fade>
   );
 };
@@ -282,7 +282,7 @@ const SLOTS: [number, number, React.FC][] = [
 
 // One narration file per section (docs/FILM_SCRIPT.md): s1 at 0:00, s2 at 0:16, s3 at 0:28, s4 at 0:44.
 // A missing file means that section is silent.
-const SECTIONS: [string, number][] = [['s1', 0], ['s2', 16], ['s3', 28], ['s4', 44]];
+const SECTIONS: [string, number][] = [['s1', 0], ['s2', 16], ['s3', 28], ['s4', 42.9]];
 const voiceFile = (id: string) => ['m4a', 'wav', 'mp3'].map((e) => `voice/${id}.${e}`).find(has);
 
 /** A subtle animated film grain over the whole frame (2%). */
