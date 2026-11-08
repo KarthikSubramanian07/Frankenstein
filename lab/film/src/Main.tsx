@@ -1,357 +1,245 @@
 import React from 'react';
-import {AbsoluteFill, Audio, getStaticFiles, Img, interpolate, OffthreadVideo, Sequence, spring, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
+import {AbsoluteFill, Audio, Easing, getStaticFiles, Img, interpolate, OffthreadVideo, Sequence, staticFile, useCurrentFrame} from 'remotion';
 import {DATA} from './data';
-import {SCENES} from './timeline';
-import {BODY, C, HEAD, MONO, SPRING} from './theme';
-import {Card, Caption, clamp01, Expert, Lcd, Pending, Scene, Stamp} from './ui';
+import {s} from './timeline';
+import {BODY, C, HEAD, MONO} from './theme';
 
-const files = () => new Set(getStaticFiles().map((f) => f.name));
-const has = (name: string) => files().has(name);
-const Clip: React.FC<{name: string; from?: number}> = ({name, from = 0}) =>
-  has(name) ? <OffthreadVideo src={staticFile(name)} startFrom={from} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} /> : <Pending what={name} />;
+const has = (name: string) => getStaticFiles().some((f) => f.name === name);
+const ease = Easing.inOut(Easing.cubic);
+const fadeIO = (f: number, len: number, d = 9) =>
+  interpolate(f, [0, d, len - d, len], [0, 1, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+const ramp = (f: number, a: number, b: number) => interpolate(f, [a, b], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: ease});
 
-const fmt = (n: number) => n.toLocaleString('en-US');
-
-// 0:00 Hook: the changed game, side by side.
-const Hook: React.FC<{len: number}> = ({len}) => (
-  <Scene len={len}>
-    <Caption size={62} lines={[{t: "Doom, rebuilt by AI from machine code. Then changed.", at: 0}]} />
-    <Lcd x={120} y={270} w={1680} h={602}>
-      {/* Start 2.6 s in: the cheat has fired, so 100% vs 200% shows from the first second; the real last frame holds after. */}
-      {has('clips/side_by_side_end.png') ? <Img src={staticFile('clips/side_by_side_end.png')} style={{position: 'absolute', width: '100%', height: '100%', objectFit: 'cover'}} /> : null}
-      <Sequence durationInFrames={125} layout="none">
-        <div style={{position: 'absolute', inset: 0}}>
-          <Clip name="clips/side_by_side.mp4" from={78} />
-        </div>
-      </Sequence>
-    </Lcd>
-    <Readout at={12} />
-    <Newcomer at={24} />
-    <Expert text="GBADoom · god-mode function fn_080054C8 recovered by the agents, one line edited, rebuilt" at={30} bottom={14} />
-  </Scene>
-);
-
-/** Big health readouts under each half of the side by side, readable muted. */
-const Readout: React.FC<{at: number}> = ({at}) => {
+/** One sentence, big and centred, held for its whole slot. `onDark` puts it on a dark pill over footage. */
+const Line: React.FC<{text: string; len: number; onDark?: boolean; top?: number}> = ({text, len, onDark, top}) => {
   const f = useCurrentFrame();
-  const {fps} = useVideoConfig();
-  const p = spring({frame: f - at, fps, config: SPRING.pop});
-  // One flash on the 200% side: a pulse and an underline drawn under it, so the eye finds the difference.
-  const pulse = 1 + 0.18 * Math.exp(-Math.max(0, f - at - 10) / 6) * (f >= at + 10 ? 1 : 0);
-  const line = interpolate(f, [at + 10, at + 22], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
-  const flash = interpolate(f, [at + 10, at + 14, at + 28], [0, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
-  const item = (x: number, v: string, col: string, s: number) => (
-    <div style={{position: 'absolute', left: x, top: 884, width: 840, textAlign: 'center', opacity: clamp01(p * 1.5), transform: `scale(${(0.8 + 0.2 * p) * s})`, fontFamily: HEAD, fontWeight: 800, fontSize: 64, color: col}}>{v}</div>
-  );
+  const o = fadeIO(f, len, 10);
+  const box: React.CSSProperties = onDark
+    ? {background: 'rgba(29,32,38,0.82)', color: C.cream, padding: '18px 40px', borderRadius: 20}
+    : {color: C.ink};
   return (
-    <>
-      <div style={{position: 'absolute', left: 960, top: 292, width: 818, height: 558, border: `10px solid ${C.coral}`, borderRadius: 12, opacity: flash, boxSizing: 'border-box'}} />
-      {item(120, 'health 100%', C.gray, 1)}
-      {item(960, 'health 200%', C.coral, pulse)}
-      <div style={{position: 'absolute', left: 1380 - 190 * line, top: 968, width: 380 * line, height: 10, borderRadius: 5, background: C.coral}} />
-    </>
-  );
-};
-
-/** Shows only the game area of the 2880x1490 player capture (x 322..2557), dropping the key legend. */
-const CAP = {w: 2880, h: 1490, x0: 330, x1: 2550};
-const GameCrop: React.FC<{innerW: number; children: React.ReactNode}> = ({innerW, children}) => {
-  const k = innerW / (CAP.x1 - CAP.x0);
-  return <div style={{position: 'absolute', left: -CAP.x0 * k, top: 0, width: CAP.w * k, height: CAP.h * k}}>{children}</div>;
-};
-
-/** For people who don't play Doom: what the cheat is and what changed. */
-const Newcomer: React.FC<{at: number}> = ({at}) => {
-  const f = useCurrentFrame();
-  const o = interpolate(f, [at, at + 10], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
-  return (
-    <div style={{position: 'absolute', top: 994, left: 0, right: 0, textAlign: 'center', opacity: o, fontFamily: BODY, fontWeight: 600, fontSize: 28, color: C.ink}}>
-      Same cheat: Doom's god mode (invincibility). Right side: one line of the agents' recovered C changed it to 200% health.
+    <div style={{position: 'absolute', left: 0, right: 0, top: top ?? (onDark ? 50 : 90), display: 'flex', justifyContent: 'center', opacity: o}}>
+      <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 80, lineHeight: 1.12, textAlign: 'center', maxWidth: 1640, letterSpacing: -1, ...box}}>{text}</div>
     </div>
   );
 };
 
-// 0:06 Problem: cartridge, recipe with its lines missing.
-const Problem: React.FC<{len: number}> = ({len}) => {
-  const f = useCurrentFrame();
-  const {fps} = useVideoConfig();
-  const cart = spring({frame: f - 8, fps, config: SPRING.pop});
-  const card = spring({frame: f - 35, fps, config: SPRING.pop});
-  const stat = spring({frame: f - 60, fps, config: SPRING.pop});
-  const boil = Math.floor(f / 4) % 2; // hand-drawn lines boil at about 8 fps
+/** Lines in slots: [start, end, text] in seconds, relative to the scene. */
+const Lines: React.FC<{items: [number, number, string][]; onDark?: boolean; top?: number}> = ({items, onDark, top}) => (
+  <>
+    {items.map(([a, b, t]) => (
+      <Sequence key={t} from={s(a)} durationInFrames={s(b) - s(a)} layout="none">
+        <Line text={t} len={s(b) - s(a)} onDark={onDark} top={top} />
+      </Sequence>
+    ))}
+  </>
+);
+
+/** Game footage: the 2880x1490 capture, nearest-neighbour scaled. View is a centre point (cx, cy) and a scale k. */
+const CAP = {w: 2880, h: 1490};
+const WIDE = {cx: 1440, cy: 866, k: 0.865}; // game area x 330..2550 fills the width, status bar on screen
+const Game: React.FC<{clip: string; still: string; from: number; view: {cx: number; cy: number; k: number}; clipLen: number}> = ({clip, still, from, view, clipLen}) => {
+  const t = `translate(${960 - view.cx * view.k}px, ${540 - view.cy * view.k}px) scale(${view.k})`;
+  const px: React.CSSProperties = {position: 'absolute', left: 0, top: 0, width: CAP.w, height: CAP.h, imageRendering: 'pixelated'};
   return (
-    <Scene len={len}>
-      <Caption size={70} lines={[{t: 'Most classic games survive only as a cartridge.', at: 0}, {t: 'The source code is gone.', at: 75}]} />
+    <AbsoluteFill style={{background: '#000', overflow: 'hidden'}}>
+      <div style={{position: 'absolute', left: 0, top: 0, width: CAP.w, height: CAP.h, transform: t, transformOrigin: '0 0'}}>
+        {has(still) ? <Img src={staticFile(still)} style={px} /> : null}
+        <Sequence durationInFrames={clipLen} layout="none">
+          {has(clip) ? <OffthreadVideo src={staticFile(clip)} startFrom={from} muted style={px} /> : null}
+        </Sequence>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const Fade: React.FC<{len: number; bg?: string; children: React.ReactNode}> = ({len, bg = C.cream, children}) => {
+  const f = useCurrentFrame();
+  return <AbsoluteFill style={{background: bg, opacity: fadeIO(f, len, 9)}}>{children}</AbsoluteFill>;
+};
+
+// 0:00 to 0:08 Doom, full screen.
+const Open: React.FC = () => (
+  <Fade len={s(8)} bg="#000">
+    <Game clip="clips/god_original.mp4" still="clips/god_original_end.png" from={0} view={WIDE} clipLen={s(8)} />
+    <Lines onDark items={[[0, 4, 'This is Doom, from 1993.'], [4, 8, 'For most games this old, the original code is lost.']]} />
+  </Fade>
+);
+
+// 0:08 to 0:16 A cartridge and a blank page with a question mark.
+const Lost: React.FC = () => {
+  const f = useCurrentFrame();
+  const a = ramp(f, 6, 30);
+  const b = ramp(f, 24, 48);
+  return (
+    <Fade len={s(8)}>
       <svg width={1920} height={1080} style={{position: 'absolute', inset: 0}}>
-        <g transform={`translate(520 610) scale(${cart}) rotate(${-6 + boil * 0.8})`}>
-          <rect x={-170} y={-210} width={340} height={400} rx={26} fill={C.lcd1} stroke={C.ink} strokeWidth={8} />
-          <rect x={-120} y={-150} width={240} height={170} rx={10} fill={C.lcd3} stroke={C.ink} strokeWidth={6} />
-          <text x={0} y={-50} textAnchor="middle" fontFamily={HEAD} fontWeight={800} fontSize={54} fill={C.lcd0}>DOOM</text>
-          {[0, 1, 2, 3, 4].map((k) => (
-            <rect key={k} x={-110 + k * 48} y={150} width={28} height={40} fill={C.ink} />
-          ))}
-          <text x={0} y={95} textAnchor="middle" fontFamily={MONO} fontSize={26} fill={C.cream}>machine code only</text>
+        <g transform={`translate(640 640)`} opacity={a}>
+          <rect x={-180} y={-230} width={360} height={430} rx={28} fill={C.lcd1} stroke={C.ink} strokeWidth={8} />
+          <rect x={-130} y={-170} width={260} height={180} rx={10} fill={C.lcd3} stroke={C.ink} strokeWidth={6} />
+          <text x={0} y={-62} textAnchor="middle" fontFamily={HEAD} fontWeight={800} fontSize={58} fill={C.lcd0}>DOOM</text>
+          {[0, 1, 2, 3, 4].map((k) => <rect key={k} x={-118 + k * 50} y={160} width={30} height={40} fill={C.ink} />)}
         </g>
-        <g opacity={clamp01(card * 1.5)}>
-          <path d={`M 760 ${610 + boil} C 860 ${580 - boil} 980 ${640 + boil} 1080 600`} stroke={C.coral} strokeWidth={7} fill="none" strokeDasharray="16 14" />
-          <path d="M 1060 580 L 1090 602 L 1056 622" stroke={C.coral} strokeWidth={7} fill="none" />
-        </g>
-        <g transform={`translate(1400 600) scale(${card}) rotate(${4 - boil * 0.8})`}>
-          <rect x={-230} y={-250} width={460} height={500} rx={20} fill={C.paper} stroke={C.ink} strokeWidth={8} />
-          <text x={-190} y={-180} fontFamily={HEAD} fontWeight={800} fontSize={46} fill={C.ink}>Recipe (source)</text>
-          {[0, 1, 2, 3, 4, 5].map((k) => (
-            <line key={k} x1={-190} x2={150 - (k % 3) * 60} y1={-110 + k * 56} y2={-110 + k * 56} stroke={C.gray} strokeWidth={6} strokeDasharray="4 18" />
-          ))}
-          <text x={120} y={150} fontFamily={HEAD} fontWeight={800} fontSize={150} fill={C.violet}>?</text>
+        <g transform={`translate(1280 640)`} opacity={b}>
+          <rect x={-200} y={-250} width={400} height={480} rx={18} fill={C.paper} stroke={C.ink} strokeWidth={8} />
+          <text x={0} y={60} textAnchor="middle" fontFamily={HEAD} fontWeight={800} fontSize={240} fill={C.violet}>?</text>
         </g>
       </svg>
-      <div style={{position: 'absolute', left: 0, right: 0, top: 900, textAlign: 'center', opacity: clamp01(stat * 1.4), transform: `scale(${0.9 + 0.1 * stat})`, fontFamily: BODY, fontWeight: 700, fontSize: 40, color: C.ink}}>
-        <span style={{color: C.coral, fontFamily: HEAD, fontSize: 64}}>{DATA.endangeredPct}%</span> of classic games are endangered.
-        <span style={{fontWeight: 400, fontSize: 24, color: C.gray, marginLeft: 16}}>(VGHF and SPN, 2023)</span>
-      </div>
-      <Expert text="Only the compiled ROM ships. The C source that made it is lost." at={40} />
-    </Scene>
+      <Lines items={[[0, 4, 'The game still runs, but nobody can read how it works.'], [4, 8, 'So nobody can fix it, or bring it to new devices.']]} />
+    </Fade>
   );
 };
 
-// 0:14 How: machine code becomes C, then MATCH.
-const How: React.FC<{len: number}> = ({len}) => {
+// 0:16 to 0:28 Raw numbers to readable code, into the checker, EXACT MATCH.
+const Rebuild: React.FC = () => {
   const f = useCurrentFrame();
-  const asm = DATA.match.asm;
-  const c = DATA.match.c;
-  const asmShown = Math.floor(interpolate(f, [15, 90], [0, asm.length], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}));
-  const cShown = Math.floor(interpolate(f, [70, 190], [0, c.length], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}));
+  const hex = DATA.matchHex.split(' ');
+  const code = DATA.match.c.split('\n').filter((l) => !l.trim().startsWith('//') && !l.trim().startsWith('/*') && !l.trim().startsWith('*')).join('\n');
+  const typed = Math.floor(interpolate(f, [s(0.6), s(4.6)], [0, code.length], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}));
+  const intoBox = ramp(f, s(5.2), s(7));
+  const stamp = ramp(f, s(8.6), s(9.4));
+  const hexO = 1 - intoBox;
   return (
-    <Scene len={len}>
-      <Caption size={70} lines={[{t: "Meta's Muse writes the C.", at: 0}, {t: "Byte for byte, or it doesn't count.", at: 120}, {t: `From memory alone: ${DATA.memoryProbe.compiled} of ${DATA.memoryProbe.of} compiled.`, at: 215}]} />
-      <Card style={{position: 'absolute', left: 90, top: 250, width: 800, height: 700, padding: 32, boxSizing: 'border-box', background: C.ink, borderColor: C.ink}}>
-        <div style={{fontFamily: BODY, fontWeight: 700, fontSize: 26, color: C.lcd3, marginBottom: 16}}>MACHINE CODE · from the cartridge</div>
-        {asm.length ? (
-          asm.slice(0, Math.max(asmShown, 0)).slice(0, 14).map((l, k) => (
-            <div key={k} style={{fontFamily: MONO, fontSize: 30, color: C.cream, lineHeight: 1.4, whiteSpace: 'pre'}}>{l}</div>
-          ))
-        ) : (
-          <div style={{fontFamily: MONO, fontSize: 24, color: C.gray}}>asset pending: DATA.match.asm</div>
-        )}
-      </Card>
-      <svg width={120} height={80} style={{position: 'absolute', left: 905, top: 560}}>
-        <path d="M 10 40 L 100 40 M 80 18 L 104 40 L 80 62" stroke={C.coral} strokeWidth={9} fill="none" />
-      </svg>
-      <Card style={{position: 'absolute', left: 1030, top: 250, width: 800, height: 700, padding: 32, boxSizing: 'border-box'}}>
-        <div style={{fontFamily: BODY, fontWeight: 700, fontSize: 26, color: C.lcd1, marginBottom: 16}}>C · written by Meta's Muse Spark</div>
-        <div style={{fontFamily: MONO, fontSize: 27, color: C.ink, lineHeight: 1.45, whiteSpace: 'pre-wrap'}}>{c ? c.slice(0, cShown) : 'asset pending: DATA.match.c'}</div>
-      </Card>
-      <Stamp text="MATCH" at={205} color={C.lcd1} x={1500} y={830} />
-      <Expert text={`ARM Thumb machine code → C → GCC → byte-identical · each check ${DATA.checkSeconds} s · ${DATA.match.fn}`} at={40} />
-    </Scene>
-  );
-};
-
-// 0:23 Trust: a real false claim, caught at one instruction.
-const Trust: React.FC<{len: number}> = ({len}) => {
-  const f = useCurrentFrame();
-  const {fps} = useVideoConfig();
-  const L = DATA.lie;
-  const a = spring({frame: f - 8, fps, config: SPRING.pop});
-  const b = spring({frame: f - 45, fps, config: SPRING.pop});
-  const counts = [
-    {n: DATA.liesCaught, t: 'lies caught', col: C.coral},
-    {n: DATA.fakesRejected, t: 'fakes rejected', col: C.coral},
-    {n: DATA.fakesAccepted, t: 'let through', col: C.lcd1},
-  ];
-  return (
-    <Scene len={len}>
-      <Caption size={76} lines={[{t: "Agents lie. Compilers don't.", at: 0}]} />
-      <Card style={{position: 'absolute', left: 110, top: 290, width: 720, padding: 38, boxSizing: 'border-box', opacity: clamp01(a * 1.5), transform: `scale(${0.9 + 0.1 * a})`}}>
-        <div style={{fontFamily: BODY, fontWeight: 700, fontSize: 26, color: C.gray}}>AGENT · claim</div>
-        <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 64, color: C.ink, marginTop: 8}}>“{L.claim}”</div>
-      </Card>
-      <Card style={{position: 'absolute', left: 890, top: 290, width: 920, padding: 38, boxSizing: 'border-box', background: C.ink, opacity: clamp01(b * 1.5), transform: `scale(${0.9 + 0.1 * b})`}}>
-        <div style={{fontFamily: BODY, fontWeight: 700, fontSize: 26, color: C.lcd3}}>REFEREE · re-runs the compiler</div>
-        <div style={{fontFamily: MONO, fontSize: 31, color: C.cream, marginTop: 14}}>{L.pct}% match · first difference at {L.offset}</div>
-        <div style={{fontFamily: MONO, fontSize: 36, color: C.mint, marginTop: 16}}>expected {L.expected}</div>
-        <div style={{fontFamily: MONO, fontSize: 36, color: C.coral, marginTop: 8}}>got&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L.got}</div>
-      </Card>
-      <Stamp text="REJECTED" at={85} color={C.coral} x={1530} y={760} size={96} />
-      <div style={{position: 'absolute', top: 640, left: 140, width: 1000, display: 'flex', justifyContent: 'center', gap: 80}}>
-        {counts.map((c, k) => {
-          const p = spring({frame: f - 120 - k * 8, fps, config: SPRING.pop});
-          return (
-            <div key={k} style={{textAlign: 'center', opacity: clamp01(p * 1.5), transform: `translateY(${(1 - p) * 30}px)`}}>
-              <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 150, color: c.col, lineHeight: 1}}>{c.n}</div>
-              <div style={{fontFamily: BODY, fontWeight: 700, fontSize: 38, color: C.ink}}>{c.t}</div>
-            </div>
-          );
-        })}
+    <Fade len={s(12)}>
+      <div style={{position: 'absolute', left: 110, top: 330, width: 760, opacity: hexO, fontFamily: MONO, fontSize: 30, lineHeight: 1.5, color: C.gray, wordBreak: 'break-all'}}>
+        {hex.slice(0, 168).join(' ')}
       </div>
-      <Expert text={`real event: ${L.run} · ${L.fn} · attempt ${L.attempt} · one instruction gave it away`} at={40} />
-    </Scene>
+      <div
+        style={{
+          position: 'absolute', left: interpolate(intoBox, [0, 1], [1010, 610]), top: interpolate(intoBox, [0, 1], [330, 380]), width: 700, padding: 34,
+          background: C.paper, border: `5px solid ${C.ink}`, borderRadius: 22, fontFamily: MONO, fontSize: 30, lineHeight: 1.45, color: C.ink, whiteSpace: 'pre-wrap',
+          transform: `scale(${interpolate(intoBox, [0, 1], [1, 0.9])})`,
+        }}
+      >
+        {code.slice(0, typed)}
+      </div>
+      {/* the checker box */}
+      <div style={{position: 'absolute', left: 540, top: 330, width: 840, height: 640, border: `10px solid ${C.ink}`, borderRadius: 34, opacity: intoBox}} />
+      <div
+        style={{
+          position: 'absolute', left: 960, top: 650, whiteSpace: 'nowrap', transform: `translate(-50%,-50%) rotate(-6deg) scale(${interpolate(stamp, [0, 1], [1.25, 1])})`, opacity: stamp,
+          border: `12px solid ${C.lcd1}`, borderRadius: 20, padding: '10px 44px', background: 'rgba(251,250,247,0.94)', color: C.lcd1, fontFamily: HEAD, fontWeight: 800, fontSize: 104, letterSpacing: 4,
+        }}
+      >
+        EXACT MATCH
+      </div>
+      <Lines items={[[0, 5, 'Our AI agents read the cartridge and rewrite the code, piece by piece.'], [5, 8.5, 'Then a checker rebuilds each piece.'], [8.5, 12, "It passes only if it's an exact match."]]} />
+    </Fade>
   );
 };
 
-// 0:31 Proof: the count and two identical checksums.
-const Proof: React.FC<{len: number}> = ({len}) => {
+// 0:28 to 0:36 The AI claims a match; NOT A MATCH.
+const Lie: React.FC = () => {
+  const f = useCurrentFrame();
+  const bubble = ramp(f, 6, 26);
+  const stamp = ramp(f, s(4), s(4.8));
+  return (
+    <Fade len={s(8)}>
+      <div style={{position: 'absolute', left: 960, top: 560, transform: `translate(-50%,-50%) scale(${0.94 + 0.06 * bubble})`, opacity: bubble}}>
+        <div style={{background: C.paper, border: `6px solid ${C.ink}`, borderRadius: 48, padding: '50px 80px', fontFamily: BODY, fontWeight: 700, fontSize: 92, color: C.ink, whiteSpace: 'nowrap'}}>
+          <span style={{display: 'inline-block', background: C.ink, color: C.cream, borderRadius: 999, fontSize: 44, padding: '10px 22px', marginRight: 30, verticalAlign: 'middle'}}>AI</span>
+          Done. It matches!
+        </div>
+        <div style={{position: 'absolute', left: 120, bottom: -46, width: 0, height: 0, borderLeft: '40px solid transparent', borderRight: '40px solid transparent', borderTop: `50px solid ${C.ink}`}} />
+      </div>
+      <div
+        style={{
+          position: 'absolute', left: 1180, top: 760, whiteSpace: 'nowrap', transform: `translate(-50%,-50%) rotate(-8deg) scale(${interpolate(stamp, [0, 1], [1.25, 1])})`, opacity: stamp,
+          border: `12px solid ${C.coral}`, borderRadius: 20, padding: '10px 44px', background: 'rgba(251,250,247,0.94)', color: C.coral, fontFamily: HEAD, fontWeight: 800, fontSize: 96, letterSpacing: 4,
+        }}
+      >
+        NOT A MATCH
+      </div>
+      <Lines items={[[0, 4, "Sometimes the AI says it got it right when it didn't."], [4, 8, `The checker caught all ${DATA.liesCaught} of those today.`]]} />
+    </Fade>
+  );
+};
+
+// 0:36 to 0:44 568 squares fill; they fold into a cartridge with a check mark.
+const Count: React.FC = () => {
   const f = useCurrentFrame();
   const N = DATA.functions;
   const T = DATA.totalFunctions;
-  const filled = Math.round(interpolate(f, [12, 110], [0, N], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: (t) => 1 - (1 - t) ** 3}));
-  const cols = 24;
-  const cell = 24;
-  const shaO = interpolate(f, [120, 135], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const filled = Math.round(interpolate(f, [s(0.3), s(1.6)], [0, N], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)}));
+  const fold = ramp(f, s(4.2), s(5.6));
+  const check = ramp(f, s(5.6), s(6.6));
+  const cols = 36;
+  const cell = 26;
   return (
-    <Scene len={len}>
-      <Caption size={70} lines={[{t: `${N} of ${T} functions, proven.`, at: 0}, {t: 'SHA-1 identical.', at: 130}]} />
-      <div style={{position: 'absolute', left: 130, top: 250, width: cols * cell, display: 'flex', flexWrap: 'wrap'}}>
+    <Fade len={s(8)}>
+      <div style={{position: 'absolute', left: 960 - (cols * cell) / 2, top: 300, width: cols * cell, display: 'flex', flexWrap: 'wrap', opacity: 1 - fold, transform: `scale(${1 - 0.55 * fold})`, transformOrigin: '50% 40%'}}>
         {Array.from({length: T}, (_, k) => (
-          <div key={k} style={{width: cell - 3, height: cell - 3, margin: 1.5, borderRadius: 3, background: k < filled ? C.mint : '#DDD6C8', boxShadow: k < filled ? `inset 0 0 0 2px ${C.lcd1}` : 'none'}} />
+          <div key={k} style={{width: cell - 4, height: cell - 4, margin: 2, borderRadius: 4, background: k < filled ? C.lcd1 : '#DDD6C8'}} />
         ))}
       </div>
-      <div style={{position: 'absolute', left: 130, top: 840, fontFamily: HEAD, fontWeight: 800, fontSize: 84, color: C.ink}}>
-        {filled}<span style={{color: C.gray, fontSize: 50}}> / {T} proven</span>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 790, textAlign: 'center', opacity: 1 - fold, fontFamily: HEAD, fontWeight: 800, fontSize: 110, color: C.lcd1}}>
+        {filled}
+        <span style={{color: C.gray, fontSize: 64}}> / {T}</span>
       </div>
-      <div style={{position: 'absolute', left: 820, top: 330, width: 1000, opacity: shaO}}>
-        {['ORIGINAL', 'REBUILT'].map((t) => (
-          <Card key={t} style={{padding: '22px 30px', marginBottom: 26}}>
-            <div style={{fontFamily: BODY, fontWeight: 700, fontSize: 26, color: C.gray}}>{t} ROM · SHA-1</div>
-            <div style={{fontFamily: MONO, fontWeight: 700, fontSize: 31, color: C.ink, marginTop: 6}}>{DATA.sha1}</div>
-          </Card>
-        ))}
-      </div>
-      <Stamp text="IDENTICAL" at={160} color={C.lcd1} x={1320} y={700} size={96} rot={-5} />
-      <Expert text={`${DATA.pctBytes}% of code bytes so far, small functions first · agent C spliced in, the rest original`} at={40} />
-    </Scene>
+      <svg width={1920} height={1080} style={{position: 'absolute', inset: 0, opacity: fold}}>
+        <g transform={`translate(960 610) scale(${0.85 + 0.15 * fold})`}>
+          <rect x={-180} y={-230} width={360} height={430} rx={28} fill={C.lcd1} stroke={C.ink} strokeWidth={8} />
+          <rect x={-130} y={-170} width={260} height={180} rx={10} fill={C.lcd3} stroke={C.ink} strokeWidth={6} />
+          <text x={0} y={-62} textAnchor="middle" fontFamily={HEAD} fontWeight={800} fontSize={58} fill={C.lcd0}>DOOM</text>
+          {[0, 1, 2, 3, 4].map((k) => <rect key={k} x={-118 + k * 50} y={160} width={30} height={40} fill={C.ink} />)}
+        </g>
+        <path d="M 1180 600 L 1250 670 L 1390 500" stroke={C.lcd1} strokeWidth={30} fill="none" strokeLinecap="round" strokeLinejoin="round" pathLength={1} strokeDasharray={1} strokeDashoffset={1 - check} />
+      </svg>
+      <Lines items={[[0, 4, `${N} of Doom's ${T} pieces are back so far.`], [4, 8, 'Put back together, the game is identical to the original.']]} />
+    </Fade>
   );
 };
 
-// 0:36 Run over run: a near-miss became a MATCH.
-const Warm: React.FC<{len: number}> = ({len}) => {
+// The HEALTH number in the 2880x1490 capture (measured on god_200_end.png): centre (840, 1300); zoom so it fills ~40%.
+const HP = {cx: 840, cy: 1255, k: 2.05};
+const zoomView = (p: number) => ({cx: WIDE.cx + (HP.cx - WIDE.cx) * p, cy: WIDE.cy + (HP.cy - WIDE.cy) * p, k: WIDE.k + (HP.k - WIDE.k) * p});
+
+// 0:44 to 0:49 Original Doom, cheat on, zoom into 100%.
+const Before: React.FC = () => {
   const f = useCurrentFrame();
-  const W = DATA.warmStart;
-  const w = interpolate(f, [8, 40], [0, W.before], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
-  const bar = (label: string, pct: number, col: string, top: number) => (
-    <div style={{position: 'absolute', left: 200, top, width: 1520}}>
-      <div style={{fontFamily: MONO, fontSize: 34, color: C.ink, marginBottom: 12}}>{label}</div>
-      <div style={{height: 96, background: '#DDD6C8', borderRadius: 14, overflow: 'hidden'}}>
-        <div style={{height: '100%', width: `${pct}%`, background: col, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', paddingRight: 18, boxSizing: 'border-box', fontFamily: HEAD, fontWeight: 800, fontSize: 48, color: C.ink}}>{Math.round(pct)}%</div>
-      </div>
+  const z = ramp(f, s(1.2), s(3));
+  return (
+    <Fade len={s(5)} bg="#000">
+      <Game clip="clips/god_original.mp4" still="clips/god_original_end.png" from={s(3)} view={zoomView(z)} clipLen={s(5)} />
+      <Lines onDark items={[[0, 5, 'Now that we have the code, we can change it.']]} />
+    </Fade>
+  );
+};
+
+// 0:49 to 0:55 Edited build, same cheat, zoom into 200%, green ring pulse.
+const After: React.FC = () => {
+  const f = useCurrentFrame();
+  const z = ramp(f, s(0.6), s(2.4));
+  const ring = interpolate(f, [s(2.6), s(3.2), s(4.4)], [0, 1, 0.55], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const r = 410 + 22 * Math.sin(Math.max(0, f - s(2.6)) / 6);
+  return (
+    <Fade len={s(6)} bg="#000">
+      {/* starts 5 s into the clip: the cheat fires and health turns 200%; the clip's real last frame holds after it ends */}
+      <Game clip="clips/god_200.mp4" still="clips/god_200_end.png" from={s(5)} view={zoomView(z)} clipLen={s(4.3)} />
+      <div style={{position: 'absolute', left: 960 - r, top: 668 - r * 0.5, width: 2 * r, height: 2 * r * 0.5, borderRadius: '50%', border: `14px solid ${C.mint}`, opacity: ring, boxShadow: `0 0 40px ${C.mint}`}} />
+      <Lines onDark items={[[0, 6, "We changed one line of the AI's code. Same cheat, double the health."]]} />
+    </Fade>
+  );
+};
+
+// 0:55 to 1:00 End card.
+const End: React.FC = () => (
+  <Fade len={s(5)} bg={C.ink}>
+    <div style={{position: 'absolute', top: 200, left: 0, right: 0, textAlign: 'center'}}>
+      <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 130, color: C.lcd3, letterSpacing: -2}}>Frankenstein.</div>
+      <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 76, color: C.cream, marginTop: 6}}>Lost games, brought back.</div>
     </div>
-  );
-  return (
-    <Scene len={len}>
-      <Caption size={64} lines={[{t: `Run over run: a ${W.before}% near-miss became a ${W.after}.`, at: 0}]} />
-      {bar(`${W.fn} · run ${W.beforeRun} · stuck at ${W.before}%`, w, C.lcd3, 290)}
-      {bar(`${W.fn} · next run ${W.afterRun}, from its best try · ${W.after} on attempt ${W.attempt}`, interpolate(f, [45, 70], [0, 100], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}), C.mint, 520)}
-      <Stamp text={W.after} at={72} color={C.lcd1} x={1560} y={770} size={96} />
-      <div style={{position: 'absolute', top: 800, left: 200, fontFamily: BODY, fontWeight: 600, fontSize: 40, color: C.ink}}>(No held-out gain yet; we don't claim one.)</div>
-    </Scene>
-  );
-};
-
-// 0:41 Why source: change it, run it somewhere new.
-const Why: React.FC<{len: number}> = ({len}) => {
-  const f = useCurrentFrame();
-  const n = Math.round(interpolate(f, [20, 80], [0, DATA.equivalence.identical], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}));
-  return (
-    <Scene len={len}>
-      <Caption size={66} lines={[{t: 'One line of recovered C changed.', at: 0}, {t: `${fmt(DATA.equivalence.identical)} of ${fmt(DATA.equivalence.total)} identical in a browser.`, at: 90}]} />
-      <Lcd x={110} y={270} w={800} h={549} label="Change it: health 200%">
-        <GameCrop innerW={748}>
-          {has('clips/god_200_end.png') ? <Img src={staticFile('clips/god_200_end.png')} style={{position: 'absolute', width: '100%', height: '100%'}} /> : null}
-          <Sequence durationInFrames={135} layout="none">
-            <div style={{position: 'absolute', inset: 0}}>
-              <Clip name="clips/god_200.mp4" from={140} />
-            </div>
-          </Sequence>
-        </GameCrop>
-      </Lcd>
-      <Card style={{position: 'absolute', left: 1030, top: 270, width: 800, height: 420, overflow: 'hidden', padding: 0}}>
-        <Clip name="clips/equivalence.mp4" />
-      </Card>
-      <div style={{position: 'absolute', left: 1030, top: 720, width: 800, textAlign: 'center'}}>
-        <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 80, color: C.lcd1}}>{fmt(n)} / {fmt(DATA.equivalence.total)}</div>
-        <div style={{fontFamily: BODY, fontWeight: 700, fontSize: 28, color: C.ink}}>identical: the agents' C in a browser vs the original Game Boy Advance machine code</div>
-      </div>
-      <Expert text="4 recovered functions, 20,000 recorded outputs, in WebAssembly; 6 checked natively on arm64 on about 1 M inputs each" at={40} />
-    </Scene>
-  );
-};
-
-// 0:46 Partners: the real ASI:One chat next to each partner's job.
-const ASI_SHOTS = ['assets/asi_one_rejected_crop.png', 'assets/asi_one_match_crop.png', 'assets/asi_one_identical_crop.png'];
-const Partners: React.FC<{len: number}> = ({len}) => {
-  const f = useCurrentFrame();
-  const {fps} = useVideoConfig();
-  const cards = [
-    {who: "Meta's Muse", job: 'writes the C', col: C.lcd1},
-    {who: 'SubQ Snap', job: 'judges every match', col: C.violet, line: DATA.snap[0]},
-    {who: 'The compiler', job: 'proves it, byte for byte', col: C.ink},
-    {who: 'Fetch.ai ASI:One', job: 'lets anyone ask', col: C.coral},
-  ];
-  const seg = len / ASI_SHOTS.length;
-  return (
-    <Scene len={len}>
-      <Caption size={60} lines={[{t: 'Muse writes · Snap judges · the compiler proves · ASI:One asks', at: 0}]} />
-      <Card style={{position: 'absolute', left: 90, top: 250, width: 760, height: 709, overflow: 'hidden', padding: 0}}>
-        {ASI_SHOTS.map((src, k) => {
-          const o = interpolate(f, [k * seg - 8, k * seg + 4, (k + 1) * seg - 4, (k + 1) * seg + 8], [0, 1, 1, k === ASI_SHOTS.length - 1 ? 1 : 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
-          const y = interpolate(f, [k * seg, (k + 1) * seg], [0, -24], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
-          return has(src) ? (
-            <Img key={src} src={staticFile(src)} style={{position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', opacity: o, transform: `translateY(${y}px)`}} />
-          ) : k === 0 ? <Pending key={src} what={src} /> : null;
-        })}
-      </Card>
-      <div style={{position: 'absolute', left: 90, top: 972, width: 760, textAlign: 'center', fontFamily: BODY, fontWeight: 600, fontSize: 24, color: C.ink}}>{DATA.asiOneLabel}</div>
-      <div style={{position: 'absolute', left: 900, top: 250, width: 940, display: 'flex', flexWrap: 'wrap', gap: 28}}>
-        {cards.map((c, k) => {
-          const p = spring({frame: f - 10 - k * 12, fps, config: SPRING.pop});
-          return (
-            <Card key={k} style={{width: 440, height: 330, padding: 34, boxSizing: 'border-box', opacity: clamp01(p * 1.5), transform: `translateY(${(1 - p) * 50}px) rotate(${(k % 2 ? 1.2 : -1.2) * p}deg)`}}>
-              <div style={{height: 16, width: 100, background: c.col, borderRadius: 8, marginBottom: 26}} />
-              <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 52, color: C.ink, lineHeight: 1.05}}>{c.who}</div>
-              <div style={{fontFamily: BODY, fontWeight: 600, fontSize: 36, color: C.gray, marginTop: 14}}>{c.job}</div>
-              {'line' in c && c.line ? <div style={{fontFamily: MONO, fontSize: 22, color: C.violet, marginTop: 16}}>{c.line}</div> : null}
-            </Card>
-          );
-        })}
-      </div>
-      <Expert text="MongoDB Atlas holds the crew's memory · Gemini is the second lab screening every match" at={30} bottom={14} />
-    </Scene>
-  );
-};
-
-// 0:55 End: built today / not ours.
-const End: React.FC<{len: number}> = ({len}) => {
-  const f = useCurrentFrame();
-  const {fps} = useVideoConfig();
-  const p = spring({frame: f - 4, fps, config: SPRING.pop});
-  const col = (title: string, items: string[], color: string) => (
-    <div style={{width: 640}}>
-      <div style={{fontFamily: BODY, fontWeight: 700, fontSize: 28, color, marginBottom: 10}}>{title}</div>
-      <div style={{fontFamily: BODY, fontSize: 26, color: C.cream, lineHeight: 1.45}}>{items.join(' · ')}</div>
+    <div style={{position: 'absolute', top: 620, left: 120, right: 120, textAlign: 'center', fontFamily: BODY, fontSize: 28, lineHeight: 1.6, color: C.cream}}>
+      <div>Built today: the AI agents, the checker, the patch, this film. Not ours: Doom (id Software), GBADoom (doomhack), mGBA.</div>
+      <div>Made with Meta Muse, SubQ Snap, Fetch.ai ASI:One, MongoDB Atlas, Gemini.</div>
+      <div style={{fontFamily: MONO, color: C.mint, marginTop: 16}}>{DATA.url} · {DATA.repo}</div>
+      <div style={{marginTop: 6}}>{DATA.team.join(' · ')}</div>
     </div>
-  );
-  return (
-    <Scene len={len} bg={C.ink}>
-      <div style={{position: 'absolute', top: 110, left: 0, right: 0, textAlign: 'center', transform: `scale(${0.85 + 0.15 * p})`, opacity: clamp01(p * 1.5)}}>
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 34}}>
-          {has('assets/bolt.svg') ? <Img src={staticFile('assets/bolt.svg')} style={{width: 140, height: 140, imageRendering: 'pixelated'}} /> : null}
-          <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 150, color: C.lcd3, letterSpacing: -3}}>FRANKENSTEIN</div>
-        </div>
-        <div style={{fontFamily: HEAD, fontWeight: 800, fontSize: 64, color: C.cream, marginTop: 4}}>Lost games, rebuilt and proven.</div>
-        <div style={{fontFamily: MONO, fontSize: 34, color: C.mint, marginTop: 22}}>{DATA.url}</div>
-        <div style={{fontFamily: MONO, fontSize: 26, color: C.cream, marginTop: 10}}>{DATA.repo}</div>
-        <div style={{fontFamily: BODY, fontWeight: 600, fontSize: 28, color: C.cream, marginTop: 14}}>Team: {DATA.team.join(' · ')}</div>
-      </div>
-      <div style={{position: 'absolute', top: 720, left: 0, right: 0, display: 'flex', justifyContent: 'center', gap: 120}}>
-        {col('BUILT TODAY', DATA.builtToday, C.mint)}
-        {col('NOT OURS', DATA.notOurs, C.gray)}
-      </div>
-    </Scene>
-  );
-};
+  </Fade>
+);
 
-const ORDER: [keyof typeof SCENES, React.FC<{len: number}>][] = [
-  ['hook', Hook], ['problem', Problem], ['how', How], ['trust', Trust], ['proof', Proof], ['warm', Warm], ['why', Why], ['partners', Partners], ['end', End],
+const SLOTS: [number, number, React.FC][] = [
+  [0, 8, Open], [8, 16, Lost], [16, 28, Rebuild], [28, 36, Lie], [36, 44, Count], [44, 49, Before], [49, 55, After], [55, 60, End],
 ];
 
 const voice = () => ['voice/narration.m4a', 'voice/narration.wav', 'voice/narration.mp3'].find(has);
@@ -360,14 +248,11 @@ export const Main: React.FC = () => {
   const v = voice();
   return (
     <AbsoluteFill style={{background: C.cream}}>
-      {ORDER.map(([k, S]) => {
-        const [a, b] = SCENES[k];
-        return (
-          <Sequence key={k} from={a} durationInFrames={b - a} name={k}>
-            <S len={b - a} />
-          </Sequence>
-        );
-      })}
+      {SLOTS.map(([a, b, S]) => (
+        <Sequence key={a} from={s(a)} durationInFrames={s(b) - s(a)}>
+          <S />
+        </Sequence>
+      ))}
       {v ? <Audio src={staticFile(v)} /> : null}
     </AbsoluteFill>
   );
