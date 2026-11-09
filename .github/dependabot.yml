@@ -1,0 +1,15 @@
+# Weekly dependency updates, grouped so each ecosystem opens at most one PR a week.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: weekly }
+    groups: { actions: { patterns: ["*"] } }
+  - package-ecosystem: npm
+    directories: [/stage, /creature/phone, /lab/film]
+    schedule: { interval: weekly }
+    groups: { npm: { patterns: ["*"] } }
+  - package-ecosystem: pip
+    directories: [/, /crew, /crew/bench]
+    schedule: { interval: weekly }
+    groups: { pip: { patterns: ["*"] } }
