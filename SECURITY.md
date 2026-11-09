@@ -23,8 +23,8 @@ protect and how.
 - **Every service listens on localhost only.** That covers the referee (7101), bench referee (7121), crew jobs
   API (7111), director (7112), Stage (5173, 7201, 7202), bridge (7300, 7301, 7304), overlay (7302) and phone page
   (7401). We checked this by reading the code and with `lsof`. The ASI:One agents use Agentverse mailbox mode, so
-  they need no inbound connections. Their own uAgents servers (8001, 8002) are the one exception still to check
-  (see Lane A below). The phone page serves six named files plus the ROM, with no directory listing.
+  they need no inbound connections. Their own uAgents servers (8001, 8002) are forced onto 127.0.0.1
+  as well. The phone page serves a fixed list of named files plus the ROM, with no directory listing.
 - **Spend caps.** The jobs API allows at most 3 jobs at once and $5 in any rolling hour, counting every job and
   every route (`CREW_MAX_JOBS` and `CREW_HOURLY_USD` change these). A job reserves its whole budget when it starts,
   and anything past a cap gets HTTP 429. `max_usd` is clamped between $0.10 and $5. Queries are cleaned of control
@@ -34,7 +34,7 @@ protect and how.
   container that has no network and sees an empty `.env`. Each compile stops after 60 s or 20 errors. If a
   compile log mentions any file other than the candidate and its headers, the referee withholds the log.
 - **The web surfaces.** The site's CSP is `default-src 'self'` with `frame-ancestors 'none'`, plus HSTS and
-  `nosniff`. No page loads remote scripts (only fonts). The referee sends no wildcard CORS header.
+  `nosniff`. The only remote script is GSAP from cdnjs, pinned with a subresource-integrity hash; the CSP allows only that one path. The referee sends no wildcard CORS header.
 - **CI and dependencies.** Workflows run with `contents: read`, there is no `pull_request_target`, and secrets
   reach jobs only through `env`. `npm audit --omit=dev` finds 0 issues in `stage/` and `creature/phone/`.
 
@@ -53,31 +53,36 @@ Please don't test against someone else's machine.
 | Medium | The referee container mounted `.env` and had network access. | `11f8e98` (applies to newly created containers) |
 | Low | Director heartbeats had no body, frame or list caps. Negative or non-numeric Content-Length broke the handlers. `crew.export` ran `rmtree` on a path built from an unchecked run id. | `cb923c8` |
 
-## Requests per lane
+## Fixed in the 2026-11-08 review
 
-**Lane A (lab)**
-1. *High until done:* restart the referee (`python -m lab.referee serve`) and both agents on every machine that
-   runs them. Running processes still hold the code from before `e84e353`. Recreate the `frank-lab` container
-   between demo runs so that it gets `--network none` and the empty `.env`.
-2. *Low, unverified:* the uAgents servers on 8001 and 8002 may bind all interfaces, which is the uAgents default
-   as we understand it. uAgents isn't installed on the reviewer's machine. Check with
-   `lsof -nP -iTCP:8001 -sTCP:LISTEN`. Only signed agent envelopes are accepted there, so the exposure is about
-   the same as public ASI:One access. Keep the macOS firewall on at the venue anyway.
-3. *Low:* `lab/agents/excavator_agent.py` forwards the whole chat message as `query`, and `_http` reports every
-   error (including a 429 spend cap) as "crew down". Suggested patch: send `{"query": text[:200]}`, and in `_http`
-   catch `urllib.error.HTTPError` and return `json.loads(e.read())`, so the user sees "hourly spend cap reached".
+| Severity | Finding | Commit |
+|---|---|---|
+| Critical | The bench referee (7121) sent `Access-Control-Allow-Origin: *`, took `text/plain` posts and had no include rule, so any web page open on the laptop could read `.env` through a compile log. | `083f10b` |
+| High | Any web page could start paid crew jobs with a `text/plain` POST, or by DNS rebinding. | `083f10b` |
+| Medium | The same cross-site gap on the director (7112), the referee (7101) and the bridge (7300 to 7304). The uAgents servers bound `0.0.0.0` with wildcard CORS, so anyone on the network could reach `/connect`. Every "prove" message re-linked all 235 functions, with no limit on how many ran at once. | `083f10b`, `41bea39`, `b4fec5d` |
+| Low | Stage sockets had no Origin check. The sandbox container had no resource limits, and compile work folders were never deleted (1.4 GB). MongoDB errors could carry the URI into `metrics.json`. GSAP had no integrity hash. Actions were pinned to tags. Dependencies had 5 advisories, including zod (high) in `lab/film`. | `b4fec5d`, `41bea39`, `fc66fae`, `080c1fa`, `26d4588` |
 
-**Lane C (stage)**
-1. *Low:* in `stage/server/index.mjs`, `safeRun` accepts `..` and `.`. Every path it builds ends in a fixed
-   filename, so the reach is one level up. Patch:
-   `const safeRun = (id) => (typeof id === 'string' && /^[A-Za-z0-9][\w.-]*$/.test(id) && !id.includes('..') ? id : null);`
-2. *Low:* the server on 7201 sends `access-control-allow-origin: *`. The data is public, but this lets any web page
-   open on the demo laptop read it. Consider allowing only `http://127.0.0.1:5173`.
+**Local services refuse browsers.** Every localhost API (referee 7101, bench referee 7121, crew jobs 7111,
+director 7112, bridge 7300/7301/7304, Stage 7201/7202) answers only `Host` 127.0.0.1, localhost or [::1], which
+defeats DNS rebinding. It also refuses any non-loopback `Origin`, and POSTs that spend money or change state must
+be `application/json`, so a cross-site `text/plain` POST gets 415 (`crew/httpguard.py`). No service sends a wildcard CORS
+header, and Stage sockets accept only `STAGE_ORIGINS`. The uAgents servers (8001, 8002) are forced onto 127.0.0.1
+and accept browser requests only from agentverse.ai. The bench referee applies the same include and directive
+lint as the lab referee, and it withholds any compile log that names another file. The `frank-lab` sandbox runs read-only, with
+no capabilities, 2 GB of memory and 256 processes, and each compile's work folder is deleted. MongoDB errors
+are scrubbed of credentials before they reach `metrics.json`. GitHub Actions are pinned to commit SHAs, with
+`contents: read` and no persisted credentials.
 
-**Lane D (creature)**
-1. *Info:* `creature/overlay/serve.py` uses `SimpleHTTPRequestHandler`, which lists the overlay folder. It is
-   confined to that folder and localhost.
-2. *Low:* commit `creature/phone/package-lock.json` so `npm ci` pins the mgba-wasm dependency tree.
+**Repository settings.** `main` is protected: changes go through a pull request, the offline test job must pass,
+and force pushes and deletion are blocked. Secret scanning with push protection, Dependabot alerts and security
+updates, CodeQL default setup, and weekly grouped Dependabot version updates (`.github/dependabot.yml`) are on.
+Merged branches are deleted automatically.
 
-**Shared**
-- *Info:* GitHub Actions are pinned to major tags (`@v4`), not commit SHAs. That is fine for today.
+**After pulling these fixes,** restart every service that is still running older code. Recreate the `frank-lab` container
+(`lab/setup_referee.sh`) so it picks up the new limits.
+
+## Still open
+
+- The bench referee compiles on the host rather than in the container. The include lint gates it, and it serves
+  only the 20 bench functions.
+- `creature/overlay/serve.py` lists the overlay folder. It is confined to that folder and to localhost.
