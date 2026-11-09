@@ -1,0 +1,165 @@
+{
+  "v": 1,
+  "generated_at": "2026-11-08T00:09:06+00:00",
+  "rule": "game function not in UNION.json and never fn.matched, whose best match_pct over every verdict is >= 90",
+  "label": "close = best attempt >=90% byte-match, not accepted, not counted",
+  "threshold_pct": 90.0,
+  "close": 25,
+  "close_95": 14,
+  "of": 568,
+  "proven_exact": 235,
+  "matched_pending_union": 0,
+  "runs_scanned": 94,
+  "rows": [
+    {
+      "fn": "fn_03001764",
+      "size": 52,
+      "best_match_pct": 100.0,
+      "run": "doom_play01"
+    },
+    {
+      "fn": "fn_08005424",
+      "size": 52,
+      "best_match_pct": 95.7,
+      "run": "doom_par0"
+    },
+    {
+      "fn": "fn_0800591C",
+      "size": 68,
+      "best_match_pct": 92.9,
+      "run": "doom_dig03"
+    },
+    {
+      "fn": "fn_08005960",
+      "size": 36,
+      "best_match_pct": 92.9,
+      "run": "doom_dig03"
+    },
+    {
+      "fn": "fn_08005A04",
+      "size": 36,
+      "best_match_pct": 92.9,
+      "run": "doom_par0"
+    },
+    {
+      "fn": "fn_08005A28",
+      "size": 36,
+      "best_match_pct": 92.9,
+      "run": "doom_dig03"
+    },
+    {
+      "fn": "fn_08005A4C",
+      "size": 68,
+      "best_match_pct": 96.0,
+      "run": "doom_dig03"
+    },
+    {
+      "fn": "fn_08005C38",
+      "size": 60,
+      "best_match_pct": 92.0,
+      "run": "doom_sweep3"
+    },
+    {
+      "fn": "fn_08005EDC",
+      "size": 68,
+      "best_match_pct": 96.2,
+      "run": "doom_sweep3"
+    },
+    {
+      "fn": "fn_08006558",
+      "size": 40,
+      "best_match_pct": 93.8,
+      "run": "doom_dig03"
+    },
+    {
+      "fn": "fn_08006FF4",
+      "size": 56,
+      "best_match_pct": 95.8,
+      "run": "doom_sweep3"
+    },
+    {
+      "fn": "fn_080097DC",
+      "size": 116,
+      "best_match_pct": 96.1,
+      "run": "doom_sweep3"
+    },
+    {
+      "fn": "fn_0800D0E0",
+      "size": 108,
+      "best_match_pct": 98.1,
+      "run": "doom_par0"
+    },
+    {
+      "fn": "fn_0800E2CC",
+      "size": 116,
+      "best_match_pct": 94.2,
+      "run": "doom_sweep3"
+    },
+    {
+      "fn": "fn_0800F690",
+      "size": 60,
+      "best_match_pct": 92.3,
+      "run": "doom_sweep3"
+    },
+    {
+      "fn": "fn_0800FB6C",
+      "size": 144,
+      "best_match_pct": 98.4,
+      "run": "doom_sweep3"
+    },
+    {
+      "fn": "fn_08010030",
+      "size": 180,
+      "best_match_pct": 97.6,
+      "run": "doom_par1"
+    },
+    {
+      "fn": "fn_0801143C",
+      "size": 124,
+      "best_match_pct": 96.5,
+      "run": "doom_align_on"
+    },
+    {
+      "fn": "fn_08012A90",
+      "size": 84,
+      "best_match_pct": 97.6,
+      "run": "doom_par0"
+    },
+    {
+      "fn": "fn_08012AE4",
+      "size": 168,
+      "best_match_pct": 97.6,
+      "run": "doom_par0"
+    },
+    {
+      "fn": "fn_080185B4",
+      "size": 112,
+      "best_match_pct": 97.8,
+      "run": "doom_sweep3"
+    },
+    {
+      "fn": "fn_08018E08",
+      "size": 32,
+      "best_match_pct": 91.7,
+      "run": "doom_par0"
+    },
+    {
+      "fn": "fn_0801A99C",
+      "size": 56,
+      "best_match_pct": 95.2,
+      "run": "doom_sweep3"
+    },
+    {
+      "fn": "fn_0801AA4C",
+      "size": 128,
+      "best_match_pct": 92.5,
+      "run": "doom_sweep3"
+    },
+    {
+      "fn": "fn_0801D500",
+      "size": 52,
+      "best_match_pct": 90.0,
+      "run": "doom_sweep3"
+    }
+  ]
+}
