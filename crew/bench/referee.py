@@ -88,6 +88,9 @@ def context(fn: str) -> str:
     return (OUT / "ctx" / f"{fn}.h").read_text()
 
 
+# /rebuild over HTTP reads only run directories, never an arbitrary path from the request body.
+REBUILD_ROOTS = ((ROOT / "runs").resolve(), (ROOT / "crew" / "exports").resolve())
+
 LOG_PATH_RE = re.compile(r"^(?:In file included from|\s+from)?\s*([^\s:]+):\d+(?::\d+)?[:,]", re.M)
 
 
@@ -223,7 +226,11 @@ class Handler(BaseHTTPRequestHandler):
             except KeyError:
                 return self._send(404, {"error": f"unknown fn {fn}"})
         if path == "/rebuild":
-            return self._send(200, rebuild(str(body.get("recovered_dir") or "runs/live/recovered")))
+            raw = body.get("recovered_dir") or "runs/live/recovered"
+            d = (ROOT / raw).resolve() if isinstance(raw, str) else None
+            if d is None or not any(r in d.parents or d == r for r in REBUILD_ROOTS):
+                return self._send(400, {"error": "recovered_dir must be inside runs/ or crew/exports/"})
+            return self._send(200, rebuild(str(d)))
         if path == "/patch":
             return self._send(501, {"error": "patch is not supported by the bench referee"})
         return self._send(404, {"error": "not found"})
