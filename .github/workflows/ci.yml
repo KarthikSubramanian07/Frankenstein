@@ -69,3 +69,17 @@ jobs:
       - name: Full bench (informational, GCC version differs from the bench's 16.2.0)
         continue-on-error: true
         run: python -m pytest -q crew/bench
+
+  site:
+    name: site (Worker, llms.txt, trust pages)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+      - name: Site tests (no network)
+        run: node --test tests/site/*.test.mjs

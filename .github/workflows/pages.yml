@@ -53,8 +53,20 @@ jobs:
       - name: Smoke test
         if: steps.guard.outputs.ready == 'true'
         run: |
-          for p in / /robots.txt /sitemap.xml; do
-            code=$(curl -s -o /dev/null -w "%{http_code}" "https://tryfrankenstein.pages.dev$p")
+          site=https://tryfrankenstein.pages.dev
+          for p in / /judges /about /contact /privacy /llms.txt /robots.txt /sitemap.xml /index.md; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "$site$p")
             echo "$p -> $code"
             [ "$code" = "200" ] || exit 1
           done
+          # Markdown content negotiation: Markdown with Vary: Accept for agents, HTML for browsers.
+          h=$(curl -sS -L -D - -o /dev/null -H 'Accept: text/markdown' "$site/")
+          echo "$h" | grep -qi '^content-type: text/markdown' || { echo "home: no Markdown"; exit 1; }
+          echo "$h" | grep -qi '^vary:.*accept' || { echo "home: no Vary: Accept"; exit 1; }
+          curl -sS -L -D - -o /dev/null -H 'Accept: text/html' "$site/" | grep -qi '^content-type: text/html' || { echo "home: no HTML"; exit 1; }
+          # Agent-friendly 404: status 404 and a Markdown body that links to llms.txt.
+          probe="$site/__smoke-404-$GITHUB_RUN_ID"
+          code=$(curl -sS -L -o /tmp/404.md -w "%{http_code} %{content_type}" -H 'Accept: text/markdown' "$probe")
+          echo "404 probe -> $code"
+          case "$code" in "404 text/markdown"*) ;; *) exit 1 ;; esac
+          grep -q 'llms.txt' /tmp/404.md || { echo "404 body has no llms.txt link"; exit 1; }
