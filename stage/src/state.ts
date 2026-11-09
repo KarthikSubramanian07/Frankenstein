@@ -273,12 +273,6 @@ export function apply(s: State, e: Ev): Effect[] {
   return fx;
 }
 
-/** % recovered, from matched events and the run's own fn_total. null when unknown. */
-export function pctRecovered(s: State): number | null {
-  if (!s.fnTotal) return null;
-  return (100 * s.matched.length) / s.fnTotal;
-}
-
 export function elapsedS(s: State): number | null {
   if (s.t0 == null || s.tNow == null) return null;
   return Math.max(0, (s.tNow - s.t0) / 1000);
@@ -289,11 +283,6 @@ export function fmtClock(sec: number | null): string {
   const m = Math.floor(sec / 60);
   const ss = Math.floor(sec % 60);
   return `${String(m).padStart(2, '0')}:${String(ss).padStart(2, '0')}`;
-}
-
-export function fmtPct(p: number | null, digits = 0): string {
-  if (p == null) return '--';
-  return p.toFixed(digits);
 }
 
 /** Game functions in the whole target (manifest), falling back to this run's scope. */

@@ -30,10 +30,6 @@ export type Judge = {
   libraryBackend: string | null; // run.started library_backend
 };
 
-export const LABEL: Record<Sponsor, string> = {
-  snap: 'SUBQ SNAP', muse: 'MUSE', gemini: 'GEMINI', mongodb: 'MONGODB', library: 'LIBRARY', asi: 'ASI:ONE',
-};
-
 export function emptyJudge(): Judge {
   return { lines: [], n: 0, asi: null, libraryBackend: null };
 }
