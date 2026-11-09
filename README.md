@@ -67,7 +67,7 @@ The team demo machine uses `make up` (start every lane, replay mode by default),
 Other entry points:
 
 - Crew: `python -m crew.run` for a run, `python -m crew.serve` for the jobs API. Offline tests: `make test-crew`. See [`crew/README.md`](crew/README.md).
-- Site: `python3 -m http.server -d site 8000`. Pushes to `main` that touch `site/**` deploy to Cloudflare Pages.
+- Site: `python3 -m http.server -d site 8000` for the pages, or `npx wrangler pages dev site` to include the Worker that serves Markdown to agents (`site/_worker.js`). Site tests: `make test-site`. Pushes to `main` that touch `site/**` deploy to Cloudflare Pages.
 - `make help` lists every target.
 
 On the Stage and the site, bright text means the compiler proved it. Violet with a "?" means it's our guess, such as a guessed function name.
