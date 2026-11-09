@@ -5,6 +5,7 @@ must point at the same anonymous symbol (fn_/data_ id, plus the same offset into
 """
 import json
 import re
+import shutil
 import subprocess
 import time
 import uuid
@@ -108,9 +109,16 @@ class Referee:
 
     # ---------- compile ----------
     def _compile(self, fn: str, src: str, mode: str) -> tuple[bool, str, list[dict], dict]:
-        """Preprocess, lint the expansion, then compile. Returns (ok, log, items, expanded lint result)."""
+        """Preprocess, lint the expansion, then compile. Returns (ok, log, items, expanded lint result).
+        The work directory is removed afterwards: anyone in ASI:One can ask for a check, so none may pile up."""
         work = self.out / "tmp" / uuid.uuid4().hex[:10]
         work.mkdir(parents=True)
+        try:
+            return self._compile_in(work, fn, src, mode)
+        finally:
+            shutil.rmtree(work, ignore_errors=True)
+
+    def _compile_in(self, work: Path, fn: str, src: str, mode: str) -> tuple[bool, str, list[dict], dict]:
         (work / "cand.c").write_text(src)
         rel = work.relative_to(REPO)
         flags = f"{self.arm_flags if mode == 'arm' else self.thumb_flags} {DIAG_FLAGS} -include {self.game['out_rel']}/ctx/{fn}.h"

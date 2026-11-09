@@ -14,7 +14,7 @@ import time
 from pathlib import Path
 
 from lab.agents.frankenstein_agent import (BUSY, CREW_URL, FN_RE, INFERRED, JOB_TIMEOUT_S, OBSERVED, REPO, TOO_LONG, _http,
-                                           too_long)
+                                           harden_uagents_server, too_long)
 
 REFEREE_AGENT = "agent1q088qnxafee4aug0qz4xnd9zkk4veq2r9ez07mp047u8enqhckc5w2hstx0"
 REFEREE_TIMEOUT_S = 120  # mailbox round trip: Agentverse relays both legs
@@ -109,6 +109,7 @@ def build_agent():
     from uagents_core.contrib.protocols.chat import (ChatAcknowledgement, ChatMessage, EndSessionContent, TextContent,
                                                      chat_protocol_spec)
 
+    harden_uagents_server()
     agent = Agent(name="frankenstein-excavator", seed=_seed(), port=8002, mailbox=True, publish_agent_details=True,
                   readme_path=str(Path(__file__).with_name("EXCAVATOR_README.md")),
                   description="Recovers lost games' source code with an agent crew, then has the Frankenstein Referee agent verify it. First patient: Doom.")

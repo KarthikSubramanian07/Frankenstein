@@ -10,6 +10,7 @@ patch: the changed function is compiled, linked by ld at its original address (e
 """
 import hashlib
 import json
+import shutil
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
@@ -135,6 +136,12 @@ class RomLinker:
     def _compile_and_link(self, fn: str, src: str, addr: int, mode: str) -> bytes | str:
         work = self.out / "tmp" / uuid.uuid4().hex[:10]
         work.mkdir(parents=True)
+        try:
+            return self._compile_and_link_in(work, fn, src, addr, mode)
+        finally:
+            shutil.rmtree(work, ignore_errors=True)
+
+    def _compile_and_link_in(self, work: Path, fn: str, src: str, addr: int, mode: str) -> bytes | str:
         (work / "fix.c").write_text(src)
         rel = work.relative_to(REPO)
         flags = self.referee.arm_flags if mode == "arm" else self.referee.thumb_flags

@@ -17,6 +17,7 @@ import json
 import os
 import re
 import secrets
+import threading
 import time
 import urllib.error
 import urllib.request
@@ -241,15 +242,29 @@ def answer_status() -> str:
     return "\n".join(lines)
 
 
+_rebuild_lock = threading.Lock()
+_rebuild_last: tuple[tuple, dict] | None = None
+
+
 def _rebuild() -> dict:
-    """Relink the ROM from every accepted function now: the latest rebuild, never a cached claim."""
+    """Relink the ROM from every accepted function now: the latest rebuild, never a cached claim.
+    A rebuild re-compiles every recovered function (hundreds of compiles), and anyone in ASI:One can ask for one,
+    so one runs at a time and the result is reused only while the exact same files (path, mtime, size) are in."""
+    global _rebuild_last
     import shutil
     import tempfile
     from lab.referee.romlink import RomLinker
-    with tempfile.TemporaryDirectory() as pool:
-        for fn, path in recovered_files().items():
-            shutil.copy(path, Path(pool) / f"{fn}.c")
-        return RomLinker(referee()).rebuild(pool)
+    with _rebuild_lock:
+        files = recovered_files()
+        key = tuple(sorted((fn, str(p), p.stat().st_mtime_ns, p.stat().st_size) for fn, p in files.items()))
+        if _rebuild_last is not None and _rebuild_last[0] == key:
+            return _rebuild_last[1]
+        with tempfile.TemporaryDirectory() as pool:
+            for fn, path in files.items():
+                shutil.copy(path, Path(pool) / f"{fn}.c")
+            result = RomLinker(referee()).rebuild(pool)
+        _rebuild_last = (key, result)
+        return result
 
 
 def downloads_approved() -> bool:
@@ -403,6 +418,31 @@ def _seed() -> str:
 
 
 # ---------- the agent ----------
+INSPECTOR_ORIGINS = {b"https://agentverse.ai", b"https://www.agentverse.ai"}  # its Connect button calls 127.0.0.1
+
+
+def harden_uagents_server() -> None:
+    """uAgents serves its inspector (/connect, /disconnect, /messages) on 0.0.0.0 with CORS *. Mailbox mode needs no
+    inbound connection, so listen on loopback only, and answer browsers only from the Agentverse inspector: any
+    other web page on this laptop could otherwise POST /connect with its own Agentverse token and claim the agent."""
+    from uagents import asgi
+    asgi.HOST = "127.0.0.1"
+    if getattr(asgi.ASGIServer, "_frank_origin_check", False):
+        return
+    call = asgi.ASGIServer.__call__
+
+    async def checked(self, scope, receive, send):
+        origin = dict(scope.get("headers") or []).get(b"origin") if scope.get("type") == "http" else None
+        if origin is not None and origin not in INSPECTOR_ORIGINS:
+            await send({"type": "http.response.start", "status": 403, "headers": [(b"content-type", b"application/json")]})
+            await send({"type": "http.response.body", "body": b'{"error": "origin not allowed"}'})
+            return
+        await call(self, scope, receive, send)
+
+    asgi.ASGIServer.__call__ = checked
+    asgi.ASGIServer._frank_origin_check = True
+
+
 def build_agent():
     import asyncio
     from uagents import Agent, Context, Protocol
@@ -419,6 +459,7 @@ def build_agent():
             ctx.logger.warning(f"card dropped: {e}")
             return []
 
+    harden_uagents_server()
     agent = Agent(name="frankenstein-referee", seed=_seed(), port=8001, mailbox=True, publish_agent_details=True,
                   readme_path=str(Path(__file__).with_name("AGENT_README.md")),
                   description="Brings back lost games' source code from the cartridge and proves every function byte-identical. First patient: Doom.")

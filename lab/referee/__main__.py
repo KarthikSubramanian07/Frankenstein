@@ -10,13 +10,17 @@
 """
 import argparse
 import json
+import re
 import sys
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
+from crew.httpguard import cross_site_error
+
 REPO = Path(__file__).resolve().parents[2]
 FIXTURES = REPO / "contracts" / "fixtures"
 MAX_BODY = 256 * 1024
+FN_ID = re.compile(r"(?:fn|rt)_[0-9A-Za-z_]{1,64}")  # Doom fn_XXXXXXXX ids; the Pokémon referee's rt_ ids
 REBUILD_ROOTS = (REPO / "runs", REPO / "crew" / "exports")
 
 
@@ -41,10 +45,14 @@ def make_handler(referee, mock: bool):
             self.wfile.write(data)
 
         def do_GET(self) -> None:
+            if refused := cross_site_error(self, post=False):  # DNS rebinding and cross-origin pages
+                return self._send(refused[0], {"error": refused[1]})
             if self.path == "/health":
                 return self._send(200, {"ok": True, "mock": mock})
             if self.path.startswith("/context/"):
                 fn = self.path.rsplit("/", 1)[1]
+                if not FN_ID.fullmatch(fn):
+                    return self._send(404, {"error": "unknown function"})
                 if mock:
                     return self._send(200, f"/* mock context for {fn} */\n")
                 try:
@@ -54,6 +62,9 @@ def make_handler(referee, mock: bool):
             self._send(404, {"error": "not found"})
 
         def do_POST(self) -> None:
+            # A web page could otherwise POST text/plain here (no CORS preflight) and have candidate C compiled.
+            if refused := cross_site_error(self, post=True):
+                return self._send(refused[0], {"error": refused[1]})
             try:
                 length = int(self.headers.get("Content-Length") or 0)
             except ValueError:
