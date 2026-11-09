@@ -186,8 +186,10 @@ def test_http_and_crew_integration(built, monkeypatch):
         ctx = tgt.context(fid)
         assert "typedef s32 fixed_t;" in ctx and "struct_" in ctx
         assert ref.check(fid, candidate_from_answer(built, fid))["status"] == "MATCH"
-        rb = ref.rebuild(str(Path("/nonexistent")))
+        rb = ref.rebuild("runs/_bench_nonexistent")
         assert rb["identical"] is True and rb["method"] == "source-tree"
+        with pytest.raises(Exception):  # /rebuild over HTTP reads only runs/ and crew/exports/
+            ref.rebuild(str(Path("/nonexistent")))
         with pytest.raises(Exception):
             ref.check("fn_DEADBEEF", "int x;")
     finally:

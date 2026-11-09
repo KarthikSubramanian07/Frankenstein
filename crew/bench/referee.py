@@ -13,6 +13,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 import sys
 import tempfile
@@ -87,6 +88,9 @@ def context(fn: str) -> str:
         raise KeyError(fn)
     return (OUT / "ctx" / f"{fn}.h").read_text()
 
+
+# /rebuild over HTTP reads only run directories, never an arbitrary path from the request body.
+REBUILD_ROOTS = (os.path.realpath(ROOT / "runs"), os.path.realpath(ROOT / "crew" / "exports"))
 
 LOG_PATH_RE = re.compile(r"^(?:In file included from|\s+from)?\s*([^\s:]+):\d+(?::\d+)?[:,]", re.M)
 
@@ -223,7 +227,12 @@ class Handler(BaseHTTPRequestHandler):
             except KeyError:
                 return self._send(404, {"error": f"unknown fn {fn}"})
         if path == "/rebuild":
-            return self._send(200, rebuild(str(body.get("recovered_dir") or "runs/live/recovered")))
+            raw = body.get("recovered_dir") or "runs/live/recovered"
+            d = os.path.realpath(os.path.join(ROOT, raw)) if isinstance(raw, str) else ""
+            runs, exports = REBUILD_ROOTS
+            if not (d.startswith(runs + os.sep) or d.startswith(exports + os.sep)):
+                return self._send(400, {"error": "recovered_dir must be inside runs/ or crew/exports/"})
+            return self._send(200, rebuild(d))
         if path == "/patch":
             return self._send(501, {"error": "patch is not supported by the bench referee"})
         return self._send(404, {"error": "not found"})
