@@ -2,7 +2,11 @@
 
 **AI agents rebuild a game's lost source code, one function at a time, and a compiler accepts only byte-identical pieces.**
 
+[![Live site](https://img.shields.io/badge/live-tryfrankenstein.pages.dev-7CF2C8?style=flat-square&labelColor=17141F)](https://tryfrankenstein.pages.dev)
+[![Demo film](https://img.shields.io/badge/film-1%20minute-F2A97C?style=flat-square&labelColor=17141F)](https://www.youtube.com/watch?v=yi0_hTj1lkg)
 [![License: MIT](https://img.shields.io/badge/license-MIT-FFD23F?style=flat-square&labelColor=17141F)](#license)
+
+**[Website](https://tryfrankenstein.pages.dev)** · [How it works](https://tryfrankenstein.pages.dev/#how) · [Partners](https://tryfrankenstein.pages.dev/#partners) · [Proof](https://tryfrankenstein.pages.dev/#numbers) · [Credits](https://tryfrankenstein.pages.dev/#credits) · [For judges](https://tryfrankenstein.pages.dev/judges) · [Demo film](https://www.youtube.com/watch?v=yi0_hTj1lkg)
 
 For most classic games, only the compiled cartridge survives: 87% of classic games released in the US are critically endangered (Video Game History Foundation and Software Preservation Network, 2023). The game still runs, but nobody can fix, port or study it.
 
@@ -63,9 +67,10 @@ The team demo machine uses `make up` (start every lane, replay mode by default),
 Other entry points:
 
 - Crew: `python -m crew.run` for a run, `python -m crew.serve` for the jobs API. Offline tests: `make test-crew`. See [`crew/README.md`](crew/README.md).
+- Site: `python3 -m http.server -d site 8000`. Pushes to `main` that touch `site/**` deploy to Cloudflare Pages.
 - `make help` lists every target.
 
-On the Stage, bright text means the compiler proved it. Violet with a "?" means it's our guess, such as a guessed function name.
+On the Stage and the site, bright text means the compiler proved it. Violet with a "?" means it's our guess, such as a guessed function name.
 
 ## Ask the agents in ASI:One
 
@@ -94,6 +99,7 @@ The repo has four lanes. They share only the contracts in [`contracts/CONTRACTS.
 | [`stage/`](stage/README.md) | C · Stage | Aidenn | The live show: a log driven only by the event stream, replays at 1–20x (:5173, :7201/7202) |
 | [`creature/`](creature/README.md) | D · Creature | Enzo | Doom in mGBA, heal overlay, ROM hot-swap, phone play page (:7401) |
 | `contracts/` | shared | | Schemas, fixtures, validator |
+| `site/` | shared | | [tryfrankenstein.pages.dev](https://tryfrankenstein.pages.dev), deployed from `main` |
 | `tools/` | shared | | `frank.py` (`make up/down/status`), `counts.py` (official tallies) |
 
 The engineering log is [`DECISIONS.md`](DECISIONS.md).
@@ -106,7 +112,7 @@ The engineering log is [`DECISIONS.md`](DECISIONS.md).
 | Subquadratic (SubQ Snap) | Picks the next function, routes requests like "Doomguy's face" (ranked the real face function first, p 0.88), and gates claims |
 | Fetch.ai (ASI:One, Agentverse) | The chat front end and the two agents above |
 | MongoDB Atlas | Stores the habit library shared across runs |
-| Google Gemini | Second-opinion review of accepted matches |
+| Google Gemini | Second-opinion review of accepted matches; also generated the site's illustrations (`site/tools/generate_art.py`) |
 
 ## What we built at the hackathon & what we did not build
 
