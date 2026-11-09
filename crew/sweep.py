@@ -18,7 +18,6 @@ import argparse
 import json
 import re
 import sys
-from pathlib import Path
 
 from .checker import Checker
 from .config import ROOT, Config

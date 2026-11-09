@@ -19,7 +19,6 @@ import sys
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
-from pathlib import Path
 
 from . import permuter
 from .checker import Checker

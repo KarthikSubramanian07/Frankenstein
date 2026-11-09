@@ -6,7 +6,6 @@ Reads lab/exports/transfer/<arm>/r*/ (events.jsonl, metrics.json, recovered/). W
 lab/exports/transfer/results.json. A match counts only if this fresh referee check says MATCH.
 """
 import json
-import re
 import sys
 from pathlib import Path
 

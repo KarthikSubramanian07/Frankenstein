@@ -24,7 +24,6 @@ import re
 import threading
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from pathlib import Path
 
 from .config import ROOT, Config
 from .httpguard import cross_site_error

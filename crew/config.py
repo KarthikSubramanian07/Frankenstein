@@ -53,10 +53,6 @@ class Config:
         real = self.lab_out / "manifest.json"
         return real if real.exists() else ROOT / "contracts" / "fixtures" / "manifest.sample.json"
 
-    @property
-    def using_fixture_manifest(self) -> bool:
-        return self.manifest_path.name == "manifest.sample.json"
-
     @staticmethod
     def env_has(name: str) -> bool:
         return bool(env(name))

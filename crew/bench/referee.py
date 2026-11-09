@@ -21,7 +21,7 @@ import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-from crew.bench.core import FLAGS_STR, OUT, ROOT, compare, compile_c, compiler_version, disasm, extract, \
+from crew.bench.core import OUT, ROOT, compare, compile_c, compiler_version, disasm, extract, \
     find_function, read_elf
 from crew.httpguard import cross_site_error
 from lab.referee.lint import lint as lab_lint

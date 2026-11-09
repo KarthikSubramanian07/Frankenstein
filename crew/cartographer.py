@@ -581,11 +581,6 @@ def signatures_for(fn: str, header: str, target: Target | None = None, *, callee
             f"with the asm. */\n{PRELUDE}{body}\n")
 
 
-def load_header(run_dir: Path) -> str | None:
-    p = Path(run_dir) / "types.h"
-    return safe_read(p) if p.exists() else None
-
-
 # --------------------------------------------------------------------------------------------- propose
 
 def _rel(p: Path) -> str:

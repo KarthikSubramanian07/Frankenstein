@@ -13,10 +13,9 @@ from __future__ import annotations
 import json
 import re
 import sys
-from pathlib import Path
 
 from .checker import Checker
-from .config import ROOT, Config
+from .config import Config
 from .digger import n_instructions
 from .events import EventLog
 from .referee import make_referee

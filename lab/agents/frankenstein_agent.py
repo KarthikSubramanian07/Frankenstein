@@ -227,7 +227,6 @@ def recovered_files() -> dict[str, Path]:
 
 
 def answer_status() -> str:
-    s = _http("GET", f"{CREW_URL}/status")
     game = [f for f in referee().functions.values() if f["scope"] == "game"]
     # The count comes from the files on disk (union + live + ASI:One), not from one run's status, so it is the
     # whole game's number; the rebuild intent proves them byte for byte.

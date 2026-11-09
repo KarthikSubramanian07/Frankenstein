@@ -2,9 +2,9 @@
 original GBA machine code run instruction by instruction in a Thumb/ARM emulator (Unicorn). Same inputs, fixed seed.
 Run from the repo root:  /tmp/eqv/bin/python lab/demo/equivalence/run.py [N] [-fwrapv]
 Needs: pip install unicorn ziglang (any venv); clang; node. Reads lab/out/target.gba (built locally, never committed)."""
-import ctypes, json, os, random, struct, subprocess, sys, tempfile, time
+import ctypes, json, random, struct, subprocess, sys, tempfile, time
 from pathlib import Path
-from unicorn import Uc, UC_ARCH_ARM, UC_MODE_ARM, UC_MODE_THUMB
+from unicorn import Uc, UC_ARCH_ARM, UC_MODE_ARM
 from unicorn.arm_const import UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2, UC_ARM_REG_LR, UC_ARM_REG_SP
 
 HERE = Path(__file__).parent
@@ -100,7 +100,6 @@ def main():
 
         t0 = time.time()  # bounding box update: memory in, memory out
         cf = lib.fn_0800549C; cf.argtypes = [ctypes.c_void_p, ctypes.c_int, ctypes.c_int]
-        box = (ctypes.c_int * 4).from_address(ctypes.cast(lib.box_ptr(), ctypes.c_void_p).value) if False else None
         lib.box_ptr.restype = ctypes.c_void_p
         bp = lib.box_ptr()
         bad, gout, nout = [], [], []

@@ -31,7 +31,6 @@ from .prompts import DISTILL_SYSTEM, distill_user
 from .referee import make_referee
 from .target import Target
 
-PRIORITY_SUBSYSTEM_HINT = None  # Lane A tells us hud then weapons; ordering uses only manifest data (no viz_map)
 
 
 def new_run_id(runs_dir: Path, prefix: str = "r") -> str:

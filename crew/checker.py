@@ -14,7 +14,6 @@ CAST = re.compile(r"\(\s*(unsigned|signed|u8|u16|u32|s8|s16|s32|int|short|char|l
 GOTO = re.compile(r"\bgoto\b")
 # IWRAM/EWRAM raw casts (0x02…/0x03…) stand in for a data_ id. GBA MMIO at 0x0400… is hardware, not data_.
 ABS_ADDR = re.compile(r"\)\s*0x0[235-9][0-9A-Fa-f]{6}\b")  # only 0x04 (I/O) is hardware; ROM 0x08… is data
-MMIO = re.compile(r"0x0400[0-9A-Fa-f]{4}")
 # volatile is legitimate only when it qualifies the MMIO access itself: (volatile T *)0x0400…
 MMIO_VOLATILE = re.compile(r"volatile[^;()]*\*\s*\)\s*0x0400[0-9A-Fa-f]{4}|0x0400[0-9A-Fa-f]{4}[^;]*volatile")
 

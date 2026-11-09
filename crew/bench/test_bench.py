@@ -9,7 +9,6 @@ import concurrent.futures as cf
 import json
 import re
 import threading
-import urllib.request
 from http.server import ThreadingHTTPServer
 from pathlib import Path
 

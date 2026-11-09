@@ -110,7 +110,6 @@ _CANON = {"unsigned": "unsigned int", "signed": "int", "signed int": "int", "sho
           "unsigned long int": "unsigned long", "char signed": "signed char"}
 NARROW = {"char", "signed char", "unsigned char", "short", "unsigned short", "_Bool", "bool"}
 INT32 = {"int", "unsigned int"}
-SCALAR_INT = NARROW | INT32 | {"long", "unsigned long"}
 KEYWORDS = TYPE_KW | {"if", "else", "for", "while", "do", "switch", "case", "default", "return", "break",
                       "continue", "goto", "sizeof", "typedef"}
 
@@ -493,7 +492,6 @@ def parse_decl(toks, P, lo, hi, typedefs) -> Decl | None:
     d.lo, d.hi, d.spec_hi, d.spec = lo, hi, i, spec
     d.storage = "static" in spec or "extern" in spec
     d.volatile = "volatile" in spec
-    d.simple = True
     while i < hi:
         dlo, stars = i, []
         while i < hi and toks[i].t in ("*", "const", "volatile"):
@@ -1272,8 +1270,6 @@ def _unsigned_safe(f: Func, name: str) -> bool:
                             return False
                         break
                     return False  # relational, division, right shift, call argument, member, unknown: unsure
-            if s.k in ("if", "while", "do", "for") and False:
-                pass
     return True
 
 

@@ -59,7 +59,6 @@ def red(s): return _c("31", s)
 def yellow(s): return _c("33", s)
 def dim(s): return _c("2", s)
 def bold(s): return _c("1", s)
-def violet(s): return _c("35", s)
 
 
 OK, BAD, SKIP, MISS = green("✓"), red("✗"), dim("○"), yellow("!")

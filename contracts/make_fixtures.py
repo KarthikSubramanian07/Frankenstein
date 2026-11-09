@@ -119,10 +119,6 @@ TICKER = [
     "The status bar flickers back to life.", "Small function, big ego. Matched first try.",
     "The referee does not do partial credit.", "Literal pools: where good intentions go to die.",
 ]
-ANNOUNCER = ["Claim rejected!", "Round {r}. Fight.", "New record!", "Quarter recovered!", "Halfway recovered!",
-             "Three quarters!"]
-
-
 def src_preview(fid: str, rng: random.Random) -> str:
     v = rng.choice(["a", "p", "x"])
     return "\n".join([

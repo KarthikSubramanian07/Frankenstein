@@ -5,7 +5,6 @@ All reads go through guard.safe_read. Original names never appear here (Lane A a
 from __future__ import annotations
 
 import json
-from pathlib import Path
 
 from .config import ROOT, Config
 from .guard import safe_read
