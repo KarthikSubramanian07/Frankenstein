@@ -72,14 +72,14 @@ REFEREE_URL=http://127.0.0.1:7121 FRANK_MANIFEST=crew/bench/out/manifest.json \
 
 # Jobs API for ASI:One (--mock for instant fixture answers)
 python -m crew.serve --port 7111
-curl -s localhost:7111/jobs -d '{"query": "bring back the face"}'
+curl -s localhost:7111/jobs -H 'Content-Type: application/json' -d '{"query": "bring back the face"}'
 
 # On stage: 3 small functions, live, with a timer
 python -m crew.demo --pick 3 --live
 
 # Play to recover: Lane D posts heartbeats, Snap steers every 4 s
 python -m crew.run --split train --director --live
-curl -s localhost:7112/heartbeat -d '{"running": ["fn_0801B34C"], "frame_png_b64": "…"}'
+curl -s localhost:7112/heartbeat -H 'Content-Type: application/json' -d '{"running": ["fn_0801B34C"], "frame_png_b64": "…"}'
 
 # Cartographer: dry run, real pass, then feed the header to a run
 python -m crew.cartographer --run-dir runs/r01 --dry-run

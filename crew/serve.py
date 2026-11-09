@@ -27,6 +27,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 from .config import ROOT, Config
+from .httpguard import cross_site_error
 
 FIX = ROOT / "contracts" / "fixtures"
 MAX_BODY = 256 * 1024
@@ -277,6 +278,8 @@ def make_handler(jobs: Jobs):
             self.wfile.write(data)
 
         def do_GET(self):
+            if refused := cross_site_error(self, post=False):
+                return self._send(refused[0], {"error": refused[1]})
             p = self.path.split("?", 1)[0].rstrip("/")
             if p == "/health":
                 return self._send(200, {"ok": True, "mock": jobs.mock, "model": jobs.cfg.model,
@@ -295,6 +298,8 @@ def make_handler(jobs: Jobs):
             path = self.path.rstrip("/")
             if path not in ("/jobs", "/route"):
                 return self._send(404, {"error": "not found"})
+            if refused := cross_site_error(self, post=True):  # every job and route spends real money
+                return self._send(refused[0], {"error": refused[1]})
             try:
                 n = int(self.headers.get("Content-Length") or 0)
             except ValueError:

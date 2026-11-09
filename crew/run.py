@@ -329,6 +329,7 @@ class Run:
         from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
         from .director import MAX_HEARTBEAT_BYTES, Director, parse_heartbeat
+        from .httpguard import cross_site_error
 
         self.director = Director(self.cfg, self.target, self.log)
         run = self
@@ -342,7 +343,9 @@ class Run:
                     n = int(self.headers.get("Content-Length") or 0)
                 except ValueError:
                     n = -1
-                if not 0 <= n <= MAX_HEARTBEAT_BYTES:  # refuse before reading: no 8 MB reads on demand
+                if refused := cross_site_error(self, post=True):  # a heartbeat steers paid Snap calls
+                    body, code = {"error": refused[1]}, refused[0]
+                elif not 0 <= n <= MAX_HEARTBEAT_BYTES:  # refuse before reading: no 8 MB reads on demand
                     body, code = {"error": f"body must be 0 to {MAX_HEARTBEAT_BYTES} bytes"}, 413
                 else:
                     try:
@@ -359,8 +362,9 @@ class Run:
                 self.wfile.write(data)
 
             def do_GET(self):
-                data = json.dumps({"boosted": run.director.boosted, "last": run.director.last}).encode()
-                self.send_response(200)
+                refused = cross_site_error(self, post=False)
+                data = json.dumps({"error": refused[1]} if refused else {"boosted": run.director.boosted, "last": run.director.last}).encode()
+                self.send_response(refused[0] if refused else 200)
                 self.send_header("Content-Type", "application/json")
                 self.send_header("Content-Length", str(len(data)))
                 self.end_headers()

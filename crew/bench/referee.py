@@ -23,6 +23,8 @@ from pathlib import Path
 
 from crew.bench.core import FLAGS_STR, OUT, ROOT, compare, compile_c, compiler_version, disasm, extract, \
     find_function, read_elf
+from crew.httpguard import cross_site_error
+from lab.referee.lint import lint as lab_lint
 try:  # keep the hard-floor rules identical to the crew's mirror of Lane A's linter
     from crew.referee import LINT_RULES
 except ImportError:  # crew/referee.py not present in this checkout: same rules, inlined
@@ -42,6 +44,10 @@ _ASM_LINE = re.compile(
     r"(?:r\d+|sp|lr|pc|\{|\[|#|\.L|fn_|data_|__aeabi|0x|[0-9a-f]+\s*<)", re.I)
 _LOCK = threading.Lock()
 _STATE: dict = {}
+MAX_BODY = 256 * 1024
+# Candidate C is compiled on the host, so the include and directive rules of Lane A's hardened lint apply too:
+# a quoted or absolute #include would print another file's lines (.env, crew/bench/answers/) in the compile log.
+INCLUDE_RULES = ("L009", "L010")
 
 
 def _load() -> dict:
@@ -72,7 +78,7 @@ def lint(src: str) -> list[dict]:
                 break
         elif body.strip():
             run = 0
-    return viol
+    return viol + [v for v in lab_lint(src, 0)["violations"] if v["rule"] in INCLUDE_RULES]
 
 
 def context(fn: str) -> str:
@@ -82,8 +88,15 @@ def context(fn: str) -> str:
     return (OUT / "ctx" / f"{fn}.h").read_text()
 
 
+LOG_PATH_RE = re.compile(r"^(?:In file included from|\s+from)?\s*([^\s:]+):\d+(?::\d+)?[:,]", re.M)
+
+
 def _clean_log(log: str, tmp: str) -> str:
     log = log.replace(tmp + "/", "").replace(tmp, "")
+    for m in LOG_PATH_RE.finditer(log):  # second line of defence behind L009: only our files and system headers
+        path = m.group(1)
+        if path not in ("candidate.c", "ctx.h", "<command-line>", "<built-in>") and not (path.startswith("/") and "/include/" in path):
+            return "compile log withheld: the compiler reported on a file outside the candidate and its headers"
     log = re.sub(r"(?<![\w.])/(?:[^\s:'\"]+/)+([^\s:'\"/]+)", r"\1", log)  # strip any other absolute path
     return log[-6000:]
 
@@ -165,15 +178,21 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(code)
         self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(body)))
-        self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
         self.wfile.write(body)
 
     def _body(self) -> dict:
         n = int(self.headers.get("Content-Length") or 0)
-        return json.loads(self.rfile.read(n) or b"{}")
+        if not 0 <= n <= MAX_BODY:
+            raise ValueError("body too large")
+        body = json.loads(self.rfile.read(n) or b"{}")
+        if not isinstance(body, dict):
+            raise ValueError("body must be a JSON object")
+        return body
 
     def do_GET(self):
+        if refused := cross_site_error(self, post=False):
+            return self._send(refused[0], {"error": refused[1]})
         path = self.path.split("?", 1)[0].rstrip("/")
         if path == "/health":
             return self._send(200, {"ok": True, "referee": referee_name()})
@@ -189,10 +208,12 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         path = self.path.split("?", 1)[0].rstrip("/")
+        if refused := cross_site_error(self, post=True):
+            return self._send(refused[0], {"error": refused[1]})
         try:
             body = self._body()
         except Exception:
-            return self._send(400, {"error": "body must be JSON"})
+            return self._send(400, {"error": "body must be a JSON object of at most 256 KB"})
         if path == "/check":
             fn, src = body.get("fn"), body.get("src")
             if not isinstance(fn, str) or not isinstance(src, str):

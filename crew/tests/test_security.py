@@ -262,3 +262,57 @@ def test_director_only_offers_functions_this_run_still_has_to_claim():
     assert [f for f, _ in d.hot()] == ["fn_08000002"]
     d.pending = lambda: set()
     assert d.steer()["action"] == "none"  # nothing to steer: no Snap call, no boost
+
+
+# ---------------------------------------------------------------- browsers on the demo laptop
+@pytest.mark.parametrize("headers,code", [
+    ({"Content-Type": "text/plain"}, 415),  # a cross-site form or fetch needs no CORS preflight for text/plain
+    ({"Content-Type": "application/x-www-form-urlencoded"}, 415),
+    ({"Host": "evil.example:7111"}, 403),  # DNS rebinding keeps the attacker's Host
+    ({"Origin": "https://evil.example"}, 403),
+    ({"Origin": "null"}, 403),  # sandboxed iframes and file:// pages
+])
+def test_jobs_api_refuses_browser_requests_from_other_sites(server, jobs, headers, code):
+    status, err = post(server, "/jobs", {"fn": FN, "max_usd": 0.5}, headers=headers)
+    assert status == code and "error" in err
+    assert jobs.jobs == {}  # nothing started, nothing reserved
+    assert jobs.guard.spent() == 0
+
+
+def test_jobs_api_accepts_local_callers_and_the_local_stage(server):
+    assert post(server, "/jobs", {"fn": FN, "max_usd": 0.5}, headers={"Host": "localhost:7111"})[0] == 200
+    assert post(server, "/jobs", {"fn": FN, "max_usd": 0.5}, headers={"Origin": "http://127.0.0.1:5173"})[0] == 200
+
+
+def test_jobs_api_refuses_rebound_reads(server):
+    c = http.client.HTTPConnection("127.0.0.1", server.server_address[1], timeout=5)
+    c.request("GET", "/status", headers={"Host": "evil.example"})
+    r = c.getresponse()
+    assert r.status == 403
+    c.close()
+
+
+def test_bench_lint_blocks_quoted_and_absolute_includes():
+    from crew.bench.referee import lint as bench_lint
+
+    for src in ('#include "/Users/me/Frankenstein/.env"', '%:include "../.env"', '#define H "x"\n#include H',
+                '#line 1 "<built-in>"'):
+        assert {v["rule"] for v in bench_lint(src + f"\nint {FN}(void){{return 1;}}")} & {"L009", "L010"}, src
+    assert bench_lint(f"#include <stdint.h>\nint {FN}(void){{return 1;}}") == []
+
+
+def test_bench_compile_log_never_names_another_file():
+    from crew.bench.referee import _clean_log
+
+    log = "In file included from candidate.c:1:\n/home/me/repo/.env:1:1: error: x\n    1 | KEY=sk-secret\n"
+    assert "sk-secret" not in _clean_log(log, "/tmp/benchref-x")
+    ok = "candidate.c:2:1: error: expected ';'\n"
+    assert _clean_log(ok, "/tmp/benchref-x") == ok
+
+
+def test_memory_errors_never_carry_the_mongodb_password():
+    from crew.memory import safe_error
+
+    uri = "mongodb+srv://frank:hunter2@cluster0.example.mongodb.net/?retryWrites=true"
+    assert "hunter2" not in safe_error(RuntimeError(f"bad uri {uri}"), uri)
+    assert "hunter2" not in safe_error(RuntimeError("mongodb://frank:hunter2@host:27017 refused"), None)

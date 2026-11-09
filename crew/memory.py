@@ -11,7 +11,16 @@ with metrics at the end), idioms (owned by crew/library.py).
 from __future__ import annotations
 
 import queue
+import re
 import threading
+
+CREDENTIALS = re.compile(r"(mongodb(?:\+srv)?://)[^@/\s]+@")
+
+
+def safe_error(e: Exception, uri: str | None) -> str:
+    """The error text that reaches metrics.json (published in runs/): never the URI or its user:password."""
+    text = str(e).replace(uri, "<MONGODB_URI>") if uri else str(e)
+    return CREDENTIALS.sub(r"\1<credentials>@", text)[:200]
 
 
 class AtlasSink:
@@ -21,6 +30,7 @@ class AtlasSink:
         self.q: queue.Queue = queue.Queue()
         self.written = 0
         self.error = None
+        self.uri = cfg.mongodb_uri
         if not cfg.mongodb_uri:
             return
         try:
@@ -34,7 +44,7 @@ class AtlasSink:
             self.events.create_index([("type", 1), ("fn", 1)])
             self.ok = True
         except Exception as e:  # memory is best-effort; the run never depends on it
-            self.error = str(e)[:200]
+            self.error = safe_error(e, self.uri)
             return
         self.batch, self.flush_s = batch, flush_s
         self._stop = threading.Event()
@@ -57,7 +67,7 @@ class AtlasSink:
                 self.events.insert_many(docs, ordered=False)
                 self.written += len(docs)
             except Exception as e:
-                self.error = str(e)[:200]
+                self.error = safe_error(e, self.uri)
 
     def _loop(self) -> None:
         while not self._stop.wait(self.flush_s):
@@ -74,5 +84,5 @@ class AtlasSink:
         try:
             self.runs.update_one({"run_id": self.run_id}, {"$set": {**metrics, "run_id": self.run_id}}, upsert=True)
         except Exception as e:
-            self.error = str(e)[:200]
+            self.error = safe_error(e, self.uri)
         return {"backend": "mongodb-atlas", "events_written": self.written, "error": self.error}
