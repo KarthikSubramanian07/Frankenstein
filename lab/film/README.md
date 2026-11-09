@@ -7,7 +7,7 @@ craft from Eddy's Platypus ad. Built with Remotion under its free license for in
 
 ```bash
 npm install            # or reuse an existing node_modules
-npm run render         # → out/frankenstein_film.mp4
+npm run render         # → out/frankenstein_film_final.mp4
 npm run stills -- Frankenstein 150 560 770 1000 1150 1300 1500 1620   # QA stills → out/stills/
 ```
 
