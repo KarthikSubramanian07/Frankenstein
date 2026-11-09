@@ -1,4 +1,6 @@
 .env
+.env.*
+!.env.example
 .venv/
 lab/secrets/*
 !lab/secrets/.gitkeep
