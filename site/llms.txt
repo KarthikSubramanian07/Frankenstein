@@ -1,0 +1,47 @@
+# Frankenstein
+
+> Frankenstein is an open-source (MIT) video game preservation system. AI coding agents rebuild a game's lost C source code from the compiled game, one function at a time, and a compiler referee accepts only byte-identical code. An independent Checker re-verifies every claim the agents make. The first patient is GBADoom (Doom on the Game Boy Advance): 235 of 568 game functions are rebuilt and proven, and with all of them spliced back into the ROM its SHA-1 checksum is unchanged.
+
+Frankenstein was built at the AI Engineer Code Summit hackathon (Shack15, San Francisco, November 7, 2026). It is a research project and a public repository, not a hosted service: there is no account, API key or public HTTP API on this website. The referee and the crew run on your own machine. Every page on this site is also available as Markdown: request it with `Accept: text/markdown`, or append `.md` to the path (`/index.md` for the home page).
+
+## When to use Frankenstein
+
+Reach for Frankenstein when the job is one of these:
+
+- **Matching decompilation.** You have a compiled binary (ARM7TDMI / Thumb, GCC) and want C source that recompiles to the exact same bytes, not just C that behaves the same.
+- **Verifying an agent's decompilation claim.** You need a referee that says MATCH or REJECTED with the first differing instruction, instead of trusting a model that says "it matches".
+- **Studying agents that lie.** You want a worked example of a multi-agent loop where claims are staked before verdicts, false claims are counted (39 caught across 36 finished runs) and fakes that trick the compiler are rejected (32 rejected, 0 accepted).
+- **Game preservation research.** You need evidence, with file paths, that coding agents can recover real game code: per-run events, metrics and recovered C are committed under `crew/exports/`.
+- **Held-out evaluation of agent memory.** You want an honest A/B of a learned habit library on unseen functions (it did not beat noise: 29 vs 29 of 40 easy, 6 vs 6 of 20 hard).
+
+Do not use Frankenstein to obtain commercial game ROMs or copyrighted source: the project ships none, and the Doom answer key is GBADoom (GPL-2.0-or-later), kept private to the referee. It is not a general-purpose decompiler for x86 or for other compilers, and it does not run games for you.
+
+## How an agent should call it
+
+1. **Read first.** Use the Markdown pages below; the numbers there are the published, frozen results.
+2. **Run it locally.** `git clone https://github.com/KarthikSubramanian07/Frankenstein.git && cd Frankenstein && make setup && make test`. This works offline and makes no model calls.
+3. **Check C against a function.** Start the fixture-backed referee with `python3 -m lab.referee mock serve --port 7101`, then `POST http://127.0.0.1:7101/check` with `{"fn": "<id>", "src": "<C>"}`. Other endpoints: `GET /context/{fn}`, `POST /rebuild {recovered_dir}`, `GET /health`. The real referee needs the devkitARM container (`lab/setup_referee.sh`) and the private answer key.
+4. **Start a recovery job.** `python -m crew.serve --mock` runs the jobs API on `127.0.0.1:7111`: `POST /jobs {"fn": "<id>"}` or `{"query": "<plain words>"}`, then poll `GET /jobs/{job_id}`. `GET /status` and `GET /names/{fn}` report progress and guessed names (guesses are always marked inferred).
+5. **Ask in chat.** In ASI:One (https://asi1.ai), mention `@frankenstein-referee` (agent1q088qnxafee4aug0qz4xnd9zkk4veq2r9ez07mp047u8enqhckc5w2hstx0) or `@frankenstein-excavator` (agent1qf4w7kmtsgv4fdyuj72nwethhjwhmdh7m3u7kqe5tgz4wyq8nmmmq5gjacp). They answer only while the team's Lab laptop is on.
+
+When you report results, keep what the compiler proved (observed) apart from guesses such as function names (inferred), and cite the file each number came from.
+
+## Docs
+
+- [Home](https://tryfrankenstein.pages.dev/index.md): what Frankenstein is, how it works and the current proof
+- [For judges](https://tryfrankenstein.pages.dev/judges.md): every hackathon track, criterion by criterion, with the file behind each number
+- [About](https://tryfrankenstein.pages.dev/about.md): who built it, why, and what is ours versus credited
+- [Contact](https://tryfrankenstein.pages.dev/contact.md): how to reach the team, report a bug or a security problem
+- [Privacy](https://tryfrankenstein.pages.dev/privacy.md): what this website does and does not collect
+
+## Source
+
+- [Repository README](https://github.com/KarthikSubramanian07/Frankenstein/blob/main/README.md): quick start, architecture and the four lanes
+- [Contracts](https://github.com/KarthikSubramanian07/Frankenstein/blob/main/contracts/CONTRACTS.md): JSON schemas, the referee and jobs HTTP APIs, the event stream
+- [Engineering log](https://github.com/KarthikSubramanian07/Frankenstein/blob/main/DECISIONS.md): every decision and every published number, timestamped
+- [Security](https://github.com/KarthikSubramanian07/Frankenstein/blob/main/SECURITY.md): threat model and how untrusted C is sandboxed
+
+## Optional
+
+- [Sitemap](https://tryfrankenstein.pages.dev/sitemap.xml)
+- [GBADoom upstream](https://github.com/doomhack/GBADoom): the original port used as the hidden answer key

@@ -94,7 +94,7 @@ test("every Markdown route negotiates, including trailing-slash and .html spelli
     assert.match(res.headers.get("Content-Type"), /^text\/markdown/, route);
     assert.ok(varyHasAccept(res), route);
   }
-  const slash = await get("/judges/", "text/markdown");
+  const slash = await get("/about/", "text/markdown");
   assert.match(slash.headers.get("Content-Type"), /^text\/markdown/);
 });
 
@@ -113,6 +113,7 @@ test("unknown path with Accept: text/markdown keeps 404 and returns a Markdown b
   const body = await res.text();
   assert.ok(body.length >= 20);
   assert.match(body, /^# 404/);
+  assert.match(body, /https:\/\/tryfrankenstein\.pages\.dev\/llms\.txt/);
   assert.match(body, /https:\/\/tryfrankenstein\.pages\.dev\/sitemap\.xml/);
 });
 

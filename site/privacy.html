@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Privacy · Frankenstein</title>
+<meta name="description" content="What tryfrankenstein.pages.dev collects (no accounts, cookies, analytics or forms) and what the hosting, font and script providers it relies on can see.">
+<link rel="canonical" href="https://tryfrankenstein.pages.dev/privacy">
+<link rel="alternate" type="text/markdown" href="/privacy.md" title="Privacy (Markdown)">
+<meta name="theme-color" content="#F4EFE4">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Frankenstein">
+<meta property="og:title" content="Privacy · Frankenstein">
+<meta property="og:description" content="What tryfrankenstein.pages.dev collects (no accounts, cookies, analytics or forms) and what the hosting, font and script providers it relies on can see.">
+<meta property="og:url" content="https://tryfrankenstein.pages.dev/privacy">
+<meta property="og:image" content="https://tryfrankenstein.pages.dev/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="/assets/site.css?v=24">
+<link rel="stylesheet" href="/assets/page.css?v=2">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Privacy",
+  "description": "What tryfrankenstein.pages.dev collects (no accounts, cookies, analytics or forms) and what the hosting, font and script providers it relies on can see.",
+  "url": "https://tryfrankenstein.pages.dev/privacy",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Frankenstein",
+    "url": "https://tryfrankenstein.pages.dev/"
+  },
+  "about": {
+    "@id": "https://tryfrankenstein.pages.dev/#organization"
+  },
+  "dateModified": "2026-11-09"
+}
+</script>
+</head>
+<body class="page">
+<a class="skip" href="#main">Skip to content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="bolt" viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="#306230" d="M7 2h5v1h-5zM6 3h5v1h-5zM5 4h5v1h-5zM4 5h5v1h-5zM3 6h10v1h-10zM3 7h10v1h-10zM8 8h4v1h-4zM7 9h4v1h-4zM6 10h4v1h-4zM5 11h4v1h-4zM5 12h3v1h-3zM4 13h3v1h-3zM4 14h2v1h-2zM3 15h2v1h-2z"/><path fill="#FFD23F" d="M6 0h5v1h-5zM5 1h5v1h-5zM4 2h5v1h-5zM3 3h5v1h-5zM2 4h10v1h-10zM2 5h10v1h-10zM7 6h4v1h-4zM6 7h4v1h-4zM5 8h4v1h-4zM4 9h4v1h-4zM4 10h3v1h-3zM3 11h3v1h-3zM3 12h2v1h-2zM2 13h2v1h-2z"/></symbol>
+  </defs>
+</svg>
+<header class="nav-wrap">
+  <nav class="nav" aria-label="Main">
+    <a class="logo" href="/" aria-label="Frankenstein home"><svg class="logo-bolt" aria-hidden="true"><use href="#bolt"/></svg><span>Frankenstein</span></a>
+    <ul class="pnav"><li><a href="/">Home</a></li><li><a href="/judges">For judges</a></li><li><a href="/about">About</a></li><li><a href="/contact">Contact</a></li><li><a href="/privacy" aria-current="page">Privacy</a></li></ul>
+  </nav>
+</header>
+<main id="main" class="prose">
+  <p class="kicker" aria-hidden="true">privacy · plain words</p>
+  <h1>We don't want <span class="two">your data.</span></h1>
+  <p class="lede">This website is a static page about an open-source project. It has no accounts, no sign-up, no forms, no cookies, no analytics and no advertising, and its scripts store nothing in your browser.</p>
+  <h2>What this site collects</h2>
+  <p>Nothing on purpose. We don't run analytics, tracking pixels or session recording, and we never ask for your name or email. The page's Content Security Policy blocks form submissions and any connection to a server other than this one, apart from the font and script providers below.</p>
+  <h2>What other services can see</h2>
+  <ul>
+    <li><b>Cloudflare Pages</b> hosts the site. Like any web host, Cloudflare processes each request (your IP address, browser user agent and the page you asked for) to serve it and protect it from abuse, under the <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare privacy policy</a>. We don't add logging of our own.</li>
+    <li><b>Google Fonts</b> serves the typefaces, so your browser asks Google for them, under the <a href="https://policies.google.com/privacy" rel="noopener">Google privacy policy</a>.</li>
+    <li><b>cdnjs</b> (run by Cloudflare) serves the GSAP animation library on the home page, pinned with a subresource-integrity hash.</li>
+    <li><b>GitHub</b> sees you only if you follow a link to the repository.</li>
+  </ul>
+  <h2>If you talk to the agents</h2>
+  <p>The ASI:One agents are a separate service. Messages you send them pass through Fetch.ai's platform, reach the team's Lab laptop, and may be sent to the model providers the crew uses (Meta, Subquadratic and Google). A job's prompts and results are saved in run logs, and finished runs may be published in the public repository. Don't send the agents personal or confidential information.</p>
+  <h2>Children, changes and questions</h2>
+  <p>The site isn't directed at children and collects nothing from anyone. If this changes, we'll update this page and its date first. Questions about privacy go to a <a href="https://github.com/KarthikSubramanian07/Frankenstein/issues">GitHub issue</a>; see the <a href="/contact">contact page</a>.</p>
+  <p class="meta">Effective 2026-11-09</p>
+</main>
+<footer class="pfoot">
+  <nav aria-label="Site"><a href="/">Home</a><a href="/judges">For judges</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a><a href="https://github.com/KarthikSubramanian07/Frankenstein" rel="noopener">GitHub</a></nav>
+  <p>Built at the AI Engineer Code Summit hackathon, Shack15, San Francisco, November 7, 2026. MIT licensed. Doom is a trademark of id Software; not affiliated with or endorsed by id Software, doomhack, Nintendo, or any platform named here.</p>
+</footer>
+</body>
+</html>

@@ -5,16 +5,19 @@
 //      gets its Markdown twin (site/<page>.md) with `Content-Type: text/markdown` and `Vary: Accept`.
 //      Browsers, which never ask for text/markdown, keep getting the same HTML as before.
 //   2. Agent-friendly 404s: an unknown path still returns HTTP 404, and Markdown readers get a short
-//      Markdown explanation with links to the home page and /sitemap.xml instead of the HTML error page.
+//      Markdown explanation with links to /llms.txt and /sitemap.xml instead of the HTML error page.
 //   3. The security and cache headers from site/_headers on every response. Cloudflare does not apply
 //      _headers to responses a Worker builds itself, so they are mirrored here (a test keeps the two in sync).
 
 const ORIGIN = "https://tryfrankenstein.pages.dev";
 
-// HTML route -> its Markdown twin. Keep in step with site/sitemap.xml.
+// HTML route -> its Markdown twin. Keep in step with site/sitemap.xml and site/llms.txt.
 export const MARKDOWN_ROUTES = {
   "/": "/index.md",
   "/judges": "/judges.md",
+  "/about": "/about.md",
+  "/contact": "/contact.md",
+  "/privacy": "/privacy.md",
 };
 
 // Mirror of site/_headers, in file order. tests/site/worker.test.mjs fails if they drift apart.
@@ -126,6 +129,7 @@ compiled game, one function at a time, and a compiler accepts only byte-identica
 ## Where to go instead
 
 - [Home](${ORIGIN}/): what Frankenstein is and the current proof (Markdown: ${ORIGIN}/index.md)
+- [llms.txt](${ORIGIN}/llms.txt): the agent guide, with when to use Frankenstein and how to call it
 - [Sitemap](${ORIGIN}/sitemap.xml): every public page
 - [Source on GitHub](https://github.com/KarthikSubramanian07/Frankenstein)
 `;
