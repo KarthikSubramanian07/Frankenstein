@@ -6,11 +6,37 @@ import asyncio
 import base64
 import hashlib
 import json
+import re
 import struct
 import time
 from pathlib import Path
+from urllib.parse import urlsplit
 
 MAX_BODY = 256 * 1024
+LOOPBACK = {'127.0.0.1', 'localhost', '::1'}
+HTTP_REQUEST_LINE = re.compile(rb'^[A-Z]{3,8} \S+ HTTP/')
+
+
+def _host_only(value):
+    v = value.strip().lower()
+    if v.startswith('['):
+        return v[1:v.find(']')] if ']' in v else v
+    return v.rsplit(':', 1)[0] if v.count(':') == 1 else v
+
+
+def browser_refusal(headers, method):
+    """A web page open on this laptop must not feed or read the bridge (SECURITY.md, threat 5).
+    DNS rebinding keeps the attacker's Host; a cross-origin page sends its Origin; and a text/plain POST
+    needs no CORS preflight, so telemetry must be application/json."""
+    host = headers.get('host')
+    if host and _host_only(host) not in LOOPBACK:
+        return 'Host must be 127.0.0.1 or localhost'
+    origin = headers.get('origin')
+    if origin is not None and (urlsplit(origin).hostname or '') not in LOOPBACK:
+        return 'cross-origin requests are not accepted'
+    if method == 'POST' and headers.get('content-type', '').split(';')[0].strip().lower() != 'application/json':
+        return 'Content-Type must be application/json'
+    return None
 
 
 class State:
@@ -136,6 +162,8 @@ class Bridge:
     async def tap(self, reader, writer):
         try:
             while line := await reader.readline():
+                if HTTP_REQUEST_LINE.match(line):
+                    break  # a browser POSTing to the tap port (cross-protocol); real taps send JSON lines only
                 try:
                     self.state.tap(json.loads(line))
                 except (ValueError, TypeError, KeyError):
@@ -152,6 +180,8 @@ class Bridge:
             lines = raw.decode('ascii').split('\r\n')
             method, path, _ = lines[0].split(' ')
             headers = dict((k.lower().strip(), v.strip()) for k, v in (line.split(':', 1) for line in lines[1:] if ':' in line))
+            if refusal := browser_refusal(headers, method):
+                return await self.respond(writer, 403, {'error': refusal})
             if method == 'GET' and headers.get('upgrade', '').lower() == 'websocket':
                 key = headers.get('sec-websocket-key', '')
                 if headers.get('sec-websocket-version') != '13' or len(base64.b64decode(key)) != 16:

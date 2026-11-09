@@ -31,6 +31,11 @@ export function startServer(opts = {}) {
   const safeRun = (id) => (typeof id === 'string' && /^[A-Za-z0-9][\w.-]*$/.test(id) && !id.includes('..') ? id : null);
   // only the Stage page itself may read this server from a browser (SECURITY.md, Lane C 2)
   const origins = (process.env.STAGE_ORIGINS ?? 'http://127.0.0.1:5173,http://localhost:5173').split(',').map((o) => o.trim()).filter(Boolean);
+  // DNS rebinding: a page on evil.example re-resolved to 127.0.0.1 keeps its own Host, so a loopback server
+  // answers only loopback Host names. A browser socket must come from an allowed origin (no Origin: a local tool).
+  const loopback = new Set(['127.0.0.1', 'localhost', '[::1]', '::1']);
+  const hostOk = (h) => !loopback.has(host) || (typeof h === 'string' && loopback.has(h.toLowerCase().replace(/:\d+$/, '')));
+  const wsOk = (req) => hostOk(req.headers.host) && (req.headers.origin === undefined || origins.includes(req.headers.origin));
   const runDir = (id) => {
     for (const r of roots) { const d = path.join(r, id); try { if (fs.statSync(d).isDirectory()) return d; } catch { /* next root */ } }
     return path.join(runsDir, id);
@@ -115,6 +120,7 @@ export function startServer(opts = {}) {
   const httpServer = http.createServer((req, res) => {
     const url = new URL(req.url, `http://${host}`);
     res.allowOrigin = origins.includes(req.headers.origin) ? req.headers.origin : origins[0];
+    if (!hostOk(req.headers.host)) return send(res, 403, { error: 'Host must be 127.0.0.1 or localhost' });
     const parts = url.pathname.split('/').filter(Boolean);
     const runParam = safeRun(url.searchParams.get('run') || '') || liveRunId();
     if (url.pathname === '/health') return send(res, 200, { ok: true, live: liveRunId(), runs_dir: runsDir });
@@ -155,7 +161,7 @@ export function startServer(opts = {}) {
   httpServer.listen(httpPort, host);
 
   // ---------- WebSocket ----------
-  const wss = new WebSocketServer({ port: wsPort, host });
+  const wss = new WebSocketServer({ port: wsPort, host, verifyClient: ({ req }) => wsOk(req) });
 
   wss.on('connection', (ws, req) => {
     const url = new URL(req.url || '/', `ws://${host}`);
