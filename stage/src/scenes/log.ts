@@ -16,10 +16,10 @@ export class LogScene implements Scene {
   constructor() {
     const game = new URLSearchParams(location.search).get('game');
     this.el.innerHTML = `
-      <div class="lg-game"><b class="ttl">doom</b>${game ? `<iframe src="${esc(game)}" allow="cross-origin-isolated; autoplay; gamepad; fullscreen"></iframe>` : '<span>game capture</span>'}</div>
+      <div class="lg-game"><b class="ttl">doom</b>${game ? `<iframe src="${esc(game)}" title="Doom game preview" allow="cross-origin-isolated; autoplay; gamepad; fullscreen"></iframe>` : '<span>game capture</span>'}</div>
       <div class="lg-side">
-        <div class="lg-panel">
-          <ol class="lg-raw" data-k="log"></ol>
+        <div class="lg-panel" role="region" aria-label="Rebuild event stream">
+          <ol class="lg-raw" data-k="log" aria-live="polite"></ol>
         </div>
       </div>`;
   }

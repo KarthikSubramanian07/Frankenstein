@@ -32,10 +32,14 @@ if (reduced || !legacy) setMuted(true);
 const stageEl = document.getElementById('stage')!;
 const fxCanvas = h('canvas');
 fxCanvas.id = 'fxlayer';
+fxCanvas.setAttribute('aria-hidden', 'true');
 const flashEl = h('div');
 flashEl.id = 'flash';
+flashEl.setAttribute('aria-hidden', 'true');
 const markEl = h('div');
 markEl.id = 'mark';
+markEl.setAttribute('role', 'status');
+markEl.setAttribute('aria-live', 'polite');
 const fx = new Fx(fxCanvas, flashEl, stageEl, reduced);
 
 const scenes: Partial<Record<SceneId, Scene>> = {};

@@ -40,7 +40,7 @@ export class SplitScene implements Scene {
     const game = new URLSearchParams(location.search).get('game');
     this.el.innerHTML = `
       <div class="sp-win${game ? ' has-game' : ''}">
-        ${game ? `<iframe src="${esc(game)}" allow="cross-origin-isolated; autoplay; gamepad; fullscreen"></iframe>` : ''}
+        ${game ? `<iframe src="${esc(game)}" title="Doom game preview" allow="cross-origin-isolated; autoplay; gamepad; fullscreen"></iframe>` : ''}
         <div class="sp-cap"></div>
       </div>
       <div class="sp-runon"></div>
