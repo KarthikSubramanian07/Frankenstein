@@ -300,3 +300,10 @@ details.proof[open] > summary .hand::after{content:" (hide)";font-size:.85em;opa
 details.proof > *:not(summary){margin-bottom:14px}
 .legend-row{gap:10px 18px}
 .tally{margin:0;display:flex;flex-wrap:wrap;gap:8px}
+
+/* A11y & responsive reflow */
+@media (max-width:600px){
+  .sha-rows p{grid-template-columns:1fr;gap:4px}
+  .diff .row{grid-template-columns:1fr;gap:4px}
+}
+figcaption code{overflow-wrap:anywhere;word-break:break-all}
