@@ -6,6 +6,7 @@
 <title>Frankenstein · Lost games, rebuilt and proven</title>
 <meta name="description" content="Lost games, rebuilt and proven. AI agents bring a game's dead source code back from the cartridge, and a compiler checks every byte. Doom is our first patient.">
 <link rel="canonical" href="https://tryfrankenstein.pages.dev/">
+<link rel="alternate" type="text/markdown" href="/index.md" title="Frankenstein (Markdown)">
 <meta name="theme-color" content="#F4EFE4">
 <meta name="robots" content="index, follow">
 
@@ -37,19 +38,82 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "SoftwareSourceCode",
-  "name": "Frankenstein",
-  "alternateName": "Frankenstein: lost games, rebuilt and proven",
-  "description": "Video game preservation: coding agents rebuild a game's lost C source from the compiled game, one function at a time. An independent Checker re-verifies every claim, and a compiler referee accepts only byte-identical code. The first patient is GBADoom, built without LTO.",
-  "url": "https://tryfrankenstein.pages.dev/",
-  "codeRepository": "https://github.com/KarthikSubramanian07/Frankenstein",
-  "programmingLanguage": ["Python", "C"],
-  "runtimePlatform": "devkitARM GCC (ARM7TDMI, Thumb)",
-  "license": "https://opensource.org/licenses/MIT",
-  "dateCreated": "2026-11-07",
-  "keywords": "game preservation, matching decompilation, coding agents, multi-agent, verification, reverse engineering, Game Boy Advance, GBADoom",
-  "creator": { "@type": "Organization", "name": "Team Frankenstein" },
-  "isBasedOn": { "@type": "SoftwareSourceCode", "name": "GBADoom", "codeRepository": "https://github.com/doomhack/GBADoom", "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" }
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://tryfrankenstein.pages.dev/#organization",
+      "name": "Team Frankenstein",
+      "alternateName": "Frankenstein",
+      "description": "Team Frankenstein builds Frankenstein, an open-source video game preservation system in which AI coding agents rebuild a game's lost C source from the compiled game and a compiler accepts only byte-identical code.",
+      "url": "https://tryfrankenstein.pages.dev/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://tryfrankenstein.pages.dev/assets/apple-touch-icon.png",
+        "width": 180,
+        "height": 180
+      },
+      "image": "https://tryfrankenstein.pages.dev/assets/og.jpg",
+      "foundingDate": "2026-11-07",
+      "sameAs": [
+        "https://github.com/KarthikSubramanian07/Frankenstein"
+      ],
+      "knowsAbout": [
+        "matching decompilation",
+        "video game preservation",
+        "GBADoom",
+        "coding agents",
+        "compiler verification"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "url": "https://github.com/KarthikSubramanian07/Frankenstein/issues",
+        "availableLanguage": "en"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "San Francisco",
+        "addressRegion": "CA",
+        "addressCountry": "US"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://tryfrankenstein.pages.dev/#website",
+      "name": "Frankenstein",
+      "url": "https://tryfrankenstein.pages.dev/",
+      "inLanguage": "en",
+      "publisher": {
+        "@id": "https://tryfrankenstein.pages.dev/#organization"
+      }
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "Frankenstein",
+      "alternateName": "Frankenstein: lost games, rebuilt and proven",
+      "description": "Video game preservation: coding agents rebuild a game's lost C source from the compiled game, one function at a time. An independent Checker re-verifies every claim, and a compiler referee accepts only byte-identical code. The first patient is GBADoom, built without LTO.",
+      "url": "https://tryfrankenstein.pages.dev/",
+      "codeRepository": "https://github.com/KarthikSubramanian07/Frankenstein",
+      "programmingLanguage": [
+        "Python",
+        "C"
+      ],
+      "runtimePlatform": "devkitARM GCC (ARM7TDMI, Thumb)",
+      "license": "https://opensource.org/licenses/MIT",
+      "dateCreated": "2026-11-07",
+      "keywords": "game preservation, matching decompilation, coding agents, multi-agent, verification, reverse engineering, Game Boy Advance, GBADoom",
+      "creator": {
+        "@id": "https://tryfrankenstein.pages.dev/#organization"
+      },
+      "isBasedOn": {
+        "@type": "SoftwareSourceCode",
+        "name": "GBADoom",
+        "codeRepository": "https://github.com/doomhack/GBADoom",
+        "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
+      },
+      "@id": "https://tryfrankenstein.pages.dev/#software"
+    }
+  ]
 }
 </script>
 </head>
@@ -224,6 +288,7 @@
       <a class="btn btn-ink" href="https://github.com/KarthikSubramanian07/Frankenstein" rel="noopener">Source on GitHub <span aria-hidden="true">&#8599;</span></a>
       <p>Built at the AI Engineer Code Summit hackathon, Shack15, San Francisco, November 7, 2026. MIT licensed.</p>
       <p class="legal">Doom is a trademark of id Software. Not affiliated with or endorsed by id Software, doomhack, Nintendo, or any platform named here. The handheld in our illustrations is our own generic design. Logos are trademarks of their owners, used to credit our partners.</p>
+      <p class="legal"><a href="/about">About</a> · <a href="/contact">Contact</a> · <a href="/privacy">Privacy</a> · <a href="/llms.txt">llms.txt</a></p>
     </div>
   </div>
 </footer>
