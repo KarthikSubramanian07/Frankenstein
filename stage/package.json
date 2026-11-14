@@ -15,11 +15,11 @@
     "qa": "node scripts/qa.mjs"
   },
   "dependencies": {
-    "ws": "^8.18.0"
+    "ws": "^8.22.2"
   },
   "devDependencies": {
     "playwright-core": "^1.56.0",
     "typescript": "^7.0.2",
-    "vite": "^8.3.6"
+    "vite": "^8.3.7"
   }
 }
